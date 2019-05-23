@@ -1,0 +1,397 @@
+swagger: "2.0"
+info:
+  description: "These are the Swagger definitions for SoftBank API"
+  version: "1.0.0"
+  title: "SoftBank API"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "someapi.somewhere.com"
+basePath: "/v1"
+tags:
+  - name: "Company"
+    description: "APIs for accessing Company related Entities"
+schemes:
+  - "https"
+  - "http"
+paths:
+  /companies:
+    get:
+      tags:
+        - "Company"
+      summary: "Returns a list of company domain objects."
+      description: "Returns a list of company domain objects."
+      operationId: "getAllCompanies"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CompanyListResponse"
+        400:
+          description: "Invalid request"
+        404:
+          description: "Companies not found"
+      security:
+        - api_key: []
+  /companies/{companyId}:
+    get:
+      tags:
+        - "Company"
+      summary: "Returns a single company domain object by requested ID."
+      description: "Returns a single company domain object by requested ID"
+      operationId: "getCompanyById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "ID of the requested Company"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Company"
+        400:
+          description: "Invalid request"
+        404:
+          description: "Companies not found"
+      security:
+        - api_key: []
+  /company/{companyId}/initiatives:
+    get:
+      tags:
+        - "initiatives"
+      summary: "Find initiatives for specific companyId"
+      description: "Returns an array of CompanyInitiative"
+      operationId: "getInitiativesByCompanyId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "ID of the Company for which to return Iniatives"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CompanyInitiatives"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Company not found"
+      security:
+        - api_key: []
+  /company/{companyId}/updates:
+    get:
+      tags:
+        - "updates"
+      summary: "Find updates for specific companyId"
+      description: "Returns an array of CompanyUpdate"
+      operationId: "getUpdatesByCompanyId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "ID of the Company for which to return Updates"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CompanyUpdates"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Company not found"
+      security:
+        - api_key: []
+  /company/{companyId}/revenue:
+    get:
+      tags:
+        - "revenue data"
+      summary: "Gets revenue data for specific companyId"
+      description: "Returns an array of CompanyRevenueResponse"
+      operationId: "getRevenueByCompanyId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "ID of the Company for which to return revenue"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: query
+          name: "currency"
+          type: "string"
+          required: true
+          description: "Value representing currency, either usd or jpy"
+        - in: query
+          name: "timeFrame"
+          type: "string"
+          required: true
+          description: "One of monthly, quarterly, yearly"
+        - in: query
+          name: "endDate"
+          type: "string"
+          required: true
+          description: "Ending date of the returned range, not including projection"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/CompanyRevenue"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Company not found"
+      security:
+        - api_key: []
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  CompanyInitiatives:
+    type: array
+    items:
+      $ref: '#/definitions/CompanyInitiativeResponse'
+  CompanyInitiativeResponse:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID for initiative"
+      status:
+        type: "string"
+        description: "Initiative Status"
+      title:
+        type: "string"
+        description: "Title of the initiative"
+      owner:
+        type: "string"
+        description: "Owner of the initiative"
+      description:
+        type: "string"
+        description: "Description for the initiative"
+    xml:
+      name: "Order"
+  CompanyUpdates:
+    type: array
+    items:
+      $ref: '#/definitions/CompanyUpdateResponse'
+  CompanyUpdateResponse:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+        description: "Unique ID for initiative"
+      status:
+        type: "string"
+        description: "Initiative Status"
+      title:
+        type: "string"
+        description: "Title of the update"
+      owner:
+        type: "string"
+        description: "Owner of the update"
+      date:
+        type: "string"
+        description: "Date for the update"
+    xml:
+      name: "Order"
+  CompanyRevenue:
+    type: array
+    items:
+      $ref: '#/definitions/CompanyRevenueResponse'
+  CompanyRevenueResponse:
+    type: "object"
+    properties:
+      companyId:
+        type: "string"
+        description: "Company ID for data"
+      projected:
+        type: "boolean"
+        description: "Whether the entity represents historic or projected data"
+      revenue:
+        type: "number"
+        description: "Actual Revenue Data"
+      PY:
+        type: "number"
+        description: "PY Data"
+      IC:
+        type: "number"
+        description: "IC Data"
+      budget:
+        type: "number"
+        description: "Budget Data"
+      forecast:
+        type: "number"
+        description: "Forecast Data"
+      comment:
+        type: "string"
+        description: "Comment associated with a particular data point"
+      confidence:
+        type: "string"
+        description: "Represents a confidence level in the data point"
+    xml:
+      name: "Order"
+  CompanyListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/Company'
+  Company:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      type:
+        type: "string"
+      sector:
+        type: "array"
+        items:
+          $ref: 'string'
+      score:
+        type: "number"
+      moic:
+        type: "number"
+      irr:
+        type: "number"
+      logo:
+        type: "string"
+      revenue:
+        type: "string"
+      name:
+        type: "string"
+        description: "Displayed in the company header."
+      description:
+        type: "string"
+        description: "Displayed in the company header under the tags."
+      tags:
+        type: "array"
+        items:
+          $ref: '#/definitions/Tag'
+      percentOwnership:
+        type: "string"
+        description: "Displayed in the company header to the right of the tags."
+      dealTeam:
+        type: "array"
+        description: "Displayed in the company header under the description as a list."
+        items:
+          $ref: '#/definitions/TeamMember'
+      takeaways:
+        type: "array"
+        items:
+          $ref: '#/definitions/Takeaway'
+      takeawayDate:
+        type: "string"
+        description: "Displayed in the company header with the list of takeaways."
+      deployed:
+        type: "number"
+        description: "Displayed in the company header to the right of the takeaways."
+      valuation:
+        description: "Displayed in the company header to the right of the deployed."
+        $ref: '#/definitions/ValuationDetail'
+      initiatives:
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyInitiatives'
+      companyUpdates:
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyUpdates'
+  Tag:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+  ValuationDetail:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+      desc:
+        type: "string"
+      entry:
+        type: "number"
+      current:
+        type: "number"
+      yearOne:
+        type: "number"
+      yearTwo:
+        type: "number"
+      yearThree:
+        type: "number"
+      exit:
+        type: "number"
+  TeamMember:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+  Takeaway:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      content:
+        type: "string"
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+      status:
+        type: "string"
+        description: "Simple string value of `success` or `failed`."
+      message:
+        type: "string"
+        description: "Simple string message that can provide additional detail on the API response; perhaps with details on the data returned."
+      data:
+        type: "object"
+        description: "Container for APi request data. Can be an object container or array container. Should be used by the client to create domain models or similar."
+      errors:
+        type: "array"
+        description: "List of errors associated with the API request."
+        items:
+          $ref: '#/definitions/ApiError'
+  ApiError:
+    type: "object"
+    properties:
+      code:
+        description: "Specific API error code that clients can use to map to unique error messages or create specific error flows."
+        type: "integer"
+      field:
+        type: "string"
+        description: "Used when form POSTs with specific field errors and indicates the field name in the request."
+      message:
+        type: "string"
+        description: "Custom message provided by the API for the error."
+      id:
+        type: "string"
+        description: "UUIDv4 used to track errors in logs especially when using PII data that's omitted from logs."

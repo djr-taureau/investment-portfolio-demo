@@ -1,0 +1,81 @@
+@import "../../../assets/scss/variables";
+
+:host {
+
+    .footer {
+        width: 100%;
+        padding: 0 0 $loose;
+        background-color: $footer-background;
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.11), 0 0 4px rgba(0, 0, 0, 0.11), 0 0 4px rgba(0, 0, 0, 0.11);
+
+        .footer-inner {
+            max-width: $page-max-width;
+            margin: 0 auto;
+            display: flex;
+            position: relative;
+
+            .footer-content {
+                padding: $em-base;
+                width: 100%;
+                color: $dark-gray;
+
+                ul.footer-list {
+                    margin: 0;
+                    padding: 0;
+                    list-style-type: none;
+
+                    @media #{$xs} {
+                        text-align: center;
+                    }
+
+                    li {
+                        font-size: 12px;
+                        padding-right: $little-space;
+
+                        &:last-child {
+                            float: right;
+                            padding-right: 0;
+
+                            @media #{$xs} {
+                                float: none;
+                            }
+                        }
+
+                        a {
+                            color: $dark-gray;
+                            text-decoration: none;
+                        }
+
+                        address {
+                            font-style: normal;
+                            font-weight: 400;
+                            display: inline;
+                        }
+
+                    }
+
+                    .inline-item {
+                        display: inline-block;
+
+                        &::after {
+                            content: "";
+                            display: inline-block;
+                            border-right: 1px solid #ff0000;
+                            height: rem(18);
+                            margin: 0 $tight;
+                            vertical-align: middle;
+                        }
+                    }
+
+                    .inline-block {
+                        display: inline-block;
+                    }
+                }
+
+            }
+        }
+    }
+}

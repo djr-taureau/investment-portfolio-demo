@@ -1,0 +1,56 @@
+import { Component, OnInit } from "@angular/core";
+import { select, Store } from "@ngrx/store";
+import { Observable, of } from "rxjs";
+import { Company } from "../../core/domain/company.model";
+import { Logger } from "../../util/logger";
+import * as TestUti from "../../util/test.util";
+
+@Component({
+    selector: "sbp-header-container",
+    template: `
+        <sbp-header [companies]="companies$ | async" (selectCompany)="selectCompany($event)"> </sbp-header>
+    `
+})
+export class HeaderContainer implements OnInit {
+    /**
+     * Internal logger.
+     */
+    private static logger: Logger = Logger.getLogger("HeaderContainer");
+
+    /**
+     * The companies observable.
+     */
+    public companies$: Observable<Company[]>;
+
+    /**
+     * Constructor.
+     */
+    public constructor(private store$: Store<any>) {
+        HeaderContainer.logger.debug(`constructor()`);
+    }
+
+    /**
+     * Initialize the component.
+     */
+    public ngOnInit() {
+        HeaderContainer.logger.debug(`ngOnInit()`);
+
+        // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
+        // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
+        this.companies$ = of([
+            TestUti.getCompanyMock({ name: "Foo, Inc." }),
+            TestUti.getCompanyMock({ name: "Bar, LLC." }),
+            TestUti.getCompanyMock({ name: "Dogs and Cats" })
+        ]);
+    }
+
+    /**
+     * Dispatch action to select role in store.
+     */
+    public selectCompany(event: Company) {
+        HeaderContainer.logger.debug(`onCompanySelect( ${event.name} )`);
+
+        // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
+        // this.store$.dispatch(new RegisterLayoutActions.SelectCompany(event.name));
+    }
+}

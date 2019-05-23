@@ -1,0 +1,36 @@
+<mat-toolbar color="primary">
+
+    <button mat-button
+            routerLink="/">
+        <mat-icon>
+            <img src="/assets/image/header-logo.png"
+                 alt="SoftBank">
+        </mat-icon>
+    </button>
+
+    <div fxLayout="row"
+         fxShow="false"
+         fxShow.gt-sm
+         class="menu">
+        <span>Portfolio /</span>
+        <mat-select placeholder="Select Company"
+                    panelClass="my-select-panel-class"
+                    (selectionChange)="onCompanySelect($event)">
+            <mat-option *ngFor="let company of companies"
+                        [value]="company">{{ company.name }}</mat-option>
+
+        </mat-select>
+    </div>
+
+    <div class="user">
+        <button mat-button
+                [matMenuTriggerFor]="menu">
+            Welcome John Doe <i class="icon-user"></i> <i class="icon-arrow-down5"></i>
+        </button>
+        <mat-menu #menu="matMenu"
+                  class="user-mat">
+            <button mat-menu-item>Logout</button>
+        </mat-menu>
+    </div>
+
+</mat-toolbar>

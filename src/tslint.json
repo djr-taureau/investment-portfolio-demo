@@ -1,0 +1,22 @@
+{
+  "extends": ["../tslint.json"],
+  "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "sbp",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "sbp",
+      "kebab-case"
+    ]
+  },
+  "exclude": [
+    "**/node_modules/**",
+    "**/*.spec.ts",
+    "**/**/app.po.ts"
+  ]
+}

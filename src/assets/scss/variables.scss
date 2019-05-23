@@ -1,0 +1,57 @@
+//////////////////////////////////////////////////////
+// px to rem and px to em
+//////////////////////////////////////////////////////
+$em-base: 16px !default;
+
+//////////////////////////////////////////////////////
+// Colors
+//////////////////////////////////////////////////////
+$header-background: #DCE3F0;
+$header-font: #4B709F;
+$footer-background: #fff;
+$light-black: #1F212D;
+$lighter-black: #3B3F5C;
+$validation-red: #FF0000;
+$sky-blue: #0081E6;
+$white: #fff;
+$warning: #cd2026;
+$dark-gray: #3B3F5C;
+$light-black: #181722;
+$lighter-yellow: #FFBA59;
+//////////////////////////////////////////////////////
+// Spacing
+//////////////////////////////////////////////////////
+$cramped: rem(6);
+$tight: rem(12);
+$cozy: rem(18);
+$comfortable: rem(24);
+$loose: rem(30);
+$very-loose: rem(36);
+$far: rem(48);
+$wide: rem(60);
+$double-wide: rem(90);
+$little-space: 5px !default;
+
+//////////////////////////////////////////////////////
+// Page widths
+//////////////////////////////////////////////////////
+$page-max-width: rem(1240);
+$page-break: rem(1276);
+$page-min-width: rem(930);
+
+//////////////////////////////////////////////////////
+// Component heights
+//////////////////////////////////////////////////////
+$footer-height: rem(60);
+$header-height: rem(100);
+
+//////////////////////////////////////////////////////
+// Breakpoints
+//////////////////////////////////////////////////////
+$xs: "only screen and (max-width: 767px)";
+$gt-xs: "only screen and (min-width: 768px)";
+$sm: "only screen and (min-width: 768px) and (max-width: 991px)";
+$gt-sm: "only screen and (min-width: 992px)";
+$md: "only screen and (min-width: 992px) and (max-width: 1119px)";
+$gt-md: "only screen and (min-width: 1199px)";
+$lg: "only screen and (min-width: 1200px)";

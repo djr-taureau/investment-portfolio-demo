@@ -1,0 +1,63 @@
+@import "../../../assets/scss/variables";
+
+.mat-toolbar {
+    background-color: $header-background;
+    font-family: Montserrat, sans-serif;
+    color: $header-font;
+
+    mat-icon {
+        width: inherit;
+
+        img {
+            width: 80px;
+        }
+    }
+
+    .menu {
+        margin-left: 10px;
+
+        .mat-button {
+            position: relative;
+            border-radius: 0px;
+            padding: 14px 16px;
+            font-family: Montserrat, sans-serif;
+
+            &.cdk-mouse-focused {
+                &::after {
+                    content: "";
+                    position: absolute;
+                    height: 5px;
+                    background-color: $lighter-yellow;
+                    bottom: 0px;
+                    width: 100%;
+                    left: 0px;
+                }
+            }
+
+        }
+
+
+    }
+
+    .user {
+        position: absolute;
+        right: 0;
+
+        .mat-button {
+            font-family: Montserrat, sans-serif;
+
+            i {
+                font-size: 20px;
+            }
+        }
+    }
+
+}
+
+.cdk-overlay-pane {
+    margin-left: 120px;
+}
+
+.mat-menu-item {
+    font-family: Montserrat, sans-serif;
+}
