@@ -11,21 +11,58 @@ info:
 host: "someapi.somewhere.com"
 basePath: "/v1"
 tags:
-  - name: "Company"
+  - name: "company"
     description: "APIs for accessing Company related Entities"
 schemes:
   - "https"
   - "http"
 paths:
+  /score:
+    get:
+      tags:
+        - "score"
+      summary: "Retrieve score details about a portfolio"
+      description: ""
+      operationId: "getPortfolioScoreDetails"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio summary being requested"
+          required: true
+          type: "number"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/ScoreDetail"
+        400:
+          description: "Invalid status value"
   /companies:
     get:
       tags:
-        - "Company"
+        - "company"
       summary: "Returns a list of company domain objects."
       description: "Returns a list of company domain objects."
       operationId: "getAllCompanies"
       produces:
         - "application/json"
+      parameters:
+        - name: "groupBy"
+          in: "query"
+          description: "Optional group by param that directs the API to return results in a grouped fashion - NONE would return one group with all companies"
+          required: false
+          type: "string"
+          default: "NONE"
+          enum:
+            - "NONE"
+            - "REGION"
+            - "SCORE"
+            - "MOIC"
+            - "IRR"
+            - "INVESTED"
+            - "VALUATION"
       responses:
         200:
           description: "successful operation"
@@ -40,7 +77,7 @@ paths:
   /companies/{companyId}:
     get:
       tags:
-        - "Company"
+        - "company"
       summary: "Returns a single company domain object by requested ID."
       description: "Returns a single company domain object by requested ID"
       operationId: "getCompanyById"
@@ -158,6 +195,52 @@ paths:
           description: "Company not found"
       security:
         - api_key: []
+  /portfolio/:id:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve summary information about the portfolio"
+      description: ""
+      operationId: "getPortfolioSummary"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio summary being requested"
+          required: true
+          type: "number"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/PortfolioSummary"
+        400:
+          description: "Invalid status value"
+  /team:
+    get:
+      tags:
+        - "team"
+      summary: "Retrieve list of companies within the portfolio"
+      description: ""
+      operationId: "getPortfolioTeam"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio summary being requested"
+          required: true
+          type: "number"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Team"
+        400:
+          description: "Invalid status value"
 securityDefinitions:
   petstore_auth:
     type: "oauth2"
@@ -171,6 +254,145 @@ securityDefinitions:
     name: "api_key"
     in: "header"
 definitions:
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+      status:
+        type: "string"
+        description: "Simple string value of `success` or `failed`."
+      message:
+        type: "string"
+        description: "Simple string message that can provide additional detail on the API response; perhaps with details on the data returned."
+      data:
+        type: "object"
+        description: "Container for APi request data. Can be an object container or array container. Should be used by the client to create domain models or similar."
+      errors:
+        type: "array"
+        description: "List of errors associated with the API request."
+        items:
+          $ref: '#/definitions/ApiError'
+  ApiError:
+    type: "object"
+    properties:
+      code:
+        description: "Specific API error code that clients can use to map to unique error messages or create specific error flows."
+        type: "integer"
+      field:
+        type: "string"
+        description: "Used when form POSTs with specific field errors and indicates the field name in the request."
+      message:
+        type: "string"
+        description: "Custom message provided by the API for the error."
+      id:
+        type: "string"
+        description: "UUIDv4 used to track errors in logs especially when using PII data that's omitted from logs."
+  Company:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+        description: "Displayed in the company header."
+      description:
+        type: "string"
+        description: "Displayed in the company header under the tags."
+      type:
+        type: "string"
+      sector:
+        type: "array"
+        items:
+          $ref: '#/definitions/Sector'
+      regions:
+        type: "array"
+        items:
+          $ref: "#/definitions/Region"
+      funds:
+        type: "array"
+        items:
+          $ref: "#/definitions/Fund"
+      score:
+        type: "number"
+      amountInvested:
+        type: "number"
+      deployed:
+        type: "number"
+        description: "Displayed in the company header to the right of the takeaways."
+      currentValuation:
+        type: "number"
+      moic:
+        type: "number"
+      irr:
+        type: "number"
+      logo:
+        type: "string"
+      revenue:
+        type: "string"
+      tags:
+        type: "array"
+        items:
+          $ref: '#/definitions/Tag'
+      percentOwnership:
+        type: "string"
+        description: "Displayed in the company header to the right of the tags."
+      #      Note: This should be accomplished via the /team endpoint which includes deal team and other team info and is useful elsewhere
+      #      dealTeam:
+      #        type: "array"
+      #        description: "Displayed in the company header under the description as a list."
+      #        items:
+      #          $ref: '#/definitions/TeamMember'
+      takeaways:
+        type: "array"
+        items:
+          $ref: '#/definitions/Takeaway'
+      takeawayDate:
+        type: "string"
+        description: "Displayed in the company header with the list of takeaways."
+      valuation:
+        $ref: '#/definitions/ValuationDetail'
+      initiatives:
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyInitiatives'
+      companyUpdates:
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyUpdates'
+      slackName:
+        type: "string"
+      slackUrl:
+        type: "string"
+      aka:
+        type: "string"
+      headquarters:
+        type: "string"
+      founders:
+        type: "array"
+        items:
+          type: "string"
+      website:
+        type: "string"
+      stage:
+        type: "string"
+        enum:
+          - "PRIVATE"
+          - "PUBLIC"
+      fiscalYearEnd:
+        type: "string"
+      investingEntity:
+        type: "string"
+      initialInvestmentDate:
+        type: "string"
+      latetFollowOnDate:
+        type: "string"
+      FDOwnership:
+        type: "string"
+      boardMembers:
+        type: "array"
+        items:
+          $ref: "#/definitions/Contact"
   CompanyInitiatives:
     type: array
     items:
@@ -195,6 +417,19 @@ definitions:
         description: "Description for the initiative"
     xml:
       name: "Order"
+  CompanyListGroup:
+    type: "object"
+    properties:
+      groupName:
+        type: "string"
+      companies:
+        type: "array"
+        items:
+          $ref: "#/definitions/Company"
+  CompanyListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/CompanyListGroup'
   CompanyUpdates:
     type: array
     items:
@@ -219,6 +454,21 @@ definitions:
         description: "Date for the update"
     xml:
       name: "Order"
+  CompanyRelationship:
+    type: "object"
+    properties:
+      memberId:
+        type: "integer"
+        description: "the id of the member"
+      companyId:
+        type: "integer"
+        description: "the id of the company"
+      relationship:
+        type: "string"
+        enum:
+          - "OTHER_COMPANY"
+          - "COMPANY_COVERED"
+          - "BOARD_SEAT"
   CompanyRevenue:
     type: array
     items:
@@ -255,70 +505,127 @@ definitions:
         description: "Represents a confidence level in the data point"
     xml:
       name: "Order"
-  CompanyListResponse:
-    type: array
-    items:
-      $ref: '#/definitions/Company'
-  Company:
+  Contact:
     type: "object"
     properties:
       id:
+        type: "integer"
+        format: "int64"
+      companyName:
         type: "string"
-      type:
+      firstName:
         type: "string"
-      sector:
-        type: "array"
-        items:
-          $ref: 'string'
-      score:
-        type: "number"
-      moic:
-        type: "number"
-      irr:
-        type: "number"
-      logo:
+      lastName:
         type: "string"
-      revenue:
+      avatar:
         type: "string"
+      slack:
+        type: "string"
+      mobile:
+        type: "string"
+      email:
+        type: "string"
+      bio:
+        type: "string"
+      position:
+        type: "string"
+  Fund:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
       name:
         type: "string"
-        description: "Displayed in the company header."
+        description: "name of the fund"
+      descrtiption:
+        type: "string"
+        description: "description of the fund"
+  PortfolioSummary:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      invested:
+        type: "number"
+      valuation:
+        type: "number"
+      totalFund:
+        type: "number"
+      companies:
+        type: "array"
+        items:
+          type: "integer"
+          description: "array of ids representing the companies within the portfolio"
+  Region:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "name of the region"
+      descrtiption:
+        type: "string"
+        description: "description of the region"
+  ScoreDetail:
+    type: "object"
+    properties:
+      companyId:
+        type: "integer"
+      percentChange:
+        type: "number"
+      changeOverDuration:
+        type: "string"
+      overall:
+        type: "number"
+      breakdown:
+        type: "array"
+        items:
+          $ref: "#/definitions/ScoreDetailGroup"
+  ScoreDetailGroup:
+    type: "object"
+    properties:
+      score:
+        type: "number"
+      name:
+        type: "string"
+      comments:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            comment:
+              type: "string"
+            updated:
+              type: "string"
+      members:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamMember"
+      history:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            label:
+              type: "string"
+            score:
+              type: "number"
+  Sector:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+        description: "The name of the industry"
       description:
         type: "string"
-        description: "Displayed in the company header under the tags."
-      tags:
-        type: "array"
-        items:
-          $ref: '#/definitions/Tag'
-      percentOwnership:
-        type: "string"
-        description: "Displayed in the company header to the right of the tags."
-      dealTeam:
-        type: "array"
-        description: "Displayed in the company header under the description as a list."
-        items:
-          $ref: '#/definitions/TeamMember'
-      takeaways:
-        type: "array"
-        items:
-          $ref: '#/definitions/Takeaway'
-      takeawayDate:
-        type: "string"
-        description: "Displayed in the company header with the list of takeaways."
-      deployed:
-        type: "number"
-        description: "Displayed in the company header to the right of the takeaways."
-      valuation:
-        description: "Displayed in the company header to the right of the deployed."
-        $ref: '#/definitions/ValuationDetail'
-      initiatives:
-        type: "array"
-        items:
-          $ref: '#/definitions/CompanyInitiatives'
-      companyUpdates:
-        type: "array"
-        items:
-          $ref: '#/definitions/CompanyUpdates'
+        description: "Long form description of the industry (ie, for tooltips)"
   Tag:
     type: "object"
     properties:
@@ -326,6 +633,43 @@ definitions:
         type: "string"
       name:
         type: "string"
+  Takeaway:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      content:
+        type: "string"
+  Team:
+    type: "object"
+    properties:
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamMemberGroup"
+  TeamMember:
+    allOf:
+      - $ref: "#/definitions/Contact"
+      - type: "object"
+        properties:
+          companyRelationships:
+            type: "array"
+            items:
+              $ref: "#/definitions/CompanyRelationship"
+  TeamMemberGroup:
+    type: "object"
+    properties:
+      category:
+        type: "string"
+        enum:
+          - "DEAL"
+          - "OPS"
+          - "PORTFOLIO"
+          - "FINANCE"
+      members:
+        type: "array"
+        items:
+          $ref: "#/definitions/TeamMember"
   ValuationDetail:
     type: "object"
     properties:
@@ -347,51 +691,4 @@ definitions:
         type: "number"
       exit:
         type: "number"
-  TeamMember:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-      name:
-        type: "string"
-  Takeaway:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-      content:
-        type: "string"
-  ApiResponse:
-    type: "object"
-    properties:
-      code:
-        type: "integer"
-      status:
-        type: "string"
-        description: "Simple string value of `success` or `failed`."
-      message:
-        type: "string"
-        description: "Simple string message that can provide additional detail on the API response; perhaps with details on the data returned."
-      data:
-        type: "object"
-        description: "Container for APi request data. Can be an object container or array container. Should be used by the client to create domain models or similar."
-      errors:
-        type: "array"
-        description: "List of errors associated with the API request."
-        items:
-          $ref: '#/definitions/ApiError'
-  ApiError:
-    type: "object"
-    properties:
-      code:
-        description: "Specific API error code that clients can use to map to unique error messages or create specific error flows."
-        type: "integer"
-      field:
-        type: "string"
-        description: "Used when form POSTs with specific field errors and indicates the field name in the request."
-      message:
-        type: "string"
-        description: "Custom message provided by the API for the error."
-      id:
-        type: "string"
-        description: "UUIDv4 used to track errors in logs especially when using PII data that's omitted from logs."
+
