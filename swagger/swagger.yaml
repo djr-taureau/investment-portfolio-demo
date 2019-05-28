@@ -329,7 +329,9 @@ definitions:
       logo:
         type: "string"
       revenue:
-        type: "string"
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyRevenue'
       tags:
         type: "array"
         items:
@@ -372,6 +374,8 @@ definitions:
         type: "array"
         items:
           type: "string"
+      foundedDate:
+        type: "string"
       website:
         type: "string"
       stage:
@@ -385,7 +389,7 @@ definitions:
         type: "string"
       initialInvestmentDate:
         type: "string"
-      latetFollowOnDate:
+      latestFollowOnDate:
         type: "string"
       FDOwnership:
         type: "string"
