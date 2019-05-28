@@ -23,6 +23,9 @@
     </div>
 
     <div class="user">
+        <button (click)="onToggleSlideout($event)">
+            Test Open/Close Panel
+        </button>
         <button mat-button
                 [matMenuTriggerFor]="menu">
             Welcome John Doe <i class="icon-user"></i> <i class="icon-arrow-down5"></i>

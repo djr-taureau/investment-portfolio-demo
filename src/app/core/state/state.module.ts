@@ -5,10 +5,11 @@ import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../../../environments/environment";
 import { AuthEffect } from "./auth/auth.effect";
+import { FlowEffect } from "./flow/flow.effect";
 import { reducers } from "./index";
 import { RouterEffect } from "./router/router.effect";
 
-const EFFECTS = [RouterEffect, AuthEffect];
+const EFFECTS = [RouterEffect, AuthEffect, FlowEffect];
 
 const MODULES = [
     /**

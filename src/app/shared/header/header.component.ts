@@ -20,11 +20,17 @@ export class HeaderComponent implements OnInit {
     @Input()
     public companies: Company[] = null;
 
+    @Input()
+    public slideoutOpen: boolean;
+
     /**
      * Dispatches an event when user selects a role.
      */
     @Output()
     public selectCompany: EventEmitter<Company> = new EventEmitter<Company>();
+
+    @Output()
+    public toggleSlideout: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * Selected company.
@@ -53,5 +59,10 @@ export class HeaderComponent implements OnInit {
         this.selectedCompany = event.value;
         HeaderComponent.logger.debug(`onCompanySelect( ${this.selectedCompany.name} )`);
         this.selectCompany.emit(this.selectedCompany);
+    }
+
+    public onToggleSlideout(event: any) {
+        HeaderComponent.logger.debug(`onToggleSlideout()`);
+        this.toggleSlideout.emit(this.slideoutOpen);
     }
 }

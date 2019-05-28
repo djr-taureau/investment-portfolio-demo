@@ -1,12 +1,15 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import * as fromAuth from "./auth/auth.reducer";
+import * as fromLayout from "./layout/layout.reducer";
 
 export interface AppState {
     auth: fromAuth.AuthState;
+    layout: fromLayout.LayoutState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
-    auth: fromAuth.authReducer
+    auth: fromAuth.authReducer,
+    layout: fromLayout.layoutReducer
 };
 
 // -------------------------------------------------------------------
@@ -52,4 +55,14 @@ export const getPending = createSelector(
 export const getSuccess = createSelector(
     selectAuthState,
     fromAuth.getSuccess
+);
+
+// -------------------------------------------------------------------
+// LAYOUT SELECTORS
+// -------------------------------------------------------------------
+export const selectLayoutState = createFeatureSelector<fromLayout.LayoutState>("layout");
+
+export const getShowSlideout = createSelector(
+    selectLayoutState,
+    fromLayout.getShowSlideout
 );

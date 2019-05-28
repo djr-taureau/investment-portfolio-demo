@@ -1,5 +1,6 @@
 export const appRoutePaths = {
     login: "login",
     register: "register",
-    changePassword: "change-password"
+    changePassword: "change-password",
+    companyInfo: "company-info"
 };
