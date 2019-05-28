@@ -58,7 +58,8 @@ paths:
           enum:
             - "NONE"
             - "REGION"
-            - "SCORE"
+            - "SECTOR"
+            - "STAGE"
             - "MOIC"
             - "IRR"
             - "INVESTED"
@@ -301,7 +302,7 @@ definitions:
         description: "Displayed in the company header under the tags."
       type:
         type: "string"
-      sector:
+      sectors:
         type: "array"
         items:
           $ref: '#/definitions/Sector'
@@ -313,11 +314,9 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Fund"
-      score:
-        type: "number"
       amountInvested:
         type: "number"
-      deployed:
+      amountDeployed:
         type: "number"
         description: "Displayed in the company header to the right of the takeaways."
       currentValuation:
@@ -329,13 +328,13 @@ definitions:
       logo:
         type: "string"
       revenue:
-        type: "string"
+        $ref: '#/definitions/CompanyRevenueResponse'
       tags:
         type: "array"
         items:
           $ref: '#/definitions/Tag'
       percentOwnership:
-        type: "string"
+        type: "string" #@Andrew if we make this string then do we format on the backend? I think I'd rather have these be floats so its obvious where formatting occurs?
         description: "Displayed in the company header to the right of the tags."
       #      Note: This should be accomplished via the /team endpoint which includes deal team and other team info and is useful elsewhere
       #      dealTeam:
@@ -352,14 +351,6 @@ definitions:
         description: "Displayed in the company header with the list of takeaways."
       valuation:
         $ref: '#/definitions/ValuationDetail'
-      initiatives:
-        type: "array"
-        items:
-          $ref: '#/definitions/CompanyInitiatives'
-      companyUpdates:
-        type: "array"
-        items:
-          $ref: '#/definitions/CompanyUpdates'
       slackName:
         type: "string"
       slackUrl:
@@ -377,6 +368,7 @@ definitions:
       stage:
         type: "string"
         enum:
+          - "PREREV"
           - "PRIVATE"
           - "PUBLIC"
       fiscalYearEnd:
@@ -385,40 +377,17 @@ definitions:
         type: "string"
       initialInvestmentDate:
         type: "string"
-      latetFollowOnDate:
+      latestFollowOnDate:
         type: "string"
-      FDOwnership:
+      fdOwnership: # @Andrew Would like to know what this is?
         type: "string"
       boardMembers:
         type: "array"
         items:
           $ref: "#/definitions/Contact"
-  CompanyInitiatives:
-    type: array
-    items:
-      $ref: '#/definitions/CompanyInitiativeResponse'
-  CompanyInitiativeResponse:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-        description: "Unique ID for initiative"
-      status:
-        type: "string"
-        description: "Initiative Status"
-      title:
-        type: "string"
-        description: "Title of the initiative"
-      owner:
-        type: "string"
-        description: "Owner of the initiative"
-      description:
-        type: "string"
-        description: "Description for the initiative"
-    xml:
-      name: "Order"
   CompanyListGroup:
     type: "object"
+    description: "The Company in this listing will be a backend defined subset of #Company appropriate to the listing only"
     properties:
       groupName:
         type: "string"
@@ -430,30 +399,6 @@ definitions:
     type: array
     items:
       $ref: '#/definitions/CompanyListGroup'
-  CompanyUpdates:
-    type: array
-    items:
-      $ref: '#/definitions/CompanyUpdateResponse'
-  CompanyUpdateResponse:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-        description: "Unique ID for initiative"
-      status:
-        type: "string"
-        description: "Initiative Status"
-      title:
-        type: "string"
-        description: "Title of the update"
-      owner:
-        type: "string"
-        description: "Owner of the update"
-      date:
-        type: "string"
-        description: "Date for the update"
-    xml:
-      name: "Order"
   CompanyRelationship:
     type: "object"
     properties:
@@ -503,7 +448,7 @@ definitions:
       confidence:
         type: "string"
         description: "Represents a confidence level in the data point"
-    xml:
+    xml:    #@Andrew what is this?
       name: "Order"
   Contact:
     type: "object"
@@ -511,7 +456,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
-      companyName:
+      companyName:          #@Andrew what is this? Intentionally denormalized, or employer, or ?
         type: "string"
       firstName:
         type: "string"
@@ -570,50 +515,6 @@ definitions:
       descrtiption:
         type: "string"
         description: "description of the region"
-  ScoreDetail:
-    type: "object"
-    properties:
-      companyId:
-        type: "integer"
-      percentChange:
-        type: "number"
-      changeOverDuration:
-        type: "string"
-      overall:
-        type: "number"
-      breakdown:
-        type: "array"
-        items:
-          $ref: "#/definitions/ScoreDetailGroup"
-  ScoreDetailGroup:
-    type: "object"
-    properties:
-      score:
-        type: "number"
-      name:
-        type: "string"
-      comments:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            comment:
-              type: "string"
-            updated:
-              type: "string"
-      members:
-        type: "array"
-        items:
-          $ref: "#/definitions/TeamMember"
-      history:
-        type: "array"
-        items:
-          type: "object"
-          properties:
-            label:
-              type: "string"
-            score:
-              type: "number"
   Sector:
     type: "object"
     properties:
@@ -671,7 +572,7 @@ definitions:
         items:
           $ref: "#/definitions/TeamMember"
   ValuationDetail:
-    type: "object"
+    type: "object" # @Andrew something about this one feels wrong to me. We can discuss.
     properties:
       id:
         type: "string"
