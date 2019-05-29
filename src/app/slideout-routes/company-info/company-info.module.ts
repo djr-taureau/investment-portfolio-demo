@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { SlideoutModule } from "../../shared/slideout/slideout.module";
+import { SharedModule } from "../../shared/shared.module";
 import { CompanyInfoComponent } from "./company-info.component";
 import { CompanyInfoContainerComponent } from "./company-info.container.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -16,7 +16,7 @@ const COMPANY_INFO_ROUTES: Routes = [
     }
 ];
 @NgModule({
-    imports: [CommonModule, FlexLayoutModule, MaterialModule, RouterModule.forChild(COMPANY_INFO_ROUTES), SlideoutModule],
+    imports: [CommonModule, FlexLayoutModule, RouterModule.forChild(COMPANY_INFO_ROUTES), SharedModule],
     declarations: COMPONENTS,
     exports: COMPONENTS
 })
