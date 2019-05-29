@@ -5,6 +5,7 @@ import { FooterModule } from "./footer/footer.module";
 import { HeaderModule } from "./header/header.module";
 import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { SlideoutModule } from "./slideout/slideout.module";
 
 const MODULES = [
     // Angular Modules
@@ -18,7 +19,8 @@ const MODULES = [
     // Application Shared Feature Modules
     HeaderModule,
     FooterModule,
-    MaterialModule
+    MaterialModule,
+    SlideoutModule
 ];
 
 @NgModule({

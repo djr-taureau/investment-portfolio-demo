@@ -1,0 +1,11 @@
+@import "../../../assets/scss/variables";
+
+:host {
+    height: 100%;
+
+    .top-section {}
+
+    .bottom-section {
+        border-top: 1px dotted $light-grey-blue;
+    }
+}
