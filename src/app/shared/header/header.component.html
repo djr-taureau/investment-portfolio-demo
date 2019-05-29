@@ -37,3 +37,14 @@
     </div>
 
 </mat-toolbar>
+
+<div fxLayout="row">
+
+    <img [src]="selectedCompany.logo"
+         [alt]="selectedCompany.name">
+
+    <div>{{ selectedCompany.name }}</div>
+
+    <div *ngFor="let teamMember of teamMembers">{{ teamMember.name }}</div>
+
+</div>
