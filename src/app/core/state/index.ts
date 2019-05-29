@@ -1,14 +1,18 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import * as fromAuth from "./auth/auth.reducer";
+import { CustomRouterStateSerializer, RouterStateUrl } from "./router/custom-router-state.serializer";
+import * as fromRouter from "@ngrx/router-store";
 import * as fromLayout from "./layout/layout.reducer";
 
 export interface AppState {
     auth: fromAuth.AuthState;
+    router: fromRouter.RouterReducerState<RouterStateUrl>;
     layout: fromLayout.LayoutState;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.authReducer,
+    router: fromRouter.routerReducer,
     layout: fromLayout.layoutReducer
 };
 
