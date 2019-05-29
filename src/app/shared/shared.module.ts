@@ -6,6 +6,8 @@ import { HeaderModule } from "./header/header.module";
 import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SlideoutModule } from "./slideout/slideout.module";
+import { ChartsModule } from "@progress/kendo-angular-charts";
+import "hammerjs";
 
 const MODULES = [
     // Angular Modules
@@ -15,6 +17,7 @@ const MODULES = [
 
     // 3rd Party Modules
     FlexLayoutModule,
+    ChartsModule,
 
     // Application Shared Feature Modules
     HeaderModule,

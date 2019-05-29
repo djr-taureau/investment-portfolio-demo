@@ -1,3 +1,5 @@
+@import "../../../../assets/scss/variables";
+
 .row__name {
     height: 21px;
     font-family: PostGrotesk;
@@ -60,7 +62,31 @@
     color: grey;
 }
 
+.board-members__label {
+    height: 16px;
+    font-family: PostGrotesk;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    color: $grey-blue;
+}
+
 mat-icon {
     border-radius: 1px;
     color: navy;
+}
+
+mat-list-item {
+    padding-left: 0px !important;
+}
+
+mat-list-base {
+    padding-left: 0px !important;
+}
+
+mat-list-item-content {
+    padding-left: 0px !important;
 }

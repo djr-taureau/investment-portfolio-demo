@@ -79,7 +79,7 @@ export interface CompanyUpdate {
 export interface Sector {
     id: string;
     name: string;
-    desriptioon: string;
+    desription: string;
 }
 
 export interface Region {
@@ -114,6 +114,7 @@ export interface Contact {
 }
 
 export interface BoardMember {
+    id?: string;
     name: string;
     sinceDate: string;
     company: string;
