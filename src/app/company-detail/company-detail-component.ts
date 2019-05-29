@@ -3,7 +3,7 @@ import { BoardMember } from "app/core/domain/company.model";
 import { Logger } from "app/util/logger";
 
 @Component({
-    selector: "company-detail-component",
+    selector: "sbp-company-detail-component",
     templateUrl: "./company-detail-component.html",
     styleUrls: ["./company-detail-component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush

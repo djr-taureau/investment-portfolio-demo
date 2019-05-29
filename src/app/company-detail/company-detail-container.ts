@@ -4,9 +4,9 @@ import { Logger } from "app/util/logger";
 import { BoardMember } from "app/core/domain/company.model";
 
 @Component({
-    selector: "company-detail-container",
+    selector: "sbp-company-detail-container",
     template: `
-        <company-detail-component [boardMembers]="boardMembers$ | async"> </company-detail-component>
+        <sbp-company-detail-component [boardMembers]="boardMembers$ | async"> </sbp-company-detail-component>
     `
 })
 export class CompanyDetailContainer implements OnInit {
