@@ -13,10 +13,6 @@ export class BoardMemberComponent implements OnInit {
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("BoardMemberComponent");
-    /**
-     * Internal logger.
-     */
-    private static logger: Logger = Logger.getLogger("BoardMemberComponent");
 
     @Input()
     public boardMembers: BoardMember[];
