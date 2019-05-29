@@ -21,7 +21,7 @@ export interface Company {
     initialInvestmentDate: string;
     latestFollowOnDate: string;
     FDOwnership: string;
-    boardMembers: Contact[];
+    boardMembers: BoardMember[];
     MOIC: number;
     IRR: number;
     logo: string;
@@ -111,6 +111,15 @@ export interface Contact {
     email: string;
     bio: string;
     postion: string;
+}
+
+export interface BoardMember {
+    name: string;
+    sinceDate: string;
+    company: string;
+    phone: string;
+    email: string;
+    avatar: string;
 }
 
 export interface TeamMember {

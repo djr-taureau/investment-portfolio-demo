@@ -1,0 +1,66 @@
+.row__name {
+    height: 21px;
+    font-family: PostGrotesk;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: black;
+}
+
+.row__sinceDate {
+    height: 18px;
+    opacity: 0.75;
+    font-family: PostGrotesk;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: grey;
+}
+
+.row__company {
+    height: 13px;
+    font-family: PostGrotesk;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: grey;
+}
+
+.row__phone {
+    height: 13px;
+    font-family: PostGrotesk;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    color: grey;
+}
+
+.row__email {
+    height: 13px;
+    font-family: PostGrotesk;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    color: grey;
+}
+
+mat-icon {
+    border-radius: 1px;
+    color: navy;
+}
