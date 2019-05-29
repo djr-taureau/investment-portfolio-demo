@@ -1,14 +1,22 @@
-import { Component, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
-import { Observable, of } from "rxjs";
-import { Company } from "../../core/domain/company.model";
-import { Logger } from "../../util/logger";
+import * as fromState from "../../core/state";
+import { OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
 import * as TestUti from "../../util/test.util";
+import { Company } from "../../core/domain/company.model";
+import { Component, OnInit } from "@angular/core";
+import { Logger } from "../../util/logger";
+import { Observable, of } from "rxjs";
+import { select, Store } from "@ngrx/store";
 
 @Component({
     selector: "sbp-header-container",
     template: `
-        <sbp-header [companies]="companies$ | async" (selectCompany)="selectCompany($event)"> </sbp-header>
+        <sbp-header
+            [slideoutOpen]="slideoutOpen$ | async"
+            [companies]="companies$ | async"
+            (selectCompany)="selectCompany($event)"
+            (toggleSlideout)="toggleSlideout($event)"
+        >
+        </sbp-header>
     `
 })
 export class HeaderContainer implements OnInit {
@@ -21,6 +29,8 @@ export class HeaderContainer implements OnInit {
      * The companies observable.
      */
     public companies$: Observable<Company[]>;
+
+    public slideoutOpen$: Observable<boolean>;
 
     /**
      * Constructor.
@@ -42,6 +52,16 @@ export class HeaderContainer implements OnInit {
             TestUti.getCompanyMock({ name: "Bar, LLC." }),
             TestUti.getCompanyMock({ name: "Dogs and Cats" })
         ]);
+
+        this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
+    }
+
+    /**
+     * Tests opening the Company Info panel
+     * @param $event
+     */
+    public toggleSlideout($event: boolean): void {
+        this.store$.dispatch(new OpenCompanyInfoPanel(1));
     }
 
     /**

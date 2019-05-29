@@ -1,8 +1,10 @@
 import { APP_BASE_HREF } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { appRoutePaths } from "./app.routes";
 import { AuthRouteGuard } from "./core/route-guard/auth.route-guard";
 import * as AppRoutes from "./app.routes";
+import { CompanyInfoContainerComponent } from "./slideout-routes/company-info/company-info.container.component";
 
 const PROVIDERS = [
     {
@@ -43,6 +45,12 @@ const routes: Routes = [
     //     pathMatch: "full",
     //     redirectTo: AppRoutes.appRoutePaths.login
     // }
+
+    {
+        path: "company-info",
+        loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
+        // outlet: "sidebar-outlet"
+    }
 ];
 
 @NgModule({
@@ -52,7 +60,7 @@ const routes: Routes = [
          *
          * NOTE: Use `enableTracing: true` to see Angular built-in router logging.
          */
-        RouterModule.forRoot(routes, { useHash: false, enableTracing: false })
+        RouterModule.forRoot(routes, { useHash: true, enableTracing: false })
     ],
     exports: [RouterModule],
     providers: PROVIDERS
