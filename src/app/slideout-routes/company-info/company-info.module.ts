@@ -1,4 +1,3 @@
-import { SlideoutModule } from "../../shared/slideout/slideout.module";
 import { CompanyInfoComponent } from "./company-info.component";
 import { CompanyInfoContainerComponent } from "./company-info.container.component";
 import { NgModule } from "@angular/core";
@@ -15,7 +14,7 @@ const COMPANY_INFO_ROUTES: Routes = [
     }
 ];
 @NgModule({
-    imports: [SharedModule, RouterModule.forChild(COMPANY_INFO_ROUTES), SlideoutModule],
+    imports: [SharedModule, RouterModule.forChild(COMPANY_INFO_ROUTES)],
     declarations: COMPONENTS,
     exports: COMPONENTS
 })
