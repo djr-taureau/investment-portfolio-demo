@@ -1,0 +1,317 @@
+{
+    "companies": [{
+            "id": 1,
+            "name": "We Work",
+            "description": "company description",
+            "type": 1,
+            "sectors": [{
+                "name": "Real Estate"
+            }],
+            "dealTeam": [{
+                    "id": 1,
+                    "name": "Mary Smith"
+                },
+                {
+                    "id": 2,
+                    "name": "John Hinkenheimer"
+                }
+            ],
+            "takeaways": [{
+                    "id": 1,
+                    "content": "In the middle of raising Series J Fund raising"
+                },
+                {
+                    "id": 2,
+                    "content": "Softbank should connect WeWork with PAYIM"
+                }
+            ],
+            "score": 2.25,
+            "deployed": 80,
+            "MOIC": 1.0,
+            "IRR": 0,
+            "valuationDetail": {
+                "companyId": 1,
+                "entry": 30000000,
+                "current": 200000,
+                "year1": 3000000,
+                "year2": 3000000,
+                "year3": 3000000,
+                "exit": 2000000
+            }
+        },
+        {
+            "id": 2,
+            "name": "Uber",
+            "description": "company description",
+            "type": 1,
+            "sectors": [{
+                "name": "Transportation"
+            }],
+            "dealTeam": [{
+                    "id": 3,
+                    "name": "Don Juan"
+                },
+                {
+                    "id": 4,
+                    "name": "Beverly Boyton"
+                }
+            ],
+            "takeaways": [{
+                    "id": 1,
+                    "content": "Recent IPO to watch"
+                },
+                {
+                    "id": 2,
+                    "content": "More to Follow"
+                }
+            ],
+            "score": 2.25,
+            "deployed": 80,
+            "MOIC": 1.0,
+            "IRR": 10,
+            "valuationDetail": {
+                "companyId": 2,
+                "entry": 30000000,
+                "current": 200000,
+                "year1": 3000000,
+                "year2": 3000000,
+                "year3": 3000000,
+                "exit": 2000000
+            }
+        },
+        {
+            "id": 3,
+            "name": "ByteDance",
+            "description": "company description",
+            "type": 1,
+            "sectors": [{
+                "id": 3,
+                "name": "Frontier Tech"
+            }],
+            "dealTeam": [{
+                    "id": 5,
+                    "name": "Jackson Browne"
+                },
+                {
+                    "id": 6,
+                    "name": "Bradley Zuckerberg"
+                }
+            ],
+            "takeaways": [{
+                    "id": 1,
+                    "content": "In the middle of raising Series J Fund raising"
+                },
+                {
+                    "id": 2,
+                    "content": "Softbank should connect WeWork with PAYIM"
+                }
+            ],
+            "score": 2.25,
+            "deployed": 80,
+            "MOIC": 1.0,
+            "IRR": 10,
+            "valuationDetail": {
+                "companyId": 3,
+                "entry": 30000000,
+                "current": 200000,
+                "year1": 3000000,
+                "year2": 3000000,
+                "year3": 3000000,
+                "exit": 2000000
+            }
+        }
+    ],
+    "revenue": [{
+            "companyId": 1,
+            "quarter": 4,
+            "year": 2017,
+            "revenue": 200,
+            "PY": 10,
+            "IC": 0,
+            "budget": 0,
+            "forecast": 0
+        },
+        {
+            "companyId": 1,
+            "quarter": 1,
+            "year": 2018,
+            "revenue": 280,
+            "PY": 25.3,
+            "IC": 0,
+            "budget": 0,
+            "forecast": 0
+        },
+        {
+            "companyId": 1,
+            "quarter": 2,
+            "year": 2018,
+            "revenue": 300,
+            "PY": 20.4,
+            "IC": 0,
+            "budget": 0,
+            "forecast": 0
+        },
+        {
+            "companyId": 1,
+            "quarter": 3,
+            "year": 2018,
+            "revenue": 380,
+            "PY": 53,
+            "IC": -44.1,
+            "budget": -44.1,
+            "forecast": -44.1
+        },
+        {
+            "companyId": 1,
+            "quarter": 4,
+            "year": 2018,
+            "revenue": 370,
+            "PY": 17,
+            "IC": -14.3,
+            "budget": -14.3,
+            "forecast": -14.3
+        },
+        {
+            "companyId": 1,
+            "quarter": 1,
+            "year": 2019,
+            "revenue": 450,
+            "PY": null,
+            "IC": -5.1,
+            "budget": -5.1,
+            "forecast": -5.1
+        },
+        {
+            "companyId": 2,
+            "quarter": 4,
+            "year": 2017,
+            "revenue": 200,
+            "PY": 10,
+            "IC": 0,
+            "budget": 0,
+            "forecast": 0
+        },
+        {
+            "companyId": 2,
+            "quarter": 1,
+            "year": 2018,
+            "revenue": 280,
+            "PY": 25.3,
+            "IC": 0,
+            "budget": 0,
+            "forecast": 0
+        },
+        {
+            "companyId": 2,
+            "quarter": 2,
+            "year": 2018,
+            "revenue": 300,
+            "PY": 20.4,
+            "IC": 0,
+            "budget": 0,
+            "forecast": 0
+        },
+        {
+            "companyId": 2,
+            "quarter": 3,
+            "year": 2018,
+            "revenue": 380,
+            "PY": 53,
+            "IC": -44.1,
+            "budget": -44.1,
+            "forecast": -44.1
+        },
+        {
+            "companyId": 2,
+            "quarter": 4,
+            "year": 2018,
+            "revenue": 370,
+            "PY": 17,
+            "IC": -14.3,
+            "budget": -14.3,
+            "forecast": -14.3
+        },
+        {
+            "companyId": 2,
+            "quarter": 1,
+            "year": 2019,
+            "revenue": 450,
+            "PY": null,
+            "IC": -5.1,
+            "budget": -5.1,
+            "forecast": -5.1
+        }
+    ],
+    "ebitda": [{
+            "id": 1,
+            "quarter": 1,
+            "year": 2018,
+            "actual": true,
+            "revenue": 325.2,
+            "vsPY": -44.1,
+            "vsIC": -5.2,
+            "forcast": 325
+        },
+        {
+            "id": 2,
+            "quarter": 2,
+            "year": 2018,
+            "actual": true,
+            "revenue": 225.2,
+            "vsPY": -34.1,
+            "vsIC": 5.2,
+            "forcast": 325
+        },
+        {
+            "id": 3,
+            "quarter": 3,
+            "year": 2018,
+            "actual": true,
+            "revenue": 625.2,
+            "vsPY": -14.1,
+            "vsIC": 5.2,
+            "forcast": 325
+        },
+        {
+            "id": 4,
+            "quarter": 2,
+            "year": 2018,
+            "actual": true,
+            "revenue": "5555.55",
+            "vsPY": -34.1,
+            "vsIC": 5.2,
+            "forcast": 325
+        }
+    ],
+    "cashburn": [{
+            "id": 1,
+            "quarter": 1,
+            "year": 2018,
+            "actual": true,
+            "revenue": 325.2,
+            "vsPY": -44.1,
+            "vsIC": -5.2,
+            "forcast": 325
+        },
+        {
+            "id": 2,
+            "quarter": 2,
+            "year": 2018,
+            "actual": true,
+            "revenue": 225.2,
+            "vsPY": -34.1,
+            "vsIC": 5.2,
+            "forcast": 325
+        },
+        {
+            "id": 3,
+            "quarter": 3,
+            "year": 2018,
+            "actual": true,
+            "revenue": 625.2,
+            "vsPY": -14.1,
+            "vsIC": 5.2,
+            "forcast": 325
+        }
+    ]
+}

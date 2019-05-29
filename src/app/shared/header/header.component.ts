@@ -24,18 +24,25 @@ export class HeaderComponent implements OnInit {
     public slideoutOpen: boolean;
 
     /**
-     * Dispatches an event when user selects a role.
+     * List of team members.
      */
-    @Output()
-    public selectCompany: EventEmitter<Company> = new EventEmitter<Company>();
+    @Input()
+    public teamMembers: Company[] = null;
 
     @Output()
     public toggleSlideout: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
-     * Selected company.
+     * Currently selected company.
      */
+    @Input()
     public selectedCompany: Company = null;
+
+    /**
+     * Dispatches an event when user selects a role.
+     */
+    @Output()
+    public selectCompany: EventEmitter<Company> = new EventEmitter<Company>();
 
     /**
      * Constructor.
@@ -56,9 +63,9 @@ export class HeaderComponent implements OnInit {
      * @param event
      */
     public onCompanySelect(event: MatSelectChange) {
-        this.selectedCompany = event.value;
-        HeaderComponent.logger.debug(`onCompanySelect( ${this.selectedCompany.name} )`);
-        this.selectCompany.emit(this.selectedCompany);
+        const company = event.value;
+        HeaderComponent.logger.debug(`onCompanySelect( ${company.name} )`);
+        this.selectCompany.emit(company);
     }
 
     public onToggleSlideout(event: any) {

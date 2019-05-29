@@ -1,15 +1,19 @@
 import { NgModule } from "@angular/core";
 import { EffectsModule } from "@ngrx/effects";
-import { StoreRouterConnectingModule } from "@ngrx/router-store";
+import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { environment } from "../../../environments/environment";
 import { AuthEffect } from "./auth/auth.effect";
 import { FlowEffect } from "./flow/flow.effect";
+import { CustomRouterStateSerializer } from "./router/custom-router-state.serializer";
 import { reducers } from "./index";
+import { reducers as portfolioReducers } from "./portfolio/index";
 import { RouterEffect } from "./router/router.effect";
+import { PortfolioEffects } from "./portfolio/portfolio.effects";
+import { CompanyEffects } from "./portfolio/portfolio-company/portfolio-company.effects";
 
-const EFFECTS = [RouterEffect, AuthEffect, FlowEffect];
+const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, PortfolioEffects, CompanyEffects];
 
 const MODULES = [
     /**
@@ -20,6 +24,7 @@ const MODULES = [
      * based application.
      */
     StoreModule.forRoot(reducers),
+    StoreModule.forFeature("portfolio", portfolioReducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and
@@ -57,6 +62,14 @@ const MODULES = [
 
 @NgModule({
     imports: MODULES,
-    declarations: []
+    declarations: [],
+    providers: [
+        /**
+         * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
+         * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
+         * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
+         */
+        { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }
+    ]
 })
 export class StateModule {}

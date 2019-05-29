@@ -26,10 +26,12 @@
         <button (click)="onToggleSlideout($event)">
             Test Open/Close Panel
         </button>
+
         <button mat-button
                 [matMenuTriggerFor]="menu">
             Welcome John Doe <i class="icon-user"></i> <i class="icon-arrow-down5"></i>
         </button>
+
         <mat-menu #menu="matMenu"
                   class="user-mat">
             <button mat-menu-item>Logout</button>
@@ -37,3 +39,14 @@
     </div>
 
 </mat-toolbar>
+
+<div fxLayout="row">
+
+    <img [src]="selectedCompany.logo"
+         [alt]="selectedCompany.name">
+
+    <div>{{ selectedCompany.name }}</div>
+
+    <div *ngFor="let teamMember of teamMembers">{{ teamMember.name }}</div>
+
+</div>

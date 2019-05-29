@@ -1,18 +1,20 @@
 import * as fromState from "../../core/state";
-import { OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
 import * as TestUti from "../../util/test.util";
-import { Company } from "../../core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
-import { Logger } from "../../util/logger";
-import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
+import { Observable, of } from "rxjs";
+import { Company } from "../../core/domain/company.model";
+import { CloseCompanyInfoPanel, OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
+import { Logger } from "../../util/logger";
 
 @Component({
     selector: "sbp-header-container",
     template: `
         <sbp-header
-            [slideoutOpen]="slideoutOpen$ | async"
             [companies]="companies$ | async"
+            [teamMembers]="teamMembers$ | async"
+            [slideoutOpen]="slideoutOpen$ | async"
+            [selectedCompany]="selectedCompany$ | async"
             (selectCompany)="selectCompany($event)"
             (toggleSlideout)="toggleSlideout($event)"
         >
@@ -30,6 +32,19 @@ export class HeaderContainer implements OnInit {
      */
     public companies$: Observable<Company[]>;
 
+    /**
+     * The teamMembers observable.
+     */
+    public teamMembers$: Observable<Company[]>;
+
+    /**
+     * The selected company observable.
+     */
+    public selectedCompany$: Observable<Company>;
+
+    /**
+     * Boolean indicating of the slide open is open.
+     */
     public slideoutOpen$: Observable<boolean>;
 
     /**
@@ -47,10 +62,17 @@ export class HeaderContainer implements OnInit {
 
         // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
         // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
+        this.selectedCompany$ = of(TestUti.getCompanyMock({ name: "Foo, Inc." }));
         this.companies$ = of([
             TestUti.getCompanyMock({ name: "Foo, Inc." }),
             TestUti.getCompanyMock({ name: "Bar, LLC." }),
             TestUti.getCompanyMock({ name: "Dogs and Cats" })
+        ]);
+
+        this.teamMembers$ = of([
+            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Tom Brady" }),
+            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Julian Edleman" }),
+            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Rob Gronkowski" })
         ]);
 
         this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
@@ -60,8 +82,8 @@ export class HeaderContainer implements OnInit {
      * Tests opening the Company Info panel
      * @param $event
      */
-    public toggleSlideout($event: boolean): void {
-        this.store$.dispatch(new OpenCompanyInfoPanel(1));
+    public toggleSlideout(slideOut: boolean): void {
+        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel(1)) : this.store$.dispatch(new CloseCompanyInfoPanel(1));
     }
 
     /**
@@ -72,5 +94,6 @@ export class HeaderContainer implements OnInit {
 
         // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
         // this.store$.dispatch(new RegisterLayoutActions.SelectCompany(event.name));
+        this.selectedCompany$ = of(event);
     }
 }
