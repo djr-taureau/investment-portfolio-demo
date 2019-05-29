@@ -1,3 +1,4 @@
+import { GoToPortfolioListing } from "./flow.actions";
 import * as FlowActions from "./flow.actions";
 import { Action, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
@@ -36,6 +37,17 @@ export class FlowEffect {
             new ToggleSlideout(false)
         ])
     );
+
+    /**
+     * Handles clicks to go to the portolio listing
+     */
+    @Effect()
+    goToPortfolioListing: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.GoToPortfolioListing>(FlowActionTypes.GoToPortfolioListing),
+        map((action) => action.payload),
+        concatMap((companyId) => [new Go({ path: [appRoutePaths.portfolioListing], extras: { queryParamsHandling: "preserve" } })])
+    );
+
     /**
      * Constructor
      */

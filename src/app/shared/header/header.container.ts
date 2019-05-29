@@ -1,11 +1,11 @@
+import * as fromState from "../../core/state";
+import * as TestUti from "../../util/test.util";
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { Company } from "../../core/domain/company.model";
+import { CloseCompanyInfoPanel, OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
 import { Logger } from "../../util/logger";
-import { OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
-import * as TestUti from "../../util/test.util";
-import * as fromState from "../../core/state";
 
 @Component({
     selector: "sbp-header-container",
@@ -82,8 +82,8 @@ export class HeaderContainer implements OnInit {
      * Tests opening the Company Info panel
      * @param $event
      */
-    public toggleSlideout($event: boolean): void {
-        this.store$.dispatch(new OpenCompanyInfoPanel(1));
+    public toggleSlideout(slideOut: boolean): void {
+        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel(1)) : this.store$.dispatch(new CloseCompanyInfoPanel(1));
     }
 
     /**

@@ -4,7 +4,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { appRoutePaths } from "./app.routes";
 import { AuthRouteGuard } from "./core/route-guard/auth.route-guard";
 import * as AppRoutes from "./app.routes";
-import { CompanyInfoContainerComponent } from "./slideout-routes/company-info/company-info.container.component";
 
 const PROVIDERS = [
     {
@@ -37,6 +36,15 @@ const routes: Routes = [
     //     loadChildren: "./product/product.module#FooModule",
     //     canActivate: [AuthRouteGuard]
     // },
+    {
+        path: AppRoutes.appRoutePaths.companyInfo,
+        loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.portfolioListing,
+        loadChildren: "./portfolio-listing/portfolio-listing.module#PortfolioListingModule"
+    }
+
     //////////////////////////////////////////////////
     // Redirects
     //////////////////////////////////////////////////
@@ -45,12 +53,6 @@ const routes: Routes = [
     //     pathMatch: "full",
     //     redirectTo: AppRoutes.appRoutePaths.login
     // }
-
-    {
-        path: "company-info",
-        loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
-        // outlet: "sidebar-outlet"
-    }
 ];
 
 @NgModule({
