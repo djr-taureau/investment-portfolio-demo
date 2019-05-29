@@ -27,7 +27,7 @@ export class SlideoutContainerComponent implements OnInit {
      * Handles closing the slideout panel
      */
     public onClose(): void {
-        this.store$.dispatch(new ToggleSlideout(true));
+        this.store$.dispatch(new ToggleSlideout(false));
     }
     /**
      * Initialize the component.

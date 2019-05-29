@@ -8,7 +8,7 @@ import { SharedModule } from "./shared/shared.module";
 import { SlideoutModule } from "./shared/slideout/slideout.module";
 import { CompanyInfoModule } from "./slideout-routes/company-info/company-info.module";
 
-const MODULES = [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CoreModule, SharedModule, SlideoutModule];
+const MODULES = [BrowserModule, AppRoutingModule, BrowserAnimationsModule, CoreModule, SharedModule];
 
 const COMPONENTS = [AppComponent];
 

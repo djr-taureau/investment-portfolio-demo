@@ -12,23 +12,28 @@ import { ToggleSlideout } from "../layout/layout.actions";
 
 @Injectable()
 export class FlowEffect {
+    /**
+     * Handles the opening of the company info panel flow
+     * TODO: GMAN - Once we understand how to load the company, set the state, etc - add those actions in here
+     */
     @Effect()
     openCompanyInfoPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.OpenCompanyInfoPanel>(FlowActionTypes.OpenCompanyInfoPanel),
         map((action) => action.payload),
-        concatMap((companyId) => [
-            new ToggleSlideout(false),
-            new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve" } })
-        ])
+        concatMap((companyId) => [new ToggleSlideout(true), new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve" } })])
     );
 
+    /**
+     * Handles closing the company info panel flow
+     * TODO: GMAN - Once we understand how to clear the company, set the state, etc - add those actions in here
+     */
     @Effect()
     closeCompanyInfoPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.CloseCompanyInfoPanel>(FlowActionTypes.CloseCompanyInfoPanel),
         map((action) => action.payload),
         concatMap((companyId) => [
             new Go({ path: [appRoutePaths.companyInfo], extras: { queryParamsHandling: "preserve" } }),
-            new ToggleSlideout(true)
+            new ToggleSlideout(false)
         ])
     );
     /**

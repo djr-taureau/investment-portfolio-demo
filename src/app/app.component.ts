@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
         AppComponent.logger.debug(`constructor()`);
     }
 
+    /**
+     * Initialize the component.
+     */
     public ngOnInit(): void {
         this.showSlideout$ = this.store$.pipe(select(fromState.getShowSlideout));
     }

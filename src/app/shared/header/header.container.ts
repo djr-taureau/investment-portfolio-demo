@@ -6,7 +6,6 @@ import { Component, OnInit } from "@angular/core";
 import { Logger } from "../../util/logger";
 import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
-import { ToggleSlideout } from "../../core/state/layout/layout.actions";
 
 @Component({
     selector: "sbp-header-container",
@@ -57,6 +56,10 @@ export class HeaderContainer implements OnInit {
         this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
     }
 
+    /**
+     * Tests opening the Company Info panel
+     * @param $event
+     */
     public toggleSlideout($event: boolean): void {
         this.store$.dispatch(new OpenCompanyInfoPanel(1));
     }

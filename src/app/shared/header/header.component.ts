@@ -63,6 +63,6 @@ export class HeaderComponent implements OnInit {
 
     public onToggleSlideout(event: any) {
         HeaderComponent.logger.debug(`onToggleSlideout()`);
-        this.toggleSlideout.emit(this.slideoutOpen);
+        this.toggleSlideout.emit(!this.slideoutOpen);
     }
 }

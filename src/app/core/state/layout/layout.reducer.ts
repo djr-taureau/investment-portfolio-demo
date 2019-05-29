@@ -18,7 +18,7 @@ function toggleSlideout(show: boolean, state: LayoutState = initialState): Layou
 export function layoutReducer(state: LayoutState = initialState, action: LayoutActions): LayoutState {
     switch (action.type) {
         case LayoutActionTypes.ToggleSlideout:
-            return toggleSlideout(!action.payload, state);
+            return toggleSlideout(action.payload, state);
         default:
             return state;
     }
