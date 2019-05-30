@@ -289,6 +289,24 @@ definitions:
       id:
         type: "string"
         description: "UUIDv4 used to track errors in logs especially when using PII data that's omitted from logs."
+  BoardMember:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      sinceDate:
+        type: "string"
+      company:
+        type: "string"
+      phone:
+        type: "string"
+      email:
+        type: "string"
+      avatar:
+        type: "string"
   Company:
     type: "object"
     properties:
@@ -328,13 +346,15 @@ definitions:
       logo:
         type: "string"
       revenue:
-        $ref: '#/definitions/CompanyRevenueResponse'
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyRevenue'
       tags:
         type: "array"
         items:
           $ref: '#/definitions/Tag'
       percentOwnership:
-        type: "string" #@Andrew if we make this string then do we format on the backend? I think I'd rather have these be floats so its obvious where formatting occurs?
+        type: "number"
         description: "Displayed in the company header to the right of the tags."
       #      Note: This should be accomplished via the /team endpoint which includes deal team and other team info and is useful elsewhere
       #      dealTeam:
@@ -363,6 +383,8 @@ definitions:
         type: "array"
         items:
           type: "string"
+      foundedDate:
+        type: "string"
       website:
         type: "string"
       stage:
@@ -384,7 +406,7 @@ definitions:
       boardMembers:
         type: "array"
         items:
-          $ref: "#/definitions/Contact"
+            $ref: "#/definitions/BoardMember"
   CompanyListGroup:
     type: "object"
     description: "The Company in this listing will be a backend defined subset of #Company appropriate to the listing only"
@@ -448,8 +470,6 @@ definitions:
       confidence:
         type: "string"
         description: "Represents a confidence level in the data point"
-    xml:    #@Andrew what is this?
-      name: "Order"
   Contact:
     type: "object"
     properties:
