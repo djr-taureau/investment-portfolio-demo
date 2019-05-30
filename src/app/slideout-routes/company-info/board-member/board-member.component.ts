@@ -14,6 +14,9 @@ export class BoardMemberComponent implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("BoardMemberComponent");
 
+    /**
+     * Array of BoardMembers passed in from container
+     */
     @Input()
     public boardMembers: BoardMember[];
 
@@ -21,7 +24,5 @@ export class BoardMemberComponent implements OnInit {
         BoardMemberComponent.logger.debug(`constructor()`);
     }
 
-    ngOnInit() {
-        BoardMemberComponent.logger.debug(JSON.stringify(this.boardMembers[0]));
-    }
+    ngOnInit() {}
 }

@@ -18,8 +18,14 @@ export class CompanyInfoContainerComponent implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("CompanyInfoContainerComponent");
 
+    /**
+     * BoardMembers selected from the Company
+     */
     public boardMembers$: Observable<BoardMember[]>;
 
+    /**
+     * The Company in context
+     */
     public company$: Observable<Company>;
 
     /**
@@ -45,8 +51,6 @@ export class CompanyInfoContainerComponent implements OnInit {
                 avatar: "assets/image/nauset.jpg"
             }
         ]);
-
-        this.boardMembers$.subscribe((data) => CompanyInfoContainerComponent.logger.debug(JSON.stringify(data[0])));
     }
 
     constructor(private store$: Store<any>) {}

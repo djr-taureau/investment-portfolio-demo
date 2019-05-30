@@ -319,7 +319,7 @@ definitions:
         description: "Displayed in the company header under the tags."
       type:
         type: "string"
-      sector:
+      sectors:
         type: "array"
         items:
           $ref: '#/definitions/Sector'
