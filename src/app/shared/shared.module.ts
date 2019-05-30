@@ -23,7 +23,8 @@ const MODULES = [
     HeaderModule,
     FooterModule,
     MaterialModule,
-    SlideoutModule
+    SlideoutModule,
+    DirectivesModule
 ];
 
 @NgModule({
