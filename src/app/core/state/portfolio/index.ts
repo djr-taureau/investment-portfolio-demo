@@ -86,7 +86,7 @@ export const getPortfolioLoaded = createSelector(
     getPortfolioState,
     fromPortfolio.getLoaded
 );
-export const getPorfolioLoading = createSelector(
+export const getPortfolioLoading = createSelector(
     getPortfolioState,
     fromPortfolio.getLoading
 );
