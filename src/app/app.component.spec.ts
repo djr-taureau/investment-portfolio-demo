@@ -5,7 +5,6 @@ import { AppComponent } from "./app.component";
 import { FooterModule } from "./shared/footer/footer.module";
 import { HeaderModule } from "./shared/header/header.module";
 import { SharedModule } from "./shared/shared.module";
-import { SlideoutModule } from "./shared/slideout/slideout.module";
 
 describe("AppComponent", () => {
     // Spy on the NGRX Store so we can mock the `pipe()` and `dispatch()` methods.
@@ -13,7 +12,7 @@ describe("AppComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [RouterTestingModule, HeaderModule, FooterModule, SharedModule, SlideoutModule],
+            imports: [RouterTestingModule, HeaderModule, FooterModule, SharedModule],
             declarations: [AppComponent],
             providers: [
                 {
