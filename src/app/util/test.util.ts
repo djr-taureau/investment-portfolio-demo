@@ -1,7 +1,7 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company } from "../core/domain/company.model";
+import { Company, TeamMember } from "../core/domain/company.model";
 
 /**
  * Provides unit tests access to DOM elements by element ID or CSS selector in a component's fixture.
@@ -51,28 +51,70 @@ export const changeSelectFormElementValue = (select, fixture, index) => {
  */
 export const getCompanyDefault = (): Company => {
     return {
+        aka: "",
+        amountInvested: 0,
+        boardMembers: [],
         companyUpdates: [],
+        currentValuation: 0,
         data: null,
         dealTeam: [],
         deployed: 0,
         description: "",
+        FDOwnership: "",
+        fiscalYearEnd: "",
+        foundedDate: "",
+        founders: [],
+        funds: [],
+        headquarters: "",
         id: "",
+        initialInvestmentDate: "",
         initiatives: [],
+        investingEntity: "",
         IRR: 0,
+        latestFollowOnDate: "",
         logo: "",
         MOIC: 0,
         name: "",
         percentOwnership: "0",
+        regions: [],
         revenue: [],
         score: 0,
         sector: [],
+        slackName: "",
+        slackUrl: "",
+        stage: "",
         tags: [],
         takeawayDate: "",
         takeaways: [],
         type: "",
-        valuation: null
+        valuation: null,
+        website: ""
     };
 };
+
+/**
+ * Creates a default TeamMember.
+ */
+export const getTeamMemberDefault = (): TeamMember => {
+    return {
+        id: "",
+        name: ""
+    };
+};
+
+/**
+ * Creates a fully populated TeamMember using default values for properties
+ * or those passed in as a Partial.
+ *
+ * Used for mocking TeamMember objects.
+ *
+ * @param defaultMock
+ * @param partial
+ */
+export const getMock = (defaultMock: any, partial?: Partial<any>): any => ({
+    ...defaultMock(),
+    ...partial
+});
 
 /**
  * Creates a fully populated Company using default values for properties

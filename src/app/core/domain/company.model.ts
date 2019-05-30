@@ -2,8 +2,26 @@ export interface Company {
     id: string;
     type: string; // enum
     data: any;
-    sector: string[];
+    sector: Sector[];
+    regions: Region[];
+    funds: Fund[];
     score: number;
+    amountInvested: number;
+    currentValuation: number;
+    slackName: string;
+    slackUrl: string;
+    aka: string;
+    headquarters: string;
+    founders: string[];
+    foundedDate: string;
+    website: string;
+    stage: string;
+    fiscalYearEnd: string;
+    investingEntity: string;
+    initialInvestmentDate: string;
+    latestFollowOnDate: string;
+    FDOwnership: string;
+    boardMembers: BoardMember[];
     MOIC: number;
     IRR: number;
     logo: string;
@@ -61,12 +79,48 @@ export interface CompanyUpdate {
 export interface Sector {
     id: string;
     name: string;
+    desription: string;
+}
+
+export interface Region {
+    id: string;
+    name: string;
+    description: string;
+}
+
+export interface Fund {
+    id: string;
+    name: string;
+    description: string;
 }
 
 export interface Tag {
     // List of tags under the company name in the header.
     id: string;
     name: string;
+}
+
+export interface Contact {
+    id: string;
+    companyName: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    slack: string;
+    mobile: string;
+    email: string;
+    bio: string;
+    postion: string;
+}
+
+export interface BoardMember {
+    id?: string;
+    name: string;
+    sinceDate: string;
+    company: string;
+    phone: string;
+    email: string;
+    avatar: string;
 }
 
 export interface TeamMember {

@@ -1,0 +1,243 @@
+<sbp-slideout-panel [preTitleText]="getCompanyName()"
+                    [titleText]="'Company Info'"
+                    (close)="onClose()">
+
+    <!-- MAIN CONTAINER -->
+    <div class="main"
+         fxLayout="column"
+         fxLayoutAlign="start stretch"
+         fxLayoutGap="15px">
+
+        <!-- DESCRIPTION SECTION ROW -->
+        <div class="description"
+             fxLayout="row">
+            {{company.description}}
+        </div>
+        <!-- TAGS SECTION ROW -->
+        <div fxLayout="row"
+             fxLayoutGap="5px"
+             fxLayoutAlign="start center">
+            <div class="tag"
+                 *ngFor="let tag of company.tags"
+                 fxLayout="column"
+                 fxLayoutAlign="center start">
+                <div class="tag__text">{{tag.name | uppercase}}</div>
+            </div>
+            <img class="tag__img"
+                 matListAvatar
+                 src="assets/image/slack.png">
+            <div class="slack__text">{{company.slackName | uppercase}}</div>
+            <div class="tag__img">
+                <kendo-chart class="tag__img">
+                    <kendo-chart-series>
+                        <kendo-chart-series-item type="donut"
+                                                 [data]="getChartData()"
+                                                 field="value">
+                            <!-- <kendo-chart-series-item-labels
+                          [content]="labelContent"
+                          color="#fff" background="none">
+                        </kendo-chart-series-item-labels> -->
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+                    <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                </kendo-chart>
+            </div>
+            <div class="slack__text">{{company.percentOwnership*100}}% OWNERSHIP</div>
+        </div>
+        <!-- DATA SECTION ROW -->
+        <div class="data"
+             fxLayout="row"
+             fxLayoutAlign="space-between center">
+            <div class="data__left-column"
+                 fxFlex="50%"
+                 fxLayout="column"
+                 fxLayoutAlign="start stretch">
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div fxLayout="row"
+                             class="data__label">Also Known As:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div fxLayout="row"
+                             class="data__value">{{company.aka}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Headquarters:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.headquarters}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Founded Date:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.foundedDate}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Founders:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.founders}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Website:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.website}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Social Media:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.aka}}</div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="data__right-column"
+                 fxFlex="50%"
+                 fxLayout="column"
+                 fxLayoutAlign="start stretch">
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Sector:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{getSectorList()}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Company Stage:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.stage}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Fiscal Year End:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.fiscalYearEnd}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Investing Entity:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.investingEntity}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Initial Investment Date:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.initialInvestmentDate}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">Last Follow on Date:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.latestFollowOnDate}}</div>
+                    </div>
+                </div>
+                <div fxLayout="row"
+                     fxLayoutAlign="space-between start">
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__label">FD Ownership:</div>
+                    </div>
+                    <div fxFlex="50%"
+                         fxLayout="column"
+                         fxLayoutAlign="start stretch">
+                        <div class="data__value">{{company.FDOwnership}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOARD MEMBERS ROW -->
+        <div fxLayout="row">
+            <sbp-board-member [boardMembers]="boardMembers"></sbp-board-member>
+        </div>
+    </div>
+
+</sbp-slideout-panel>

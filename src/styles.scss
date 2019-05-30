@@ -2,12 +2,13 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import "assets/scss/variables";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html,
 body {
     padding: 0 0 51px 0;
     margin: 0;
-    background: #F4F5F7;
+    background: #ebeff5;
     font-family: Montserrat, sans-serif;
 }
 
