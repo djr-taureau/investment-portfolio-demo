@@ -320,7 +320,7 @@ definitions:
         description: "Displayed in the company header under the tags."
       type:
         type: "string"
-      sectors:
+      sector:
         type: "array"
         items:
           $ref: '#/definitions/Sector'
@@ -332,9 +332,11 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Fund"
+      score:
+        type: "number"
       amountInvested:
         type: "number"
-      amountDeployed:
+      deployed:
         type: "number"
         description: "Displayed in the company header to the right of the takeaways."
       currentValuation:
