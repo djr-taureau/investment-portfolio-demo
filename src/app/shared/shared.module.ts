@@ -6,6 +6,7 @@ import { HeaderModule } from "./header/header.module";
 import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { SlideoutModule } from "./slideout/slideout.module";
+import { DirectivesModule } from "./directives/directives.module";
 
 const MODULES = [
     // Angular Modules
@@ -20,7 +21,8 @@ const MODULES = [
     HeaderModule,
     FooterModule,
     MaterialModule,
-    SlideoutModule
+    SlideoutModule,
+    DirectivesModule
 ];
 
 @NgModule({
