@@ -1,0 +1,16 @@
+<div fxLayout="row"
+     fxLayoutAlign="center center"
+     fxFill>
+    <ng-container *ngFor="let link of links; let idx=index; trackBy: trackByFn">
+        <div class="tab"
+             fxLayout="row"
+             fxLayoutAlign="center center"
+             fxLayoutGap="8px"
+             [ngClass]="{'selected':link.route === selectedLink, 'disabled': !link.enabled}"
+             [attr.disabled]="!link.enabled || null"
+             (click)="link.enabled && onLinkClick(link)">
+            <div>{{link.icon}}</div>
+            <div class="name">{{link.label}}</div>
+        </div>
+    </ng-container>
+</div>

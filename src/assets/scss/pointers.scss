@@ -1,0 +1,34 @@
+.no-focus-hover {
+
+    &:focus,
+    &:hover {
+        outline: none !important;
+        border-color: inherit;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+}
+
+.hand-cursor {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.not-allowed-cursor {
+    cursor: not-allowed !important;
+}
+
+.grabbable {
+    cursor: move;
+    /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+/* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.grabbable:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
