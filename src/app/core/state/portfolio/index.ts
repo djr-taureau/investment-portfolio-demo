@@ -11,7 +11,7 @@ export interface CompaniesState {
 }
 
 export interface State extends fromRoot.AppState {
-    companies: CompaniesState;
+    portfolio: CompaniesState;
 }
 
 export const reducers: ActionReducerMap<CompaniesState, any> = {
@@ -20,7 +20,7 @@ export const reducers: ActionReducerMap<CompaniesState, any> = {
     portfolio: fromPortfolio.reducer
 };
 
-export const getDashboardState = createFeatureSelector<State, CompaniesState>("companies");
+export const getDashboardState = createFeatureSelector<State, CompaniesState>("portfolio");
 
 export const getCompanyEntitiesState = createSelector(
     getDashboardState,

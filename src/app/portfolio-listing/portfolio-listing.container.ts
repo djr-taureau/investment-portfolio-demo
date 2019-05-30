@@ -2,9 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { Company } from "../core/domain/company.model";
-import { loadPortfolio } from "../core/state/portfolio/portfolio.actions";
 import { Logger } from "../util/logger";
-import * as fromCompanyState from "../core/state/portfolio/index";
+import * as fromCompanyState from "../core/state/portfolio";
+import { PortfolioActions } from "../core/state/portfolio/actions-index";
 import * as TestUti from "../util/test.util";
 
 @Component({
@@ -28,21 +28,14 @@ export class PortfolioListingContainer implements OnInit {
      * Constructor.
      * @param store$
      */
-    constructor(private store$: Store<any>) {
+    constructor(private store$: Store<fromCompanyState.State>) {
         PortfolioListingContainer.logger.debug(`constructor()`);
+        this.companies$ = store$.pipe(select(fromCompanyState.getPortfolioCompanies));
     }
-
     /**
      * Initialize the component.
      */
     public ngOnInit(): void {
-        this.store$.dispatch(loadPortfolio);
-
-        // this.companies$ = this.store$.pipe(select(fromCompanyState.getPortfolioCompanies));
-        this.companies$ = of([
-            TestUti.getCompanyMock({ name: "Foo, Inc." }),
-            TestUti.getCompanyMock({ name: "Bar, LLC." }),
-            TestUti.getCompanyMock({ name: "Dogs and Cats" })
-        ]);
+        this.store$.dispatch(PortfolioActions.loadPortfolio());
     }
 }

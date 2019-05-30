@@ -10,7 +10,7 @@ import { CompanyService } from "../../service/company.service";
 @Injectable()
 export class PortfolioEffects {
     @Effect()
-    loadCollection$: Observable<Action> = this.actions$.pipe(
+    loadPortfolio$: Observable<Action> = this.actions$.pipe(
         ofType(PortfolioActions.loadPortfolio.type),
         exhaustMap(() =>
             this.companyService.getCompanies().pipe(
