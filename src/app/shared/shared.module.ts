@@ -8,6 +8,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { SlideoutModule } from "./slideout/slideout.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import "hammerjs";
+import { DirectivesModule } from "./directives/directives.module";
 
 const MODULES = [
     // Angular Modules
