@@ -51,26 +51,44 @@ export const changeSelectFormElementValue = (select, fixture, index) => {
  */
 export const getCompanyDefault = (): Company => {
     return {
+        aka: "",
+        amountInvested: 0,
+        boardMembers: [],
         companyUpdates: [],
+        currentValuation: 0,
         data: null,
         dealTeam: [],
         deployed: 0,
         description: "",
+        FDOwnership: "",
+        fiscalYearEnd: "",
+        foundedDate: "",
+        founders: [],
+        funds: [],
+        headquarters: "",
         id: "",
+        initialInvestmentDate: "",
         initiatives: [],
+        investingEntity: "",
         IRR: 0,
+        latestFollowOnDate: "",
         logo: "",
         MOIC: 0,
         name: "",
         percentOwnership: "0",
+        regions: [],
         revenue: [],
         score: 0,
         sector: [],
+        slackName: "",
+        slackUrl: "",
+        stage: "",
         tags: [],
         takeawayDate: "",
         takeaways: [],
         type: "",
-        valuation: null
+        valuation: null,
+        website: ""
     };
 };
 

@@ -6,12 +6,6 @@
       "attribute",
       "sbp",
       "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "sbp",
-      "kebab-case"
     ]
   },
   "exclude": [

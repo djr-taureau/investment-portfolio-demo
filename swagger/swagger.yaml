@@ -288,6 +288,24 @@ definitions:
       id:
         type: "string"
         description: "UUIDv4 used to track errors in logs especially when using PII data that's omitted from logs."
+  BoardMember:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      sinceDate:
+        type: "string"
+      company:
+        type: "string"
+      phone:
+        type: "string"
+      email:
+        type: "string"
+      avatar:
+        type: "string" 
   Company:
     type: "object"
     properties:
@@ -301,7 +319,7 @@ definitions:
         description: "Displayed in the company header under the tags."
       type:
         type: "string"
-      sector:
+      sectors:
         type: "array"
         items:
           $ref: '#/definitions/Sector'
@@ -329,7 +347,9 @@ definitions:
       logo:
         type: "string"
       revenue:
-        type: "string"
+        type: "array"
+        items:
+          $ref: '#/definitions/CompanyRevenue'
       tags:
         type: "array"
         items:
@@ -372,6 +392,8 @@ definitions:
         type: "array"
         items:
           type: "string"
+      foundedDate:
+        type: "string"
       website:
         type: "string"
       stage:
@@ -385,14 +407,14 @@ definitions:
         type: "string"
       initialInvestmentDate:
         type: "string"
-      latetFollowOnDate:
+      latestFollowOnDate:
         type: "string"
       FDOwnership:
         type: "string"
       boardMembers:
         type: "array"
         items:
-          $ref: "#/definitions/Contact"
+          $ref: "#/definitions/BoardMember"
   CompanyInitiatives:
     type: array
     items:

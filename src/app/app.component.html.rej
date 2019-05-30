@@ -1,4 +1,0 @@
-diff a/src/app/app.component.html b/src/app/app.component.html	(rejected hunks)
-@@ -5 +5 @@
--	<router-outlet name="sidebar-outlet"></router-outlet>
-+    <router-outlet name="sidebar-outlet"></router-outlet>

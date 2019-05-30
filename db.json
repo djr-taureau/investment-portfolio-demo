@@ -7,6 +7,24 @@
             "sectors": [{
                 "name": "Real Estate"
             }],
+            "regions": [
+                {
+                    "id": 1,
+                    "name": "Region 1",
+                    "description": "Region 1 Description"
+                }
+            ],
+            "funds": [
+                {
+                    "id": 1,
+                    "name": "Fund 1",
+                    "description": "Fund 1 Description"
+                }
+            ],
+            "score": 2.25,
+            "amountInvested": 1000000,
+            "deployed": 500000,
+            "currentValuation": 1500000,
             "dealTeam": [{
                     "id": 1,
                     "name": "Mary Smith"
@@ -25,7 +43,6 @@
                     "content": "Softbank should connect WeWork with PAYIM"
                 }
             ],
-            "score": 2.25,
             "deployed": 80,
             "MOIC": 1.0,
             "IRR": 0,
