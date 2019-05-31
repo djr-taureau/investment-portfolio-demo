@@ -8,7 +8,9 @@ export enum RouterActionTypes {
 
     // Specific routing to keep knowledge out of other components.
     GotoLogin = "[Router] GotoLogin",
-    GotoRegister = "[Router] GotoRegister"
+    GotoRegister = "[Router] GotoRegister",
+    GoToPortfolioListing = "[Router] Go to Portfolio Listing",
+    GoToCompanyInfo = "[Router] Go to Company Info"
 }
 
 export class Go implements Action {
@@ -29,19 +31,34 @@ export class Forward implements Action {
     constructor() {}
 }
 
+// Shorthand action creators for specific routes
 export class GotoLogin implements Action {
-    readonly type = RouterActionTypes.GotoLogin;
+    readonly type = RouterActionTypes.Go;
     readonly payload = { path: appRoutePaths.login };
 
     constructor() {}
 }
 
 export class GotoRegister implements Action {
-    readonly type = RouterActionTypes.GotoRegister;
+    readonly type = RouterActionTypes.Go;
     readonly payload = { path: appRoutePaths.register };
 
     constructor() {}
 }
 
+export class GoToPortfolioListing implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.portfolioListing };
+
+    constructor() {}
+}
+
+export class GoToCompanyInfo implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve", skipLocationChange: true } };
+
+    constructor() {}
+}
+
 // TODO: BMR: 05/07/2019: Make this actually work as right now these aren't being used.
-export type RouterActions = Go | Back | Forward | GotoLogin | GotoRegister;
+export type RouterActions = Go | Back | Forward | GotoLogin | GoToCompanyInfo | GotoRegister | GoToPortfolioListing;

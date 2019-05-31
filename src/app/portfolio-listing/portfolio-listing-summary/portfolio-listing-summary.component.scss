@@ -1,0 +1,55 @@
+@import "../../../assets/scss/variables";
+
+:host {
+    .item-container {
+        padding: 24px;
+    }
+
+    .item-cell {
+        padding: 12px 30px;
+        min-width: 300px;
+        min-height: 100px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        background-color: $white;
+
+        &__label {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $grey-blue;
+            text-transform: uppercase;
+        }
+
+        &__label {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $grey-blue;
+            text-transform: uppercase;
+        }
+
+        &__value {
+            font-family: PostGrotesk;
+            font-size: 30px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $black;
+
+            &--muted {
+                color: rgba($black, .5);
+            }
+        }
+    }
+}

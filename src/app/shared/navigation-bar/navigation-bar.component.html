@@ -8,7 +8,7 @@
              fxLayoutGap="8px"
              [ngClass]="{'selected':link.route === selectedLink, 'disabled': !link.enabled}"
              [attr.disabled]="!link.enabled || null"
-             (click)="link.enabled && onLinkClick(link)">
+             (click)="onLinkClick(link)">
             <div>{{link.icon}}</div>
             <div class="name">{{link.label}}</div>
         </div>
