@@ -4,7 +4,7 @@ import { CompanyApiActions, CompanyActions } from "../portfolio-company";
 import { PortfolioApiActions } from "../actions-index";
 
 export interface State extends EntityState<Company> {
-    selectedCompanyId: string | null;
+    selectedCompanyId: number | null;
 }
 
 export const adapter: EntityAdapter<Company> = createEntityAdapter<Company>({
@@ -23,6 +23,8 @@ export function reducer(
     switch (action.type) {
         case CompanyApiActions.searchSuccess.type:
         case PortfolioApiActions.loadCompaniesSuccess.type: {
+            // TODO: remove this once the company selector is valid
+            state.selectedCompanyId = action.companies[0].id;
             return adapter.addMany(action.companies, state);
         }
 

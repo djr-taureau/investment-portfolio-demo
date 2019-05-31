@@ -1,12 +1,32 @@
 {
-    "companies": [{
+    "companies": [
+        {
             "id": 1,
             "name": "We Work",
-            "description": "company description",
+            "description": "WeWork Platform for creators that transforms buildings into dynamic environments for creativity, focus, and collaboration",
             "type": 1,
             "sectors": [{
                 "name": "Real Estate"
             }],
+            "tags": [
+                { "name": "private" }, 
+                { "name": "real estate" }, 
+                { "name": "coworking" }, 
+                { "name": "hospitality" }
+            ],
+            "slacName": "wasitim",
+            "percentOwnership": ".122",
+            "aka": "The We Company",
+            "headquarters": "New York, New York, USA",
+            "foundedDate": "2010",
+            "founders": ["Adam Neumann", "Miguel McKelvey"],
+            "website": "www.wework.com",
+            "fiscalYearEnd": "Dec 31",
+            "investingEntity": "SVF",
+            "initialInvestmentDate": "Nov 2018",
+            "latestFollowOnDate": "Jun 2018",
+            "FDOwnership": "12.2%",
+            "stage": "Private",
             "regions": [
                 {
                     "id": 1,
@@ -43,7 +63,6 @@
                     "content": "Softbank should connect WeWork with PAYIM"
                 }
             ],
-            "deployed": 80,
             "MOIC": 1.0,
             "IRR": 0,
             "valuationDetail": {
@@ -54,7 +73,23 @@
                 "year2": 3000000,
                 "year3": 3000000,
                 "exit": 2000000
+            },
+            "boardMembers": [{
+                "name": "tim mcgee",
+                "sinceDate": "May 2018",
+                "company": "benchmark capital",
+                "phone": "(510) 123-4567",
+                "email": "bruce.dunlevle@benchmarkcapital.com",
+                "avatar": "assets/image/nauset.jpg"
+            }, {
+                "name": "buddy mcgee",
+                "sinceDate": "May 2015",
+                "company": "dogs r'us",
+                "phone": "(510) 123-4567",
+                "email": "budman@dogrus.com",
+                "avatar": "assets/image/nauset.jpg"                
             }
+            ]
         },
         {
             "id": 2,

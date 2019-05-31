@@ -1,4 +1,4 @@
-<sbp-slideout-panel [preTitleText]="getCompanyName()"
+<sbp-slideout-panel [preTitleText]="company.name"
                     [titleText]="'Company Info'"
                     (close)="onClose()">
 
@@ -31,7 +31,7 @@
                 <kendo-chart class="tag__img">
                     <kendo-chart-series>
                         <kendo-chart-series-item type="donut"
-                                                 [data]="getChartData()"
+                                                 [data]="chartData"
                                                  field="value">
                             <!-- <kendo-chart-series-item-labels
                           [content]="labelContent"
@@ -150,7 +150,7 @@
                     <div fxFlex="50%"
                          fxLayout="column"
                          fxLayoutAlign="start stretch">
-                        <div class="data__value">{{getSectorList()}}</div>
+                        <div class="data__value">{{sectorList}}</div>
                     </div>
                 </div>
                 <div fxLayout="row"
@@ -236,7 +236,7 @@
 
         <!-- BOARD MEMBERS ROW -->
         <div fxLayout="row">
-            <sbp-board-member [boardMembers]="boardMembers"></sbp-board-member>
+            <sbp-board-member [boardMembers]="company.boardMembers"></sbp-board-member>
         </div>
     </div>
 

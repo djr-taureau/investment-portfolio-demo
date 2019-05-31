@@ -2,7 +2,7 @@ import { FindCompanyActions } from "../search";
 import { CompanyApiActions } from "../portfolio-company";
 
 export interface State {
-    ids: string[];
+    ids: number[];
     loading: boolean;
     error: string;
     query: string;

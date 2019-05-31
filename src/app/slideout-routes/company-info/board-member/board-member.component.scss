@@ -1,5 +1,9 @@
 @import "../../../../assets/scss/variables";
 
+.row {
+    width: 650px;
+}
+
 .row__name {
     height: 21px;
     font-family: PostGrotesk;
@@ -34,7 +38,6 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 0.5px;
-    text-align: center;
     color: grey;
 }
 

@@ -1,8 +1,8 @@
 export interface Company {
-    id: string;
+    id: number;
     type: string; // enum
     data: any;
-    sector: Sector[];
+    sectors: Sector[];
     regions: Region[];
     funds: Fund[];
     score: number;
@@ -41,7 +41,7 @@ export interface Company {
     tags: Tag[];
 
     // Displayed in the company header to the right of the tags.
-    percentOwnership: string;
+    percentOwnership: number;
 
     // Displayed in the company header under the description as a list.
     dealTeam: TeamMember[];

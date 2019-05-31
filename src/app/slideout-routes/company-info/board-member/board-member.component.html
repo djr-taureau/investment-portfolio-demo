@@ -3,34 +3,40 @@
     <div class="board-members__label">BOARD MEMBERS ({{boardMembers.length}})</div>
     <mat-list>
         <mat-list-item *ngFor="let boardMember of boardMembers">
-            <div fxLayout="row"
-                 fxLayoutAlign="space-between center"
-                 fxLayoutGap="20px">
+            <div class="row"
+                 fxLayout="row"
+                 fxFlex="0 0 inherit"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="10px">
                 <img matListAvatar
                      src="{{boardMember.avatar}}">
                 <div fxLayout="row"
+                     fxFlex="0 0 30"
                      fxLayoutAlign="start center"
                      fxLayoutGap="5px">
                     <div class="row__name">{{boardMember.name | titlecase}} </div>
                     <div class="row__sinceDate">since {{boardMember.sinceDate}}</div>
                 </div>
                 <div fxLayout="row"
-                     fxLayoutAlign="space-between center"
+                     fxFlex="0 0 20"
+                     fxLayoutAlign="start center"
                      fxLayoutGap="5px">
                     <mat-icon>domain</mat-icon>
-                    <div class="row__company">{{boardMember.company | uppercase}}</div>
+                    <div class="row__company">{{boardMember.company | uppercase | sbpEllipsis: 25}}</div>
                 </div>
                 <div fxLayout="row"
-                     fxLayoutAlign="space-between center"
+                     fxFlex="0 0 15"
+                     fxLayoutAlign="start center"
                      fxLayoutGap="5px">
                     <mat-icon>phone</mat-icon>
                     <div class="row__phone">{{boardMember.phone}}</div>
                 </div>
                 <div fxLayout="row"
-                     fxLayoutAlign="space-between center"
+                     fxFlex="0 0 35"
+                     fxLayoutAlign="start center"
                      fxLayoutGap="5px">
                     <mat-icon>email</mat-icon>
-                    <div class="row__email">{{boardMember.email | uppercase}}</div>
+                    <div class="row__email">{{boardMember.email | uppercase | sbpEllipsis: 25}}</div>
                 </div>
             </div>
         </mat-list-item>
