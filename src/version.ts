@@ -24,12 +24,12 @@ export interface AppVersion {
 
 export const VERSION: AppVersion = {
     dirty: true,
-    raw: "fe52b10-dirty",
-    hash: "fe52b10",
+    raw: "b5eac34-dirty",
+    hash: "b5eac34",
     distance: null,
     tag: null,
     semver: null,
-    suffix: "fe52b10-dirty",
+    suffix: "b5eac34-dirty",
     semverString: null,
-    version: "0.0.60"
+    version: "0.0.61"
 };

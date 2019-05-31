@@ -6,7 +6,7 @@ import { PortfolioListingSummaryComponent } from "./portfolio-listing-summary/po
 import { PortfolioListingSummaryContainerComponent } from "./portfolio-listing-summary/portfolio-listing-summary.container.component";
 import { PortfolioListingComponent } from "./portfolio-listing.component";
 import { PortfolioListingContainerComponent } from "./portfolio-listing.container.component";
-
+// test
 const COMPONENTS: any = [
     PortfolioListingContainerComponent,
     PortfolioListingComponent,
