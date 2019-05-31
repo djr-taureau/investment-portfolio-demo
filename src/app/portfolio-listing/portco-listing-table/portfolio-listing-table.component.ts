@@ -84,6 +84,17 @@ export class PortfolioListingTableComponent implements OnInit {
         this.dataProvider.filter = performance.now().toString();
     }
 
+    /**
+     * filter data grid by string search.
+     * @param filterValue
+     *
+     */
+    public applyFilter(filterValue: string) {
+        filterValue = filterValue.trim(); // Remove whitespace
+        filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+        // this.dataSource.filter = filterValue;
+    }
+
     public checkGroupByColumn(field, add) {
         let found = null;
         for (const column of this.groupByColumns) {
@@ -195,7 +206,6 @@ export class PortfolioListingTableComponent implements OnInit {
     public isGroup(index, item): boolean {
         return item.level;
     }
-
     /**
      * Creates the table's data provider from a list of companies.
      * @param value
