@@ -1,16 +1,16 @@
 import { CommonModule } from "@angular/common";
 import { SharedModule } from "../shared/shared.module";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { PortfolioListingTableComponent } from "./portco-listing-table/portfolio-listing-table.component";
 import { PortfolioListingComponent } from "./portfolio-listing.component";
-import { PortfolioListingContainerComponent } from "./portfolio-listing.container.component";
+import { PortfolioListingContainer } from "./portfolio-listing.container";
 
-const COMPONENTS: any = [PortfolioListingContainerComponent, PortfolioListingComponent];
+const COMPONENTS: any = [PortfolioListingContainer, PortfolioListingComponent, PortfolioListingTableComponent];
 const PORTFOLIO_COMPANIES_ROUTES: Routes = [
     {
         path: "",
-        component: PortfolioListingContainerComponent
+        component: PortfolioListingContainer
     }
 ];
 @NgModule({

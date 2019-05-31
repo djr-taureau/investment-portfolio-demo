@@ -1,10 +1,10 @@
 import * as fromState from "./core/state/";
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { slideFromRight } from "./shared/animations/slide.animations";
 import { Logger } from "./util/logger";
+
 @Component({
     selector: "sbp-root",
     templateUrl: "./app.component.html",
@@ -17,6 +17,9 @@ export class AppComponent implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("AppComponent");
 
+    /**
+     * Flag indicating if the slide-out is visible.
+     */
     public showSlideout$: Observable<boolean>;
 
     /**
@@ -30,6 +33,7 @@ export class AppComponent implements OnInit {
      * Initialize the component.
      */
     public ngOnInit(): void {
+        AppComponent.logger.debug(`ngOnInit()`);
         this.showSlideout$ = this.store$.pipe(select(fromState.getShowSlideout));
     }
 }

@@ -36,6 +36,7 @@ const routes: Routes = [
     //     loadChildren: "./product/product.module#FooModule",
     //     canActivate: [AuthRouteGuard]
     // },
+    { path: "", redirectTo: "/portfolio-listing", pathMatch: "full" },
     {
         path: AppRoutes.appRoutePaths.companyInfo,
         loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"

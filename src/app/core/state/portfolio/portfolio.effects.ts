@@ -3,18 +3,20 @@ import { Action } from "@ngrx/store";
 import { Effect, Actions, ofType } from "@ngrx/effects";
 import { Observable, defer, of } from "rxjs";
 import { PortfolioActions, PortfolioApiActions } from "./actions-index";
-import { switchMap, toArray, map, catchError, mergeMap } from "rxjs/operators";
+import { map, catchError, exhaustMap } from "rxjs/operators";
 import { Company } from "../../domain/company.model";
 import { CompanyService } from "../../service/company.service";
 
 @Injectable()
 export class PortfolioEffects {
     @Effect()
-    loadCollection$: Observable<Action> = this.actions$.pipe(
+    loadPortfolio$: Observable<Action> = this.actions$.pipe(
         ofType(PortfolioActions.loadPortfolio.type),
-        switchMap(() =>
+        exhaustMap(() =>
             this.companyService.getCompanies().pipe(
-                map((companies: Company[]) => PortfolioApiActions.loadCompaniesSuccess({ companies })),
+                map((companies: Company[]) => {
+                    return PortfolioApiActions.loadCompaniesSuccess({ companies });
+                }),
                 catchError((error) => of(PortfolioApiActions.loadCompaniesFailure({ error })))
             )
         )

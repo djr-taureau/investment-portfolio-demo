@@ -15,8 +15,8 @@ export class ApiEndpointService {
      * Build: Uses the compile time provided API URL.
      */
     public static BASE_URL = {
-        LOCAL: "http://localhost:4301/",
-        REMOTE: "https://y4wsszfouk.execute-api.us-east-2.amazonaws.com/prod/",
+        LOCAL: "http://localhost:4401/",
+        REMOTE: "https://remote.api.com/",
         BUILD: "https://DOMAIN_URL"
     };
 
@@ -42,13 +42,6 @@ export class ApiEndpointService {
     };
 
     /**
-     * Map of domains for API endpoints.
-     */
-    public static DOMAIN = {
-        LOCAL_DEV: "localhost:4301/"
-    };
-
-    /**
      * Map of contexts for API endpoints.
      */
     public static CONTEXT = "api/";
@@ -64,7 +57,8 @@ export class ApiEndpointService {
     public static ENDPOINT = {
         LOGIN: `auth/login/`,
         REGISTER: `auth/register/`,
-        EXAMPLE_DETAILS: "example/{id}/details/{id}"
+        EXAMPLE_DETAILS: "example/{id}/details/{id}",
+        COMPANIES: "companies"
     };
 
     /**
@@ -80,7 +74,7 @@ export class ApiEndpointService {
      * keep this dumb simple.
      */
     public static getEndpoint(endpoint: string, params?: {}): string {
-        const url = `${ApiEndpointService.getBaseUrl()}${ApiEndpointService.CONTEXT}${endpoint}`;
+        const url = `${ApiEndpointService.getBaseUrl()}${endpoint}`;
         return StringUtil.replaceTokens(url, params);
     }
 
