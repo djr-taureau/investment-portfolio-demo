@@ -1,15 +1,15 @@
-import { GoToPortfolioListing } from "./flow.actions";
 import * as FlowActions from "./flow.actions";
 import { Action, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { ActivatedRoute, Router } from "@angular/router";
 import { appRoutePaths } from "../../../app.routes";
-import { concatMap, map } from "rxjs/operators";
+import { concatMap, map, tap } from "rxjs/operators";
 import { FlowActionTypes } from "./flow.actions";
 import { Go } from "../router/router.action";
 import { Injectable } from "@angular/core";
+import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
-import { ToggleSlideout } from "../layout/layout.actions";
+import { SetSelectedPortfolioLink, ToggleSlideout } from "../layout/layout.actions";
 
 @Injectable()
 export class FlowEffect {
@@ -21,7 +21,10 @@ export class FlowEffect {
     openCompanyInfoPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.OpenCompanyInfoPanel>(FlowActionTypes.OpenCompanyInfoPanel),
         map((action) => action.payload),
-        concatMap((companyId) => [new ToggleSlideout(true), new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve" } })])
+        concatMap((companyId) => [
+            new ToggleSlideout(true),
+            new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve", skipLocationChange: true } })
+        ])
     );
 
     /**
@@ -33,7 +36,7 @@ export class FlowEffect {
         ofType<FlowActions.CloseCompanyInfoPanel>(FlowActionTypes.CloseCompanyInfoPanel),
         map((action) => action.payload),
         concatMap((companyId) => [
-            new Go({ path: [appRoutePaths.companyInfo], extras: { queryParamsHandling: "preserve" } }),
+            new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve", skipLocationChange: true } }),
             new ToggleSlideout(false)
         ])
     );
@@ -42,10 +45,13 @@ export class FlowEffect {
      * Handles clicks to go to the portolio listing
      */
     @Effect()
-    goToPortfolioListing: Observable<Action> = this.actions$.pipe(
-        ofType<FlowActions.GoToPortfolioListing>(FlowActionTypes.GoToPortfolioListing),
+    portfolioNavigationLinkClicked: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.PortfolioNavigationItemClicked>(FlowActionTypes.PortfolioNavigationItemClicked),
         map((action) => action.payload),
-        concatMap((companyId) => [new Go({ path: [appRoutePaths.portfolioListing], extras: { queryParamsHandling: "preserve" } })])
+        concatMap((link: NavigationBarLink) => [
+            new Go({ path: link.route, extras: { queryParamsHandling: "preserve" } }),
+            new SetSelectedPortfolioLink(link.route)
+        ])
     );
 
     /**

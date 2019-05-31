@@ -5,6 +5,7 @@ import { FooterModule } from "./footer/footer.module";
 import { HeaderModule } from "./header/header.module";
 import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { PortfolioNavbarModule } from "./portfolio-navbar/portfolio-navbar.module";
 import { SlideoutModule } from "./slideout/slideout.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import "hammerjs";
@@ -21,11 +22,12 @@ const MODULES = [
     ChartsModule,
 
     // Application Shared Feature Modules
+    DirectivesModule,
     HeaderModule,
     FooterModule,
     MaterialModule,
-    SlideoutModule,
-    DirectivesModule
+    PortfolioNavbarModule,
+    SlideoutModule
 ];
 
 @NgModule({

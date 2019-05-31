@@ -70,3 +70,13 @@ export const getShowSlideout = createSelector(
     selectLayoutState,
     fromLayout.getShowSlideout
 );
+
+export const getPortfolioNavLinks = createSelector(
+    selectLayoutState,
+    fromLayout.getPortfolioNavLinks
+);
+
+export const getSelectedPortfolioNavLink = createSelector(
+    selectLayoutState,
+    fromLayout.getSelectedPortfolioNavLink
+);

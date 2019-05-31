@@ -10,7 +10,6 @@ const COMPONENTS: any = [PortfolioListingContainerComponent, PortfolioListingCom
 const PORTFOLIO_COMPANIES_ROUTES: Routes = [
     {
         path: "",
-        outlet: "",
         component: PortfolioListingContainerComponent
     }
 ];
