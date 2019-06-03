@@ -2,8 +2,6 @@
 
 This project leverages the following:
 
-Trigger a CI Build test. 
-
 * Node  vr 10.15.3 -- required version.
 * This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 * [NGRX](https://github.com/ngrx/platform) for state management.
