@@ -2,7 +2,7 @@
 
 .mat-toolbar {
     background-color: $header-background;
-    font-family: Montserrat, sans-serif;
+    //font-family: Montserrat, sans-serif;
     color: $header-font;
 
     mat-icon {
@@ -20,7 +20,7 @@
             position: relative;
             border-radius: 0px;
             padding: 14px 16px;
-            font-family: Montserrat, sans-serif;
+            //font-family: Montserrat, sans-serif;
 
             &.cdk-mouse-focused {
                 &::after {
@@ -41,7 +41,7 @@
         right: 0;
 
         .mat-button {
-            font-family: Montserrat, sans-serif;
+            //font-family: Montserrat, sans-serif;
 
             i {
                 font-size: 20px;
@@ -56,5 +56,5 @@
 }
 
 .mat-menu-item {
-    font-family: Montserrat, sans-serif;
+    //font-family: Montserrat, sans-serif;
 }
