@@ -4,7 +4,7 @@ import { Store } from "@ngrx/store";
 @Component({
     selector: "sbp-portfolio-listing-summary",
     templateUrl: "./portfolio-listing-summary.component.html",
-    styleUrls: ["/portfolio-listing-summary.component.scss"]
+    styleUrls: ["./portfolio-listing-summary.component.scss"]
 })
 export class PortfolioListingSummaryComponent implements OnInit {
     @Input()
