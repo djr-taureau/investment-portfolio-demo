@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { appRoutePaths } from "../../../app.routes";
 import { concatMap, map, tap } from "rxjs/operators";
 import { FlowActionTypes } from "./flow.actions";
-import { Go, GoToCompanyInfo, GoToPortfolioListing } from "../router/router.action";
+import { Go, GoToCompanyInfo, GoToPortfolioDashboard, GoToPortfolioListing } from "../router/router.action";
 import { Injectable } from "@angular/core";
 import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
@@ -52,6 +52,9 @@ export class FlowEffect {
             switch (link.route) {
                 case appRoutePaths.portfolioListing:
                     actions.push(new GoToPortfolioListing());
+                    break;
+                case appRoutePaths.portfolioDashboard:
+                    actions.push(new GoToPortfolioDashboard());
                     break;
                 default:
                     break;

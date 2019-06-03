@@ -9,14 +9,14 @@ import { select, Store } from "@ngrx/store";
 import { SetSelectedPortfolioLink } from "../core/state/layout/layout.actions";
 
 @Component({
-    selector: "sbp-portfolio-listing-container",
-    template: "<sbp-portfolio-listing></sbp-portfolio-listing>"
+    selector: "sbp-portfolio-dashboard-container",
+    template: "<sbp-portfolio-dashboard></sbp-portfolio-dashboard>"
 })
-export class PortfolioListingContainerComponent implements OnInit {
+export class PortfolioDashboardContainerComponent implements OnInit {
     /**
      * Internal logger.
      */
-    private static logger: Logger = Logger.getLogger("PortfolioCompaniesContainerComponent");
+    private static logger: Logger = Logger.getLogger("PortfolioDashboardContainerComponent");
 
     /**
      * Initialize the component.
@@ -24,7 +24,7 @@ export class PortfolioListingContainerComponent implements OnInit {
     public ngOnInit(): void {
         const links$ = this.store$.pipe(select(getPortfolioNavLinks));
         links$.first().subscribe((links) => {
-            const matchingLink = _.find(links, (link: NavigationBarLink) => link.route === appRoutePaths.portfolioListing);
+            const matchingLink = _.find(links, (link: NavigationBarLink) => link.route === appRoutePaths.portfolioDashboard);
             if (matchingLink) {
                 this.store$.dispatch(new SetSelectedPortfolioLink(matchingLink.route));
             }
