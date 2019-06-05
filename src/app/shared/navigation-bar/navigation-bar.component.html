@@ -6,11 +6,15 @@
              fxLayout="row"
              fxLayoutAlign="center center"
              fxLayoutGap="8px"
-             [ngClass]="{'selected':link.route === selectedLink, 'disabled': !link.enabled}"
-             [attr.disabled]="!link.enabled || null"
-             (click)="onLinkClick(link)">
-            <div>{{link.icon}}</div>
+             [ngClass]="link | sbpCalculateNavBarClasses: selectedLink: hovered"
+             (click)="onLinkClick(link)"
+             (mouseover)="onMouseOver(link)"
+             (mouseout)="onMouseOut(link)">
+            <img src="{{link.icon}}"
+                 class="overview">
             <div class="name">{{link.label}}</div>
+            <div class="count"
+                 *ngIf="link.showItemCount">(42)</div>
         </div>
     </ng-container>
 </div>

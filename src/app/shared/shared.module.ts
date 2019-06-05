@@ -10,6 +10,8 @@ import { SlideoutModule } from "./slideout/slideout.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import "hammerjs";
 import { DirectivesModule } from "./directives/directives.module";
+import { PipeModule } from "./pipes/pipe.module";
+import { NavigationBarModule } from "./navigation-bar/navigation-bar.module";
 
 const MODULES = [
     // Angular Modules
@@ -27,7 +29,8 @@ const MODULES = [
     FooterModule,
     MaterialModule,
     PortfolioNavbarModule,
-    SlideoutModule
+    SlideoutModule,
+    PipeModule
 ];
 
 @NgModule({

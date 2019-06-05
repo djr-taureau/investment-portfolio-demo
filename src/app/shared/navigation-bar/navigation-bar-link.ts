@@ -4,4 +4,5 @@ export interface NavigationBarLink {
     route: string;
     enabled: boolean;
     itemcount?: number;
+    showItemCount: boolean;
 }

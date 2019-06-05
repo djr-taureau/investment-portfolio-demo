@@ -5,6 +5,8 @@ export const appRoutePaths = {
     companyInfo: "company-info",
     portfolioListing: "portfolio-listing",
     portfolioDashboard: "portfolio-dashboard",
+    portfolioFinancials: "portfolio-financials",
+    portfolioDocuments: "portfolio-documents",
     portfolioMapView: "portfolio-map-view",
     portfolioCalendarView: "portfolio-calendar-view",
     portfolioInitiatives: "portfolio-initiatives"

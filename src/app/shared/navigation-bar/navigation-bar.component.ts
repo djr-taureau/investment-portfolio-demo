@@ -31,6 +31,8 @@ export class NavigationBarComponent implements OnInit {
     @Output()
     public linkClick: EventEmitter<NavigationBarLink> = new EventEmitter<NavigationBarLink>();
 
+    public hovered = "";
+
     /**
      * Tracks the loop for performance
      * @param index
@@ -50,6 +52,29 @@ export class NavigationBarComponent implements OnInit {
         }
     }
 
+    /**
+     * Moving the complex styling logic here
+     * @param link
+     */
+    // public calculateClasses(link: NavigationBarLink): object {
+    //     const result = {
+    //         selected: link.route === this.selectedLink,
+    //         disabled: link.route !== this.selectedLink && link.route !== this.hovered,
+    //         hovered: link.route !== this.selectedLink && link.route === this.hovered
+    //     };
+    //     return result;
+    // }
+
+    /**
+     * Ways to keep track of which link is currently hovered
+     * @param link
+     */
+    public onMouseOver(link: NavigationBarLink) {
+        this.hovered = link.route;
+    }
+    public onMouseOut(link: NavigationBarLink) {
+        this.hovered = "";
+    }
     /**
      * Initialize the component.
      */

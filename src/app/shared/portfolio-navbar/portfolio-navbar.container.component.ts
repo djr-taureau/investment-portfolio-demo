@@ -5,7 +5,9 @@ import { Observable } from "rxjs";
 import { PortfolioNavigationItemClicked } from "../../core/state/flow/flow.actions";
 import { Logger } from "../../util/logger";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
+
 import * as fromState from "../../core/state/";
+import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
 
 @Component({
     selector: "sbp-portfolio-navbar-container",

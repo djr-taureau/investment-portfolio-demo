@@ -19,6 +19,17 @@
             border-bottom: 4px solid $light-navy;
         }
 
+        &.disabled {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $grey-blue;
+        }
+
         .name {
             opacity: 1;
             font-family: PostGrotesk;
@@ -31,5 +42,26 @@
             text-transform: uppercase;
         }
 
+        .count {
+            color: $grey-blue;
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+        }
+
+    }
+
+    .hovered {
+        color: $light-navy !important;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        opacity: 1 !important;
+        @extend .hand-cursor;
+        background-color: rgba($light-navy, .07) !important; //#124F8C26;
     }
 }
