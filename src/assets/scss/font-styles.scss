@@ -1,0 +1,39 @@
+/** FONT FACE IMPORTS */
+@import "fonts/post-grotesk";
+@import "variables";
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.blocked {
+    text-decoration: line-through !important;
+
+    .strong {
+        font-weight: bold;
+    }
+}
+
+.all-normal {
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    font-weight: normal;
+}

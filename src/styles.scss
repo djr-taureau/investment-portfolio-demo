@@ -1,7 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
+//@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700");
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import "assets/scss/variables";
+@import "assets/scss/font-styles";
 @import "assets/scss/pointers";
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
@@ -10,7 +11,7 @@ body {
     padding: 0 0 51px 0;
     margin: 0;
     background: #ebeff5;
-    font-family: Montserrat, sans-serif;
+    font-family: PostGrotesk, sans-serif;
 }
 
 .disabled {

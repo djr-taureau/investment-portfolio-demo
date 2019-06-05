@@ -44,6 +44,10 @@ const routes: Routes = [
     {
         path: AppRoutes.appRoutePaths.portfolioListing,
         loadChildren: "./portfolio-listing/portfolio-listing.module#PortfolioListingModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.portfolioDashboard,
+        loadChildren: "./portfolio-dashboard/portfolio-dashboard.module#PortfolioDashboardModule"
     }
 
     //////////////////////////////////////////////////

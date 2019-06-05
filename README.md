@@ -9,6 +9,10 @@ This project leverages the following:
 * Using [NGRX](https://github.com/ngrx/platform) store selectors in an HTTP request interceptor to automatically add the auth token to request headers.
 * Protected Angular routes using [Route Guards](https://angular.io/guide/router#milestone-5-route-guards) that determine if the user is authenticated via [NGRX](https://github.com/ngrx/platform) selectors.
 
+
+## Build Status
+[![Build Status](https://dev.azure.com/sb-azure-devops/Prism/_apis/build/status/Caserta-Concepts.sb-fe?branchName=develop)](https://dev.azure.com/sb-azure-devops/Prism/_build/latest?definitionId=1&branchName=develop)
+
 ## Quick Start
 
 * Clone the Ordering app UI: `git clone TODO/sbproot.git`

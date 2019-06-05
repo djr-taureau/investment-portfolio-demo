@@ -45,7 +45,9 @@ export class NavigationBarComponent implements OnInit {
      * @param link
      */
     public onLinkClick(link: NavigationBarLink): void {
-        this.linkClick.emit(link);
+        if (link.enabled) {
+            this.linkClick.emit(link);
+        }
     }
 
     /**

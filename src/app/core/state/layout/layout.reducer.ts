@@ -15,8 +15,8 @@ export const initialState: LayoutState = {
         {
             icon: "",
             label: "Overview",
-            route: appRoutePaths.portfolioOverview,
-            enabled: false
+            route: appRoutePaths.portfolioDashboard,
+            enabled: true
         },
         {
             icon: "",

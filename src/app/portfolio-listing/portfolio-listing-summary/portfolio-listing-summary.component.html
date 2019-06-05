@@ -1,0 +1,45 @@
+<div class="item-container"
+     xLayout="row"
+     fxLayoutAlign="center center"
+     fxLayoutGap="24px">
+
+    <div class="item-cell"
+         fxLayout="column"
+         fxLayoutAlign="start center"
+         fxLayoutGap="12px">
+        <div class="item-cell__label">Companies</div>
+        <div class="item-cell__value">{{companyCount}}</div>
+    </div>
+
+    <div class="item-cell"
+         fxLayout="column"
+         fxLayoutAlign="start center"
+         fxLayoutGap="12px">
+        <div class="item-cell__label">Invested / Total Fund ($B)</div>
+        <div class="item-cell__value">{{invested}} / <span class="item-cell__value--muted">{{totalFund}}</span></div>
+    </div>
+
+    <div class="item-cell"
+         fxLayout="column"
+         fxLayoutAlign="start center"
+         fxLayoutGap="12px">
+        <div class="item-cell__label">Valuation ($B)</div>
+        <div class="item-cell__value">{{valuation}}</div>
+    </div>
+
+    <div class="item-cell"
+         fxLayout="column"
+         fxLayoutAlign="start center"
+         fxLayoutGap="12px">
+        <div class="item-cell__label">MOIC</div>
+        <div class="item-cell__value">{{moic}}</div>
+    </div>
+
+    <div class="item-cell"
+         fxLayout="column"
+         fxLayoutAlign="start center"
+         fxLayoutGap="12px">
+        <div class="item-cell__label">IRR</div>
+        <div class="item-cell__value">{{irr | percent: '2.2'}}</div>
+    </div>
+</div>

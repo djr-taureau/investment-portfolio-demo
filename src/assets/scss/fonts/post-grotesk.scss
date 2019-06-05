@@ -1,0 +1,101 @@
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-Bold.otf') format("opentype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-BoldItalic.otf') format("opentype");
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-Medium.otf') format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-MediumItalic.otf') format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-Light.otf') format("opentype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-LightItalic.otf') format("opentype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-Book.otf') format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: PostGrotesk;
+    src: url('/assets/fonts/PostGrotesk/PostGrotesk-BookItalic.otf') format("opentype");
+    font-weight: 500;
+    font-style: italic;
+}
+
+/** POSTGROTESTK */
+%font-face-post-grotesk {
+    font-family: PostGrotesk;
+    font-weight: normal;
+    font-style: normal;
+}
+
+%font-face-post-grotesk-italic {
+    font-family: PostGrotesk;
+    font-weight: 400;
+    font-style: italic;
+}
+
+%font-face-post-grotesk-med {
+    font-family: PostGrotesk;
+    font-weight: 500;
+}
+
+%font-face-post-grotesk-med-italic {
+    font-family: PostGrotesk;
+    font-weight: 500;
+    font-style: italic;
+}
+
+%font-face-post-grotesk-bold {
+    font-family: PostGrotesk;
+    font-weight: bold; //700
+}
+
+%font-face-post-grotesk-bold-italic {
+    font-family: PostGrotesk;
+    font-weight: bold; //  700
+    font-style: italic;
+}
+
+
+%font-face-post-grotesk {
+    font-family: PostGrotesk;
+}
+
+.font-face-post-grotesk {
+    @extend %font-face-post-grotesk;
+}

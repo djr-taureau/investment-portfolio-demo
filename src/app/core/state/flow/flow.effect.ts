@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { appRoutePaths } from "../../../app.routes";
 import { concatMap, map, tap } from "rxjs/operators";
 import { FlowActionTypes } from "./flow.actions";
-import { Go } from "../router/router.action";
+import { Go, GoToCompanyInfo, GoToPortfolioDashboard, GoToPortfolioListing } from "../router/router.action";
 import { Injectable } from "@angular/core";
 import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
@@ -21,10 +21,7 @@ export class FlowEffect {
     openCompanyInfoPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.OpenCompanyInfoPanel>(FlowActionTypes.OpenCompanyInfoPanel),
         map((action) => action.payload),
-        concatMap((companyId) => [
-            new ToggleSlideout(true),
-            new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve", skipLocationChange: true } })
-        ])
+        concatMap((companyId) => [new ToggleSlideout(true), new GoToCompanyInfo()])
     );
 
     /**
@@ -36,7 +33,7 @@ export class FlowEffect {
         ofType<FlowActions.CloseCompanyInfoPanel>(FlowActionTypes.CloseCompanyInfoPanel),
         map((action) => action.payload),
         concatMap((companyId) => [
-            new Go({ path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve", skipLocationChange: true } }),
+            // TODO: GMAN: Come up with action to clear the current route out of the sidebar-outlet
             new ToggleSlideout(false)
         ])
     );
@@ -48,10 +45,22 @@ export class FlowEffect {
     portfolioNavigationLinkClicked: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.PortfolioNavigationItemClicked>(FlowActionTypes.PortfolioNavigationItemClicked),
         map((action) => action.payload),
-        concatMap((link: NavigationBarLink) => [
-            new Go({ path: link.route, extras: { queryParamsHandling: "preserve" } }),
-            new SetSelectedPortfolioLink(link.route)
-        ])
+        concatMap((link: NavigationBarLink) => {
+            const actions = [];
+            actions.push(new SetSelectedPortfolioLink(link.route));
+
+            switch (link.route) {
+                case appRoutePaths.portfolioListing:
+                    actions.push(new GoToPortfolioListing());
+                    break;
+                case appRoutePaths.portfolioDashboard:
+                    actions.push(new GoToPortfolioDashboard());
+                    break;
+                default:
+                    break;
+            }
+            return actions;
+        })
     );
 
     /**
