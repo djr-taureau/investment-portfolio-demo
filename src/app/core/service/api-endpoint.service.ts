@@ -1,4 +1,3 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { UrlUtil } from "../../util/url.util";
 import * as StringUtil from "../../util/string.util";
@@ -44,7 +43,7 @@ export class ApiEndpointService {
     /**
      * Map of contexts for API endpoints.
      */
-    public static CONTEXT = "api/";
+    public static CONTEXT = "api";
 
     /**
      * Map of contexts for API endpoints.
@@ -62,9 +61,14 @@ export class ApiEndpointService {
     };
 
     /**
+     * List of secure API endpoints.
+     */
+    public static secureEndpoints = [ApiEndpointService.ENDPOINT.COMPANIES];
+
+    /**
      * Constructor.
      */
-    constructor(private http: HttpClient) {}
+    constructor() {}
 
     /**
      * Constructs an API endpoint.
@@ -108,12 +112,11 @@ export class ApiEndpointService {
 
     /**
      * Determines if the requested URL is a secure API endpoint.
-     * @param {string} url
+     * @param {string} requestedUrl
      * @returns {boolean}
      */
-    public static isSecureEndpoint(url: string = ""): boolean {
-        const isExample = url.toLowerCase().indexOf(ApiEndpointService.ENDPOINT.EXAMPLE_DETAILS) > -1;
-        return isExample;
+    public static isSecureEndpoint(requestedUrl: string = ""): boolean {
+        return this.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
     }
 
     /**

@@ -26,10 +26,13 @@ export class CompanyService {
     /**
      * Retrieves all the companies
      */
-    public getCompanies(): Observable<Company[]> {
-        CompanyService.logger.debug(`getCompanies()`);
+    public getCompanies(isMock: boolean = false): Observable<Company[]> {
+        CompanyService.logger.debug(`getCompanies( isMock: ${isMock} )`);
 
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
+        const url = isMock
+            ? "https://prism-dev-api-management.azure-api.net/sbdevapi5/companies"
+            : ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
+
         return this.http.get<Company[]>(url).pipe(
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`companiesFault( ${fault.error.message} )`);

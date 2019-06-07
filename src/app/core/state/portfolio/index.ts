@@ -56,14 +56,17 @@ export const getSearchCompanyIds = createSelector(
     getSearchState,
     fromSearch.getIds
 );
+
 export const getSearchQuery = createSelector(
     getSearchState,
     fromSearch.getQuery
 );
+
 export const getSearchLoading = createSelector(
     getSearchState,
     fromSearch.getLoading
 );
+
 export const getSearchError = createSelector(
     getSearchState,
     fromSearch.getError
@@ -86,13 +89,20 @@ export const getPortfolioLoaded = createSelector(
     getPortfolioState,
     fromPortfolio.getLoaded
 );
+
 export const getPortfolioLoading = createSelector(
     getPortfolioState,
     fromPortfolio.getLoading
 );
+
 export const getPortfolioCompanyIds = createSelector(
     getPortfolioState,
     fromPortfolio.getIds
+);
+
+export const getMocks = createSelector(
+    getPortfolioState,
+    fromPortfolio.getMocks
 );
 
 export const getPortfolioCompanies = createSelector(

@@ -34,7 +34,14 @@
 
         <mat-menu #menu="matMenu"
                   class="user-mat">
-            <button mat-menu-item>Logout</button>
+            <button mat-menu-item
+                    (click)="onLogin($event)">
+                Login
+            </button>
+            <button mat-menu-item
+                    (click)="onLogout($event)">
+                Logout
+            </button>
         </mat-menu>
     </div>
 

@@ -1,31 +1,30 @@
 import { Action } from "@ngrx/store";
-import { Auth, ChangePasswordCredentials, LoginCredentials, RegisterCredentials } from "../../domain/auth.model";
+import { Auth } from "../../domain/auth.model";
 
 export enum AuthActionTypes {
     Login = "[Auth] Login",
+    LoginPending = "[Auth] LoginPending",
     LoginSuccess = "[Auth] LoginSuccess",
     LoginFault = "[Auth] LoginFault",
 
-    Register = "[Auth] Register",
-    RegisterSuccess = "[Auth] RegisterSuccess",
-    RegisterFault = "[Auth] RegisterFault",
+    Logout = "[Auth] Logout",
+    LogoutPending = "[Auth] LogoutPending",
+    LogoutSuccess = "[Auth] LogoutSuccess",
+    LogoutFault = "[Auth] LogoutFault",
 
-    ChangePassword = "[Auth] ChangePassword",
-    ChangePasswordSuccess = "[Auth] ChangePasswordSuccess",
-    ChangePasswordFault = "[Auth] ChangePasswordFault",
-
-    NavigateToLogin = "[Auth] NavigateToLogin",
-    NavigateToRegister = "[Auth] NavigateToRegister",
-
-    SaveTempPassword = "[Auth] SaveTempPassword",
-    ResetAuthError = "[Auth] ResetAuthError",
-    ResetPending = "[Auth] ResetPending"
+    NavigateToLogin = "[Auth] NavigateToLogin"
 }
 
 export class Login implements Action {
     readonly type = AuthActionTypes.Login;
 
-    constructor(public payload: LoginCredentials) {}
+    constructor() {}
+}
+
+export class LoginPending implements Action {
+    readonly type = AuthActionTypes.LoginPending;
+
+    constructor() {}
 }
 
 export class LoginSuccess implements Action {
@@ -40,20 +39,26 @@ export class LoginFault implements Action {
     constructor(public payload: string) {}
 }
 
-export class Register implements Action {
-    readonly type = AuthActionTypes.Register;
-
-    constructor(public payload: RegisterCredentials) {}
-}
-
-export class RegisterSuccess implements Action {
-    readonly type = AuthActionTypes.RegisterSuccess;
+export class Logout implements Action {
+    readonly type = AuthActionTypes.Logout;
 
     constructor() {}
 }
 
-export class RegisterFault implements Action {
-    readonly type = AuthActionTypes.RegisterFault;
+export class LogoutPending implements Action {
+    readonly type = AuthActionTypes.LogoutPending;
+
+    constructor() {}
+}
+
+export class LogoutSuccess implements Action {
+    readonly type = AuthActionTypes.LogoutSuccess;
+
+    constructor() {}
+}
+
+export class LogoutFault implements Action {
+    readonly type = AuthActionTypes.LogoutFault;
 
     constructor(public payload: string) {}
 }
@@ -64,60 +69,4 @@ export class NavigateToLogin implements Action {
     constructor() {}
 }
 
-export class ChangePassword implements Action {
-    readonly type = AuthActionTypes.ChangePassword;
-
-    constructor(public payload: ChangePasswordCredentials) {}
-}
-
-export class ChangePasswordSuccess implements Action {
-    readonly type = AuthActionTypes.ChangePasswordSuccess;
-
-    constructor(public payload: Auth) {}
-}
-
-export class ChangePasswordFault implements Action {
-    readonly type = AuthActionTypes.ChangePasswordFault;
-
-    constructor(public payload: string) {}
-}
-
-export class NavigateToRegister implements Action {
-    readonly type = AuthActionTypes.NavigateToRegister;
-
-    constructor() {}
-}
-
-export class NewPasswordRequired implements Action {
-    readonly type = AuthActionTypes.SaveTempPassword;
-
-    constructor(public payload: string) {}
-}
-
-export class ResetAuthError implements Action {
-    readonly type = AuthActionTypes.ResetAuthError;
-
-    constructor() {}
-}
-
-export class ResetPending implements Action {
-    readonly type = AuthActionTypes.ResetPending;
-
-    constructor() {}
-}
-
-export type AuthActions =
-    | Login
-    | LoginSuccess
-    | LoginFault
-    | Register
-    | RegisterSuccess
-    | RegisterFault
-    | ChangePassword
-    | ChangePasswordSuccess
-    | ChangePasswordFault
-    | NavigateToLogin
-    | NavigateToRegister
-    | NewPasswordRequired
-    | ResetAuthError
-    | ResetPending;
+export type AuthActions = Login | LoginPending | LoginSuccess | LoginFault | Logout | LogoutPending | LogoutSuccess | LogoutFault | NavigateToLogin;

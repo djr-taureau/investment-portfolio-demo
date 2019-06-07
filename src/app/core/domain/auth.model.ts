@@ -1,6 +1,6 @@
 export interface LoginCredentials {
-    username: string;
-    password: string;
+    username?: string;
+    password?: string;
 }
 
 export interface RegisterCredentials {
@@ -22,8 +22,8 @@ export interface ChangePasswordCredentials {
 }
 
 export interface Auth extends LoginCredentials {
-    accessToken: string;
-    idToken: string;
+    accessToken?: string;
+    idToken?: string;
     newPasswordRequired?: boolean;
 }
 

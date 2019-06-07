@@ -8,10 +8,9 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { PortfolioNavbarModule } from "./portfolio-navbar/portfolio-navbar.module";
 import { SlideoutModule } from "./slideout/slideout.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
-import "hammerjs";
 import { DirectivesModule } from "./directives/directives.module";
 import { PipeModule } from "./pipes/pipe.module";
-import { NavigationBarModule } from "./navigation-bar/navigation-bar.module";
+import "hammerjs";
 
 const MODULES = [
     // Angular Modules

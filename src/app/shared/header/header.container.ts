@@ -6,6 +6,7 @@ import { Observable, of } from "rxjs";
 import { Company } from "../../core/domain/company.model";
 import { CloseCompanyInfoPanel, OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
 import { Logger } from "../../util/logger";
+import * as AuthActions from "../../core/state/auth/auth.action";
 
 @Component({
     selector: "sbp-header-container",
@@ -15,6 +16,8 @@ import { Logger } from "../../util/logger";
             [teamMembers]="teamMembers$ | async"
             [slideoutOpen]="slideoutOpen$ | async"
             [selectedCompany]="selectedCompany$ | async"
+            (login)="login($event)"
+            (logout)="logout($event)"
             (selectCompany)="selectCompany($event)"
             (toggleSlideout)="toggleSlideout($event)"
         >
@@ -95,5 +98,21 @@ export class HeaderContainer implements OnInit {
         // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
         // this.store$.dispatch(new RegisterLayoutActions.SelectCompany(event.name));
         this.selectedCompany$ = of(event);
+    }
+
+    /**
+     * Dispatch action to login.
+     */
+    public login(event: any) {
+        HeaderContainer.logger.debug(`login()`);
+        this.store$.dispatch(new AuthActions.Login());
+    }
+
+    /**
+     * Dispatch action to logout.
+     */
+    public logout(event: any) {
+        HeaderContainer.logger.debug(`logout()`);
+        this.store$.dispatch(new AuthActions.Logout());
     }
 }

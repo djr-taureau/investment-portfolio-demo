@@ -37,22 +37,22 @@ export class PortfolioListingTableComponent implements OnInit {
     /**
      * Data table's data provider.
      */
-    private dataProvider = new MatTableDataSource([]);
+    public dataProvider = new MatTableDataSource([]);
 
     /**
      * List of columns for the table.
      */
-    private columns: Column[];
+    public columns: Column[];
 
     /**
      * List of columns displayed in the table.
      */
-    private displayedColumns: string[];
+    public displayedColumns: string[];
 
     /**
      * List of columns group in the table.
      */
-    private groupByColumns: string[];
+    public groupByColumns: string[];
 
     /**
      * Constructor.

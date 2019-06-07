@@ -13,9 +13,22 @@ export class PortfolioEffects {
     loadPortfolio$: Observable<Action> = this.actions$.pipe(
         ofType(PortfolioActions.loadPortfolio.type),
         exhaustMap(() =>
-            this.companyService.getCompanies().pipe(
+            this.companyService.getCompanies(false).pipe(
                 map((companies: Company[]) => {
                     return PortfolioApiActions.loadCompaniesSuccess({ companies });
+                }),
+                catchError((error) => of(PortfolioApiActions.loadCompaniesFailure({ error })))
+            )
+        )
+    );
+
+    @Effect()
+    loadMockPortfolio$: Observable<Action> = this.actions$.pipe(
+        ofType(PortfolioActions.loadMockPortfolio.type),
+        exhaustMap(() =>
+            this.companyService.getCompanies(true).pipe(
+                map((companies: Company[]) => {
+                    return PortfolioApiActions.loadMockCompaniesSuccess({ companies });
                 }),
                 catchError((error) => of(PortfolioApiActions.loadCompaniesFailure({ error })))
             )

@@ -44,15 +44,6 @@ function authSuccess(data: Auth, state: AuthState = initialState): AuthState {
     };
 }
 
-function regSuccess(state: AuthState = initialState): AuthState {
-    return {
-        ...state,
-        isRegistered: true,
-        pending: false,
-        error: ""
-    };
-}
-
 function authFailed(data: string, state: AuthState = initialState): AuthState {
     return {
         ...state,
@@ -63,53 +54,16 @@ function authFailed(data: string, state: AuthState = initialState): AuthState {
     };
 }
 
-function newPasswordRequired(data: string, state: AuthState = initialState): AuthState {
-    return {
-        ...state,
-        password: data,
-        newPasswordRequired: true
-    };
-}
-
-function resetAuthError(state: AuthState = initialState): AuthState {
-    return {
-        ...state,
-        error: ""
-    };
-}
-
-function resetPending(state: AuthState = initialState): AuthState {
-    return {
-        ...state,
-        pending: false
-    };
-}
-
 export function authReducer(state: AuthState = initialState, action: AuthActions): AuthState {
     switch (action.type) {
         case AuthActionTypes.Login:
-        case AuthActionTypes.Register:
             return initAuth(state);
 
         case AuthActionTypes.LoginSuccess:
-        case AuthActionTypes.ChangePasswordSuccess:
             return authSuccess(action.payload, state);
 
-        case AuthActionTypes.SaveTempPassword:
-            return newPasswordRequired(action.payload, state);
-
-        case AuthActionTypes.RegisterSuccess:
-            return regSuccess(state);
-
         case AuthActionTypes.LoginFault:
-        case AuthActionTypes.RegisterFault:
             return authFailed(action.payload, state);
-
-        case AuthActionTypes.ResetAuthError:
-            return resetAuthError(state);
-
-        case AuthActionTypes.ResetPending:
-            return resetPending(state);
 
         default:
             return state;

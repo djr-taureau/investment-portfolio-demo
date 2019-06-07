@@ -32,7 +32,9 @@
               },
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/adal-angular/dist/adal.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -92,7 +94,9 @@
               },
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/adal-angular/dist/adal.min.js"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
