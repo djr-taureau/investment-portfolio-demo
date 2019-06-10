@@ -1,0 +1,29 @@
+<div class="example-wrapper">
+    <!-- ICON IN THE BOX -->
+    <kendo-dropdownlist [data]="data"
+                        [textField]="'text'"
+                        [valueField]="'id'"
+                        [valuePrimitive]="false"
+                        [(ngModel)]="selectedItem"
+                        [filterable]="true"
+                        (filterChange)="handleFilter($event)"
+                        [popupSettings]="popupSettings"
+                        class="list">
+        <!-- THIS IS WHAT POPULATES THE COMBO AFTER SELECTION -->
+        <ng-template kendoDropDownListValueTemplate
+                     let-dataItem>
+            <img *ngIf="dataItem?.icon"
+                 class="icon"
+                 matListAvatar
+                 src="{{dataItem?.icon}}"> {{ dataItem?.text }}
+        </ng-template>
+        <!-- THIS IS THE LIST THAT DROPS DOWN -->
+        <ng-template kendoDropDownListItemTemplate
+                     let-dataItem>
+            <img class="icon"
+                 matListAvatar
+                 src="{{dataItem?.icon}}"> {{ dataItem?.text }}
+        </ng-template>
+    </kendo-dropdownlist>
+
+</div>
