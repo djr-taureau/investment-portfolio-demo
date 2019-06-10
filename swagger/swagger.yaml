@@ -257,8 +257,6 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Fund"
-      score:
-        type: "number"
       amountInvested:
         type: "number"
       deployed:
