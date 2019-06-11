@@ -167,27 +167,25 @@ paths:
             $ref: "#/definitions/Team"
         400:
           description: "Invalid status value"
-securityDefinitions:
-  petstore_auth:
-    type: "oauth2"
-    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-    flow: "implicit"
-    scopes:
-      write:pets: "modify pets in your account"
-      read:pets: "read your pets"
-  api_key:
-    type: "apiKey"
-    name: "api_key"
-    in: "header"
+# TODO: If we need this here?  securityDefinitions:
+#  petstore_auth:
+#    type: "oauth2"
+#    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+#    flow: "implicit"
+#    scopes:
+#      write:pets: "modify pets in your account"
+#      read:pets: "read your pets"
+#  api_key:
+#    type: "apiKey"
+#    name: "api_key"
+#    in: "header"
 definitions:
   ApiResponse:
     type: "object"
     properties:
-      code:
-        type: "integer"
-      status:
-        type: "string"
-        description: "Simple string value of `success` or `failed`."
+      success:
+        type: "boolean"
+        description: "Simple boolean indicated whether there might be response errors"
       message:
         type: "string"
         description: "Simple string message that can provide additional detail on the API response; perhaps with details on the data returned."
@@ -249,10 +247,8 @@ definitions:
         type: "array"
         items:
           $ref: '#/definitions/Sector'
-      regions:
-        type: "array"
-        items:
-          $ref: "#/definitions/Region"
+      region:
+        type: "string"
       funds:
         type: "array"
         items:
@@ -332,30 +328,6 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Contact"
-  CompanyInitiatives:
-    type: array
-    items:
-      $ref: '#/definitions/CompanyInitiativeResponse'
-  CompanyInitiativeResponse:
-    type: "object"
-    properties:
-      id:
-        type: "string"
-        description: "Unique ID for initiative"
-      status:
-        type: "string"
-        description: "Initiative Status"
-      title:
-        type: "string"
-        description: "Title of the initiative"
-      owner:
-        type: "string"
-        description: "Owner of the initiative"
-      description:
-        type: "string"
-        description: "Description for the initiative"
-    xml:
-      name: "Order"
   CompanyListGroup:
     type: "object"
     description: "The Company in this listing will be a backend defined subset of #Company appropriate to the listing only"
@@ -472,18 +444,6 @@ definitions:
         items:
           type: "integer"
           description: "array of ids representing the companies within the portfolio"
-  Region:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      name:
-        type: "string"
-        description: "name of the region"
-      descrtiption:
-        type: "string"
-        description: "description of the region"
   Sector:
     type: "object"
     properties:
