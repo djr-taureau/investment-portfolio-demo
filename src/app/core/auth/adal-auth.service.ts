@@ -5,20 +5,16 @@ import { retry } from "rxjs/operators";
 import { Logger } from "../../util/logger";
 import { Auth } from "../domain/auth.model";
 import { adal } from "adal-angular";
+import { AdalAuthContextService } from "./adal-auth-context.service";
+import { AdalAuthConfig } from "./adal-auth.config";
 import { AdalAuthConfigService } from "./auth-config.service";
+import { IAuthService } from "./auth-service.interface";
 import * as AuthActions from "../state/auth/auth.action";
-
-// NOTE: Required in order for the TS compiler to not complain about the unknown ADAL lib.
-// NOTE NOTE: MS dropped the ball and hasn't created a legit library that plays nice in the
-// JS module world...there are numerous tickets open on their GitHub site noting that it's
-// been 2 years without a fix.
-declare var AuthenticationContext: adal.AuthenticationContextStatic;
-const createAuthContextFn: adal.AuthenticationContextStatic = AuthenticationContext;
 
 @Injectable({
     providedIn: "root"
 })
-export class AdalAuthService {
+export class AdalAuthService implements IAuthService {
     /**
      * Internal logger.
      */
@@ -32,9 +28,14 @@ export class AdalAuthService {
     /**
      * Constructor.
      * @param config
+     * @param adalAuthContextService
      * @param store$
      */
-    constructor(@Inject(AdalAuthConfigService) private config, private store$: Store<any>) {
+    constructor(
+        @Inject(AdalAuthConfigService) private config: AdalAuthConfig,
+        private adalAuthContextService: AdalAuthContextService,
+        private store$: Store<any>
+    ) {
         AdalAuthService.logger.debug(`constructor()`);
         this.init();
     }
@@ -46,7 +47,9 @@ export class AdalAuthService {
         AdalAuthService.logger.debug(`init()`);
 
         // Create an instance of the ADAL auth context.
-        this.context = new createAuthContextFn(this.config);
+        // this.context = new this.adalAuthContextService.context(this.config);
+        this.context = this.adalAuthContextService.build(this.config);
+        // this.context = new this.context
 
         // It's possible the user is still auth, so perform a check ASAP.
         this.checkAuth();
@@ -165,7 +168,7 @@ export class AdalAuthService {
      * Determine if the user is authenticated.
      */
     public checkAuth(): void {
-        const error = this.context.getLoginError();
+        const error = this.getLoginError();
         const isCallback = this.isCallback();
 
         // Determine if we're successfully auth'd or there was an auth error.
@@ -187,7 +190,7 @@ export class AdalAuthService {
 
         if (isCallback) {
             // Tell the ADAL lib to redirect back to the expected callback
-            this.context.handleWindowCallback();
+            this.handleWindowCallback();
         }
     }
 }
