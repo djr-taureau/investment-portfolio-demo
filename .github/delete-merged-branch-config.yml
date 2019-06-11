@@ -1,0 +1,4 @@
+exclude: 
+  - develop
+  - release
+  - master
