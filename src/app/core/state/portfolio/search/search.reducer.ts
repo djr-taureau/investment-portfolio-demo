@@ -1,5 +1,5 @@
 import { FindCompanyActions } from "../search";
-import { CompanyApiActions } from "../portfolio-company";
+import { CompanyApiActions } from "../../company";
 
 export interface State {
     ids: number[];

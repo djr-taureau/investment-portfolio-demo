@@ -28,6 +28,7 @@
             line-height: normal;
             letter-spacing: 0.5px;
             color: $grey-blue;
+            @extend .not-allowed-cursor
         }
 
         .name {
@@ -61,7 +62,7 @@
         border-top-left-radius: 6px;
         border-top-right-radius: 6px;
         opacity: 1 !important;
-        @extend .hand-cursor;
+        //@extend .hand-cursor;
         background-color: rgba($light-navy, .07) !important; //#124F8C26;
     }
 }

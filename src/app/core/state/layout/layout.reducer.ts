@@ -20,40 +20,47 @@ export const initialState: LayoutState = {
             showItemCount: false
         },
         {
-            icon: "assets/image/finance.svg",
-            label: "Financials",
-            route: appRoutePaths.portfolioFinancials,
+            icon: "assets/image/company.svg",
+            label: "List of Companies",
+            route: appRoutePaths.portfolioListing,
             enabled: true,
             showItemCount: false
         },
-        {
-            icon: "assets/image/documents.svg",
-            label: "Documents",
-            route: appRoutePaths.portfolioDocuments,
-            enabled: true,
-            showItemCount: true
-        }
         // {
-        //     icon: "",
-        //     label: "Map View",
-        //     route: appRoutePaths.portfolioMapView,
-        //     enabled: false,
+        //     icon: "assets/image/finance.svg",
+        //     label: "Financials",
+        //     route: appRoutePaths.portfolioFinancials,
+        //     enabled: true,
         //     showItemCount: false
         // },
         // {
-        //     icon: "",
-        //     label: "Calendar View",
-        //     route: appRoutePaths.portfolioCalendarView,
-        //     enabled: false,
-        //     showItemCount: false
-        // },
-        // {
-        //     icon: "",
-        //     label: "Initiatives",
-        //     route: appRoutePaths.portfolioInitiatives,
-        //     enabled: false,
-        //     showItemCount: false
+        //     icon: "assets/image/documents.svg",
+        //     label: "Documents",
+        //     route: appRoutePaths.portfolioDocuments,
+        //     enabled: true,
+        //     showItemCount: true
         // }
+        {
+            icon: "assets/image/map.svg",
+            label: "Map View",
+            route: appRoutePaths.portfolioMapView,
+            enabled: false,
+            showItemCount: false
+        },
+        {
+            icon: "assets/image/calendar.svg",
+            label: "Calendar View",
+            route: appRoutePaths.portfolioCalendarView,
+            enabled: false,
+            showItemCount: false
+        },
+        {
+            icon: "assets/image/initiatives.svg",
+            label: "Initiatives",
+            route: appRoutePaths.portfolioInitiatives,
+            enabled: false,
+            showItemCount: false
+        }
     ]
 };
 

@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
-import { Company } from "../../../domain/company.model";
-import { CompanyApiActions, CompanyActions } from "../portfolio-company";
-import { PortfolioApiActions } from "../actions-index";
+import { Company } from "../../domain/company.model";
+import { CompanyApiActions, CompanyActions } from "./index";
+import { PortfolioApiActions } from "../portfolio/actions-index";
 
 export interface State extends EntityState<Company> {
     selectedCompanyId: number | null;
@@ -32,6 +32,9 @@ export function reducer(
             return adapter.addOne(action.company, state);
         }
 
+        case CompanyActions.setSelectedCompany.type: {
+            return { ...state, selectedCompanyId: action.id };
+        }
         default: {
             return state;
         }

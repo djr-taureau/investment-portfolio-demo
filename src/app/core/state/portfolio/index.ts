@@ -1,5 +1,5 @@
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
-import * as fromCompanies from "./portfolio-company/portfolio-company.reducer";
+import * as fromCompanies from "../company/company.reducer";
 import * as fromPortfolio from "./porfolio.reducer";
 import * as fromSearch from "./search/search.reducer";
 import * as fromRoot from "../index";

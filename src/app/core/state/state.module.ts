@@ -11,7 +11,7 @@ import { reducers } from "./index";
 import { reducers as portfolioReducers } from "./portfolio/index";
 import { RouterEffect } from "./router/router.effect";
 import { PortfolioEffects } from "./portfolio/portfolio.effects";
-import { CompanyEffects } from "./portfolio/portfolio-company/portfolio-company.effects";
+import { CompanyEffects } from "./company/company.effects";
 
 const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, PortfolioEffects, CompanyEffects];
 

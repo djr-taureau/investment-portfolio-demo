@@ -3,10 +3,10 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
 import { asyncScheduler, EMPTY as empty, Observable, of } from "rxjs";
 import { catchError, debounceTime, map, skip, switchMap, takeUntil } from "rxjs/operators";
-import { CompanyService } from "./../../../service/company.service";
-import { CompanyApiActions } from "../portfolio-company";
-import { FindCompanyActions } from "../search";
-import { Company } from "./../../../domain/company.model";
+import { CompanyService } from "../../service/company.service";
+import { CompanyApiActions } from "./index";
+import { FindCompanyActions } from "../portfolio/search";
+import { Company } from "../../domain/company.model";
 
 @Injectable()
 export class CompanyEffects {
