@@ -17,7 +17,7 @@ class AdalAuthContextMock {
     acquireToken() {}
 }
 
-fdescribe("AdalAuthService", () => {
+describe("AdalAuthService", () => {
     let testSubject: AdalAuthService;
     let config: AdalAuthConfig;
     let store$;
