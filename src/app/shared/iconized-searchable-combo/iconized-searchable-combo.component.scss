@@ -1,0 +1,19 @@
+:host {
+    .list {
+        width: 135px;
+    }
+}
+
+// NOTE: these won't work on the Kendo items if in :host
+.icon {
+    width: 20px;
+    height: 20px;
+    padding-right: 15px;
+}
+
+.k-list {
+    &-optionalLabel {
+        /** contents **/
+        place-content: start start !important;
+    }
+}
