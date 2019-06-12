@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatSelectChange } from "@angular/material";
 import { Company } from "../../core/domain/company.model";
 import { Logger } from "../../util/logger";
+import { PopupConfig } from "../iconized-searchable-combo/popup-config";
+import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
+import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
     selector: "sbp-header",
@@ -63,10 +66,36 @@ export class HeaderComponent implements OnInit {
     public selectCompany: EventEmitter<Company> = new EventEmitter<Company>();
 
     /**
+     * Controls the width and height of the popup when the combo is clicked
+     */
+    public popupSettings: PopupConfig = { width: 195 };
+
+    /**
+     * Used to hide the company combo when not in /portfoli* routes
+     */
+    public showCompanyCombo = true;
+
+    // NOTE: fill in with real data when ready
+    public listItems: Array<IconizedItem> = [
+        { id: 0, text: "WASI", icon: "assets/image/nauset.jpg" },
+        { id: 1, text: "Facebook", icon: "assets/image/notes.svg" }
+    ];
+
+    /**
      * Constructor.
      */
-    constructor() {
+    constructor(private router: Router) {
         HeaderComponent.logger.debug(`constructor()`);
+
+        // listen to events from Router
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                // event is an instance of NavigationEnd, get url!
+                const url = event.urlAfterRedirects;
+                HeaderComponent.logger.debug(`url is ${url}`);
+                this.showCompanyCombo = url.indexOf("/portfolio-") > -1;
+            }
+        });
     }
 
     /**

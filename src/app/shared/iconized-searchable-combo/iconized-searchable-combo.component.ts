@@ -4,6 +4,7 @@ import { PopupConfig } from "./popup-config";
 
 @Component({
     selector: "sbp-iconized-searchable-combo",
+
     templateUrl: "./iconized-searchable-combo.component.html",
     styleUrls: ["./iconized-searchable-combo.component.scss"]
 })
@@ -29,11 +30,14 @@ export class IconizedSearchableComboComponent implements OnInit {
      */
     public selectedItem: IconizedItem;
 
+    public currentSearchValue = "";
+
     /**
      * Sets list data source to filtered set
      */
     handleFilter(value) {
         this.data = this.source.filter((s) => s.text.toLowerCase().indexOf(value.toLowerCase()) !== -1);
+        this.currentSearchValue = value;
     }
 
     constructor() {}
