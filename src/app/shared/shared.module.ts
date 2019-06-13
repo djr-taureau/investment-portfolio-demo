@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { FooterModule } from "./footer/footer.module";
 import { HeaderModule } from "./header/header.module";
 import { MaterialModule } from "./material/material.module";
@@ -23,13 +24,14 @@ const MODULES = [
     ChartsModule,
 
     // Application Shared Feature Modules
+    CompanyNavbarModule,
     DirectivesModule,
-    HeaderModule,
     FooterModule,
+    HeaderModule,
     MaterialModule,
+    PipeModule,
     PortfolioNavbarModule,
-    SlideoutModule,
-    PipeModule
+    SlideoutModule
 ];
 
 @NgModule({

@@ -8,6 +8,7 @@
                         [filterable]="true"
                         (filterChange)="handleFilter($event)"
                         [popupSettings]="popupSettings"
+                        (selectionChange)="onSelectionChange($event)"
                         class="list">
         <!-- THIS IS WHAT POPULATES THE COMBO AFTER SELECTION -->
         <ng-template kendoDropDownListValueTemplate

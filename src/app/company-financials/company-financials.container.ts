@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { Store } from "@ngrx/store";
+import { appRoutePaths } from "../app.routes";
+import { Component } from "@angular/core";
 import { CoreCompanyContainer } from "../shared/company/core-company.container";
+import { Store } from "@ngrx/store";
 
 @Component({
     selector: "sbp-company-financials-container",
@@ -11,6 +12,6 @@ import { CoreCompanyContainer } from "../shared/company/core-company.container";
 })
 export class CompanyFinancialsContainer extends CoreCompanyContainer {
     constructor(public store$: Store<any>, public route$: ActivatedRoute) {
-        super(store$, route$);
+        super(store$, route$, appRoutePaths.companyFinancials);
     }
 }

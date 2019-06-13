@@ -1,26 +1,23 @@
+import * as fromState from "../../core/state/";
+import { CompanyNavigationItemClicked } from "../../core/state/flow/flow.actions";
 import { Component, OnInit } from "@angular/core";
-import { Route } from "@angular/router";
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
-import { PortfolioNavigationItemClicked } from "../../core/state/flow/flow.actions";
 import { Logger } from "../../util/logger";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
-
-import * as fromState from "../../core/state/";
-import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
+import { Observable } from "rxjs";
+import { select, Store } from "@ngrx/store";
 
 @Component({
-    selector: "sbp-portfolio-navbar-container",
+    selector: "sbp-company-navbar-container",
     template: `
         <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)"></sbp-navigation-bar>
     `,
-    styleUrls: ["./portfolio-navbar.container.component.scss"]
+    styleUrls: ["./company-navbar.container.scss"]
 })
-export class PortfolioNavbarContainerComponent implements OnInit {
+export class CompanyNavbarContainer implements OnInit {
     /**
      * Internal logger.
      */
-    private static logger: Logger = Logger.getLogger("PortolioNavbarContainerComponent");
+    private static logger: Logger = Logger.getLogger("CompanyNavbarContainer");
 
     /**
      * The links for the bar
@@ -37,15 +34,15 @@ export class PortfolioNavbarContainerComponent implements OnInit {
      * @param link
      */
     public onLinkClick(link: NavigationBarLink): void {
-        this.store$.dispatch(new PortfolioNavigationItemClicked(link));
+        this.store$.dispatch(new CompanyNavigationItemClicked(link));
     }
 
     /**
      * Initialize the component.
      */
     public ngOnInit(): void {
-        this.links$ = this.store$.pipe(select(fromState.getPortfolioNavLinks));
-        this.selectedLink$ = this.store$.pipe(select(fromState.getSelectedPortfolioNavLink));
+        this.links$ = this.store$.pipe(select(fromState.getComnpanyNavLinks));
+        this.selectedLink$ = this.store$.pipe(select(fromState.getSelectedCompanyNavLink));
     }
 
     constructor(private store$: Store<any>) {}

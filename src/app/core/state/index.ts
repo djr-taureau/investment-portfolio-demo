@@ -1,10 +1,9 @@
-import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import * as fromAuth from "./auth/auth.reducer";
-import { State } from "./portfolio-list/portfolio-list.reducer";
-import { CustomRouterStateSerializer, RouterStateUrl } from "./router/custom-router-state.serializer";
-import * as fromRouter from "@ngrx/router-store";
 import * as fromLayout from "./layout/layout.reducer";
 import * as fromPortfolioListing from "./portfolio-list/portfolio-list.reducer";
+import * as fromRouter from "@ngrx/router-store";
+import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
+import { RouterStateUrl } from "./router/custom-router-state.serializer";
 export interface AppState {
     auth: fromAuth.AuthState;
     router: fromRouter.RouterReducerState<RouterStateUrl>;
@@ -84,8 +83,22 @@ export const getSelectedPortfolioNavLink = createSelector(
     fromLayout.getSelectedPortfolioNavLink
 );
 
+export const getComnpanyNavLinks = createSelector(
+    selectLayoutState,
+    fromLayout.getCompanyNavLinks
+);
+
+export const getSelectedCompanyNavLink = createSelector(
+    selectLayoutState,
+    fromLayout.getSelectedCompanyyNavLink
+);
+
+export const getShowCompanyCombo = createSelector(
+    selectLayoutState,
+    fromLayout.getShowCompanyCombo
+);
 // -------------------------------------------------------------------
-// PORTFOLIO LISTING SELECTORS
+// PORTFOLIO COMPANY LISTING SELECTORS
 // -------------------------------------------------------------------
 export const selectPortfolioListingState = createFeatureSelector<fromPortfolioListing.State>("portfolioListing");
 

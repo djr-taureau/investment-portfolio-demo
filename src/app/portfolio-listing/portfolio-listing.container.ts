@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { appRoutePaths } from "../app.routes";
 import { Company } from "../core/domain/company.model";
+import { CorePortfolioContainer } from "../shared/portfolio/core-portfolio.container";
 import { Logger } from "../util/logger";
 import { PortfolioActions } from "../core/state/portfolio/actions-index";
 import * as fromCompanyState from "../core/state/portfolio";
@@ -13,7 +15,7 @@ import * as fromCompanyState from "../core/state/portfolio";
         </sbp-portfolio-listing>
     `
 })
-export class PortfolioListingContainer implements OnInit {
+export class PortfolioListingContainer extends CorePortfolioContainer implements OnInit {
     /**
      * Internal logger.
      */
@@ -30,14 +32,6 @@ export class PortfolioListingContainer implements OnInit {
     public mocks$: Observable<any[]>;
 
     /**
-     * Constructor.
-     * @param store$
-     */
-    constructor(private store$: Store<fromCompanyState.State>) {
-        PortfolioListingContainer.logger.debug(`constructor()`);
-    }
-
-    /**
      * Initialize the component.
      */
     public ngOnInit(): void {
@@ -45,15 +39,6 @@ export class PortfolioListingContainer implements OnInit {
         this.companies$ = this.store$.pipe(select(fromCompanyState.getPortfolioCompanies));
         this.mocks$ = this.store$.pipe(select(fromCompanyState.getMocks));
         this.store$.dispatch(PortfolioActions.loadPortfolio());
-
-        // TODO: AG: This needs to be fixed as it's throwing a RTE.
-        // const links$ = this.store$.pipe(select(getPortfolioNavLinks));
-        // links$.first().subscribe((links) => {
-        //     const matchingLink = _.find(links, (link: NavigationBarLink) => link.route === appRoutePaths.portfolioListing);
-        //     if (matchingLink) {
-        //         this.store$.dispatch(new SetSelectedPortfolioLink(matchingLink.route));
-        //     }
-        // });
     }
 
     /**
@@ -63,5 +48,13 @@ export class PortfolioListingContainer implements OnInit {
     public loadCompanies(event?: any): void {
         PortfolioListingContainer.logger.debug(`loadCompanies()`);
         this.store$.dispatch(PortfolioActions.loadMockPortfolio());
+    }
+
+    /**
+     * Constructor.
+     * @param store$
+     */
+    constructor(public store$: Store<fromCompanyState.State>) {
+        super(store$, appRoutePaths.portfolioListing);
     }
 }

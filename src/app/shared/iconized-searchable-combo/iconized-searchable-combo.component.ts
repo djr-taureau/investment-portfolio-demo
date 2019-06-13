@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { IconizedItem } from "./iconized-item";
 import { PopupConfig } from "./popup-config";
 
@@ -25,6 +25,8 @@ export class IconizedSearchableComboComponent implements OnInit {
     @Input()
     public popupSettings = { width: 200 };
 
+    @Output()
+    public selectionChange: EventEmitter<IconizedItem> = new EventEmitter();
     /**
      * ngModel must be used since the list items are object based
      */
@@ -38,6 +40,14 @@ export class IconizedSearchableComboComponent implements OnInit {
     handleFilter(value) {
         this.data = this.source.filter((s) => s.text.toLowerCase().indexOf(value.toLowerCase()) !== -1);
         this.currentSearchValue = value;
+    }
+
+    /**
+     * Handles the changing of the selection
+     * @param event
+     */
+    onSelectionChange(event) {
+        this.selectionChange.emit(event);
     }
 
     constructor() {}

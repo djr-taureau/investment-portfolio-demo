@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
      * Dispatches an event when user selects a role.
      */
     @Output()
-    public selectCompany: EventEmitter<Company> = new EventEmitter<Company>();
+    public selectCompany: EventEmitter<number> = new EventEmitter<number>();
 
     /**
      * Controls the width and height of the popup when the combo is clicked
@@ -73,6 +73,7 @@ export class HeaderComponent implements OnInit {
     /**
      * Used to hide the company combo when not in /portfoli* routes
      */
+    @Input()
     public showCompanyCombo = true;
 
     // NOTE: fill in with real data when ready
@@ -87,15 +88,15 @@ export class HeaderComponent implements OnInit {
     constructor(private router: Router) {
         HeaderComponent.logger.debug(`constructor()`);
 
-        // listen to events from Router
-        this.router.events.subscribe((event) => {
-            if (event instanceof NavigationEnd) {
-                // event is an instance of NavigationEnd, get url!
-                const url = event.urlAfterRedirects;
-                HeaderComponent.logger.debug(`url is ${url}`);
-                this.showCompanyCombo = url.indexOf("/portfolio-") > -1;
-            }
-        });
+        // // listen to events from Router
+        // this.router.events.subscribe((event) => {
+        //     if (event instanceof NavigationEnd) {
+        //         // event is an instance of NavigationEnd, get url!
+        //         const url = event.urlAfterRedirects;
+        //         HeaderComponent.logger.debug(`url is ${url}`);
+        //         this.showCompanyCombo = url.indexOf("/portfolio-") > -1;
+        //     }
+        // });
     }
 
     /**
@@ -109,10 +110,9 @@ export class HeaderComponent implements OnInit {
      * Handles the selection of a company.
      * @param event
      */
-    public onCompanySelect(event: MatSelectChange) {
-        const company = event.value;
-        HeaderComponent.logger.debug(`onCompanySelect( ${company.name} )`);
-        this.selectCompany.emit(company);
+    public onCompanySelect(event: IconizedItem) {
+        HeaderComponent.logger.debug(`onCompanySelect( ${event} )`);
+        this.selectCompany.emit(event.id);
     }
 
     /**
