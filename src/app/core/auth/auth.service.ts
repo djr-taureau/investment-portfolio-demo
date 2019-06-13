@@ -41,4 +41,13 @@ export class AuthService implements IAuthService {
         AuthService.logger.info(`checkAuth()`);
         this.adalAuthService.checkAuth();
     }
+
+    /**
+     * Determines if the user is authenticated.
+     */
+    public get isAuthenticated(): boolean {
+        const result: boolean = this.adalAuthService.isAuthenticated;
+        AuthService.logger.info(`isAuthenticated( ${result} )`);
+        return result;
+    }
 }

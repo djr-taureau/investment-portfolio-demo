@@ -1,4 +1,5 @@
 import { AuthService } from "./core/auth/auth.service";
+import { InitializationService } from "./core/service/initialization.service";
 import * as fromState from "./core/state/";
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     /**
      * Constructor.
      */
-    constructor(private store$: Store<any>, private authService: AuthService) {
+    constructor(private store$: Store<any>, private initializationService: InitializationService) {
         AppComponent.logger.debug(`constructor()`);
     }
 
@@ -37,6 +38,6 @@ export class AppComponent implements OnInit {
         AppComponent.logger.debug(`ngOnInit()`);
         this.showSlideout$ = this.store$.pipe(select(fromState.getShowSlideout));
 
-        this.authService.checkAuth();
+        this.initializationService.init();
     }
 }
