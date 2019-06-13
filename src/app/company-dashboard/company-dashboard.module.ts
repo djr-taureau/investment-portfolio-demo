@@ -1,19 +1,31 @@
-// import { CommonModule } from "@angular/common";
+import { StoreModule } from "@ngrx/store";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
+import { CompanySummaryCollapsedComponent } from "./company-summary/collapsed/company-summary-collapsed.component";
+import { CompanySummaryContainer } from "./company-summary/company-summary.container";
+import { CompanySummaryExpandedComponent } from "./company-summary/expanded/company-summary-expanded.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
+import { reducers } from "../core/state/company/dashboard";
 
-const COMPONENTS: any = [CompanyDashboardContainer, CompanyDashboardComponent];
+const COMPONENTS: any = [
+    CompanyDashboardContainer,
+    CompanyDashboardComponent,
+    CompanySummaryContainer,
+    CompanySummaryCollapsedComponent,
+    CompanySummaryExpandedComponent
+];
+
 const MODULE_ROUTES: Routes = [
     {
         path: "",
         component: CompanyDashboardContainer
     }
 ];
+
 @NgModule({
-    imports: [RouterModule.forChild(MODULE_ROUTES), SharedModule],
+    imports: [RouterModule.forChild(MODULE_ROUTES), SharedModule, StoreModule.forFeature("companyDashboard", reducers)],
     declarations: COMPONENTS,
     exports: COMPONENTS
 })

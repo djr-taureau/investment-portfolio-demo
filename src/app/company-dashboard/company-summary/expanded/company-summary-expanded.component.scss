@@ -1,0 +1,9 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/pointers";
+@import "../../../../assets/scss/fonts/post-grotesk";
+
+:host {
+    .container {
+        height: 300px;
+    }
+}

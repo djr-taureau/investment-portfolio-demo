@@ -30,12 +30,6 @@ export class HeaderComponent implements OnInit {
     public slideoutOpen: boolean;
 
     /**
-     * List of team members.
-     */
-    @Input()
-    public teamMembers: Company[] = null;
-
-    /**
      * Broadcasts an event indicating a toggle to the open or closed state of the slide-out.
      */
     @Output()
@@ -52,12 +46,6 @@ export class HeaderComponent implements OnInit {
      */
     @Output()
     public logout: EventEmitter<void> = new EventEmitter<void>();
-
-    /**
-     * Currently selected company.
-     */
-    @Input()
-    public selectedCompany: Company = null;
 
     /**
      * Dispatches an event when user selects a role.

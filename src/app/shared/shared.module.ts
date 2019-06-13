@@ -34,9 +34,11 @@ const MODULES = [
     SlideoutModule
 ];
 
+const DECLARATIONS = [];
+
 @NgModule({
     imports: MODULES,
     exports: MODULES,
-    declarations: []
+    declarations: DECLARATIONS
 })
 export class SharedModule {}

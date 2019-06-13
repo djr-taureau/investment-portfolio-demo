@@ -1,4 +1,6 @@
 import * as fromState from "../../core/state/";
+import * as fromCompanyDashboardLayout from "../../core/state/company/dashboard";
+import * as CompanyDashboardLayoutActions from "../../core/state/company/dashboard/company-dashboard-layout.actions";
 import { CompanyNavigationItemClicked } from "../../core/state/flow/flow.actions";
 import { Component, OnInit } from "@angular/core";
 import { Logger } from "../../util/logger";
@@ -9,6 +11,7 @@ import { select, Store } from "@ngrx/store";
 @Component({
     selector: "sbp-company-navbar-container",
     template: `
+        <button (click)="onExpandOrCollapse($event)">{{ collapsed$ | async | expandOrCollapse }}</button>
         <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)"></sbp-navigation-bar>
     `,
     styleUrls: ["./company-navbar.container.scss"]
@@ -30,11 +33,26 @@ export class CompanyNavbarContainer implements OnInit {
     public selectedLink$: Observable<string>;
 
     /**
+     * Boolean indicating if the summary is collapsed.
+     */
+    public collapsed$: Observable<boolean>;
+
+    /**
      * Handles clicking a link
      * @param link
      */
     public onLinkClick(link: NavigationBarLink): void {
+        CompanyNavbarContainer.logger.debug(`onLinkClick( ${JSON.stringify(link)} )`);
         this.store$.dispatch(new CompanyNavigationItemClicked(link));
+    }
+
+    /**
+     * Expand or collapse the
+     * @param $event
+     */
+    public onExpandOrCollapse($event): void {
+        CompanyNavbarContainer.logger.debug(`expandOrCollapse()`);
+        this.store$.dispatch(new CompanyDashboardLayoutActions.ExpandOrCollapse());
     }
 
     /**
@@ -43,6 +61,7 @@ export class CompanyNavbarContainer implements OnInit {
     public ngOnInit(): void {
         this.links$ = this.store$.pipe(select(fromState.getComnpanyNavLinks));
         this.selectedLink$ = this.store$.pipe(select(fromState.getSelectedCompanyNavLink));
+        this.collapsed$ = this.store$.pipe(select(fromCompanyDashboardLayout.getCollapsed));
     }
 
     constructor(private store$: Store<any>) {}

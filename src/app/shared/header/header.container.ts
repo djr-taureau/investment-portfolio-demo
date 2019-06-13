@@ -15,9 +15,7 @@ import { select, Store } from "@ngrx/store";
     template: `
         <sbp-header
             [companies]="companies$ | async"
-            [teamMembers]="teamMembers$ | async"
             [slideoutOpen]="slideoutOpen$ | async"
-            [selectedCompany]="selectedCompany$ | async"
             [showCompanyCombo]="showCompanyCombo$ | async"
             (login)="login($event)"
             (logout)="logout($event)"
@@ -37,16 +35,6 @@ export class HeaderContainer implements OnInit {
      * The companies observable.
      */
     public companies$: Observable<Company[]>;
-
-    /**
-     * The teamMembers observable.
-     */
-    public teamMembers$: Observable<Company[]>;
-
-    /**
-     * The selected company observable.
-     */
-    public selectedCompany$: Observable<Company>;
 
     /**
      * Boolean indicating of the slide open is open.
@@ -104,18 +92,11 @@ export class HeaderContainer implements OnInit {
         HeaderContainer.logger.debug(`ngOnInit()`);
         // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
         // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
-        this.selectedCompany$ = of(TestUti.getCompanyMock({ name: "Foo, Inc." }));
         this.showCompanyCombo$ = this.store$.pipe(select(getShowCompanyCombo));
         this.companies$ = of([
             TestUti.getCompanyMock({ name: "Foo, Inc." }),
             TestUti.getCompanyMock({ name: "Bar, LLC." }),
             TestUti.getCompanyMock({ name: "Dogs and Cats" })
-        ]);
-
-        this.teamMembers$ = of([
-            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Tom Brady" }),
-            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Julian Edleman" }),
-            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Rob Gronkowski" })
         ]);
 
         this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
