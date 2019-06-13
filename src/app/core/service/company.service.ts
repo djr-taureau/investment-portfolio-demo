@@ -30,7 +30,7 @@ export class CompanyService {
         CompanyService.logger.debug(`getCompanies( isMock: ${isMock} )`);
 
         const url = isMock
-            ? "https://prism-dev-api-management.azure-api.net/sbdevapi5/companies"
+            ? "https://prism-dev-api-management.azure-api.net/sbdevapi5/v2/companies"
             : ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
 
         return this.http.get<Company[]>(url).pipe(

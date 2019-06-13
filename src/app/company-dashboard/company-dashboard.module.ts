@@ -1,4 +1,3 @@
-import { StoreModule } from "@ngrx/store";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanySummaryCollapsedComponent } from "./company-summary/collapsed/company-summary-collapsed.component";
@@ -7,7 +6,6 @@ import { CompanySummaryExpandedComponent } from "./company-summary/expanded/comp
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../shared/shared.module";
-import { reducers } from "../core/state/company/dashboard";
 
 const COMPONENTS: any = [
     CompanyDashboardContainer,
@@ -25,7 +23,7 @@ const MODULE_ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(MODULE_ROUTES), SharedModule, StoreModule.forFeature("companyDashboard", reducers)],
+    imports: [RouterModule.forChild(MODULE_ROUTES), SharedModule],
     declarations: COMPONENTS,
     exports: COMPONENTS
 })

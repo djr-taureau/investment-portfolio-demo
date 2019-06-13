@@ -12,6 +12,7 @@ import { reducers as portfolioReducers } from "./portfolio/index";
 import { RouterEffect } from "./router/router.effect";
 import { PortfolioEffects } from "./portfolio/portfolio.effects";
 import { CompanyEffects } from "./company/company.effects";
+import * as CompanyDashboard from "./company/dashboard";
 
 const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, PortfolioEffects, CompanyEffects];
 
@@ -25,6 +26,7 @@ const MODULES = [
      */
     StoreModule.forRoot(reducers),
     StoreModule.forFeature("portfolio", portfolioReducers),
+    StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and
