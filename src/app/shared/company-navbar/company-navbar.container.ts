@@ -1,6 +1,6 @@
-import * as fromState from "../../core/state/";
-import * as fromCompanyDashboardLayout from "../../core/state/company/dashboard";
 import * as CompanyDashboardLayoutActions from "../../core/state/company/dashboard/company-dashboard-layout.actions";
+import * as fromCompanyDashboardLayout from "../../core/state/company/dashboard";
+import * as fromState from "../../core/state/";
 import { CompanyNavigationItemClicked } from "../../core/state/flow/flow.actions";
 import { Component, OnInit } from "@angular/core";
 import { Logger } from "../../util/logger";
@@ -11,8 +11,9 @@ import { select, Store } from "@ngrx/store";
 @Component({
     selector: "sbp-company-navbar-container",
     template: `
-        <button (click)="onExpandOrCollapse($event)">{{ collapsed$ | async | expandOrCollapse }}</button>
-        <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)"></sbp-navigation-bar>
+        <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)">
+            <button (click)="onExpandOrCollapse($event)">{{ collapsed$ | async | expandOrCollapse }}</button>
+        </sbp-navigation-bar>
     `,
     styleUrls: ["./company-navbar.container.scss"]
 })
@@ -52,6 +53,7 @@ export class CompanyNavbarContainer implements OnInit {
      */
     public onExpandOrCollapse($event): void {
         CompanyNavbarContainer.logger.debug(`expandOrCollapse()`);
+        // @ts-ignore
         this.store$.dispatch(new CompanyDashboardLayoutActions.ExpandOrCollapse());
     }
 

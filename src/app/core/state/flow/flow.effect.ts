@@ -12,7 +12,8 @@ import {
     GoToCompanyFinancials,
     GoToCompanyInfo,
     GoToPortfolioDashboard,
-    GoToPortfolioListing
+    GoToPortfolioListing,
+    UpdateUrlParams
 } from "../router/router.action";
 import { Injectable } from "@angular/core";
 import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
@@ -110,6 +111,7 @@ export class FlowEffect {
             const actions = [];
             // set the selected it
             actions.push(setSelectedCompany({ id: companyId }));
+            actions.push(new UpdateUrlParams({ id: companyId }));
             // go to the current url but with the new id
             // actions.push(new CompanyNavigationItemClicked())
             return actions;

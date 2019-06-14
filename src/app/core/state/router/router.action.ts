@@ -4,7 +4,8 @@ import { appRoutePaths } from "../../../app.routes";
 export enum RouterActionTypes {
     Go = "[Router] Go",
     Back = "[Router] Back",
-    Forward = "[Router] Forward"
+    Forward = "[Router] Forward",
+    UpdateUrlParams = "[Router] UpdateUrlParams"
 }
 
 export class Go implements Action {
@@ -87,6 +88,11 @@ export class GoToCompanyDocuments implements Action {
         this.payload.path = appRoutePaths.companyDocuments.replace(":id", String(companyId));
     }
 }
+export class UpdateUrlParams implements Action {
+    readonly type = RouterActionTypes.UpdateUrlParams;
+
+    constructor(public payload: any) {}
+}
 
 export type RouterActions =
     | Go
@@ -99,4 +105,5 @@ export type RouterActions =
     | GoToCompanyInfo
     | GotoRegister
     | GoToPortfolioDashboard
-    | GoToPortfolioListing;
+    | GoToPortfolioListing
+    | UpdateUrlParams;

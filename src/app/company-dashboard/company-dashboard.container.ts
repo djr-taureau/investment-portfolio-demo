@@ -1,11 +1,10 @@
+import * as CompanyDashboardLayoutActions from "../core/state/company/dashboard/company-dashboard-layout.actions";
 import { ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
 import { appRoutePaths } from "../app.routes";
 import { Component } from "@angular/core";
 import { CoreCompanyContainer } from "../shared/company/core-company.container";
 import { Logger } from "../util/logger";
 import { Store } from "@ngrx/store";
-import * as CompanyDashboardLayoutActions from "../core/state/company/dashboard/company-dashboard-layout.actions";
 
 @Component({
     selector: "sbp-company-dashboard-container",

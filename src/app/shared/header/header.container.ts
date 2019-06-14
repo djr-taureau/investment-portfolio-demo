@@ -1,9 +1,9 @@
+import { Company } from "../../core/domain/company.model";
 import * as AuthActions from "../../core/state/auth/auth.action";
 import * as fromState from "../../core/state";
-import { setSelectedCompany } from "../../core/state/company/company.actions";
-import * as TestUti from "../../util/test.util";
 import { CloseCompanyInfoPanel, OpenCompanyInfoPanel, SelectCompany } from "../../core/state/flow/flow.actions";
-import { Company } from "../../core/domain/company.model";
+import * as TestUti from "../../util/test.util";
+
 import { Component, OnInit } from "@angular/core";
 import { getShowCompanyCombo } from "../../core/state";
 import { Logger } from "../../util/logger";
@@ -16,6 +16,7 @@ import { select, Store } from "@ngrx/store";
         <sbp-header
             [companies]="companies$ | async"
             [slideoutOpen]="slideoutOpen$ | async"
+            [selectedCompany]="selectedCompany$ | async"
             [showCompanyCombo]="showCompanyCombo$ | async"
             (login)="login($event)"
             (logout)="logout($event)"
@@ -35,6 +36,11 @@ export class HeaderContainer implements OnInit {
      * The companies observable.
      */
     public companies$: Observable<Company[]>;
+
+    /**
+     * The selected company observable.
+     */
+    public selectedCompany$: Observable<Company>;
 
     /**
      * Boolean indicating of the slide open is open.
@@ -92,13 +98,13 @@ export class HeaderContainer implements OnInit {
         HeaderContainer.logger.debug(`ngOnInit()`);
         // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
         // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
+        this.selectedCompany$ = of(TestUti.getCompanyMock({ name: "Foo, Inc." }));
         this.showCompanyCombo$ = this.store$.pipe(select(getShowCompanyCombo));
         this.companies$ = of([
             TestUti.getCompanyMock({ name: "Foo, Inc." }),
             TestUti.getCompanyMock({ name: "Bar, LLC." }),
             TestUti.getCompanyMock({ name: "Dogs and Cats" })
         ]);
-
         this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
     }
 }

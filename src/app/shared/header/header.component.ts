@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatSelectChange } from "@angular/material";
 import { Company } from "../../core/domain/company.model";
+import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
 import { Logger } from "../../util/logger";
 import { PopupConfig } from "../iconized-searchable-combo/popup-config";
-import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
-import { Router, NavigationEnd } from "@angular/router";
 
 @Component({
     selector: "sbp-header",
@@ -22,6 +20,12 @@ export class HeaderComponent implements OnInit {
      */
     @Input()
     public companies: Company[] = null;
+
+    /**
+     * The currently selected company
+     */
+    @Input()
+    public selectedCompany: Company = null;
 
     /**
      * Flag indicating if the slide-out panel is open.
@@ -73,18 +77,8 @@ export class HeaderComponent implements OnInit {
     /**
      * Constructor.
      */
-    constructor(private router: Router) {
+    constructor() {
         HeaderComponent.logger.debug(`constructor()`);
-
-        // // listen to events from Router
-        // this.router.events.subscribe((event) => {
-        //     if (event instanceof NavigationEnd) {
-        //         // event is an instance of NavigationEnd, get url!
-        //         const url = event.urlAfterRedirects;
-        //         HeaderComponent.logger.debug(`url is ${url}`);
-        //         this.showCompanyCombo = url.indexOf("/portfolio-") > -1;
-        //     }
-        // });
     }
 
     /**

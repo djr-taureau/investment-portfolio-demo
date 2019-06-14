@@ -4,7 +4,7 @@ import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from "@angula
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { exhaustMap, map, tap } from "rxjs/operators";
 import { ObserveUrlChange } from "../layout/layout.actions";
 import { Go, RouterActionTypes } from "./router.action";
 import * as RouterActions from "./router.action";
@@ -42,6 +42,20 @@ export class RouterEffect {
         tap(() => this.location.forward())
     );
 
+    @Effect({ dispatch: false })
+    updateUrlParams$: Observable<Action> = this.actions$.pipe(
+        ofType<RouterActions.UpdateUrlParams>(RouterActionTypes.UpdateUrlParams),
+        map((action) => action.payload),
+        tap((payload) => {
+            // this.router
+            // .createUrlTree([payload], {relativeTo: this.route})
+            // .toString();
+            console.log(this.route.snapshot.toString());
+            this.route.firstChild.paramMap.subscribe((output) => {
+                console.log(JSON.stringify(output));
+            });
+        })
+    );
     /**
      * Constructor
      */
