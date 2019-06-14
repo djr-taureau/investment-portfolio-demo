@@ -1,21 +1,25 @@
+import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import * as fromAuth from "./auth/auth.reducer";
+import { State } from "./portfolio-list/portfolio-list.reducer";
+import { CustomRouterStateSerializer, RouterStateUrl } from "./router/custom-router-state.serializer";
+import * as fromCompany from "./company/company.reducer";
+import * as fromRouter from "@ngrx/router-store";
 import * as fromLayout from "./layout/layout.reducer";
 import * as fromPortfolioListing from "./portfolio-list/portfolio-list.reducer";
-import * as fromRouter from "@ngrx/router-store";
-import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
-import { RouterStateUrl } from "./router/custom-router-state.serializer";
 export interface AppState {
     auth: fromAuth.AuthState;
-    router: fromRouter.RouterReducerState<RouterStateUrl>;
+    company: fromCompany.State;
+    companyListing: fromPortfolioListing.State;
     layout: fromLayout.LayoutState;
-    portfolioListing: fromPortfolioListing.State;
+    router: fromRouter.RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.authReducer,
-    router: fromRouter.routerReducer,
+    company: fromCompany.reducer,
+    companyListing: fromPortfolioListing.reducer,
     layout: fromLayout.layoutReducer,
-    portfolioListing: fromPortfolioListing.reducer
+    router: fromRouter.routerReducer
 };
 
 // -------------------------------------------------------------------
@@ -83,7 +87,27 @@ export const getSelectedPortfolioNavLink = createSelector(
     fromLayout.getSelectedPortfolioNavLink
 );
 
-export const getComnpanyNavLinks = createSelector(
+// -------------------------------------------------------------------
+// COMPANY SELECTORS
+// -------------------------------------------------------------------
+export const selectCompanyState = createFeatureSelector<fromCompany.State>("company");
+
+export const getSelectedCompanyId = createSelector(
+    selectCompanyState,
+    fromCompany.getSelectedId
+);
+
+export const getAllCompanies = createSelector(
+    selectCompanyState,
+    fromCompany.adapter.getSelectors(selectCompanyState).selectAll
+);
+
+export const getCompanyTypes = createSelector(
+    getAllCompanies,
+    (allCompanies) => _.groupBy(allCompanies, "type")
+);
+
+export const getCompanyNavLinks = createSelector(
     selectLayoutState,
     fromLayout.getCompanyNavLinks
 );
@@ -98,31 +122,31 @@ export const getShowCompanyCombo = createSelector(
     fromLayout.getShowCompanyCombo
 );
 // -------------------------------------------------------------------
-// PORTFOLIO COMPANY LISTING SELECTORS
+// PORTFOLIO LISTING SELECTORS
 // -------------------------------------------------------------------
-export const selectPortfolioListingState = createFeatureSelector<fromPortfolioListing.State>("portfolioListing");
+export const selectCompanyListingState = createFeatureSelector<fromPortfolioListing.State>("companyListing");
 
 export const getCompanyCount = createSelector(
-    selectPortfolioListingState,
+    selectCompanyListingState,
     fromPortfolioListing.getCompanyCount
 );
 export const getInvested = createSelector(
-    selectPortfolioListingState,
+    selectCompanyListingState,
     fromPortfolioListing.getInvested
 );
 export const getTotalFund = createSelector(
-    selectPortfolioListingState,
+    selectCompanyListingState,
     fromPortfolioListing.getTotalFund
 );
 export const getValuation = createSelector(
-    selectPortfolioListingState,
+    selectCompanyListingState,
     fromPortfolioListing.getValuation
 );
 export const getMOIC = createSelector(
-    selectPortfolioListingState,
+    selectCompanyListingState,
     fromPortfolioListing.getMOIC
 );
 export const getIRR = createSelector(
-    selectPortfolioListingState,
+    selectCompanyListingState,
     fromPortfolioListing.getIRR
 );

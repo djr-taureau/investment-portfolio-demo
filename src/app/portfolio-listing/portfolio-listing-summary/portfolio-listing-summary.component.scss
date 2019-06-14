@@ -6,7 +6,7 @@
     }
 
     .item-cell {
-        padding: 12px 30px;
+        padding: 11px 22px;
         min-width: 300px;
         min-height: 100px;
         border-radius: 6px;
@@ -38,6 +38,7 @@
         }
 
         &__value {
+            padding: 0;
             font-family: PostGrotesk;
             font-size: 30px;
             font-weight: 500;
@@ -49,6 +50,10 @@
 
             &--muted {
                 color: rgba($black, .5);
+            }
+
+            .chart {
+                padding: 0;
             }
         }
     }

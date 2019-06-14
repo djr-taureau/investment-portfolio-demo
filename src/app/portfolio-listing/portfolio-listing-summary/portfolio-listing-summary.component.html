@@ -6,9 +6,38 @@
     <div class="item-cell"
          fxLayout="column"
          fxLayoutAlign="start center"
-         fxLayoutGap="12px">
+         fxLayoutGap="0px">
         <div class="item-cell__label">Companies</div>
-        <div class="item-cell__value">{{companyCount}}</div>
+        <div class="item-cell__value"
+             fxLayout="row"
+             fxLayoutAlign="space-around center">
+            <kendo-chart class="chart"
+                         [chartArea]="{ height: 68, width: 240, margin: 0, padding: 0}">
+                <ng-template kendoChartDonutCenterTemplate>
+                    <div>{{companyCount}}</div>
+                </ng-template>
+                <kendo-chart-series>
+                    <kendo-chart-series-item type="donut"
+                                             [padding]="0"
+                                             [size]="5"
+                                             [margin]="0"
+                                             [data]="chartData"
+                                             [holeSize]="28"
+                                             categoryField="name"
+                                             field="value"
+                                             colorField="color">
+                    </kendo-chart-series-item>
+                </kendo-chart-series>
+                <kendo-chart-legend #legend
+                                    [height]="60"
+                                    [width]="0"
+                                    [visible]="true"
+                                    [labels]="legendLabels"
+                                    [markers]="legendMarkers"
+                                    [offsetX]="0"
+                                    [offsetY]="0"></kendo-chart-legend>
+            </kendo-chart>
+        </div>
     </div>
 
     <div class="item-cell"

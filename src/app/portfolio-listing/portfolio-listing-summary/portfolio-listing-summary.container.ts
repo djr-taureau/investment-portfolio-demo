@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
+import { ChartDataModel } from "../../core/domain/chart-data.model";
 import * as fromState from "../../core/state";
+import "rxjs-compat/add/operator/first";
 
 @Component({
     selector: "sbp-portfolio-listing-summary-container",
@@ -16,7 +18,7 @@ import * as fromState from "../../core/state";
         ></sbp-portfolio-listing-summary>
     `
 })
-export class PortfolioListingSummaryContainerComponent implements OnInit {
+export class PortfolioListingSummaryContainer implements OnInit {
     /**
      * The total number of companies in the portfolio
      */
@@ -47,6 +49,7 @@ export class PortfolioListingSummaryContainerComponent implements OnInit {
      */
     public irr$: Observable<number>;
 
+    public companyTypes$: Observable<ChartDataModel[]>;
     /**
      * Initialize the component.
      */
@@ -57,6 +60,7 @@ export class PortfolioListingSummaryContainerComponent implements OnInit {
         this.valuation$ = this.store$.pipe(select(fromState.getValuation));
         this.moic$ = this.store$.pipe(select(fromState.getMOIC));
         this.irr$ = this.store$.pipe(select(fromState.getIRR));
+        this.companyTypes$ = this.store$.pipe(select(fromState.getCompanyTypes));
     }
 
     constructor(private store$: Store<any>) {}

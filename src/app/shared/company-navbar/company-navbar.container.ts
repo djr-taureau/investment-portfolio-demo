@@ -61,7 +61,7 @@ export class CompanyNavbarContainer implements OnInit {
      * Initialize the component.
      */
     public ngOnInit(): void {
-        this.links$ = this.store$.pipe(select(fromState.getComnpanyNavLinks));
+        this.links$ = this.store$.pipe(select(fromState.getCompanyNavLinks));
         this.selectedLink$ = this.store$.pipe(select(fromState.getSelectedCompanyNavLink));
         this.collapsed$ = this.store$.pipe(select(fromCompanyDashboardLayout.getCollapsed));
     }

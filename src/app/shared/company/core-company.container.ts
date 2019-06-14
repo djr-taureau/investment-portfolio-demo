@@ -2,7 +2,7 @@ import "rxjs/operators/first";
 import * as _ from "lodash";
 import { ActivatedRoute } from "@angular/router";
 import { Company } from "../../core/domain/company.model";
-import { getComnpanyNavLinks } from "../../core/state";
+import { getCompanyNavLinks } from "../../core/state";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
 import { OnInit } from "@angular/core";
@@ -23,7 +23,7 @@ export class CoreCompanyContainer implements OnInit {
         });
 
         // Ensure that the selected link is always set in the layout when the container is init
-        const links$ = this.store$.pipe(select(getComnpanyNavLinks));
+        const links$ = this.store$.pipe(select(getCompanyNavLinks));
         links$.subscribe((links) => {
             const matchingLink = _.find(links, (link: NavigationBarLink) => link.route === this.componentUrl);
             if (matchingLink) {

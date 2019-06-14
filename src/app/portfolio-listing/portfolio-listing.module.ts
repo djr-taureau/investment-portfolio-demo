@@ -1,22 +1,22 @@
-import { CommonModule, JsonPipe } from "@angular/common";
-import { SharedModule } from "../shared/shared.module";
-import { NgModule } from "@angular/core";
-import { MatIconModule } from "@angular/material/icon";
+import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
-import { RouterModule, Routes } from "@angular/router";
-import { PortfolioListingHeaderContainer } from "./portfolio-listing-header/porfolio-listing-header.container";
-import { PortfolioListingHeaderComponent } from "./portfolio-listing-header/porfolio-listing-header.component";
-import { PortfolioListingTableComponent } from "./portfolio-listing-table/portfolio-listing-table.component";
-import { PortfolioListingSummaryComponent } from "./portfolio-listing-summary/portfolio-listing-summary.component";
-import { PortfolioListingSummaryContainerComponent } from "./portfolio-listing-summary/portfolio-listing-summary.container.component";
+import { MatIconModule } from "@angular/material/icon";
+import { NgModule } from "@angular/core";
 import { PortfolioListingComponent } from "./portfolio-listing.component";
 import { PortfolioListingContainer } from "./portfolio-listing.container";
+import { PortfolioListingHeaderComponent } from "./portfolio-listing-header/porfolio-listing-header.component";
+import { PortfolioListingHeaderContainer } from "./portfolio-listing-header/porfolio-listing-header.container";
+import { PortfolioListingSummaryComponent } from "./portfolio-listing-summary/portfolio-listing-summary.component";
+import { PortfolioListingSummaryContainer } from "./portfolio-listing-summary/portfolio-listing-summary.container";
+import { PortfolioListingTableComponent } from "./portfolio-listing-table/portfolio-listing-table.component";
+import { RouterModule, Routes } from "@angular/router";
+import { SharedModule } from "../shared/shared.module";
 
 const COMPONENTS: any = [
     PortfolioListingHeaderContainer,
     PortfolioListingHeaderComponent,
     PortfolioListingSummaryComponent,
-    PortfolioListingSummaryContainerComponent,
+    PortfolioListingSummaryContainer,
     PortfolioListingTableComponent,
     PortfolioListingContainer,
     PortfolioListingComponent

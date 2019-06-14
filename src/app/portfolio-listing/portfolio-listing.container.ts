@@ -36,8 +36,18 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
      */
     public ngOnInit(): void {
         PortfolioListingContainer.logger.debug(`ngOnInit()`);
-        this.store$.dispatch(PortfolioActions.loadPortfolio());
+        this.companies$ = this.store$.pipe(select(fromCompanyState.getPortfolioCompanies));
         this.mocks$ = this.store$.pipe(select(fromCompanyState.getMocks));
+        this.store$.dispatch(PortfolioActions.loadPortfolio());
+
+        // TODO: AG: This needs to be fixed as it's throwing a RTE.
+        // const links$ = this.store$.pipe(select(getPortfolioNavLinks));
+        // links$.first().subscribe((links) => {
+        //     const matchingLink = _.find(links, (link: NavigationBarLink) => link.route === appRoutePaths.portfolioListing);
+        //     if (matchingLink) {
+        //         this.store$.dispatch(new SetSelectedPortfolioLink(matchingLink.route));
+        //     }
+        // });
     }
 
     /**

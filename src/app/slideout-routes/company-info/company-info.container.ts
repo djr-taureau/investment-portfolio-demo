@@ -13,7 +13,7 @@ import { Logger } from "app/util/logger";
         <sbp-company-info [company]="company$ | async" (closePanel)="onClose()"> </sbp-company-info>
     `
 })
-export class CompanyInfoContainerComponent implements OnInit {
+export class CompanyInfoContainer implements OnInit {
     /**
      * Internal logger.
      */
