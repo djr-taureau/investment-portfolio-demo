@@ -2,7 +2,7 @@ import { FindCompanyActions } from "../search";
 import { CompanyApiActions } from "../../company";
 
 export interface State {
-    ids: number[];
+    ids: string[];
     loading: boolean;
     error: string;
     query: string;
@@ -17,10 +17,10 @@ const initialState: State = {
 
 export function reducer(
     state = initialState,
-    action: CompanyApiActions.CompaniesApiActionsUnion | FindCompanyActions.FindCompanyPageActionsUnion
+    action: CompanyApiActions.CompaniesApiActionsUnion | FindCompanyActions.FindCompanyActionsUnion
 ): State {
     switch (action.type) {
-        case FindCompanyActions.searchCompanies.type: {
+        case FindCompanyActions.filterCompanies.type: {
             const query = action.query;
 
             if (query === "") {

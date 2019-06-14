@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
-import { MatTableDataSource } from "@angular/material";
+import { ChangeDetectionStrategy, Component, Input, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { MatTableDataSource, MatSort, MatPaginator } from "@angular/material";
 import { Company } from "../../core/domain/company.model";
 import { Column, Group } from "../../core/domain/data-table.ui-model";
 import { Logger } from "../../util/logger";
+import * as _ from "lodash";
 
 @Component({
     selector: "sbp-portfolio-listing-table",
@@ -10,12 +11,14 @@ import { Logger } from "../../util/logger";
     styleUrls: ["./portfolio-listing-table.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PortfolioListingTableComponent implements OnInit {
+export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
     /**
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("PortfolioListingTableComponent");
 
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
     /**
      * List of companies to display.
      *
@@ -26,7 +29,6 @@ export class PortfolioListingTableComponent implements OnInit {
         this._companies = value;
         if (!!value) {
             this.dataProvider = this.createDataProvider(value);
-            // this._alldata = value;
         }
     }
     public get companies(): Company[] {
@@ -37,22 +39,30 @@ export class PortfolioListingTableComponent implements OnInit {
     /**
      * Data table's data provider.
      */
-    public dataProvider = new MatTableDataSource([]);
+    dataProvider = new MatTableDataSource([]);
 
+    @Input()
+    public filter = "";
+
+    @Input()
+    public groupByColumn = "";
+
+    @Input()
+    public sortByColumn = "";
     /**
      * List of columns for the table.
      */
-    public columns: Column[];
+    columns: Column[];
 
     /**
      * List of columns displayed in the table.
      */
-    public displayedColumns: string[];
+    displayedColumns: string[];
 
     /**
      * List of columns group in the table.
      */
-    public groupByColumns: string[];
+    groupByColumns: string[];
 
     /**
      * Constructor.
@@ -62,7 +72,7 @@ export class PortfolioListingTableComponent implements OnInit {
 
         this.columns = this.createColumns();
         this.displayedColumns = this.columns.map((column) => column.field);
-        this.groupByColumns = ["name"];
+        this.groupByColumns = [];
     }
 
     /**
@@ -70,6 +80,8 @@ export class PortfolioListingTableComponent implements OnInit {
      */
     public ngOnInit(): void {
         PortfolioListingTableComponent.logger.debug(`ngOnInit()`);
+        // this.sort.active = "name";
+        // this.sort.direction = "desc";
     }
 
     /**
@@ -83,7 +95,6 @@ export class PortfolioListingTableComponent implements OnInit {
         this.dataProvider.data = this.addGroups(this.companies, this.groupByColumns);
         this.dataProvider.filter = performance.now().toString();
     }
-
     /**
      * filter data grid by string search.
      * @param filterValue
@@ -188,6 +199,8 @@ export class PortfolioListingTableComponent implements OnInit {
         groups.forEach((group) => {
             const rowsInGroup = data.filter((row) => group[currentColumn] === row[currentColumn]);
             group.totalCounts = rowsInGroup.length;
+            // group.aggregatedValuation = 40000000;
+            // group.aggregatedInvestment = 500000;
             const subGroup = this.getSublevel(rowsInGroup, level + 1, groupByColumns, group);
             subGroup.unshift(group);
             subGroups = subGroups.concat(subGroup);
@@ -227,17 +240,31 @@ export class PortfolioListingTableComponent implements OnInit {
                 field: "name"
             },
             {
-                field: "dealTeamLead"
+                field: "type"
             },
             {
-                field: "sector"
+                field: "sectors"
+            },
+            {
+                field: "dealTeamLead"
             },
             {
                 field: "amountInvested"
             },
             {
-                field: "valuation"
+                field: "currentValuation"
+            },
+            {
+                field: "MOIC"
+            },
+            {
+                field: "IRR"
             }
         ];
+    }
+
+    ngAfterViewInit() {
+        this.dataProvider.sort = this.sort;
+        this.dataProvider.paginator = this.paginator;
     }
 }

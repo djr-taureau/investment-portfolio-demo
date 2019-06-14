@@ -57,13 +57,13 @@ export class HeaderContainer implements OnInit {
      * @param $event
      */
     public toggleSlideout(slideOut: boolean): void {
-        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel(1)) : this.store$.dispatch(new CloseCompanyInfoPanel(1));
+        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel("1")) : this.store$.dispatch(new CloseCompanyInfoPanel("1"));
     }
 
     /**
      * Dispatch action to select role in store.
      */
-    public selectCompany(event: number) {
+    public selectCompany(event: string) {
         HeaderContainer.logger.debug(`onCompanySelect( ${event} )`);
         this.store$.dispatch(new SelectCompany(event));
     }

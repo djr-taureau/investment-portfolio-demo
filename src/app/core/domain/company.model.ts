@@ -1,5 +1,5 @@
 export interface Company {
-    id: number;
+    id: string;
     type: string; // enum
     data: any;
     sectors: Sector[];

@@ -1,0 +1,55 @@
+<div class="main"
+     fxLayout="row"
+     fxLayoutAlign="space-between center">
+    <div fxLayout="column"
+         fxFlex="40">
+        <div fxLayout="row"
+             fxLayoutGap="5px">
+            <img src="assets/image/search.svg"
+                 class="search">
+            <input matInput
+                   class="search-for-company"
+                   [value]="companyFilter"
+                   (keyup)="filter.emit($event.target.value)"
+                   placeholder="Search for Company">
+            <div class="vr"></div>
+            <div fxLayoutGap="20px">
+                <img src="assets/image/filter.svg"
+                     class="filter">
+            </div>
+            <div fxLayoutGap="20px"
+                 class="vr"></div>
+            <div fxLayoutGap="5px">
+                <mat-icon class="grouping"
+                          svgIcon="grouping"></mat-icon>
+                <mat-select class="grouping dropdown"
+                            panelClass="dropDownPanel"
+                            placeholder="Group By"
+                            [formControl]="groupBy"
+                            (selectionChange)="group.emit($event.value)">
+                    <mat-option value="regions">Group By Region</mat-option>
+                    <mat-option value="type">Group By Company Type</mat-option>
+                </mat-select>
+            </div>
+
+        </div>
+    </div>
+
+    <div fxLayout="column"
+         fxFlex="20">
+        <div fxLayout="row">
+            <div fxLayoutGap="1px">
+                <mat-icon class="sort"
+                          svgIcon="sort"></mat-icon>
+                <mat-select class="sort dropdown"
+                            placeholder="Sort By"
+                            (selectionChange)="sort.emit($event.value)">
+                    <mat-option value="Valuation">Valuation</mat-option>
+                    <mat-option value="Investment">Investment</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                </mat-select>
+            </div>
+        </div>
+    </div>
+
+</div>

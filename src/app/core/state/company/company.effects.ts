@@ -13,7 +13,7 @@ export class CompanyEffects {
     @Effect()
     search$ = ({ debounce = 300, scheduler = asyncScheduler } = {}): Observable<Action> =>
         this.actions$.pipe(
-            ofType(FindCompanyActions.searchCompanies.type),
+            ofType(FindCompanyActions.filterCompanies.type),
             debounceTime(debounce, scheduler),
             switchMap(({ query }) => {
                 if (query === "") {
@@ -21,7 +21,7 @@ export class CompanyEffects {
                 }
 
                 const nextSearch$ = this.actions$.pipe(
-                    ofType(FindCompanyActions.searchCompanies.type),
+                    ofType(FindCompanyActions.filterCompanies.type),
                     skip(1)
                 );
 
@@ -33,5 +33,5 @@ export class CompanyEffects {
             })
         )
 
-    constructor(private actions$: Actions<FindCompanyActions.FindCompanyPageActionsUnion>, private companyService: CompanyService) {}
+    constructor(private actions$: Actions<FindCompanyActions.FindCompanyActionsUnion>, private companyService: CompanyService) {}
 }

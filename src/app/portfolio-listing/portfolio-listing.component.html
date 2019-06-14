@@ -5,6 +5,7 @@
     <sbp-portfolio-navbar-container></sbp-portfolio-navbar-container>
     <!-- This is where this sub-header will go: -->
     <!-- https://casertaconcepts.atlassian.net/browse/SBMVP-75 -->
+    <sbp-portfolio-listing-header-container></sbp-portfolio-listing-header-container>
 
     <!-- This is where the summary widget will go: -->
     <!-- https://casertaconcepts.atlassian.net/browse/SBMVP-81 -->
@@ -12,6 +13,7 @@
 
     <!-- This is where this list will go -->
     <!-- https://casertaconcepts.atlassian.net/browse/SBMVP-77 -->
+    <sbp-portfolio-listing-table [companies]="companies"></sbp-portfolio-listing-table>
 
     <button (click)="onLoadCompanies($event)">Load Companies</button>
 

@@ -14,25 +14,25 @@ export enum FlowActionTypes {
 export class CloseCompanyInfoPanel implements Action {
     readonly type = FlowActionTypes.CloseCompanyInfoPanel;
 
-    constructor(public payload?: number) {}
+    constructor(public payload?: string) {}
 }
 
 export class ExpandCompanyInfoSummaryPanel implements Action {
     readonly type = FlowActionTypes.ExpandCompanyInfoSummaryPanel;
 
-    constructor(public payload?: number) {}
+    constructor(public payload?: string) {}
 }
 
 export class CollapseCompanyInfoSummaryPanel implements Action {
     readonly type = FlowActionTypes.CollapseCompanyInfoSummaryPanel;
 
-    constructor(public payload?: number) {}
+    constructor(public payload?: string) {}
 }
 
 export class OpenCompanyInfoPanel implements Action {
     readonly type = FlowActionTypes.OpenCompanyInfoPanel;
 
-    constructor(public payload?: number) {}
+    constructor(public payload?: string) {}
 }
 
 export class CompanyNavigationItemClicked implements Action {
@@ -49,7 +49,7 @@ export class PortfolioNavigationItemClicked implements Action {
 export class SelectCompany implements Action {
     readonly type = FlowActionTypes.SelectCompany;
 
-    constructor(public payload: number) {}
+    constructor(public payload: string) {}
 }
 
 export type FlowActions =

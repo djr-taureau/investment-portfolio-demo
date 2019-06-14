@@ -3,17 +3,24 @@ import { Company } from "../../domain/company.model";
 import { CompanyApiActions, CompanyActions } from "./index";
 import { PortfolioApiActions } from "../portfolio/actions-index";
 
+function sortByValuation(e1: Company, e2: Company) {
+    return e1.currentValuation - e2.currentValuation;
+}
 export interface State extends EntityState<Company> {
-    selectedCompanyId: number | null;
+    selectedCompanyId: string | null;
+    sortValue: string;
+    sortOrder: string;
 }
 
 export const adapter: EntityAdapter<Company> = createEntityAdapter<Company>({
     selectId: (company: Company) => company.id,
-    sortComparer: false
+    sortComparer: sortByValuation
 });
 
 export const initialState: State = adapter.getInitialState({
-    selectedCompanyId: null
+    selectedCompanyId: null,
+    sortValue: "valuation",
+    sortOrder: "asc"
 });
 
 export function reducer(
@@ -24,7 +31,7 @@ export function reducer(
         case CompanyApiActions.searchSuccess.type:
         case PortfolioApiActions.loadCompaniesSuccess.type: {
             // TODO: remove this once the company selector is valid
-            state.selectedCompanyId = action.companies[0].id;
+            // state.selectedCompanyId = action.companies[0].id;
             return adapter.addMany(action.companies, state);
         }
 
@@ -42,3 +49,5 @@ export function reducer(
 }
 
 export const getSelectedId = (state: State) => state.selectedCompanyId;
+export const getSortValue = (state: State) => state.sortValue;
+export const getSortOrder = (state: State) => state.sortOrder;

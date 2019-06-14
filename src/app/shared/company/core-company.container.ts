@@ -18,7 +18,7 @@ export class CoreCompanyContainer implements OnInit {
         // Ensure that the url is evaluated for company id and updates the selected company if it exists
         this.route$.params.subscribe((params) => {
             if (_.get(params, "id", null)) {
-                this.store$.dispatch(setSelectedCompany({ id: Number(params.id) }));
+                this.store$.dispatch(setSelectedCompany({ id: params.id }));
             }
         });
 

@@ -3,7 +3,11 @@ import * as fromCompanies from "../company/company.reducer";
 import * as fromPortfolio from "./porfolio.reducer";
 import * as fromSearch from "./search/search.reducer";
 import * as fromRoot from "../index";
+import { Company } from "../../domain/company.model";
 
+function sortByValuation(e1: Company, e2: Company) {
+    return e1.currentValuation - e2.currentValuation;
+}
 export interface CompaniesState {
     search: fromSearch.State;
     companies: fromCompanies.State;
@@ -30,6 +34,16 @@ export const getCompanyEntitiesState = createSelector(
 export const getSelectedCompanyId = createSelector(
     getCompanyEntitiesState,
     fromCompanies.getSelectedId
+);
+
+export const getCompanySort = createSelector(
+    getCompanyEntitiesState,
+    fromCompanies.getSortValue
+);
+
+export const getCompanySortOrder = createSelector(
+    getCompanyEntitiesState,
+    fromCompanies.getSortOrder
 );
 
 export const {
@@ -110,5 +124,23 @@ export const getPortfolioCompanies = createSelector(
     getPortfolioCompanyIds,
     (entities, ids) => {
         return ids.map((id) => entities[id]);
+    }
+);
+
+export const getFilteredCompanies = createSelector(
+    getPortfolioCompanies,
+    getSearchQuery,
+    (companies, searchQuery) => {
+        return companies.filter((co) => co.name.toLowerCase().includes(searchQuery.toString().toLowerCase()));
+    }
+);
+
+export const sortCompaniesValuation = createSelector(
+    getCompanyEntities,
+    getCompanySort,
+    (companiesState) => {
+        const allCompanies = Object.values(companiesState.entities);
+        allCompanies.sort(sortByValuation);
+        return allCompanies;
     }
 );

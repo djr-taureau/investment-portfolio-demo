@@ -66,7 +66,7 @@ export const getCompanyDefault = (): Company => {
         founders: [],
         funds: [],
         headquarters: "",
-        id: 0,
+        id: "1",
         initialInvestmentDate: "",
         initiatives: [],
         investingEntity: "",

@@ -36,9 +36,8 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
      */
     public ngOnInit(): void {
         PortfolioListingContainer.logger.debug(`ngOnInit()`);
-        this.companies$ = this.store$.pipe(select(fromCompanyState.getPortfolioCompanies));
-        this.mocks$ = this.store$.pipe(select(fromCompanyState.getMocks));
         this.store$.dispatch(PortfolioActions.loadPortfolio());
+        this.mocks$ = this.store$.pipe(select(fromCompanyState.getMocks));
     }
 
     /**
@@ -56,5 +55,6 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
      */
     constructor(public store$: Store<fromCompanyState.State>) {
         super(store$, appRoutePaths.portfolioListing);
+        this.companies$ = store$.pipe(select(fromCompanyState.getFilteredCompanies));
     }
 }

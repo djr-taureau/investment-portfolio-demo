@@ -66,8 +66,8 @@ export class GoToCompanyDashboard implements Action {
     readonly type = RouterActionTypes.Go;
     public payload = { path: "" };
 
-    constructor(companyId: number) {
-        this.payload.path = appRoutePaths.companyDashboard.replace(":id", String(companyId));
+    constructor(companyId: string) {
+        this.payload.path = appRoutePaths.companyDashboard.replace(":id", companyId);
     }
 }
 
@@ -75,8 +75,8 @@ export class GoToCompanyFinancials implements Action {
     readonly type = RouterActionTypes.Go;
     public payload = { path: "" };
 
-    constructor(companyId: number) {
-        this.payload.path = appRoutePaths.companyFinancials.replace(":id", String(companyId));
+    constructor(companyId: string) {
+        this.payload.path = appRoutePaths.companyFinancials.replace(":id", companyId);
     }
 }
 
@@ -84,8 +84,8 @@ export class GoToCompanyDocuments implements Action {
     readonly type = RouterActionTypes.Go;
     public payload = { path: "" };
 
-    constructor(companyId: number) {
-        this.payload.path = appRoutePaths.companyDocuments.replace(":id", String(companyId));
+    constructor(companyId: string) {
+        this.payload.path = appRoutePaths.companyDocuments.replace(":id", companyId);
     }
 }
 export class UpdateUrlParams implements Action {

@@ -28,7 +28,7 @@ export class CompanyInfoContainerComponent implements OnInit {
      * Handles the close of the panel
      */
     public onClose(): void {
-        this.store$.dispatch(new CloseCompanyInfoPanel(1));
+        this.store$.dispatch(new CloseCompanyInfoPanel("1"));
     }
 
     /**
