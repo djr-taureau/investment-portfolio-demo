@@ -1,9 +1,7 @@
 import { APP_BASE_HREF } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { appRoutePaths } from "./app.routes";
-import { AuthRouteGuard } from "./core/route-guard/auth.route-guard";
-import * as AppRoutes from "./app.routes";
+import * as AppRoutes from "@app/app.routes";
 
 const PROVIDERS = [
     {

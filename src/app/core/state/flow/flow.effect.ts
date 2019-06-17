@@ -16,7 +16,7 @@ import {
     UpdateUrlParams
 } from "../router/router.action";
 import { Injectable } from "@angular/core";
-import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
+import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
 import { setSelectedCompany } from "../company/company.actions";
 import { SetSelectedCompanyLink, SetSelectedPortfolioLink, ToggleSlideout } from "../layout/layout.actions";

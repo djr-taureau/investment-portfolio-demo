@@ -1,5 +1,5 @@
 import { Action, createAction, props, union } from "@ngrx/store";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 
 export const loadCompany = createAction("[Company Exists Guard] Load Company", props<{ company: Company }>());
 export const sortCompanies = createAction("[Company] Sort Company", props<{ sortValue: string }>());

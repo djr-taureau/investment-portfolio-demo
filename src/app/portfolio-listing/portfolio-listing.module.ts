@@ -10,7 +10,7 @@ import { PortfolioListingSummaryComponent } from "./portfolio-listing-summary/po
 import { PortfolioListingSummaryContainer } from "./portfolio-listing-summary/portfolio-listing-summary.container";
 import { PortfolioListingTableComponent } from "./portfolio-listing-table/portfolio-listing-table.component";
 import { RouterModule, Routes } from "@angular/router";
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "@shared/shared.module";
 
 const COMPONENTS: any = [
     PortfolioListingHeaderContainer,

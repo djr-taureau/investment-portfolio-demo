@@ -1,12 +1,12 @@
-import { Company } from "../../core/domain/company.model";
-import * as AuthActions from "../../core/state/auth/auth.action";
-import * as fromState from "../../core/state";
-import { CloseCompanyInfoPanel, OpenCompanyInfoPanel, SelectCompany } from "../../core/state/flow/flow.actions";
-import * as TestUti from "../../util/test.util";
+import { Company } from "@core/domain/company.model";
+import * as AuthActions from "@core/state/auth/auth.action";
+import * as fromState from "@core/state";
+import { CloseCompanyInfoPanel, OpenCompanyInfoPanel, SelectCompany } from "@core/state/flow/flow.actions";
+import * as TestUti from "@util/test.util";
 
 import { Component, OnInit } from "@angular/core";
-import { getShowCompanyCombo } from "../../core/state";
-import { Logger } from "../../util/logger";
+import { getShowCompanyCombo } from "@core/state";
+import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
 

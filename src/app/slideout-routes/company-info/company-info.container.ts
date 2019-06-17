@@ -1,11 +1,10 @@
-import { Company, BoardMember } from "../../core/domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
-import * as fromPortfolioState from "../../core/state/portfolio";
-import { CloseCompanyInfoPanel } from "../../core/state/flow/flow.actions";
-import { ToggleSlideout } from "../../core/state/layout/layout.actions";
-import { Logger } from "app/util/logger";
+import * as fromPortfolioState from "@core/state/portfolio";
+import { CloseCompanyInfoPanel } from "@core/state/flow/flow.actions";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-company-info-container",

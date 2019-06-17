@@ -2,7 +2,7 @@ import { CompanyNotesComponent } from "./company-notes.component";
 import { CompanyNotesContainer } from "./company-notes.container";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "@shared/shared.module";
 
 const COMPONENTS: any = [CompanyNotesContainer, CompanyNotesComponent];
 const MODULE_ROUTES: Routes = [

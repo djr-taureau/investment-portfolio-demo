@@ -5,7 +5,7 @@ import { CompanySummaryContainer } from "./company-summary/company-summary.conta
 import { CompanySummaryExpandedComponent } from "./company-summary/expanded/company-summary-expanded.component";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "@shared/shared.module";
 
 const COMPONENTS: any = [
     CompanyDashboardContainer,

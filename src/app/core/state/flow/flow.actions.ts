@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
+import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
 export enum FlowActionTypes {
     CloseCompanyInfoPanel = "[Flow] Close Company Info Panel",

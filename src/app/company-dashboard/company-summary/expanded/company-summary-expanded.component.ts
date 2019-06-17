@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Company, TeamMember } from "../../../core/domain/company.model";
-import { Logger } from "../../../util/logger";
+import { Company, TeamMember } from "@core/domain/company.model";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-company-summary-expanded",

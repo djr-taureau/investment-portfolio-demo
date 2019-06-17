@@ -1,5 +1,5 @@
 import { createAction, props, union } from "@ngrx/store";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 
 /**
  * Load Portfolio Actions

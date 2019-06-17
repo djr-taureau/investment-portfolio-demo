@@ -2,14 +2,14 @@ import { Inject, Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable, of, Subscriber } from "rxjs";
 import { retry } from "rxjs/operators";
-import { Logger } from "../../util/logger";
-import { Auth } from "../domain/auth.model";
+import { Logger } from "@util/logger";
+import { Auth } from "@core/domain/auth.model";
 import { adal } from "adal-angular";
 import { AdalAuthContextService } from "./adal-auth-context.service";
 import { AdalAuthConfig } from "./adal-auth.config";
 import { AdalAuthConfigService } from "./auth-config.service";
 import { IAuthService } from "./auth-service.interface";
-import * as AuthActions from "../state/auth/auth.action";
+import * as AuthActions from "@core/state/auth/auth.action";
 
 @Injectable({
     providedIn: "root"

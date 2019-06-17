@@ -1,6 +1,6 @@
 import { of } from "rxjs";
-import { Auth } from "../domain/auth.model";
-import * as AuthActions from "../state/auth/auth.action";
+import { Auth } from "@core/domain/auth.model";
+import * as AuthActions from "@core/state/auth/auth.action";
 import { AdalAuthContextService } from "./adal-auth-context.service";
 import { AdalAuthConfig } from "./adal-auth.config";
 import { AdalAuthService } from "./adal-auth.service";

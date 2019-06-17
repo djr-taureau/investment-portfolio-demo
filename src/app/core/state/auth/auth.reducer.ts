@@ -1,4 +1,4 @@
-import { Auth } from "../../domain/auth.model";
+import { Auth } from "@core/domain/auth.model";
 import { AuthActions, AuthActionTypes } from "./auth.action";
 
 export interface AuthState {

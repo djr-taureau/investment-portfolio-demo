@@ -3,7 +3,7 @@ import { CompanyInfoContainer } from "./company-info.container";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { BoardMemberComponent } from "./board-member/board-member.component";
-import { SharedModule } from "app/shared/shared.module";
+import { SharedModule } from "@shared/shared.module";
 
 const COMPONENTS: any = [BoardMemberComponent, CompanyInfoContainer, CompanyInfoComponent];
 const COMPANY_INFO_ROUTES: Routes = [

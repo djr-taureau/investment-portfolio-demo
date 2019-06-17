@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
-import { Logger } from "../../util/logger";
-import { AuthService } from "../auth/auth.service";
-import * as AuthActions from "../state/auth/auth.action";
+import { Logger } from "@util/logger";
+import { AuthService } from "@core/auth/auth.service";
+import * as AuthActions from "@core/state/auth/auth.action";
 
 @Injectable({
     providedIn: "root"

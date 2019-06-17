@@ -1,5 +1,5 @@
 import { appRoutePaths } from "../../../app.routes";
-import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
+import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { LayoutActions, LayoutActionTypes } from "./layout.actions";
 
 export interface LayoutState {

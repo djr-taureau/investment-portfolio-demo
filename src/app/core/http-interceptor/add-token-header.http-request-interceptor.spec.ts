@@ -3,7 +3,7 @@ import { Store } from "@ngrx/store";
 import { of } from "rxjs";
 import { appRoutePaths } from "../../app.routes";
 import { AddTokenHeaderHttpRequestInterceptor } from "./add-token-header.http-request-interceptor";
-import * as RouterActions from "../state/router/router.action";
+import * as RouterActions from "@core/state/router/router.action";
 
 xdescribe("HTTP Interceptor: AddTokenHeaderHttpRequestInterceptor >>", () => {
     let testSubject: AddTokenHeaderHttpRequestInterceptor;

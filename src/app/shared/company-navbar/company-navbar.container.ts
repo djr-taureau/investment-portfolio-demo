@@ -1,9 +1,9 @@
-import * as CompanyDashboardLayoutActions from "../../core/state/company/dashboard/company-dashboard-layout.actions";
-import * as fromCompanyDashboardLayout from "../../core/state/company/dashboard";
-import * as fromState from "../../core/state/";
-import { CompanyNavigationItemClicked } from "../../core/state/flow/flow.actions";
+import * as CompanyDashboardLayoutActions from "@core/state/company/dashboard/company-dashboard-layout.actions";
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import * as fromState from "@core/state/";
+import { CompanyNavigationItemClicked } from "@core/state/flow/flow.actions";
 import { Component, OnInit } from "@angular/core";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";

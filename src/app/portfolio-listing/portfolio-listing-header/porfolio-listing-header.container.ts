@@ -3,12 +3,12 @@ import { Store, select } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { MatTableDataSource } from "@angular/material";
-import * as fromCompanyState from "../../core/state/portfolio";
-import { FindCompanyActions } from "../../core/state/portfolio/search";
-import { CompanyActions } from "../../core/state/company";
-import { Company } from "../../core/domain/company.model";
-import { Column, Group } from "../../core/domain/data-table.ui-model";
-import { Logger } from "../../util/logger";
+import * as fromCompanyState from "@core/state/portfolio";
+import { FindCompanyActions } from "@core/state/portfolio/search";
+import { CompanyActions } from "@core/state/company";
+import { Company } from "@core/domain/company.model";
+import { Column, Group } from "@core/domain/data-table.ui-model";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-portfolio-listing-header-container",

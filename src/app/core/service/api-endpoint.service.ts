@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { UrlUtil } from "../../util/url.util";
-import * as StringUtil from "../../util/string.util";
+import { UrlUtil } from "@util/url.util";
+import * as StringUtil from "@util/string.util";
 
 @Injectable({
     providedIn: "root"

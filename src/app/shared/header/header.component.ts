@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Company } from "../../core/domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { PopupConfig } from "../iconized-searchable-combo/popup-config";
 
 @Component({

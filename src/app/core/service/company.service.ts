@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Company } from "../domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Observable, of } from "rxjs";
 import { throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { ApiEndpointService } from "./api-endpoint.service";
 
 @Injectable()

@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { Action } from "@ngrx/store";
 import { Effect, Actions, ofType } from "@ngrx/effects";
-import { Observable, defer, of } from "rxjs";
+import { Observable, of } from "rxjs";
 import { PortfolioActions, PortfolioApiActions } from "./actions-index";
 import { map, catchError, exhaustMap } from "rxjs/operators";
-import { Company } from "../../domain/company.model";
-import { CompanyService } from "../../service/company.service";
+import { Company } from "@core/domain/company.model";
+import { CompanyService } from "@core/service/company.service";
 
 @Injectable()
 export class PortfolioEffects {

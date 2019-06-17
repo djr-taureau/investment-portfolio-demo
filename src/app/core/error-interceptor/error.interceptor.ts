@@ -1,9 +1,9 @@
 import { ErrorHandler, Inject, Injectable, Injector } from "@angular/core";
 import { HttpErrorResponse } from "@angular/common/http";
-import { SoftBankError, SoftBankErrorType } from "../domain/soft-bank-error";
+import { SoftBankError, SoftBankErrorType } from "@core/domain/soft-bank-error";
 import { Store } from "@ngrx/store";
-import { Logger } from "../../util/logger";
-import * as ObjectUtil from "../../util/object.util";
+import { Logger } from "@util/logger";
+import * as ObjectUtil from "@util/object.util";
 
 @Injectable()
 export class ErrorInterceptor extends ErrorHandler {

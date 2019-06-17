@@ -1,5 +1,5 @@
 import { createAction, union, props } from "@ngrx/store";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 
 export const searchSuccess = createAction("[Companies/API] Search Success", props<{ companies: Company[] }>());
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
-import { Company, TeamMember } from "../../core/domain/company.model";
-import * as fromCompanyDashboardLayout from "../../core/state/company/dashboard";
-import { Logger } from "../../util/logger";
-import * as TestUti from "../../util/test.util";
+import { Company, TeamMember } from "@core/domain/company.model";
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import { Logger } from "@util/logger";
+import * as TestUti from "@util/test.util";
 
 @Component({
     selector: "sbp-company-summary-container",

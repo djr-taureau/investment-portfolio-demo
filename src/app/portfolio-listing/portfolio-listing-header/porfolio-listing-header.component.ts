@@ -1,11 +1,11 @@
 import { Component, Input, EventEmitter, Output } from "@angular/core";
 import { MatSelectChange } from "@angular/material/select";
 import { FormControl } from "@angular/forms";
-import { Column, Group } from "../../core/domain/data-table.ui-model";
-import { Logger } from "../../util/logger";
+import { Column, Group } from "@core/domain/data-table.ui-model";
+import { Logger } from "@util/logger";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import { CustomIconService } from "../../core/service/custom-icon.service";
+import { CustomIconService } from "@core/service/custom-icon.service";
 @Component({
     selector: "sbp-portfolio-listing-header",
     templateUrl: "./portfolio-listing-header.component.html",

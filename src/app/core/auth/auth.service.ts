@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { AdalAuthService } from "./adal-auth.service";
 import { IAuthService } from "./auth-service.interface";
 

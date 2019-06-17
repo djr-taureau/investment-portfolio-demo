@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-footer-container",

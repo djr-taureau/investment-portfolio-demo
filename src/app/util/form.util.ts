@@ -1,7 +1,7 @@
 import { ElementRef } from "@angular/core";
 import { FormArray, FormControl, FormGroup, FormGroupDirective, NgForm } from "@angular/forms";
 import { Logger } from "./logger";
-import { ErrorInterceptor } from "../core/error-interceptor/error.interceptor";
+import { ErrorInterceptor } from "@core/error-interceptor/error.interceptor";
 import { ErrorStateMatcher } from "@angular/material";
 
 /**

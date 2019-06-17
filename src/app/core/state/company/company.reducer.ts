@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { CompanyApiActions, CompanyActions } from "./index";
 import { PortfolioApiActions } from "../portfolio/actions-index";
 

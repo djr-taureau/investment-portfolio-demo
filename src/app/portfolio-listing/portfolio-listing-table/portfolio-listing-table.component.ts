@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, AfterViewInit, ViewChild } from "@angular/core";
 import { MatTableDataSource, MatSort, MatPaginator } from "@angular/material";
-import { Company } from "../../core/domain/company.model";
-import { Column, Group } from "../../core/domain/data-table.ui-model";
-import { Logger } from "../../util/logger";
+import { Company } from "@core/domain/company.model";
+import { Column, Group } from "@core/domain/data-table.ui-model";
+import { Logger } from "@util/logger";
 import * as _ from "lodash";
 
 @Component({

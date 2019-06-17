@@ -17,23 +17,23 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@core/*": [
+        "app/core/*"
+      ],
+      "@shared/*": [
+        "app/shared/*"
+      ],
+      "@util/*": [
+        "app/util/*"
+      ]
+    }
   },
   "exclude": [
     "**/**/app.po.ts"
-  ],
-  "paths": {
-    "@app/*": [
-      "app/*"
-    ],
-    "@core/*": [
-      "app/core/*"
-    ],
-    "@shared/*": [
-      "app/shared/*"
-    ],
-    "@util/*": [
-      "app/util/*"
-    ]
-  }
+  ]
 }

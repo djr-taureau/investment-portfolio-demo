@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { ChartDataModel } from "../../core/domain/chart-data.model";
-import * as fromState from "../../core/state";
+import { ChartDataModel } from "@core/domain/chart-data.model";
+import * as fromState from "@core/state";
 import "rxjs-compat/add/operator/first";
 
 @Component({

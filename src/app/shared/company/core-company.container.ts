@@ -1,14 +1,14 @@
 import "rxjs/operators/first";
 import * as _ from "lodash";
 import { ActivatedRoute } from "@angular/router";
-import { Company } from "../../core/domain/company.model";
-import { getCompanyNavLinks } from "../../core/state";
+import { Company } from "@core/domain/company.model";
+import { getCompanyNavLinks } from "@core/state";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
 import { OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
-import { setSelectedCompany } from "../../core/state/company/company.actions";
-import { SetSelectedCompanyLink } from "../../core/state/layout/layout.actions";
+import { setSelectedCompany } from "@core/state/company/company.actions";
+import { SetSelectedCompanyLink } from "@core/state/layout/layout.actions";
 
 export class CoreCompanyContainer implements OnInit {
     protected selectedCompany$: Observable<Company>;

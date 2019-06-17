@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { Route } from "@angular/router";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { PortfolioNavigationItemClicked } from "../../core/state/flow/flow.actions";
-import { Logger } from "../../util/logger";
+import { PortfolioNavigationItemClicked } from "@core/state/flow/flow.actions";
+import { Logger } from "@util/logger";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 
-import * as fromState from "../../core/state/";
+import * as fromState from "@core/state/";
 import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
 
 @Component({

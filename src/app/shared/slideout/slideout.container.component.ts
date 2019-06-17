@@ -2,9 +2,9 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
 import { Component, Input, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import * as fromState from "../../core/state";
-import { ToggleSlideout } from "../../core/state/layout/layout.actions";
-import { Logger } from "../../util/logger";
+import * as fromState from "@core/state";
+import { ToggleSlideout } from "@core/state/layout/layout.actions";
+import { Logger } from "@util/logger";
 @Component({
     selector: "sbp-slideout-container",
     template: `

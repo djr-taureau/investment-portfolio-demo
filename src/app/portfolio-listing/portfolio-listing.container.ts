@@ -2,11 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { appRoutePaths } from "../app.routes";
-import { Company } from "../core/domain/company.model";
-import { CorePortfolioContainer } from "../shared/portfolio/core-portfolio.container";
-import { Logger } from "../util/logger";
-import { PortfolioActions } from "../core/state/portfolio/actions-index";
-import * as fromCompanyState from "../core/state/portfolio";
+import { Company } from "@core/domain/company.model";
+import { CorePortfolioContainer } from "@shared/portfolio/core-portfolio.container";
+import { Logger } from "@util/logger";
+import { PortfolioActions } from "@core/state/portfolio/actions-index";
+import * as fromCompanyState from "@core/state/portfolio";
 
 @Component({
     selector: "sbp-portfolio-listing-container",

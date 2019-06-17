@@ -1,11 +1,11 @@
-import { AuthService } from "./core/auth/auth.service";
-import { InitializationService } from "./core/service/initialization.service";
-import * as fromState from "./core/state/";
+import { AuthService } from "@core/auth/auth.service";
+import { InitializationService } from "@core/service/initialization.service";
+import * as fromState from "@core/state/";
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { slideFromRight } from "./shared/animations/slide.animations";
-import { Logger } from "./util/logger";
+import { slideFromRight } from "@shared/animations/slide.animations";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-root",

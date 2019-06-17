@@ -1,7 +1,7 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company, TeamMember } from "../core/domain/company.model";
+import { Company, TeamMember } from "@core/domain/company.model";
 
 /**
  * Provides unit tests access to DOM elements by element ID or CSS selector in a component's fixture.

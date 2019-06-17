@@ -3,7 +3,7 @@ import * as fromCompanies from "../company/company.reducer";
 import * as fromPortfolio from "./porfolio.reducer";
 import * as fromSearch from "./search/search.reducer";
 import * as fromRoot from "../index";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 
 function sortByValuation(e1: Company, e2: Company) {
     return e1.currentValuation - e2.currentValuation;
