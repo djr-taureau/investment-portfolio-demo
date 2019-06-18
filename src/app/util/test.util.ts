@@ -1,7 +1,7 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company, TeamMember } from "../core/domain/company.model";
+import { Company, TeamMember } from "@core/domain/company.model";
 
 /**
  * Provides unit tests access to DOM elements by element ID or CSS selector in a component's fixture.
@@ -66,7 +66,7 @@ export const getCompanyDefault = (): Company => {
         founders: [],
         funds: [],
         headquarters: "",
-        id: 0,
+        id: "1",
         initialInvestmentDate: "",
         initiatives: [],
         investingEntity: "",
@@ -98,7 +98,16 @@ export const getCompanyDefault = (): Company => {
 export const getTeamMemberDefault = (): TeamMember => {
     return {
         id: "",
-        name: ""
+        companyName: "",
+        firstName: "",
+        lastName: "",
+        avatar: "",
+        slack: "",
+        mobile: "",
+        email: "",
+        bio: "",
+        position: "",
+        companyRelationships: []
     };
 };
 

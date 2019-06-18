@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { NavigationBarLink } from "./navigation-bar-link";
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Company } from "../core/domain/company.model";
-import { Logger } from "../util/logger";
+import { Company } from "@core/domain/company.model";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-portfolio-listing",

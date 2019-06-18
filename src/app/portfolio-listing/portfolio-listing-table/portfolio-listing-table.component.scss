@@ -1,0 +1,160 @@
+@import "../../../assets/scss/variables";
+
+:host {
+    width: 80%;
+    padding: 12px;
+    //background-color: $white;
+
+    mat-table {
+        border-radius: 8px;
+        width: 100%;
+        background: none;
+
+        mat-header-row {
+            background: none;
+            min-height: 30px;
+            height: 30px;
+            text-transform: uppercase;
+            color: $grey-blue;
+
+            mat-header-cell {
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: bold;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.3px;
+                color: $grey-blue;
+            }
+        }
+
+        background-color: $white;
+        padding: 0 12px;
+
+        mat-row {
+            background-color: $white;
+            padding: 0 12px;
+
+            mat-cell {
+                &:nth-child(2) {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .row__icon {
+        padding: 0 12px 0 0px;
+    }
+
+    .tag {
+
+        height: 18px;
+        opacity: 0.5;
+        border-radius: 2px;
+        background-color: #DCE3F0;
+    }
+
+    .tag__img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .tag__text {
+        height: 13px;
+        font-family: PostGrotesk;
+        font-size: 10px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: center;
+        color: black;
+    }
+
+    //th.mat-header-cell {
+    //    background-color: $white;
+    //    padding-left: 2.4rem;
+    //
+    //    &:not(:last-child) {
+    //        border-right: 1px solid #c3c7c8;
+    //    }
+    //
+    //    color: #153c3f;
+    //    font-size: 1.8rem;
+    //    letter-spacing: 0.015rem;
+    //}
+
+    mat-cell.group_bkg {
+        height: 32px;
+        opacity: 0.5;
+        background-color: $light-grey-blue;
+    }
+
+    .mat-row {
+
+        height: 72px;
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    .Total-Valuation {
+        width: 51px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: right;
+
+    }
+
+    .column-name {
+        width: 102px;
+        height: 16px;
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.3px;
+        color: var($grey-blue);
+        text-transform: uppercase;
+    }
+
+
+    .company-name-text {
+        width: 180px;
+        height: 21px;
+        font-family: PostGrotesk;
+        font-size: 16px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+
+    }
+
+
+    .mat-cell data-grid-text {
+        width: 60px;
+        height: 15px;
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.07;
+        letter-spacing: normal;
+        text-align: right;
+
+    }
+}

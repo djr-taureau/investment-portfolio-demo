@@ -1,0 +1,13 @@
+<div class="container"
+     fxLayout="row">
+
+    <h1>Collapsed</h1>
+
+    <img [src]="company.logo"
+         [alt]="company.name">
+
+    <div>{{ company.name }}</div>
+
+    <div *ngFor="let teamMember of teamMembers">{{ teamMember.name }}</div>
+
+</div>

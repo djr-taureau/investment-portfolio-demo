@@ -8,9 +8,10 @@ import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 export class CalculateNavBarClassesPipe implements PipeTransform {
     transform(link: NavigationBarLink, selectedLink: string, hovered: string): any {
         return {
-            selected: link.route === selectedLink,
-            disabled: link.route !== selectedLink && link.route !== hovered,
-            hovered: link.route !== selectedLink && link.route === hovered
+            selected: link.enabled && link.route === selectedLink,
+            // disabled: link.route !== selectedLink && link.route !== hovered ,
+            disabled: !link.enabled,
+            hovered: link.enabled && link.route !== selectedLink && link.route === hovered
         };
     }
 }

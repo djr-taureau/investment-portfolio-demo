@@ -1,0 +1,65 @@
+<div fxLayout="column"
+     fxLayoutAlign="start center"
+     fxFlex>
+    <mat-table [dataSource]="dataProvider"
+               class="mat-elevation-z0"
+               matSort>
+
+        <ng-container *ngFor="let column of columns; let i = index"
+                      matColumnDef="{{ column.field }}">
+            <mat-header-cell mat-sort-header
+                             *matHeaderCellDef>{{ column.field }}
+
+                <!-- <button class="grid-view-header-menu"
+                        mat-icon-button
+                        [matMenuTriggerFor]="menu">
+                    <mat-icon>menu</mat-icon>
+                </button> -->
+
+                <!-- <mat-menu #menu>
+                    <button mat-menu-item
+                            (click)="groupBy($event, column);">Group By This Field</button>
+                    <button mat-menu-item
+                            (click)="unGroupBy($event, column);">Ungroup</button>
+                </mat-menu> -->
+
+            </mat-header-cell>
+            <!--            <mat-cell *matCellDef="let row">-->
+            <!--                <mat-icon *ngIf="row[column.field] === 'logo'">{{ row[column.field] }}</mat-icon>-->
+            <!--            </mat-cell>-->
+            <mat-cell *matCellDef="let row"
+                      [ngClass]="[row[column.field] == 'name' ? 'company-name-text' : 'data-grid-text']">
+                <ng-container *ngIf="column.field === 'logo'">
+                    <img class="row__icon"
+                         [src]="row[column.field]" />
+                </ng-container>
+                <ng-container *ngIf="column.field !== 'logo'">
+                    {{ row[column.field] }}
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row mat-header-row
+                        class="group_bkg"
+                        *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row class="BOUNDING"
+                 *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+        <!-- Group header -->
+        <ng-container matColumnDef="groupHeader">
+            <mat-cell colspan="999"
+                      *matCellDef="let group">
+                <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
+                <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
+                <strong class="column-name">{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
+                <!-- <p>{{ group.aggregatedValuation }}</p>
+                <p>{{ group.aggregatedInvestment }}</p> -->
+            </mat-cell>
+        </ng-container>
+
+        <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"
+                 (click)="groupHeaderClick(row)">>
+        </mat-row>
+
+    </mat-table>
+</div>

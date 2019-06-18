@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { adal } from "adal-angular";
 import { AdalAuthConfig } from "./adal-auth.config";
 

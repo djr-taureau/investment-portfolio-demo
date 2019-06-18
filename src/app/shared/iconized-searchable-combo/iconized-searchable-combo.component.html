@@ -8,21 +8,31 @@
                         [filterable]="true"
                         (filterChange)="handleFilter($event)"
                         [popupSettings]="popupSettings"
+                        (selectionChange)="onSelectionChange($event)"
                         class="list">
         <!-- THIS IS WHAT POPULATES THE COMBO AFTER SELECTION -->
         <ng-template kendoDropDownListValueTemplate
                      let-dataItem>
-            <img *ngIf="dataItem?.icon"
-                 class="icon"
+            <img class="icon"
                  matListAvatar
-                 src="{{dataItem?.icon}}"> {{ dataItem?.text }}
+                 src="assets/image/company.svg">
+            <div class="label">
+                {{ dataItem?.text }}
+            </div>
+
         </ng-template>
         <!-- THIS IS THE LIST THAT DROPS DOWN -->
         <ng-template kendoDropDownListItemTemplate
                      let-dataItem>
             <img class="icon"
                  matListAvatar
-                 src="{{dataItem?.icon}}"> {{ dataItem?.text }}
+                 src="{{dataItem?.icon}}">
+            <div class="label">
+                {{ dataItem?.text }}
+            </div>
+        </ng-template>
+        <ng-template kendoDropDownListNoDataTemplate>
+            <div class="noDataMessage">Sorry, we couldn't find any results for "{{currentSearchValue}}"</div>
         </ng-template>
     </kendo-dropdownlist>
 

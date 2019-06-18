@@ -1,13 +1,19 @@
 export const appRoutePaths = {
-    login: "login",
-    register: "register",
     changePassword: "change-password",
-    companyInfo: "company-info",
-    portfolioListing: "portfolio-listing",
-    portfolioDashboard: "portfolio-dashboard",
-    portfolioFinancials: "portfolio-financials",
-    portfolioDocuments: "portfolio-documents",
-    portfolioMapView: "portfolio-map-view",
+    companyDashboard: "company/:id/dashboard",
+    companyDocuments: "company/:id/documents",
+    companyFinancials: "company/:id/financials",
+    companyInfo: "company/:id/info",
+    companyInitiatives: "company/:id/initiatives",
+    companyNotes: "company/:id/notes",
+    companyValuation: "company/:id/valuation",
+    login: "login",
     portfolioCalendarView: "portfolio-calendar-view",
-    portfolioInitiatives: "portfolio-initiatives"
+    portfolioDashboard: "portfolio-dashboard",
+    portfolioDocuments: "portfolio-documents",
+    portfolioFinancials: "portfolio-financials",
+    portfolioInitiatives: "portfolio-initiatives",
+    portfolioListing: "portfolio-listing",
+    portfolioMapView: "portfolio-map-view",
+    register: "register"
 };

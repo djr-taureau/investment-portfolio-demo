@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
-import { BoardMember } from "app/core/domain/company.model";
-import { Logger } from "app/util/logger";
+import { BoardMember } from "@core/domain/company.model";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-board-member",

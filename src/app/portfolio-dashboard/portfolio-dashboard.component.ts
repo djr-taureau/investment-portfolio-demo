@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Logger } from "../util/logger";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-portfolio-dashboard",

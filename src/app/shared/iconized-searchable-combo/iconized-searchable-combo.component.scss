@@ -1,19 +1,76 @@
+@import "../../../assets/scss/variables";
+
 :host {
+
+
     .list {
-        width: 135px;
+        width: 165px;
+    }
+
+    // NOTE: this is working to color the main box not expanded as well
+    // leaving it here for reference as it's working more simply below
+    // ::ng-deep .k-dropdown-wrap>.k-input, .k-dropdown .k-dropdown-wrap .k-select, .k-list, .k-reset {
+    //     background-color: lightblue;
+    // }
+
+    ::ng-deep .k-dropdown-wrap {
+        border-radius: 6px;
+
+        // the down arrow on the right of the dropdownlist
+        .k-select {
+            background-color: $white !important;
+            border-radius: 0px 6px 6px 0px;
+        }
+
+        // main box, not expanded
+        .k-input {
+            background-color: $white !important;
+            border-radius: 6px 0px 0px 6px;
+            padding: 0px;
+        }
+
+        // adds the border on hover
+        &:hover {
+            border: solid 1px $light-grey-blue;
+            border-radius: 6px 6px 6px 6px
+        }
     }
 }
 
 // NOTE: these won't work on the Kendo items if in :host
+// .template {
+//     background-color: white;
+// }
+
 .icon {
     width: 20px;
-    height: 20px;
-    padding-right: 15px;
+    height: 28px;
+    padding: 0px 15px 0px 5px;
+    background-color: $pale-grey;
 }
 
-.k-list {
-    &-optionalLabel {
-        /** contents **/
-        place-content: start start !important;
-    }
+.label {
+    padding-left: 5px;
+    background-color: white;
+    font-family: PostGrotesk;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.3px;
+    color: $light-navy;
+}
+
+.noDataMessage {
+    opacity: 0.75;
+    font-family: PostGrotesk;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $grey-blue;
+    text-transform: none !important;
 }

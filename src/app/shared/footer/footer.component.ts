@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { AppVersion, VERSION } from "../../../version";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-footer",

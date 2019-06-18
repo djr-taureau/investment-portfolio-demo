@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import * as _ from "lodash";
 
-import { Company, BoardMember } from "../../core/domain/company.model";
-import { Logger } from "app/util/logger";
+import { Company, BoardMember } from "@core/domain/company.model";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-company-info",

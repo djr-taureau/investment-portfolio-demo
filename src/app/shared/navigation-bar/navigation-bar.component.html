@@ -1,6 +1,11 @@
 <div fxLayout="row"
      fxLayoutAlign="center center"
      fxFill>
+    <div fxLayout="row"
+         fxFlex="150px"
+         fxLayoutAlign="start center">
+        <ng-content></ng-content>
+    </div>
     <ng-container *ngFor="let link of links; let idx=index; trackBy: trackByFn">
         <div class="tab"
              fxLayout="row"

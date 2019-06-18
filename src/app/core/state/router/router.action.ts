@@ -5,13 +5,7 @@ export enum RouterActionTypes {
     Go = "[Router] Go",
     Back = "[Router] Back",
     Forward = "[Router] Forward",
-
-    // Specific routing to keep knowledge out of other components.
-    GotoLogin = "[Router] GotoLogin",
-    GotoRegister = "[Router] GotoRegister",
-    GoToPortfolioDashboard = "[Router] Go to Portfolio Dashboard",
-    GoToPortfolioListing = "[Router] Go to Portfolio Listing",
-    GoToCompanyInfo = "[Router] Go to Company Info"
+    UpdateUrlParams = "[Router] UpdateUrlParams"
 }
 
 export class Go implements Action {
@@ -68,5 +62,48 @@ export class GoToCompanyInfo implements Action {
     constructor() {}
 }
 
-// TODO: BMR: 05/07/2019: Make this actually work as right now these aren't being used.
-export type RouterActions = Go | Back | Forward | GotoLogin | GoToCompanyInfo | GotoRegister | GoToPortfolioDashboard | GoToPortfolioListing;
+export class GoToCompanyDashboard implements Action {
+    readonly type = RouterActionTypes.Go;
+    public payload = { path: "" };
+
+    constructor(companyId: string | number) {
+        this.payload.path = appRoutePaths.companyDashboard.replace(":id", String(companyId));
+    }
+}
+
+export class GoToCompanyFinancials implements Action {
+    readonly type = RouterActionTypes.Go;
+    public payload = { path: "" };
+
+    constructor(companyId: string | number) {
+        this.payload.path = appRoutePaths.companyFinancials.replace(":id", String(companyId));
+    }
+}
+
+export class GoToCompanyDocuments implements Action {
+    readonly type = RouterActionTypes.Go;
+    public payload = { path: "" };
+
+    constructor(companyId: string | number) {
+        this.payload.path = appRoutePaths.companyDocuments.replace(":id", String(companyId));
+    }
+}
+export class UpdateUrlParams implements Action {
+    readonly type = RouterActionTypes.UpdateUrlParams;
+
+    constructor(public payload: any) {}
+}
+
+export type RouterActions =
+    | Go
+    | Back
+    | Forward
+    | GotoLogin
+    | GoToCompanyDashboard
+    | GoToCompanyDocuments
+    | GoToCompanyFinancials
+    | GoToCompanyInfo
+    | GotoRegister
+    | GoToPortfolioDashboard
+    | GoToPortfolioListing
+    | UpdateUrlParams;

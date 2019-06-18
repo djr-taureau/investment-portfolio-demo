@@ -1,10 +1,11 @@
-import { AuthService } from "./core/auth/auth.service";
-import * as fromState from "./core/state/";
+import { AuthService } from "@core/auth/auth.service";
+import { InitializationService } from "@core/service/initialization.service";
+import * as fromState from "@core/state/";
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { slideFromRight } from "./shared/animations/slide.animations";
-import { Logger } from "./util/logger";
+import { slideFromRight } from "@shared/animations/slide.animations";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-root",
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     /**
      * Constructor.
      */
-    constructor(private store$: Store<any>, private authService: AuthService) {
+    constructor(private store$: Store<any>, private initializationService: InitializationService) {
         AppComponent.logger.debug(`constructor()`);
     }
 
@@ -37,6 +38,6 @@ export class AppComponent implements OnInit {
         AppComponent.logger.debug(`ngOnInit()`);
         this.showSlideout$ = this.store$.pipe(select(fromState.getShowSlideout));
 
-        this.authService.checkAuth();
+        this.initializationService.init();
     }
 }

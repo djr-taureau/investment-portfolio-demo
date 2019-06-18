@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { MatSelectChange } from "@angular/material";
-import { Company } from "../../core/domain/company.model";
-import { Logger } from "../../util/logger";
+import { Company } from "@core/domain/company.model";
+import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
+import { Logger } from "@util/logger";
+import { PopupConfig } from "../iconized-searchable-combo/popup-config";
 
 @Component({
     selector: "sbp-header",
@@ -21,16 +22,16 @@ export class HeaderComponent implements OnInit {
     public companies: Company[] = null;
 
     /**
+     * The currently selected company
+     */
+    @Input()
+    public selectedCompany: Company = null;
+
+    /**
      * Flag indicating if the slide-out panel is open.
      */
     @Input()
     public slideoutOpen: boolean;
-
-    /**
-     * List of team members.
-     */
-    @Input()
-    public teamMembers: Company[] = null;
 
     /**
      * Broadcasts an event indicating a toggle to the open or closed state of the slide-out.
@@ -51,16 +52,33 @@ export class HeaderComponent implements OnInit {
     public logout: EventEmitter<void> = new EventEmitter<void>();
 
     /**
-     * Currently selected company.
-     */
-    @Input()
-    public selectedCompany: Company = null;
-
-    /**
      * Dispatches an event when user selects a role.
      */
     @Output()
-    public selectCompany: EventEmitter<Company> = new EventEmitter<Company>();
+    public selectCompany: EventEmitter<number> = new EventEmitter<number>();
+
+    /**
+     * Alerts the parent component that the user has clicked the  'portfolio' breadcrumb
+     */
+    @Output()
+    public portfolioClick: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
+     * Controls the width and height of the popup when the combo is clicked
+     */
+    public popupSettings: PopupConfig = { width: 195 };
+
+    /**
+     * Used to hide the company combo when not in /portfoli* routes
+     */
+    @Input()
+    public showCompanyCombo = true;
+
+    // NOTE: fill in with real data when ready
+    public listItems: Array<IconizedItem> = [
+        { id: 0, text: "WASI", icon: "assets/image/nauset.jpg" },
+        { id: 1, text: "Facebook", icon: "assets/image/notes.svg" }
+    ];
 
     /**
      * Constructor.
@@ -80,10 +98,9 @@ export class HeaderComponent implements OnInit {
      * Handles the selection of a company.
      * @param event
      */
-    public onCompanySelect(event: MatSelectChange) {
-        const company = event.value;
-        HeaderComponent.logger.debug(`onCompanySelect( ${company.name} )`);
-        this.selectCompany.emit(company);
+    public onCompanySelect(event: IconizedItem) {
+        HeaderComponent.logger.debug(`onCompanySelect( ${event} )`);
+        this.selectCompany.emit(event.id);
     }
 
     /**
@@ -111,5 +128,12 @@ export class HeaderComponent implements OnInit {
     public onLogout(event: any) {
         HeaderComponent.logger.debug(`onLogin()`);
         this.logout.emit();
+    }
+
+    /**
+     * Handles the portfolio breadcrumb click
+     */
+    public onPortfolioClick(): void {
+        this.portfolioClick.emit();
     }
 }

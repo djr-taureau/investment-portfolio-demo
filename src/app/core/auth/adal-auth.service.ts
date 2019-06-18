@@ -2,14 +2,14 @@ import { Inject, Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Observable, of, Subscriber } from "rxjs";
 import { retry } from "rxjs/operators";
-import { Logger } from "../../util/logger";
-import { Auth } from "../domain/auth.model";
+import { Logger } from "@util/logger";
+import { Auth } from "@core/domain/auth.model";
 import { adal } from "adal-angular";
 import { AdalAuthContextService } from "./adal-auth-context.service";
 import { AdalAuthConfig } from "./adal-auth.config";
 import { AdalAuthConfigService } from "./auth-config.service";
 import { IAuthService } from "./auth-service.interface";
-import * as AuthActions from "../state/auth/auth.action";
+import * as AuthActions from "@core/state/auth/auth.action";
 
 @Injectable({
     providedIn: "root"
@@ -47,12 +47,7 @@ export class AdalAuthService implements IAuthService {
         AdalAuthService.logger.debug(`init()`);
 
         // Create an instance of the ADAL auth context.
-        // this.context = new this.adalAuthContextService.context(this.config);
         this.context = this.adalAuthContextService.build(this.config);
-        // this.context = new this.context
-
-        // It's possible the user is still auth, so perform a check ASAP.
-        this.checkAuth();
     }
 
     /**
@@ -75,7 +70,7 @@ export class AdalAuthService implements IAuthService {
      * to perform ADAL authentication via another web site hosted by MS, but for testing
      * and completeness we'll return one.
      */
-    public logout() {
+    public logout(): Observable<boolean> {
         AdalAuthService.logger.debug(`logout()`);
         this.context.logOut();
         return of(true);
@@ -90,7 +85,7 @@ export class AdalAuthService implements IAuthService {
      * processing the response received from AAD. It extracts the hash, processes the token or error, saves it in
      * the cache and calls the registered callback function in your initialization with the result.
      */
-    public handleWindowCallback() {
+    public handleWindowCallback(): void {
         AdalAuthService.logger.debug(`handleWindowCallback()`);
         this.context.handleWindowCallback();
     }
@@ -98,35 +93,35 @@ export class AdalAuthService implements IAuthService {
     /**
      * Accessor to the ADAL Auth context.
      */
-    public get authContext() {
+    public get authContext(): adal.AuthenticationContext {
         return this.context;
     }
 
     /**
      * Details regarding the user.
      */
-    public get userInfo() {
+    public get userInfo(): any {
         return this.context.getCachedUser();
     }
 
     /**
      * Accessor to the access token.
      */
-    public get accessToken() {
+    public get accessToken(): string {
         return this.context.getCachedToken(this.config.clientId);
     }
 
     /**
-     * Accessor indicating if the user is auuth'd.
+     * Accessor indicating if the user is auth'd.
      */
-    public get isAuthenticated() {
-        return this.userInfo && this.accessToken;
+    public get isAuthenticated(): boolean {
+        return !!this.userInfo && !!this.accessToken;
     }
 
     /**
      * Accessor to the access token.
      */
-    public isCallback(hash?: string) {
+    public isCallback(hash?: string): boolean {
         hash = hash || window.location.hash;
         return this.context.isCallback(hash);
     }
@@ -134,7 +129,7 @@ export class AdalAuthService implements IAuthService {
     /**
      * Accessor to the login error.
      */
-    public getLoginError() {
+    public getLoginError(): string {
         return this.context.getLoginError();
     }
 
@@ -168,6 +163,8 @@ export class AdalAuthService implements IAuthService {
      * Determine if the user is authenticated.
      */
     public checkAuth(): void {
+        AdalAuthService.logger.debug(`checkAuth()`);
+
         const error = this.getLoginError();
         const isCallback = this.isCallback();
 

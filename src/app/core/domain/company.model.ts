@@ -1,5 +1,7 @@
+import { ApiResponse } from "./api.model";
+
 export interface Company {
-    id: number;
+    id: string;
     type: string; // enum
     data: any;
     sectors: Sector[];
@@ -123,9 +125,35 @@ export interface BoardMember {
     avatar: string;
 }
 
+export enum TeamMemberGroupTypes {
+    DEAL = "DEAL",
+    OPS = "OPS",
+    PORTFOLIO = "PORTFOLIO",
+    FINANCE = "FINANCE"
+}
 export interface TeamMember {
     id: string;
-    name: string;
+    companyName: string;
+    firstName: string;
+    lastName: string;
+    avatar: string;
+    slack: string;
+    mobile: string;
+    email: string;
+    bio: string;
+    position: string;
+    companyRelationships: CompanyRelationship[];
+}
+
+export enum CompanyRelationshipTypes {
+    OTHER_COMPANY = "OTHER_COMPANY",
+    COMPANY_COVERED = "COMPANY_COVERED",
+    BOARD_SEAT = "BOARD_SEAT"
+}
+export interface CompanyRelationship {
+    memberId: string;
+    companyId: string;
+    relationship: string; // one of CompanyRelationshipTypes
 }
 
 export interface Takeaway {
@@ -194,4 +222,8 @@ export interface CompanyRevenueResponse {
     comment: string;
     // icon in minimized card state
     confidence: string;
+}
+
+export interface GetAllCompaniesResponse extends ApiResponse {
+    data: Company[];
 }

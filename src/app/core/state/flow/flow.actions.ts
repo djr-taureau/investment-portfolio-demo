@@ -1,22 +1,63 @@
 import { Action } from "@ngrx/store";
-import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
+import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
 export enum FlowActionTypes {
-    PortfolioNavigationItemClicked = "[Flow] Portfolio Navigation Item Clicked",
+    CloseCompanyInfoPanel = "[Flow] Close Company Info Panel",
+    CollapseCompanyInfoSummaryPanel = "[Flow] Collapse Company Info Summary Panel",
+    CompanyNavigationItemClicked = "[Flow] Company Navigation Item Clicked",
+    ExpandCompanyInfoSummaryPanel = "[Flow] Expand Company Info Summary Panel",
+    LoadPortfolio = "[Flow] Load Portfolio",
+    GoToPortfolio = "[Flow] Go To Portfolio",
     OpenCompanyInfoPanel = "[Flow] Open Company Info Panel",
-    CloseCompanyInfoPanel = "[Flow] Close Company Info Panel"
+    PortfolioNavigationItemClicked = "[Flow] Portfolio Navigation Item Clicked",
+    SelectCompany = "[Flow] Select Company",
+    FindCompanies = "[Flow] Find Companies"
 }
 
 export class CloseCompanyInfoPanel implements Action {
     readonly type = FlowActionTypes.CloseCompanyInfoPanel;
 
-    constructor(public payload?: number) {}
+    constructor(public payload?: string) {}
 }
 
+export class CollapseCompanyInfoSummaryPanel implements Action {
+    readonly type = FlowActionTypes.CollapseCompanyInfoSummaryPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class CompanyNavigationItemClicked implements Action {
+    readonly type = FlowActionTypes.CompanyNavigationItemClicked;
+
+    constructor(public payload: NavigationBarLink) {}
+}
+
+export class ExpandCompanyInfoSummaryPanel implements Action {
+    readonly type = FlowActionTypes.ExpandCompanyInfoSummaryPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class FindCompanies implements Action {
+    readonly type = FlowActionTypes.FindCompanies;
+
+    constructor(public query: string) {}
+}
+
+export class GoToPortfolio implements Action {
+    readonly type = FlowActionTypes.GoToPortfolio;
+
+    constructor(public payload?: string) {}
+}
+export class LoadPortfolio implements Action {
+    readonly type = FlowActionTypes.LoadPortfolio;
+
+    constructor(public payload?: string) {}
+}
 export class OpenCompanyInfoPanel implements Action {
     readonly type = FlowActionTypes.OpenCompanyInfoPanel;
 
-    constructor(public payload?: number) {}
+    constructor(public payload?: string) {}
 }
 
 export class PortfolioNavigationItemClicked implements Action {
@@ -24,5 +65,20 @@ export class PortfolioNavigationItemClicked implements Action {
 
     constructor(public payload: NavigationBarLink) {}
 }
+export class SelectCompany implements Action {
+    readonly type = FlowActionTypes.SelectCompany;
 
-export type FlowActions = CloseCompanyInfoPanel | OpenCompanyInfoPanel | PortfolioNavigationItemClicked;
+    constructor(public payload: number | string) {}
+}
+
+export type FlowActions =
+    | CloseCompanyInfoPanel
+    | CollapseCompanyInfoSummaryPanel
+    | CompanyNavigationItemClicked
+    | ExpandCompanyInfoSummaryPanel
+    | FindCompanies
+    | GoToPortfolio
+    | LoadPortfolio
+    | OpenCompanyInfoPanel
+    | PortfolioNavigationItemClicked
+    | SelectCompany;

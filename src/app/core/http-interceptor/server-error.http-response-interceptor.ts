@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { EMPTY, Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 
 @Injectable()
 export class ServerErrorHttpResponseInterceptor implements HttpInterceptor {

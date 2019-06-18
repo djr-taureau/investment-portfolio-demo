@@ -1,9 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { PortfolioNavbarContainerComponent } from "./portfolio-navbar.container.component";
+import { PortfolioNavbarContainer } from "./portfolio-navbar.container";
 import { NavigationBarModule } from "../navigation-bar/navigation-bar.module";
 
-const COMPONENTS: any = [PortfolioNavbarContainerComponent];
+const COMPONENTS: any = [PortfolioNavbarContainer];
 
 @NgModule({
     imports: [CommonModule, NavigationBarModule],

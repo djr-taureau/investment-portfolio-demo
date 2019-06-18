@@ -1,25 +1,27 @@
+import { Company } from "../../core/domain/company.model";
+import * as AuthActions from "../../core/state/auth/auth.action";
 import * as fromState from "../../core/state";
+import { CloseCompanyInfoPanel, GoToPortfolio, OpenCompanyInfoPanel, SelectCompany } from "../../core/state/flow/flow.actions";
 import * as TestUti from "../../util/test.util";
 import { Component, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
+import { getShowCompanyCombo } from "@core/state";
+import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
-import { Company } from "../../core/domain/company.model";
-import { CloseCompanyInfoPanel, OpenCompanyInfoPanel } from "../../core/state/flow/flow.actions";
-import { Logger } from "../../util/logger";
-import * as AuthActions from "../../core/state/auth/auth.action";
+import { select, Store } from "@ngrx/store";
 
 @Component({
     selector: "sbp-header-container",
     template: `
         <sbp-header
             [companies]="companies$ | async"
-            [teamMembers]="teamMembers$ | async"
             [slideoutOpen]="slideoutOpen$ | async"
             [selectedCompany]="selectedCompany$ | async"
+            [showCompanyCombo]="showCompanyCombo$ | async"
             (login)="login($event)"
             (logout)="logout($event)"
             (selectCompany)="selectCompany($event)"
             (toggleSlideout)="toggleSlideout($event)"
+            (portfolioClick)="portfolioClick()"
         >
         </sbp-header>
     `
@@ -36,11 +38,6 @@ export class HeaderContainer implements OnInit {
     public companies$: Observable<Company[]>;
 
     /**
-     * The teamMembers observable.
-     */
-    public teamMembers$: Observable<Company[]>;
-
-    /**
      * The selected company observable.
      */
     public selectedCompany$: Observable<Company>;
@@ -51,53 +48,27 @@ export class HeaderContainer implements OnInit {
     public slideoutOpen$: Observable<boolean>;
 
     /**
-     * Constructor.
+     * Boolean indicating of the company drop down combo should be visible
      */
-    public constructor(private store$: Store<any>) {
-        HeaderContainer.logger.debug(`constructor()`);
-    }
-
-    /**
-     * Initialize the component.
-     */
-    public ngOnInit() {
-        HeaderContainer.logger.debug(`ngOnInit()`);
-
-        // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
-        // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
-        this.selectedCompany$ = of(TestUti.getCompanyMock({ name: "Foo, Inc." }));
-        this.companies$ = of([
-            TestUti.getCompanyMock({ name: "Foo, Inc." }),
-            TestUti.getCompanyMock({ name: "Bar, LLC." }),
-            TestUti.getCompanyMock({ name: "Dogs and Cats" })
-        ]);
-
-        this.teamMembers$ = of([
-            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Tom Brady" }),
-            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Julian Edleman" }),
-            TestUti.getMock(TestUti.getTeamMemberDefault, { name: "Rob Gronkowski" })
-        ]);
-
-        this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
-    }
+    public showCompanyCombo$: Observable<boolean>;
 
     /**
      * Tests opening the Company Info panel
      * @param $event
      */
     public toggleSlideout(slideOut: boolean): void {
-        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel(1)) : this.store$.dispatch(new CloseCompanyInfoPanel(1));
+        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel("1")) : this.store$.dispatch(new CloseCompanyInfoPanel("1"));
     }
 
+    public portfolioClick(): void {
+        this.store$.dispatch(new GoToPortfolio());
+    }
     /**
      * Dispatch action to select role in store.
      */
-    public selectCompany(event: Company) {
-        HeaderContainer.logger.debug(`onCompanySelect( ${event.name} )`);
-
-        // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
-        // this.store$.dispatch(new RegisterLayoutActions.SelectCompany(event.name));
-        this.selectedCompany$ = of(event);
+    public selectCompany(event: string | number) {
+        HeaderContainer.logger.debug(`onCompanySelect( ${event} )`);
+        this.store$.dispatch(new SelectCompany(event));
     }
 
     /**
@@ -114,5 +85,29 @@ export class HeaderContainer implements OnInit {
     public logout(event: any) {
         HeaderContainer.logger.debug(`logout()`);
         this.store$.dispatch(new AuthActions.Logout());
+    }
+
+    /**
+     * Constructor.
+     */
+    public constructor(private store$: Store<any>) {
+        HeaderContainer.logger.debug(`constructor()`);
+    }
+
+    /**
+     * Initialize the component.
+     */
+    public ngOnInit() {
+        HeaderContainer.logger.debug(`ngOnInit()`);
+        // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
+        // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
+        this.selectedCompany$ = of(TestUti.getCompanyMock({ name: "Foo, Inc." }));
+        this.showCompanyCombo$ = this.store$.pipe(select(getShowCompanyCombo));
+        this.companies$ = of([
+            TestUti.getCompanyMock({ name: "Foo, Inc." }),
+            TestUti.getCompanyMock({ name: "Bar, LLC." }),
+            TestUti.getCompanyMock({ name: "Dogs and Cats" })
+        ]);
+        this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
     }
 }

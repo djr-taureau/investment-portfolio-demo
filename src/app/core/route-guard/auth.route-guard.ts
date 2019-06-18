@@ -3,9 +3,9 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from "@angul
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
-import { Logger } from "../../util/logger";
-import * as fromState from "../../core/state/";
-import * as AuthActions from "../state/auth/auth.action";
+import { Logger } from "@util/logger";
+import * as fromState from "@core/state/";
+import * as AuthActions from "@core/state/auth/auth.action";
 
 @Injectable()
 export class AuthRouteGuard implements CanActivate {

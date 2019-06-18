@@ -9,17 +9,17 @@
     </button>
 
     <div fxLayout="row"
-         fxShow="false"
-         fxShow.gt-sm
+         fxLayoutGap="16px"
+         fxLayoutAlign="space-between end"
          class="menu">
-        <span>Portfolio /</span>
-        <mat-select placeholder="Select Company"
-                    panelClass="my-select-panel-class"
-                    (selectionChange)="onCompanySelect($event)">
-            <mat-option *ngFor="let company of companies"
-                        [value]="company">{{ company.name }}</mat-option>
-
-        </mat-select>
+        <div (click)="onPortfolioClick()">Portfolio</div>
+        <div>&#47;</div>
+        <sbp-iconized-searchable-combo *ngIf="showCompanyCombo"
+                                       class="combo"
+                                       [popupSettings]="popupSettings"
+                                       (selectionChange)="onCompanySelect($event)"
+                                       [listItems]="listItems">
+        </sbp-iconized-searchable-combo>
     </div>
 
     <div class="user">

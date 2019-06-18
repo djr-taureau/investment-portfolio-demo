@@ -1,9 +1,7 @@
 import { APP_BASE_HREF } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { appRoutePaths } from "./app.routes";
-import { AuthRouteGuard } from "./core/route-guard/auth.route-guard";
-import * as AppRoutes from "./app.routes";
+import * as AppRoutes from "@app/app.routes";
 
 const PROVIDERS = [
     {
@@ -37,10 +35,9 @@ const routes: Routes = [
     //     canActivate: [AuthRouteGuard]
     // },
     { path: "", redirectTo: "/portfolio-listing", pathMatch: "full" },
-    {
-        path: AppRoutes.appRoutePaths.companyInfo,
-        loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
-    },
+    //////////////////////////////////////////////////
+    // TOP-LEVEL PORTFOLIO ROUTES
+    //////////////////////////////////////////////////
     {
         path: AppRoutes.appRoutePaths.portfolioListing,
         loadChildren: "./portfolio-listing/portfolio-listing.module#PortfolioListingModule"
@@ -48,6 +45,41 @@ const routes: Routes = [
     {
         path: AppRoutes.appRoutePaths.portfolioDashboard,
         loadChildren: "./portfolio-dashboard/portfolio-dashboard.module#PortfolioDashboardModule"
+    },
+
+    //////////////////////////////////////////////////
+    // COMPANY ROUTES
+    //////////////////////////////////////////////////
+    {
+        path: AppRoutes.appRoutePaths.companyDashboard,
+        loadChildren: "./company-dashboard/company-dashboard.module#CompanyDashboardModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.companyDocuments,
+        loadChildren: "./company-documents/company-documents.module#CompanyDocumentsModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.companyFinancials,
+        loadChildren: "./company-financials/company-financials.module#CompanyFinancialsModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.companyInitiatives,
+        loadChildren: "./company-initiatives/company-initiatives.module#CompanyInitiativesModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.companyNotes,
+        loadChildren: "./company-notes/company-notes.module#CompanyNotesModule"
+    },
+    {
+        path: AppRoutes.appRoutePaths.companyValuation,
+        loadChildren: "./company-valuation/company-valuation.module#CompanyValuationModule"
+    },
+    //////////////////////////////////////////////////
+    // SLIDEOUT ROUTES
+    //////////////////////////////////////////////////
+    {
+        path: AppRoutes.appRoutePaths.companyInfo,
+        loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
     }
 
     //////////////////////////////////////////////////

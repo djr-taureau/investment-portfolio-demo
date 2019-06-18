@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { EMPTY, Observable, of } from "rxjs";
 import { first, mergeMap } from "rxjs/operators";
-import { appRoutePaths } from "../../app.routes";
-import { Logger } from "../../util/logger";
-import { ApiEndpointService } from "../service/api-endpoint.service";
-import * as fromState from "../state";
-import * as RouterActions from "../state/router/router.action";
+import { appRoutePaths } from "@app/app.routes";
+import { Logger } from "@util/logger";
+import { ApiEndpointService } from "@core/service/api-endpoint.service";
+import * as fromState from "@core/state";
+import * as RouterActions from "@core/state/router/router.action";
 
 @Injectable()
 export class AddTokenHeaderHttpRequestInterceptor implements HttpInterceptor {

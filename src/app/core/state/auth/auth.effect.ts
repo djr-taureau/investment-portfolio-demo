@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { catchError, exhaustMap, map } from "rxjs/operators";
-import { AuthService } from "../../auth/auth.service";
+import { AuthService } from "@core/auth/auth.service";
 import { AuthActionTypes } from "./auth.action";
 import * as AuthActions from "./auth.action";
 

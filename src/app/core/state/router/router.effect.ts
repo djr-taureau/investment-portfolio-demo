@@ -1,10 +1,11 @@
 import { Location } from "@angular/common";
 import { Injectable } from "@angular/core";
-import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from "@angular/router";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { exhaustMap, map, tap } from "rxjs/operators";
+import { ObserveUrlChange } from "../layout/layout.actions";
 import { Go, RouterActionTypes } from "./router.action";
 import * as RouterActions from "./router.action";
 
@@ -41,6 +42,20 @@ export class RouterEffect {
         tap(() => this.location.forward())
     );
 
+    @Effect({ dispatch: false })
+    updateUrlParams$: Observable<Action> = this.actions$.pipe(
+        ofType<RouterActions.UpdateUrlParams>(RouterActionTypes.UpdateUrlParams),
+        map((action) => action.payload),
+        tap((payload) => {
+            // this.router
+            // .createUrlTree([payload], {relativeTo: this.route})
+            // .toString();
+            console.log(this.route.snapshot.toString());
+            this.route.firstChild.paramMap.subscribe((output) => {
+                console.log(JSON.stringify(output));
+            });
+        })
+    );
     /**
      * Constructor
      */
@@ -50,5 +65,14 @@ export class RouterEffect {
         private router: Router,
         private location: Location,
         private route: ActivatedRoute
-    ) {}
+    ) {
+        // listen to events from Router
+        this.router.events.subscribe((event) => {
+            if (event instanceof NavigationEnd) {
+                // event is an instance of NavigationEnd, get url!
+                const url = event.urlAfterRedirects;
+                this.store$.dispatch(new ObserveUrlChange(url));
+            }
+        });
+    }
 }

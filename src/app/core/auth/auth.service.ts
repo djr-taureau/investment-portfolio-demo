@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { AdalAuthService } from "./adal-auth.service";
 import { IAuthService } from "./auth-service.interface";
 
@@ -40,5 +40,14 @@ export class AuthService implements IAuthService {
     public checkAuth(): void {
         AuthService.logger.info(`checkAuth()`);
         this.adalAuthService.checkAuth();
+    }
+
+    /**
+     * Determines if the user is authenticated.
+     */
+    public get isAuthenticated(): boolean {
+        const result: boolean = this.adalAuthService.isAuthenticated;
+        AuthService.logger.info(`isAuthenticated( ${result} )`);
+        return result;
     }
 }

@@ -1,15 +1,15 @@
 import { CommonModule } from "@angular/common";
-import { SharedModule } from "../shared/shared.module";
+import { SharedModule } from "@shared/shared.module";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { PortfolioDashboardComponent } from "./portfolio-dashboard.component";
-import { PortfolioDashboardContainerComponent } from "./portfolio-dashboard.container.component";
+import { PortfolioDashboardContainer } from "./portfolio-dashboard.container";
 
-const COMPONENTS: any = [PortfolioDashboardContainerComponent, PortfolioDashboardComponent];
+const COMPONENTS: any = [PortfolioDashboardContainer, PortfolioDashboardComponent];
 const PORTFOLIO_DASHBOARD_ROUTES: Routes = [
     {
         path: "",
-        component: PortfolioDashboardContainerComponent
+        component: PortfolioDashboardContainer
     }
 ];
 @NgModule({

@@ -8,12 +8,11 @@ import { AuthEffect } from "./auth/auth.effect";
 import { FlowEffect } from "./flow/flow.effect";
 import { CustomRouterStateSerializer } from "./router/custom-router-state.serializer";
 import { reducers } from "./index";
-import { reducers as portfolioReducers } from "./portfolio/index";
 import { RouterEffect } from "./router/router.effect";
-import { PortfolioEffects } from "./portfolio/portfolio.effects";
-import { CompanyEffects } from "./portfolio/portfolio-company/portfolio-company.effects";
+import { CompanyEffects } from "./company/company.effects";
+import * as CompanyDashboard from "./company/dashboard";
 
-const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, PortfolioEffects, CompanyEffects];
+const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, CompanyEffects];
 
 const MODULES = [
     /**
@@ -24,7 +23,8 @@ const MODULES = [
      * based application.
      */
     StoreModule.forRoot(reducers),
-    StoreModule.forFeature("portfolio", portfolioReducers),
+    // StoreModule.forFeature("portfolio", portfolioReducers),
+    StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and

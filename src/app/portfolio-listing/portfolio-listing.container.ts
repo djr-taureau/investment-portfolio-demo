@@ -1,19 +1,19 @@
-import { Component, OnInit } from "@angular/core";
-import { select, Store } from "@ngrx/store";
-import { Observable } from "rxjs";
+import * as fromCompanyState from "../core/state/";
+import { appRoutePaths } from "../app.routes";
 import { Company } from "../core/domain/company.model";
+import { Component, OnInit } from "@angular/core";
+import { CorePortfolioContainer } from "../shared/portfolio/core-portfolio.container";
 import { Logger } from "../util/logger";
-import { PortfolioActions } from "../core/state/portfolio/actions-index";
-import * as fromCompanyState from "../core/state/portfolio";
+import { Observable } from "rxjs";
+import { select, Store } from "@ngrx/store";
 
 @Component({
     selector: "sbp-portfolio-listing-container",
     template: `
-        <sbp-portfolio-listing [companies]="companies$ | async" [mocks]="mocks$ | async" (loadCompanies)="loadCompanies($event)">
-        </sbp-portfolio-listing>
+        <sbp-portfolio-listing [companies]="companies$ | async"></sbp-portfolio-listing>
     `
 })
-export class PortfolioListingContainer implements OnInit {
+export class PortfolioListingContainer extends CorePortfolioContainer implements OnInit {
     /**
      * Internal logger.
      */
@@ -25,43 +25,19 @@ export class PortfolioListingContainer implements OnInit {
     public companies$: Observable<Company[]>;
 
     /**
-     * TODO: REMOVE: BME: Mock data stream from the Mock API.
+     * Initialize the component.
      */
-    public mocks$: Observable<any[]>;
+    public ngOnInit(): void {
+        PortfolioListingContainer.logger.debug(`ngOnInit()`);
+        this.companies$ = this.store$.pipe(select(fromCompanyState.getAllCompanies));
+        super.ngOnInit();
+    }
 
     /**
      * Constructor.
      * @param store$
      */
-    constructor(private store$: Store<fromCompanyState.State>) {
-        PortfolioListingContainer.logger.debug(`constructor()`);
-    }
-
-    /**
-     * Initialize the component.
-     */
-    public ngOnInit(): void {
-        PortfolioListingContainer.logger.debug(`ngOnInit()`);
-        this.companies$ = this.store$.pipe(select(fromCompanyState.getPortfolioCompanies));
-        this.mocks$ = this.store$.pipe(select(fromCompanyState.getMocks));
-        this.store$.dispatch(PortfolioActions.loadPortfolio());
-
-        // TODO: AG: This needs to be fixed as it's throwing a RTE.
-        // const links$ = this.store$.pipe(select(getPortfolioNavLinks));
-        // links$.first().subscribe((links) => {
-        //     const matchingLink = _.find(links, (link: NavigationBarLink) => link.route === appRoutePaths.portfolioListing);
-        //     if (matchingLink) {
-        //         this.store$.dispatch(new SetSelectedPortfolioLink(matchingLink.route));
-        //     }
-        // });
-    }
-
-    /**
-     * Mock method to loads companies.
-     * @param event
-     */
-    public loadCompanies(event?: any): void {
-        PortfolioListingContainer.logger.debug(`loadCompanies()`);
-        this.store$.dispatch(PortfolioActions.loadMockPortfolio());
+    constructor(public store$: Store<any>) {
+        super(store$, appRoutePaths.portfolioListing);
     }
 }
