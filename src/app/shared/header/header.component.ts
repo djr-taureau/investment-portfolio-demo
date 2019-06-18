@@ -58,6 +58,12 @@ export class HeaderComponent implements OnInit {
     public selectCompany: EventEmitter<number> = new EventEmitter<number>();
 
     /**
+     * Alerts the parent component that the user has clicked the  'portfolio' breadcrumb
+     */
+    @Output()
+    public portfolioClick: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
      * Controls the width and height of the popup when the combo is clicked
      */
     public popupSettings: PopupConfig = { width: 195 };
@@ -122,5 +128,12 @@ export class HeaderComponent implements OnInit {
     public onLogout(event: any) {
         HeaderComponent.logger.debug(`onLogin()`);
         this.logout.emit();
+    }
+
+    /**
+     * Handles the portfolio breadcrumb click
+     */
+    public onPortfolioClick(): void {
+        this.portfolioClick.emit();
     }
 }

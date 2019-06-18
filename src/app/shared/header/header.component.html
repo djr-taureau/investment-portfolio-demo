@@ -12,7 +12,7 @@
          fxLayoutGap="16px"
          fxLayoutAlign="space-between end"
          class="menu">
-        <div>Portfolio</div>
+        <div (click)="onPortfolioClick()">Portfolio</div>
         <div>&#47;</div>
         <sbp-iconized-searchable-combo *ngIf="showCompanyCombo"
                                        class="combo"

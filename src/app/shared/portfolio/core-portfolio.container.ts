@@ -1,6 +1,7 @@
 import "rxjs/operators/first";
 import * as _ from "lodash";
-import { getPortfolioNavLinks } from "@core/state";
+import { getPortfolioNavLinks } from "../../core/state";
+import { LoadPortfolio } from "../../core/state/flow/flow.actions";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
@@ -17,6 +18,9 @@ export class CorePortfolioContainer implements OnInit {
                 this.store$.dispatch(new SetSelectedPortfolioLink(matchingLink.route));
             }
         });
+
+        // Load the portfolio
+        this.store$.dispatch(new LoadPortfolio());
     }
     constructor(protected store$: Store<any>, featureUrl: string) {
         this.componentUrl = featureUrl;

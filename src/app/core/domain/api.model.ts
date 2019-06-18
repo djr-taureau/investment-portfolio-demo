@@ -1,14 +1,15 @@
-export interface ApiResponse {
-    // Simple string value of "success" or "failed"
-    status: string;
-
-    // Simple string message that can provide additional detail on the API response; perhaps
-    // with details on the data returned.
-    message: string;
+export interface BasicApiResponse {
+    // Simple string or boolean value of "success" or "failed"
+    status: boolean | string;
 
     // Container for APi request data. Can be an object container or array container.
     // Should be used by the client to create domain models or similar.
     data: {} | any[];
+}
+export interface ApiResponse extends BasicApiResponse {
+    // Simple string message that can provide additional detail on the API response; perhaps
+    // with details on the data returned.
+    message?: string;
 
     // List of errors associated with the API request. Example:
     // {
@@ -17,7 +18,7 @@ export interface ApiResponse {
     //      "message": "must not be blank Received value:null",
     //      "id": "5b1bdcf3-39da-47e1-ad8d-e5dc36cb4ca5"
     // }
-    errors: ApiError[];
+    errors?: ApiError[];
 }
 
 export interface ApiError {

@@ -1,10 +1,10 @@
-import { Company } from "@core/domain/company.model";
+import { CloseCompanyInfoPanel } from "../../core/state/flow/flow.actions";
+import { Company } from "../../core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
+import { getSelectedCompany } from "../../core/state";
+import { Logger } from "app/util/logger";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
-import * as fromPortfolioState from "@core/state/portfolio";
-import { CloseCompanyInfoPanel } from "@core/state/flow/flow.actions";
-import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-company-info-container",
@@ -34,7 +34,7 @@ export class CompanyInfoContainer implements OnInit {
      * Initialize the component.
      */
     public ngOnInit(): void {
-        this.company$ = this.store$.pipe(select(fromPortfolioState.getSelectedCompany));
+        this.company$ = this.store$.pipe(select(getSelectedCompany));
     }
 
     constructor(private store$: Store<any>) {}

@@ -1,19 +1,49 @@
 import { Action, createAction, props, union } from "@ngrx/store";
-import { Company } from "@core/domain/company.model";
+import { Company } from "../../domain/company.model";
 
-export const loadCompany = createAction("[Company Exists Guard] Load Company", props<{ company: Company }>());
-export const sortCompanies = createAction("[Company] Sort Company", props<{ sortValue: string }>());
-export const sortCompaniesSuccess = createAction("[Company] Sort Company Success", props<{ sortValue: string }>());
-export const setSelectedCompany = createAction("[Company] Set Selected Company", props<{ id: string }>());
-/**
- * Export a type alias of all actions in this action group
- * so that reducers can easily compose action types and
- */
+export enum CompanyActionTypes {
+    GetAll = "[Company] Get All",
+    GetAllFailure = "[Company] Get All Failure",
+    GetAllSuccess = "[Company] Get All Success",
+    Get = "[Company] Get",
+    GetFailure = "[Company] Get Failure",
+    GetSuccess = "[Company] Get Success",
+    SetSelectedCompany = "[Company] Set Selected Company"
+}
 
-const all = union({
-    loadCompany,
-    sortCompanies,
-    sortCompaniesSuccess,
-    setSelectedCompany
-});
-export type CompanyActionsUnion = typeof all;
+export class GetAll implements Action {
+    readonly type = CompanyActionTypes.GetAll;
+    constructor() {}
+}
+
+export class GetAllFailure implements Action {
+    readonly type = CompanyActionTypes.GetAllFailure;
+    constructor(public payload?: any) {}
+}
+
+export class GetAllSuccess implements Action {
+    readonly type = CompanyActionTypes.GetAllSuccess;
+    constructor(public payload: Company[]) {}
+}
+
+export class Get implements Action {
+    readonly type = CompanyActionTypes.Get;
+    constructor(public payload: string | number) {}
+}
+
+export class GetFailure implements Action {
+    readonly type = CompanyActionTypes.GetFailure;
+    constructor(public payload?: any) {}
+}
+
+export class GetSuccess implements Action {
+    readonly type = CompanyActionTypes.GetSuccess;
+    constructor(public payload: Company) {}
+}
+
+export class SetSelectedCompany implements Action {
+    readonly type = CompanyActionTypes.SetSelectedCompany;
+    constructor(public payload: number | string) {}
+}
+
+export type CompanyActions = GetAll | GetAllFailure | GetAllSuccess | Get | GetFailure | GetSuccess | SetSelectedCompany;

@@ -1,14 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { Store, select } from "@ngrx/store";
+import { getFilteredCompanies, getSearchQuery } from "../../core/state";
+import { FindCompanies } from "../../core/state/flow/flow.actions";
+import { Logger } from "../../util/logger";
 import { Observable } from "rxjs";
+import { Store, select } from "@ngrx/store";
 import { take } from "rxjs/operators";
-import { MatTableDataSource } from "@angular/material";
-import * as fromCompanyState from "@core/state/portfolio";
-import { FindCompanyActions } from "@core/state/portfolio/search";
-import { CompanyActions } from "@core/state/company";
-import { Company } from "@core/domain/company.model";
-import { Column, Group } from "@core/domain/data-table.ui-model";
-import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-portfolio-listing-header-container",
@@ -39,9 +35,9 @@ export class PortfolioListingHeaderContainer implements OnInit {
     /**
      * Constructor.
      */
-    constructor(private store$: Store<fromCompanyState.State>) {
+    constructor(private store$: Store<any>) {
         this.portcoFilter$ = store$.pipe(
-            select(fromCompanyState.getSearchQuery),
+            select(getSearchQuery),
             take(1)
         );
 
@@ -53,7 +49,7 @@ export class PortfolioListingHeaderContainer implements OnInit {
      */
     public ngOnInit(): void {
         PortfolioListingHeaderContainer.logger.debug(`ngOnInit()`);
-        const foo = this.store$.pipe(select(fromCompanyState.getFilteredCompanies));
+        const foo = this.store$.pipe(select(getFilteredCompanies));
         this.portcoFilter$.subscribe((v) => console.log(v));
         foo.subscribe((v) => console.log("filtered companies", v));
     }
@@ -63,12 +59,12 @@ export class PortfolioListingHeaderContainer implements OnInit {
 
     filter(query: string) {
         console.log(query);
-        this.store$.dispatch(FindCompanyActions.filterCompanies({ query }));
+        this.store$.dispatch(new FindCompanies(query));
     }
 
     group(group: string) {
         console.log(group);
-        const typeGroup = this.store$.pipe(select(fromCompanyState.getFilteredCompanies));
+        const typeGroup = this.store$.pipe(select(getFilteredCompanies));
         typeGroup.subscribe((result) => {
             this.groupedResults = result.reduce((p, n) => {
                 if (!p[n.type]) {

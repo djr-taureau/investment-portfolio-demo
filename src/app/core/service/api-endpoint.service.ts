@@ -14,7 +14,8 @@ export class ApiEndpointService {
      * Build: Uses the compile time provided API URL.
      */
     public static BASE_URL = {
-        LOCAL: "http://localhost:4401/",
+        // LOCAL: "http://localhost:4401/",
+        LOCAL: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v3/",
         REMOTE: "https://remote.api.com/",
         BUILD: "https://DOMAIN_URL"
     };
@@ -54,6 +55,15 @@ export class ApiEndpointService {
      * Map of API endpoints.
      */
     public static ENDPOINT = {
+        LOGIN: `auth/login/`,
+        REGISTER: `auth/register/`,
+        EXAMPLE_DETAILS: "example/{id}/details/{id}",
+        COMPANIES: "companies"
+    };
+    /**
+     * Map of API endpoints.
+     */
+    public static MOCK_ENDPOINT = {
         LOGIN: `auth/login/`,
         REGISTER: `auth/register/`,
         EXAMPLE_DETAILS: "example/{id}/details/{id}",

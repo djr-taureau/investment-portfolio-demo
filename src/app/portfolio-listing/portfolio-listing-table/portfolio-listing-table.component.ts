@@ -17,12 +17,13 @@ export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
      */
     private static logger: Logger = Logger.getLogger("PortfolioListingTableComponent");
 
+    private _companies: Company[];
+
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
+
     /**
      * List of companies to display.
-     *
-     * Create rthe
      */
     @Input()
     public set companies(value: Company[]) {
@@ -34,12 +35,6 @@ export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
     public get companies(): Company[] {
         return this._companies;
     }
-    private _companies: Company[];
-
-    /**
-     * Data table's data provider.
-     */
-    dataProvider = new MatTableDataSource([]);
 
     @Input()
     public filter = "";
@@ -49,15 +44,26 @@ export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
 
     @Input()
     public sortByColumn = "";
+
     /**
      * List of columns for the table.
      */
     columns: Column[];
 
     /**
+     * Data table's data provider.
+     */
+    dataProvider = new MatTableDataSource([]);
+
+    /**
      * List of columns displayed in the table.
      */
     displayedColumns: string[];
+
+    /**
+     * List of columns displayed in the header
+     */
+    headerColumns: string[];
 
     /**
      * List of columns group in the table.
@@ -72,6 +78,7 @@ export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
 
         this.columns = this.createColumns();
         this.displayedColumns = this.columns.map((column) => column.field);
+        this.headerColumns = this.displayedColumns.filter((c) => c !== "logo");
         this.groupByColumns = [];
     }
 
@@ -80,8 +87,6 @@ export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
      */
     public ngOnInit(): void {
         PortfolioListingTableComponent.logger.debug(`ngOnInit()`);
-        // this.sort.active = "name";
-        // this.sort.direction = "desc";
     }
 
     /**
@@ -236,6 +241,9 @@ export class PortfolioListingTableComponent implements OnInit, AfterViewInit {
      */
     private createColumns(): Column[] {
         return [
+            {
+                field: "logo"
+            },
             {
                 field: "name"
             },

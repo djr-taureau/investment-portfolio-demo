@@ -1,9 +1,8 @@
-import { Company } from "@core/domain/company.model";
-import * as AuthActions from "@core/state/auth/auth.action";
-import * as fromState from "@core/state";
-import { CloseCompanyInfoPanel, OpenCompanyInfoPanel, SelectCompany } from "@core/state/flow/flow.actions";
-import * as TestUti from "@util/test.util";
-
+import { Company } from "../../core/domain/company.model";
+import * as AuthActions from "../../core/state/auth/auth.action";
+import * as fromState from "../../core/state";
+import { CloseCompanyInfoPanel, GoToPortfolio, OpenCompanyInfoPanel, SelectCompany } from "../../core/state/flow/flow.actions";
+import * as TestUti from "../../util/test.util";
 import { Component, OnInit } from "@angular/core";
 import { getShowCompanyCombo } from "@core/state";
 import { Logger } from "@util/logger";
@@ -22,6 +21,7 @@ import { select, Store } from "@ngrx/store";
             (logout)="logout($event)"
             (selectCompany)="selectCompany($event)"
             (toggleSlideout)="toggleSlideout($event)"
+            (portfolioClick)="portfolioClick()"
         >
         </sbp-header>
     `
@@ -60,10 +60,13 @@ export class HeaderContainer implements OnInit {
         slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel("1")) : this.store$.dispatch(new CloseCompanyInfoPanel("1"));
     }
 
+    public portfolioClick(): void {
+        this.store$.dispatch(new GoToPortfolio());
+    }
     /**
      * Dispatch action to select role in store.
      */
-    public selectCompany(event: string) {
+    public selectCompany(event: string | number) {
         HeaderContainer.logger.debug(`onCompanySelect( ${event} )`);
         this.store$.dispatch(new SelectCompany(event));
     }

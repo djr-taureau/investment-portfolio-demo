@@ -1,13 +1,12 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
-import { Company } from "@core/domain/company.model";
-import { CompanyApiActions, CompanyActions } from "./index";
-import { PortfolioApiActions } from "../portfolio/actions-index";
+import { Company } from "../../domain/company.model";
+import { CompanyActions, CompanyActionTypes } from "./company.actions";
 
 function sortByValuation(e1: Company, e2: Company) {
     return e1.currentValuation - e2.currentValuation;
 }
 export interface State extends EntityState<Company> {
-    selectedCompanyId: string | null;
+    selectedCompanyId: string | number | null;
     sortValue: string;
     sortOrder: string;
 }
@@ -23,25 +22,17 @@ export const initialState: State = adapter.getInitialState({
     sortOrder: "asc"
 });
 
-export function reducer(
-    state = initialState,
-    action: CompanyApiActions.CompaniesApiActionsUnion | CompanyActions.CompanyActionsUnion | PortfolioApiActions.PortfolioApiActionsUnion
-): State {
+export function reducer(state = initialState, action: CompanyActions): State {
     switch (action.type) {
-        case CompanyApiActions.searchSuccess.type:
-        case PortfolioApiActions.loadCompaniesSuccess.type: {
-            // TODO: remove this once the company selector is valid
-            // state.selectedCompanyId = action.companies[0].id;
-            return adapter.addMany(action.companies, state);
-        }
+        case CompanyActionTypes.GetAllSuccess:
+            return action.payload.length > 0 ? adapter.addMany(action.payload, state) : state;
 
-        case CompanyActions.loadCompany.type: {
-            return adapter.addOne(action.company, state);
-        }
+        case CompanyActionTypes.GetSuccess:
+            return action.payload ? adapter.upsertOne(action.payload, state) : state;
 
-        case CompanyActions.setSelectedCompany.type: {
-            return { ...state, selectedCompanyId: action.id };
-        }
+        case CompanyActionTypes.SetSelectedCompany:
+            return { ...state, selectedCompanyId: action.payload };
+
         default: {
             return state;
         }

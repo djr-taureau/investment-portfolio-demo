@@ -1,3 +1,5 @@
+import { ApiResponse } from "./api.model";
+
 export interface Company {
     id: string;
     type: string; // enum
@@ -194,4 +196,8 @@ export interface CompanyRevenueResponse {
     comment: string;
     // icon in minimized card state
     confidence: string;
+}
+
+export interface GetAllCompaniesResponse extends ApiResponse {
+    data: Company[];
 }
