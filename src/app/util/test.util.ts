@@ -98,7 +98,16 @@ export const getCompanyDefault = (): Company => {
 export const getTeamMemberDefault = (): TeamMember => {
     return {
         id: "",
-        name: ""
+        companyName: "",
+        firstName: "",
+        lastName: "",
+        avatar: "",
+        slack: "",
+        mobile: "",
+        email: "",
+        bio: "",
+        position: "",
+        companyRelationships: []
     };
 };
 
