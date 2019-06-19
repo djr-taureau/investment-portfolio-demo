@@ -1,7 +1,7 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company, TeamMember } from "@core/domain/company.model";
+import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
 
 /**
  * Provides unit tests access to DOM elements by element ID or CSS selector in a component's fixture.
@@ -58,6 +58,7 @@ export const getCompanyDefault = (): Company => {
         currentValuation: 0,
         data: null,
         deployed: 0,
+        deployedTotal: 0,
         description: "",
         FDOwnership: "",
         fiscalYearEnd: "",
@@ -100,6 +101,7 @@ export const getTeamMemberDefault = (): TeamMember => {
         companyName: "",
         firstName: "",
         lastName: "",
+        initials: "",
         avatar: "",
         slack: "",
         mobile: "",
@@ -107,6 +109,26 @@ export const getTeamMemberDefault = (): TeamMember => {
         bio: "",
         position: "",
         companyRelationships: []
+    };
+};
+
+/**
+ * Creates a default Tag.
+ */
+export const getTagDefault = (): Tag => {
+    return {
+        id: "",
+        name: ""
+    };
+};
+
+/**
+ * Creates a default Takeaway.
+ */
+export const getTakeawayDefault = (): Takeaway => {
+    return {
+        id: "",
+        content: ""
     };
 };
 

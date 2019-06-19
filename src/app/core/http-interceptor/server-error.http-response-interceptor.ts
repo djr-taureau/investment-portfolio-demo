@@ -37,7 +37,8 @@ export class ServerErrorHttpResponseInterceptor implements HttpInterceptor {
                 (err: any) => {
                     if (err instanceof HttpErrorResponse) {
                         // TODO: BMR: 05/08/2019: Need a legit modal for errors.
-                        alert(err.error.message);
+                        const errorMsg: string = err.error.message ? err.error.message : err.message;
+                        alert(errorMsg);
                         return EMPTY;
                     }
                     // TODO: BMR: Does this ever hit?

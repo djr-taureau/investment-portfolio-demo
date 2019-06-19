@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Company, TeamMember } from "@core/domain/company.model";
+import { ChartColor } from "@core/domain/chart-data.model";
+import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -14,16 +15,50 @@ export class CompanySummaryExpandedComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("CompanySummaryExpandedComponent");
 
     /**
-     * Currently selected company.
+     * The Company in context.
      */
     @Input()
-    public company: Company = null;
+    public set company(value: Company) {
+        if (value) {
+            this._company = value;
+
+            // Create chart data.
+            this.percentOwnershipChartData = this.createPercentOwnershipChartData(value);
+            this.amountDeployedChartData = this.createAmountDeployedChartData(value);
+        }
+    }
+    public get company(): Company {
+        return this._company;
+    }
+    private _company: Company;
 
     /**
      * List of team members.
      */
     @Input()
-    public teamMembers: TeamMember[] = null;
+    public teamMembers: TeamMember[] = [];
+
+    /**
+     * List of tags.
+     */
+    @Input()
+    public tags: Tag[] = [];
+
+    /**
+     * List of takeaways.
+     */
+    @Input()
+    public takeaways: Takeaway[] = [];
+
+    /**
+     * The percent owned chart data.
+     */
+    public percentOwnershipChartData: any[] = [];
+
+    /**
+     * The amount deployed chart data.
+     */
+    public amountDeployedChartData: any[] = [];
 
     /**
      * Constructor.
@@ -37,5 +72,24 @@ export class CompanySummaryExpandedComponent implements OnInit {
      */
     public ngOnInit() {
         CompanySummaryExpandedComponent.logger.debug(`ngOnInit()`);
+    }
+
+    /**
+     * Creates the percent ownership chart data.
+     * @param company
+     */
+    private createPercentOwnershipChartData(company: Company): any[] {
+        return [
+            { value: company.percentOwnership, color: ChartColor.lightNavy },
+            { value: 1 - company.percentOwnership, color: ChartColor.lightPeriwinkle }
+        ];
+    }
+
+    /**
+     * Creates the amount deployed chart data.
+     * @param company
+     */
+    private createAmountDeployedChartData(company: Company): any[] {
+        return [{ value: company.deployed, color: ChartColor.lightNavy }, { value: company.deployedTotal, color: ChartColor.lightPeriwinkle }];
     }
 }

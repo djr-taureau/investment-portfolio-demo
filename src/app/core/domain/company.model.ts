@@ -53,6 +53,7 @@ export interface Company {
 
     // Displayed in the company header to the right of the takeaways.
     deployed: number;
+    deployedTotal: number;
 
     // Displayed in the company header to the right of the deployed.
     valuation: ValuationDetail;
@@ -141,6 +142,7 @@ export interface TeamMember {
     companyName: string;
     firstName: string;
     lastName: string;
+    initials?: string;
     avatar: string;
     slack: string;
     mobile: string;
@@ -183,11 +185,17 @@ export interface ValuationDetail {
     name: string;
     desc: string;
     entry: number;
-    current: number;
-    yearOne: number;
-    yearTwo: number;
-    yearThree: number;
-    exit: number;
+    current: ValuationValue;
+    yearOne: ValuationValue;
+    yearTwo: ValuationValue;
+    yearThree: ValuationValue;
+    exit: ValuationValue;
+}
+
+export interface ValuationValue {
+    value: number;
+    moic: number;
+    irr: number;
 }
 
 // This interface supports the Initiative card

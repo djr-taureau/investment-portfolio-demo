@@ -3,7 +3,274 @@
 @import "../../../../assets/scss/fonts/post-grotesk";
 
 :host {
+    font-family: PostGrotesk;
+
     .container {
-        height: 300px;
+        padding: 17px 45px 21px 45px;
+        background-color: $white;
+    }
+
+    .content-container {
+        width: 100%
+    }
+
+    .company-name {
+        color: $dark;
+        font-size: 36px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+    }
+
+    .name-container,
+    .deployed-container,
+    .export-container {
+        height: 100%;
+    }
+
+    .export-container {
+        vertical-align: center;
+        text-align: center;
+    }
+
+    .export {
+        width: 117px;
+        height: 40px;
+        text-transform: uppercase;
+        border-radius: 6px;
+        background-color: $light-navy;
+        color: $white;
+        font-size: 14px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+    }
+
+    .percent-owned {
+        color: $grey-blue;
+        font-size: 10px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .more-company-info {
+        color: $dark-sky-blue;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-left: 12px;
+    }
+
+    .tag {
+        margin: 0 7px 0 0;
+        padding: 2px 5px 2px 5px;
+        border-radius: 2px;
+        background-color: $light-periwinkle;
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: center;
+        color: $grey-blue;
+    }
+
+    .description {
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.3px;
+        color: $slate;
+    }
+
+    .bottom-border {
+        width: 100%;
+        border-top: dashed 1px $light-grey-blue;
+        margin: 30px 0 30px 0;
+    }
+
+    .right-border {
+        border-right: dashed 1px $light-grey-blue;
+        margin: 0 30px 0 30px;
+    }
+
+    .all-team-members,
+    .all-takeaways {
+        color: $dark-sky-blue;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    .team-member-avatar {
+        width: 32px;
+        height: 32px;
+        border: solid 1px rgba(18, 79, 140, 0.25);
+        border-radius: 50%;
+        text-align: center;
+        background-color: $pale-grey;
+        font-family: Rubik;
+        font-size: 14px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: $light-navy;
+        vertical-align: center;
+        margin: 0 5px 0 0;
+    }
+
+    .takeaway-item-badge {
+        min-width: 24px;
+        min-height: 18px;
+        border-radius: 2px;
+        background-color: $light-navy;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: $white;
+        vertical-align: center;
+        margin: 0 10px 0 0;
+    }
+
+    .team-member-avatar-container {
+        margin: 0 20px 0 0;
+    }
+
+    .team-member-name {
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.14;
+        letter-spacing: normal;
+        color: $slate;
+    }
+
+    .takeaways-container {
+        max-width: 500px;
+    }
+
+    .takeaways-header-container {
+        margin: 0 0 15px 0;
+    }
+
+    .takeaways-header {
+        font-size: 24px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.3px;
+        color: $dark;
+    }
+
+    .takeaways-total {
+        opacity: 0.75;
+        font-size: 20px;
+        font-weight: 300;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: $grey-blue;
+        margin: 0 13px 0 8px;
+    }
+
+    .takeaways-date {
+        opacity: 0.75;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: $grey-blue;
+    }
+
+    .takeaway-item-container {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.14;
+        letter-spacing: 0.3px;
+        color: $slate;
+    }
+
+    .deployed,
+    .valuation {
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $grey-blue;
+        text-transform: uppercase;
+    }
+
+    .deployed-denomination,
+    .valuation-denomination,
+    .deployed-total,
+    .valuation-moic-gross {
+        opacity: 0.75;
+        font-size: 12px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: $grey-blue;
+    }
+
+    .deployed-value {
+        font-size: 20px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: $dark;
+    }
+
+    .deployed-total {
+        opacity: 0.75;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: $grey-blue;
     }
 }

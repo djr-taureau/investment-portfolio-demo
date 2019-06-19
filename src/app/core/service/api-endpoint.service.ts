@@ -14,9 +14,8 @@ export class ApiEndpointService {
      * Build: Uses the compile time provided API URL.
      */
     public static BASE_URL = {
-        // LOCAL: "http://localhost:4401/",
-        LOCAL: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v3/",
-        REMOTE: "https://remote.api.com/",
+        LOCAL: "http://localhost:4401/",
+        REMOTE: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v3/",
         BUILD: "https://DOMAIN_URL"
     };
 
@@ -96,10 +95,7 @@ export class ApiEndpointService {
      * Getter for the base URL for the API.
      */
     public static getBaseUrl(): string {
-        const apiBaseUrl: string = UrlUtil.getQueryStringParamValue("api", UrlUtil.STRING_TYPE) as string;
-        const isLocal: boolean = apiBaseUrl.toLowerCase() === ApiEndpointService.API_CONTEXT.LOCAL.toLowerCase();
-        // const isLocal: boolean = apiBaseUrl.toLowerCase() === ApiEndpointService.API_CONTEXT.LOCAL.toLowerCase();
-        return ApiEndpointService.BASE_URL.LOCAL;
+        return ApiEndpointService.BASE_URL.REMOTE;
     }
 
     /**

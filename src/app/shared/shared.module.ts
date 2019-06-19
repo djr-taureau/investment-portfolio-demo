@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ValuationModule } from "@shared/valuation/valuation.module";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { FooterModule } from "./footer/footer.module";
 import { HeaderModule } from "./header/header.module";
@@ -31,7 +32,8 @@ const MODULES = [
     MaterialModule,
     PipeModule,
     PortfolioNavbarModule,
-    SlideoutModule
+    SlideoutModule,
+    ValuationModule
 ];
 
 const DECLARATIONS = [];

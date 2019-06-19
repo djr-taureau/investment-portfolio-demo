@@ -1,13 +1,279 @@
 <div class="container"
-     fxLayout="row">
+     fxLayout="row"
+     fxLayoutAlign="start start">
 
-    <h1>Expanded</h1>
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Logo
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div class="logo"
+         fxLayout="column"
+         fxLayoutAlign="center stretch">
+        <img [src]="company.logo"
+             [alt]="company.name">
+    </div>
 
-    <img [src]="company.logo"
-         [alt]="company.name">
+    <div fxLayout="column"
+         fxLayoutAlign="space-between stretch"
+         class="content-container">
 
-    <div>{{ company.name }}</div>
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Company Name, Tags & % Ownership
+        ////////////////////////////////////////////////////////////////////////////////////
+        -->
+        <div fxLayout="row"
+             fxLayoutAlign="space-between start">
 
-    <div *ngFor="let teamMember of teamMembers">{{ teamMember.name }}</div>
+            <div fxLayout="column"
+                 fxLayoutAlign="space-between stretch"
+                 class="name-container">
+                <div class="company-name">{{ company.name }}</div>
+                <div fxLayout="row"
+                     fxLayoutAlign="start center">
+                    <div fxLayout="row"
+                         fxLayoutAlign="space-between center"
+                         class="tags-container">
+                        <div *ngFor="let tag of tags"
+                             class="tag">
+                            {{ tag.name }}
+                        </div>
+                    </div>
+                    <div>
+                        <kendo-chart style="height: 35px; width: 35px;">
+                            <kendo-chart-series>
+                                <kendo-chart-series-item type="donut"
+                                                         field="value"
+                                                         colorField="color"
+                                                         [data]="percentOwnershipChartData">
+                                </kendo-chart-series-item>
+                            </kendo-chart-series>
+                            <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                        </kendo-chart>
+                    </div>
+                    <div class="percent-owned">{{ company.percentOwnership * 100 }}% OWN</div>
+                </div>
+            </div>
+
+            <div class="export-container hand-cursor"
+                 fxLayout="column"
+                 fxLayoutAlign="center stretch">
+                <div class="export hand-cursor">Export</div>
+            </div>
+
+        </div>
+
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Description
+        ////////////////////////////////////////////////////////////////////////////////////
+        -->
+        <div fxLayout="row"
+             fxLayoutAlign="start center">
+            <div class="description">{{ company.description }}</div>
+            <div class="more-company-info hand-cursor">More company info</div>
+        </div>
+
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Border
+        ////////////////////////////////////////////////////////////////////////////////////
+        -->
+        <div class="bottom-border"></div>
+
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Team Members
+        ////////////////////////////////////////////////////////////////////////////////////
+        -->
+        <div fxLayout="row"
+             fxLayoutAlign="start center"
+             class="team-member-avatar-container">
+
+            <div *ngFor="let teamMember of teamMembers"
+                 fxLayout="row"
+                 fxLayoutAlign="start center"
+                 class="team-member-avatar-container">
+
+                <div fxLayout="column"
+                     fxLayoutAlign="center stretch"
+                     class="team-member-avatar hand-cursor">
+                    {{ teamMember.initials }}
+                </div>
+                <div fxLayout="column"
+                     fxLayoutAlign="center stretch"
+                     class="team-member-name">
+                    <div>{{ teamMember.firstName }}</div>
+                    <div>{{ teamMember.lastName }}</div>
+                </div>
+
+            </div>
+
+            <div class="all-team-members hand-cursor">All Team Members</div>
+        </div>
+
+        <!--
+        ////////////////////////////////////////////////////////////////////////////////////
+        // Border
+        ////////////////////////////////////////////////////////////////////////////////////
+        -->
+        <div class="bottom-border"></div>
+
+        <div fxLayout="row"
+             fxLayoutAlign="space-between stretch">
+
+            <!--
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Takeaways
+            ////////////////////////////////////////////////////////////////////////////////////
+            -->
+            <div fxLayout="column"
+                 fxLayoutAlign="space-between stretch"
+                 fxFlex="40"
+                 class="takeaways-container">
+
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     class="takeaways-header-container">
+
+                    <div class="takeaways-header">Key Takeaways</div>
+                    <div class="takeaways-total">({{ takeaways.length }})</div>
+                    <div class="takeaways-date">Updated Mar 31, 2019</div>
+
+                </div>
+
+                <div *ngFor="let takeaway of takeaways; let i = index"
+                     fxLayout="row"
+                     fxLayoutAlign="start center"
+                     class="takeaway-item-container">
+
+                    <div fxLayout="column"
+                         fxLayoutAlign="center"
+                         class="takeaway-item-badge">
+                        {{ i }}
+                    </div>
+                    <div>{{ takeaway.content }}</div>
+
+                </div>
+
+                <div class="all-takeaways hand-cursor">
+                    See all {{ takeaways.length }} takeaways
+                </div>
+
+            </div>
+
+            <!--
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Border
+            ////////////////////////////////////////////////////////////////////////////////////
+            -->
+            <div class="right-border"></div>
+
+            <!--
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Amount Deployed
+            ////////////////////////////////////////////////////////////////////////////////////
+            -->
+            <div fxLayout="column"
+                 fxLayoutAlign="space-between stretch"
+                 fxFlex="20">
+
+                <div fxLayout="row"
+                     fxLayoutAlign="center stretch">
+                    <div class="deployed">Amount Deployed</div>
+                    <div>&nbsp;</div>
+                    <div class="deployed-denomination">($M)</div>
+                </div>
+
+                <div>
+                    <kendo-chart>
+                        <kendo-chart-area [margin]="0"
+                                          [width]="200"
+                                          [height]="200"></kendo-chart-area>
+                        <ng-template kendoChartDonutCenterTemplate>
+                            <div fxLayout="column"
+                                 fxLayoutAlign="space-between stretch"
+                                 class="deployed-container">
+                                <div class="deployed-value">{{ company.deployed }}</div>
+                                <div class="deployed-total">/ {{ company.deployedTotal }}</div>
+                            </div>
+                        </ng-template>
+                        <kendo-chart-series>
+                            <kendo-chart-series-item type="donut"
+                                                     field="value"
+                                                     colorField="color"
+                                                     width="2"
+                                                     [data]="amountDeployedChartData">
+                            </kendo-chart-series-item>
+                        </kendo-chart-series>
+                        <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                    </kendo-chart>
+                </div>
+
+            </div>
+
+            <!--
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Border
+            ////////////////////////////////////////////////////////////////////////////////////
+            -->
+            <div class="right-border"></div>
+
+            <!--
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Valuation
+            ////////////////////////////////////////////////////////////////////////////////////
+            -->
+            <div class="container"
+                 fxLayout="row"
+                 fxLayoutAlign="start stretch">
+
+                <div fxLayout="column"
+                     fxLayoutAlign="space-between stretch">
+                    <div fxLayout="row"
+                         fxLayoutAlign="space-between stretch">
+                        <div class="valuation">Valuation</div>
+                        <div>&nbsp;</div>
+                        <div class="valuation-denomination">($M)</div>
+                    </div>
+                    <div class="valuation-moic-gross">MOIC / Gross IRR</div>
+                </div>
+
+                <sbp-valuation [header]="'Current'"
+                               [value]="company.valuation.current.value"
+                               [moic]="company.valuation.current.moic"
+                               [grossIrr]="company.valuation.current.irr">
+                </sbp-valuation>
+
+                <div class="trend"
+                     fxLayout="column"
+                     fxLayoutAlign="center stretch">
+                    <img src="assets/image/right-trend.svg">
+                </div>
+
+                <sbp-valuation [header]="'+1 year'"
+                               [value]="company.valuation.yearOne.value"
+                               [moic]="company.valuation.yearOne.moic"
+                               [grossIrr]="company.valuation.yearOne.irr">
+                </sbp-valuation>
+
+                <div class="trend"
+                     fxLayout="column"
+                     fxLayoutAlign="center stretch">
+                    <img src="assets/image/right-trend.svg">
+                </div>
+
+                <sbp-valuation [header]="'Exit'"
+                               [value]="company.valuation.exit.value"
+                               [moic]="company.valuation.exit.moic"
+                               [grossIrr]="company.valuation.exit.irr">
+                </sbp-valuation>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>

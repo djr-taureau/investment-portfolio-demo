@@ -4,7 +4,7 @@ import { Company, GetAllCompaniesResponse } from "../domain/company.model";
 import { environment } from "../../../environments/environment";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { Store } from "@ngrx/store";

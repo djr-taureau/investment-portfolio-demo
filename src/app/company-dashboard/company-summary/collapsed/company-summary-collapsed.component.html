@@ -1,13 +1,162 @@
 <div class="container"
-     fxLayout="row">
+     fxLayout="row"
+     fxLayoutAlign="space-between stretch">
 
-    <h1>Collapsed</h1>
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Logo
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div class="logo"
+         fxLayout="column"
+         fxLayoutAlign="center stretch">
+        <img [src]="company.logo"
+             [alt]="company.name">
+    </div>
 
-    <img [src]="company.logo"
-         [alt]="company.name">
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Company Name & % Ownership
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div fxLayout="column"
+         fxLayoutAlign="space-between stretch"
+         class="name-container">
+        <div class="company-name">{{ company.name }}</div>
+        <div fxLayout="row"
+             fxLayoutAlign="start center">
+            <div>
+                <kendo-chart style="height: 35px; width: 35px;">
+                    <kendo-chart-series>
+                        <kendo-chart-series-item type="donut"
+                                                 field="value"
+                                                 colorField="color"
+                                                 [data]="chartData">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+                    <kendo-chart-legend [visible]="false"></kendo-chart-legend>
+                </kendo-chart>
+            </div>
+            <div class="percent-owned">{{ company.percentOwnership * 100 }}% OWN</div>
+            <div class="more-company-info hand-cursor">More company info</div>
+        </div>
+    </div>
 
-    <div>{{ company.name }}</div>
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Team Members
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div fxLayout="column"
+         fxLayoutAlign="space-between stretch"
+         class="team-member-container">
+        <div fxLayout="row"
+             fxLayoutAlign="center stretch"
+             class="team-member-avatar-container">
+            <div *ngFor="let teamMember of teamMembers"
+                 fxLayout="column"
+                 fxLayoutAlign="center stretch"
+                 class="team-member-avatar hand-cursor">
+                {{ teamMember.initials }}
+            </div>
+        </div>
+        <div class="more-company-info hand-cursor">All Team Members</div>
+    </div>
 
-    <div *ngFor="let teamMember of teamMembers">{{ teamMember.name }}</div>
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Border
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div class="right-border"></div>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Amount Deployed
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div fxLayout="column"
+         fxLayoutAlign="space-between stretch"
+         class="deployed-container">
+        <div fxLayout="row"
+             fxLayoutAlign="space-between stretch">
+            <div class="deployed">Deployed</div>
+            <div>&nbsp;</div>
+            <div class="deployed-denomination">($M)</div>
+        </div>
+        <div class="deployed-value">{{ company.deployed }}</div>
+        <div class="deployed-total">/ {{ company.deployedTotal }}</div>
+    </div>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Border
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div class="right-border"></div>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Valuation
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div fxLayout="column"
+         fxLayoutAlign="space-between stretch">
+        <div fxLayout="row"
+             fxLayoutAlign="space-between stretch">
+            <div class="valuation">Valuation</div>
+            <div>&nbsp;</div>
+            <div class="valuation-denomination">($M)</div>
+        </div>
+        <div class="valuation-moic-gross">MOIC / Gross IRR</div>
+    </div>
+
+    <sbp-valuation [header]="'Current'"
+                   [value]="company.valuation.current.value"
+                   [moic]="company.valuation.current.moic"
+                   [grossIrr]="company.valuation.current.irr">
+    </sbp-valuation>
+
+    <div class="trend"
+         fxLayout="column"
+         fxLayoutAlign="center stretch">
+        <img src="assets/image/right-trend.svg">
+    </div>
+
+    <sbp-valuation [header]="'+1 year'"
+                   [value]="company.valuation.yearOne.value"
+                   [moic]="company.valuation.yearOne.moic"
+                   [grossIrr]="company.valuation.yearOne.irr">
+    </sbp-valuation>
+
+    <div class="trend"
+         fxLayout="column"
+         fxLayoutAlign="center stretch">
+        <img src="assets/image/right-trend.svg">
+    </div>
+
+    <sbp-valuation [header]="'Exit'"
+                   [value]="company.valuation.exit.value"
+                   [moic]="company.valuation.exit.moic"
+                   [grossIrr]="company.valuation.exit.irr">
+    </sbp-valuation>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Border
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div class="right-border"></div>
+
+    <!--
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Export
+    ////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <div class="export-container hand-cursor"
+         fxLayout="column"
+         fxLayoutAlign="center stretch">
+        <div class="export">Export</div>
+    </div>
 
 </div>

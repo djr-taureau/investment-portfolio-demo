@@ -14,16 +14,31 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("CompanySummaryCollapsedComponent");
 
     /**
-     * Currently selected company.
+     * The Company in context.
      */
     @Input()
-    public company: Company = null;
+    public set company(theCompany: Company) {
+        if (theCompany) {
+            this._company = theCompany;
+            // Donut chart requires this format
+            this.chartData = [{ value: theCompany.percentOwnership, color: "#124f8c" }, { value: 1 - theCompany.percentOwnership, color: "#dbe3f1" }];
+        }
+    }
+    public get company(): Company {
+        return this._company;
+    }
+    private _company: Company;
 
     /**
      * List of team members.
      */
     @Input()
     public teamMembers: TeamMember[] = null;
+
+    /**
+     * The percent owned chart data.
+     */
+    public chartData: any[] = [];
 
     /**
      * Constructor.
