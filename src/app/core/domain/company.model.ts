@@ -5,7 +5,7 @@ export interface Company {
     type: string; // enum
     data: any;
     sectors: Sector[];
-    regions: Region[];
+    region: string;
     funds: Fund[];
     score: number;
     amountInvested: number;
@@ -13,7 +13,7 @@ export interface Company {
     slackName: string;
     slackUrl: string;
     aka: string;
-    headquarters: string;
+    headquarters: Address;
     founders: string[];
     foundedDate: string;
     website: string;
@@ -44,9 +44,6 @@ export interface Company {
 
     // Displayed in the company header to the right of the tags.
     percentOwnership: number;
-
-    // Displayed in the company header under the description as a list.
-    dealTeam: TeamMember[];
 
     // Displayed in the company header under the team members as a list.
     takeaways: Takeaway[];
@@ -130,6 +127,14 @@ export enum TeamMemberGroupTypes {
     OPS = "OPS",
     PORTFOLIO = "PORTFOLIO",
     FINANCE = "FINANCE"
+}
+
+export interface Team {
+    groups: TeamMemberGroup[];
+}
+export interface TeamMemberGroup {
+    category: string; // of TeamMemberGroupTypes
+    members: TeamMember[];
 }
 export interface TeamMember {
     id: string;
@@ -226,4 +231,16 @@ export interface CompanyRevenueResponse {
 
 export interface GetAllCompaniesResponse extends ApiResponse {
     data: Company[];
+}
+
+export interface Address {
+    id: string;
+    addressName: string;
+    address1: string;
+    address2: string;
+    city: string;
+    state: string;
+    countryCodeISO: string;
+    countryName: string;
+    postal: string;
 }
