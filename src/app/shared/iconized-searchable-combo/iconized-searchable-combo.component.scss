@@ -2,7 +2,6 @@
 
 :host {
 
-
     .list {
         width: 165px;
     }
@@ -12,6 +11,8 @@
     // ::ng-deep .k-dropdown-wrap>.k-input, .k-dropdown .k-dropdown-wrap .k-select, .k-list, .k-reset {
     //     background-color: lightblue;
     // }
+
+    ::ng-deep {}
 
     ::ng-deep .k-dropdown-wrap {
         border-radius: 6px;
@@ -38,10 +39,58 @@
 }
 
 // NOTE: these won't work on the Kendo items if in :host
+
+.k-popup,
+.k-column-menu .k-menu:not(.k-context-menu),
+.k-menu-group,
+.k-menu.k-context-menu {
+    background-color: $white;
+}
+
+kendo-popup {
+    &.k-animation-container {
+        background-color: $white;
+
+        .k-popup .k-list-container .k-reset {
+            background-color: red;
+        }
+
+        kendo-list {
+            background-color: $white;
+
+            .k-list-scroller {
+                background-color: $white;
+
+                .k-list {
+                    background-color: $white;
+
+                    li .k-item {
+                        background-color: $white;
+
+                        img .icon {
+                            width: 20px;
+                            height: 28px;
+                            padding: 0px 15px 0px 5px;
+                            background-color: $white;
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
+
 // .template {
 //     background-color: white;
 // }
 
+//.icon {
+//    width: 20px;
+//    height: 28px;
+//    padding: 0px 15px 0px 5px;
+//    background-color: $pale-grey;
+//}
 .icon {
     width: 20px;
     height: 28px;
