@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Company } from "@core/domain/company.model";
 import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
@@ -15,11 +16,23 @@ export class HeaderComponent implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("HeaderComponent");
 
+    private _companies: Company[];
+
+    public listItems: Array<IconizedItem>[];
+
     /**
      * List of companies.
      */
     @Input()
-    public companies: Company[] = null;
+    public set companies(value) {
+        this._companies = value;
+        console.log(JSON.stringify(value));
+        const asIconized = value.map((c: Company) => {
+            return { id: Number(c.id), icon: _.get(c, "logo", "https://via.placeholder.com/30"), text: c.name } as IconizedItem;
+        });
+        console.log(JSON.stringify(asIconized));
+        this.listItems = asIconized;
+    }
 
     /**
      * The currently selected company
@@ -73,12 +86,6 @@ export class HeaderComponent implements OnInit {
      */
     @Input()
     public showCompanyCombo = true;
-
-    // NOTE: fill in with real data when ready
-    public listItems: Array<IconizedItem> = [
-        { id: 0, text: "WASI", icon: "assets/image/nauset.jpg" },
-        { id: 1, text: "Facebook", icon: "assets/image/notes.svg" }
-    ];
 
     /**
      * Constructor.

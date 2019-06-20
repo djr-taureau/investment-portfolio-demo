@@ -1,9 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { Store } from "@ngrx/store";
 import { LegendComponent, LegendLabels, LegendMarkers, MarkersVisualArgs } from "@progress/kendo-angular-charts";
 import { Group, Text } from "@progress/kendo-drawing";
 import { Point } from "@progress/kendo-drawing/dist/es/geometry";
-import { CHART_ORIENTATION, CHART_POSITION } from "@shared/kendo/chart.const";
 
 @Component({
     selector: "sbp-portfolio-listing-summary",
