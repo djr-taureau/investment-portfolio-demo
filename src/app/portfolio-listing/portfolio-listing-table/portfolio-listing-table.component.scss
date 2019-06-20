@@ -1,23 +1,72 @@
 @import "../../../assets/scss/variables";
 
 :host {
-    width: 80%;
+    width: 100%;
     padding: 12px;
     //background-color: $white;
 
-    mat-table {
-        border-radius: 8px;
-        width: 100%;
-        background: none;
+    table {
+        border-radius: 0px;
+        width: 95%;
+        background: rgba(255, 255, 255, 0) !important;
+        background-color: rgba(255, 255, 255, 0) !important;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding: 0px;
 
-        mat-header-row {
-            background: none;
-            min-height: 30px;
-            height: 30px;
+        .group-header {
+            height: 32px !important;
+            height: 32px;
+            opacity: 0.5;
+            background-color: $light-grey-blue !important;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: $slate;
+
+            img {
+                width: 16px;
+                height: 16px;
+            }
+
+            &-label {
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                color: $slate;
+            }
+
+            &-count {
+                opacity: 0.75;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.3px;
+                color: $slate;
+            }
+        }
+
+        .mat-header-row {
+            background: none !important;
+            // min-height: 30px;
+            height: 0px;
             text-transform: uppercase;
             color: $grey-blue;
 
-            mat-header-cell {
+            .mat-header-cell {
                 font-family: PostGrotesk;
                 font-size: 12px;
                 font-weight: bold;
@@ -26,17 +75,110 @@
                 line-height: normal;
                 letter-spacing: 0.3px;
                 color: $grey-blue;
+
+                // .header-label {
+                position: relative;
+                top: -5px;
+                text-align: right;
+
+                &:nth-child(2),
+                &:nth-child(3),
+                &:nth-child(4),
+                &:nth-child(5) {
+                    text-align: left;
+                }
+
+                // }
             }
         }
 
-        background-color: $white;
-        padding: 0 12px;
+        img {
+            height: 20px;
+            width: 20px;
+        }
 
-        mat-row {
+        .mat-row {
             background-color: $white;
             padding: 0 12px;
+            height: 72px;
 
-            mat-cell {
+            .mat-cell {
+                .companyName {
+                    font-family: PostGrotesk;
+                    font-size: 16px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: normal;
+                    color: $dark;
+                }
+
+                .teamLeadName {
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.14;
+                    letter-spacing: normal;
+                    color: $slate;
+                }
+
+                .sectors {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    opacity: 0.5;
+                    border-radius: 2px;
+                    background-color: $light-periwinkle;
+                }
+
+                .sectorsAdditional {
+                    font-family: PostGrotesk;
+                    font-size: 12px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: $dark-sky-blue;
+                }
+
+                .country {
+                    opacity: 0.75;
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.14;
+                    letter-spacing: normal;
+                    color: $slate;
+                }
+
+                .amountInvested,
+                .currentValuation,
+                .moic,
+                .irr {
+                    opacity: 0.75;
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.07;
+                    letter-spacing: normal;
+                    text-align: right;
+                    color: var(--slate);
+                }
+
                 &:nth-child(2) {
                     font-weight: bold;
                 }

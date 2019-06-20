@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Company } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
+import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 
 @Component({
     selector: "sbp-portfolio-listing",
@@ -18,6 +19,8 @@ export class PortfolioListingComponent implements OnInit {
      */
     @Input()
     public companies: Company[];
+    @Input()
+    public tableData: PortfolioTableItem[];
 
     /**
      * TODO: REMOVE: BME: Mock data stream from the Mock API.

@@ -2,6 +2,8 @@ import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
+import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
+import { strict } from "assert";
 
 /**
  * Provides unit tests access to DOM elements by element ID or CSS selector in a component's fixture.
@@ -112,6 +114,24 @@ export const getTeamMemberDefault = (): TeamMember => {
     };
 };
 
+export const getPortfolioTableItemDefault = (): PortfolioTableItem => {
+    return {
+        logo: "",
+        companyId: "",
+        companyName: "",
+        teamLeadAvatar: "",
+        teamLeadName: "",
+        sectors: [],
+        region: "",
+        countryFlag: "",
+        country: "",
+        amountInvested: 0,
+        currentValuation: 0,
+        MOIC: 0,
+        IRR: 0
+    };
+};
+
 /**
  * Creates a default Tag.
  */
@@ -169,3 +189,8 @@ export const createMockFile = (content?: string[], name?: string): File => {
     name = name || "bar.txt";
     return new File(content, name);
 };
+
+export const getPortfolioTableItemMock = (partial?: Partial<PortfolioTableItem>): PortfolioTableItem => ({
+    ...getPortfolioTableItemDefault(),
+    ...partial
+});

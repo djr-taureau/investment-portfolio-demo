@@ -11,11 +11,15 @@
     <!-- https://casertaconcepts.atlassian.net/browse/SBMVP-81 -->
     <sbp-portfolio-listing-summary-container></sbp-portfolio-listing-summary-container>
 
+    <button (click)="onLoadCompanies($event)">Load Companies</button>
+
     <!-- This is where this list will go -->
     <!-- https://casertaconcepts.atlassian.net/browse/SBMVP-77 -->
-    <sbp-portfolio-listing-table [companies]="companies"></sbp-portfolio-listing-table>
+    <sbp-portfolio-listing-table [tableData]="tableData"
+                                 [groupByColumn]="'region'"
+                                 [sortByColumn]="'companyName'"
+                                 [filter]="[]"></sbp-portfolio-listing-table>
 
-    <button (click)="onLoadCompanies($event)">Load Companies</button>
 
     <div>{{ mocks }}</div>
 </div>

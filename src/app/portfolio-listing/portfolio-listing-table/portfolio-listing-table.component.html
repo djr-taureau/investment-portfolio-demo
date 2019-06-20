@@ -1,6 +1,168 @@
 <div fxLayout="column"
      fxLayoutAlign="start center"
      fxFlex>
+
+    <table class="table"
+           mat-table
+           [dataSource]="dataSource"
+           class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+        <ng-container matColumnDef="logo">
+            <th mat-header-cell
+                *matHeaderCellDef></th>
+            <td mat-cell
+                *matCellDef="let element">
+                <img matListAvatar
+                     src="{{element.logo}}">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="companyName">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">COMPANY NAME</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="companyName">{{element.companyName}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="teamLeadName">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">DEAL TEAM LEAD</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="10px"
+                     class="teamLeadName">
+                    <img matListAvatar
+                         src="{{element.teamLeadAvatar}}">
+                    <div>{{element.teamLeadName}}</div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="sectors">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">SECTOR</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="10px">
+                    <div class="sectors">{{element.sectors[0]}}</div>
+                    <div *ngIf="element.sectors.length > 1"
+                         class="sectorsAdditional">{{element.sectorsAdditional.value}}</div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="country">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">COUNTRY</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="10px">
+                    <img matListAvatar
+                         src="{{element.countryFlag}}">
+                    <div class="country">{{element.country}}</div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountInvested">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">INVESTED ($M)</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="amountInvested">{{element.amountInvested.toLocaleString('en', {useGrouping:true})}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="currentValuation">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">VALUATION ($M)</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="currentValuation">{{element.currentValuation.toLocaleString('en', {useGrouping:true})}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="MOIC">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">MOIC</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="moic">{{element.MOIC}}x</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="IRR">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">GROSS IRR</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="irr">{{element.IRR}}%</div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Group header -->
+        <ng-container matColumnDef="groupHeader">
+            <td colspan="999"
+                mat-cell
+                *matCellDef="let group">
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="10px"
+                     class="group-header-label">
+                    <img src="assets/image/up.svg"
+                         *ngIf="group.expanded" />
+                    <img src="assets/image/down.svg"
+                         *ngIf="!group.expanded" />
+                    <div>{{group[groupByColumns[group.level-1]]}}</div>
+                    <div class="group-header-count">({{group.count}}) {{group.investedSum}} {{group.valuationSum}} {{group.moicSum}} {{group.irrSum}}</div>
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- if we wanted to click on header for sort (click)="groupHeaderClick(row)"> </tr> -->
+        <tr mat-row
+            class="group-header"
+            *matRowDef="let row; columns: ['groupHeader']; when: isGroup"
+            (click)="groupHeaderClick(row)"></tr>
+
+    </table>
+</div>
+
+
+<!-- <div fxLayout="column"
+     fxLayoutAlign="start center"
+     fxFlex>
     <mat-table [dataSource]="dataProvider"
                class="mat-elevation-z0"
                matSort>
@@ -8,26 +170,26 @@
         <ng-container *ngFor="let column of columns; let i = index"
                       matColumnDef="{{ column.field }}">
             <mat-header-cell mat-sort-header
-                             *matHeaderCellDef>{{ column.field }}
+                             *matHeaderCellDef>{{ column.field }} -->
 
-                <!-- <button class="grid-view-header-menu"
+<!-- <button class="grid-view-header-menu"
                         mat-icon-button
                         [matMenuTriggerFor]="menu">
                     <mat-icon>menu</mat-icon>
                 </button> -->
 
-                <!-- <mat-menu #menu>
+<!-- <mat-menu #menu>
                     <button mat-menu-item
                             (click)="groupBy($event, column);">Group By This Field</button>
                     <button mat-menu-item
                             (click)="unGroupBy($event, column);">Ungroup</button>
                 </mat-menu> -->
 
-            </mat-header-cell>
-            <!--            <mat-cell *matCellDef="let row">-->
-            <!--                <mat-icon *ngIf="row[column.field] === 'logo'">{{ row[column.field] }}</mat-icon>-->
-            <!--            </mat-cell>-->
-            <mat-cell *matCellDef="let row"
+<!-- </mat-header-cell> -->
+<!--            <mat-cell *matCellDef="let row">-->
+<!--                <mat-icon *ngIf="row[column.field] === 'logo'">{{ row[column.field] }}</mat-icon>-->
+<!--            </mat-cell>-->
+<!-- <mat-cell *matCellDef="let row"
                       [ngClass]="[row[column.field] == 'name' ? 'company-name-text' : 'data-grid-text']">
                 <ng-container *ngIf="column.field === 'logo'">
                     <img class="row__icon"
@@ -43,18 +205,18 @@
                         class="group_bkg"
                         *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row class="BOUNDING"
-                 *matRowDef="let row; columns: displayedColumns"></mat-row>
+                 *matRowDef="let row; columns: displayedColumns"></mat-row> -->
 
-        <!-- Group header -->
-        <ng-container matColumnDef="groupHeader">
+<!-- Group header -->
+<!-- <ng-container matColumnDef="groupHeader">
             <mat-cell colspan="999"
                       *matCellDef="let group">
                 <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
                 <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
-                <strong class="column-name">{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong>
-                <!-- <p>{{ group.aggregatedValuation }}</p>
+                <strong class="column-name">{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong> -->
+<!-- <p>{{ group.aggregatedValuation }}</p>
                 <p>{{ group.aggregatedInvestment }}</p> -->
-            </mat-cell>
+<!-- </mat-cell>
         </ng-container>
 
         <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"
@@ -62,4 +224,4 @@
         </mat-row>
 
     </mat-table>
-</div>
+</div> -->
