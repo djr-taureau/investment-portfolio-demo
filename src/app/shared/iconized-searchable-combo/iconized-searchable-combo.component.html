@@ -17,7 +17,7 @@
                  matListAvatar
                  src="assets/image/company.svg">
             <div class="label">
-                {{ dataItem?.text }}
+                {{ dataItem?.text | sbpEllipsis: 10 }}
             </div>
 
         </ng-template>
@@ -28,7 +28,7 @@
                  matListAvatar
                  src="{{dataItem?.icon}}">
             <div class="label">
-                {{ dataItem?.text }}
+                {{ dataItem?.text | sbpEllipsis: 18}}
             </div>
         </ng-template>
         <ng-template kendoDropDownListNoDataTemplate>

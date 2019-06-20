@@ -1,0 +1,153 @@
+@import "variables";
+@import "~@progress/kendo-theme-default/scss/popup";
+@import "~@progress/kendo-theme-default/scss/badge";
+@import "~@progress/kendo-theme-default/scss/tooltip";
+@import "~@progress/kendo-theme-default/scss/responsivepanel";
+@import "~@progress/kendo-theme-default/scss/dataviz";
+@import "variables";
+
+.image-icon {
+    width: 20px;
+    height: 25px;
+    padding: 3px 6px 0px 6px;
+    background-color: $pale-grey;
+    left: 0px;
+    position: absolute;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+}
+
+/**
+    This is for the company selector dropdown menu
+ */
+.k-popup {
+    background-color: $white !important;
+
+    kendo-list {
+        .k-list-scroller {
+            li {
+                &.k-item {
+                    height: 32px;
+
+                    img.icon {
+                        /** This is the menu item icn */
+                        @extend .image-icon;
+                        width: 20px;
+                        height: 25px;
+                        padding: 0;
+                        left: 7px;
+                        background: none;
+                        border-top-left-radius: 0px;
+                        border-bottom-left-radius: 0px;
+                        //background-color: $white
+                    }
+
+                    div.label {
+                        padding-left: 30px;
+                        font-family: PostGrotesk;
+                        font-size: 14px;
+                        font-weight: normal;
+                        font-style: normal;
+                        font-stretch: normal;
+                        line-height: normal;
+                        letter-spacing: 0.25px;
+                        color: $dark;
+
+                    }
+
+                    &.k-state-focused {
+                        box-shadow: none;
+                        background-color: rgba($light-navy, .3);
+
+                        .icon {
+                            background-color: rgba($light-navy, .3);
+                        }
+
+                        &.k-state-selected {
+                            background-color: rgba($light-navy, .3);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+kendo-chart {
+    border: none !important;
+}
+
+kendo-dropdownlist {
+    .k-dropdown-wrap {
+        background-color: $white;
+        border-radius: 6px;
+        border-color: rgba($light-grey-blue, .5);
+
+        &:hover {
+            border-color: rgba($dark-sky-blue, .5);
+        }
+
+        &:active {
+            border-color: $dark-sky-blue;
+        }
+
+        .k-select {
+            border-width: 0;
+
+            .k-icon k-i-arrow-s {
+                color: $light-navy;
+            }
+        }
+
+        .icon {
+            @extend .image-icon;
+
+        }
+
+        .label {
+            padding-left: 30px;
+            background-color: white;
+            font-family: PostGrotesk;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.3px;
+            color: $light-navy;
+        }
+    }
+}
+
+//.icon {
+//    width: 20px;
+//    height: 28px;
+//    padding: 0px 15px 0px 5px;
+//    background-color: $pale-grey;
+//}
+//
+//.label {
+//    padding-left: 5px;
+//    background-color: white;
+//    font-family: PostGrotesk;
+//    font-size: 16px;
+//    font-weight: bold;
+//    font-style: normal;
+//    font-stretch: normal;
+//    line-height: normal;
+//    letter-spacing: 0.3px;
+//    color: $light-navy;
+//}
+//
+//.noDataMessage {
+//    opacity: 0.75;
+//    font-family: PostGrotesk;
+//    font-size: 14px;
+//    font-weight: normal;
+//    font-style: normal;
+//    font-stretch: normal;
+//    line-height: normal;
+//    letter-spacing: normal;
+//    color: $grey-blue;
+//    text-transform: none !important;
+//}

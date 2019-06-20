@@ -12,7 +12,10 @@ import { select, Store } from "@ngrx/store";
     selector: "sbp-company-navbar-container",
     template: `
         <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)">
-            <button (click)="onExpandOrCollapse($event)">{{ collapsed$ | async | expandOrCollapse }}</button>
+            <div fxLayout="row" fxLayoutAlign="start center" (click)="onExpandOrCollapse($event)">
+                <div [ngClass]="{ 'btn-expanded-img': expanded, 'btn-collapsed-img': !expanded }"></div>
+                <div [ngClass]="{ 'btn-expanded': expanded, 'btn-collapsed': !expanded }">{{ collapsed$ | async | expandOrCollapse }}</div>
+            </div>
         </sbp-navigation-bar>
     `,
     styleUrls: ["./company-navbar.container.scss"]
@@ -37,6 +40,11 @@ export class CompanyNavbarContainer implements OnInit {
      * Boolean indicating if the summary is collapsed.
      */
     public collapsed$: Observable<boolean>;
+
+    /**
+     * User for collapsed/expanded styles
+     */
+    public expanded: boolean;
 
     /**
      * Handles clicking a link
@@ -64,6 +72,9 @@ export class CompanyNavbarContainer implements OnInit {
         this.links$ = this.store$.pipe(select(fromState.getCompanyNavLinks));
         this.selectedLink$ = this.store$.pipe(select(fromState.getSelectedCompanyNavLink));
         this.collapsed$ = this.store$.pipe(select(fromCompanyDashboardLayout.getCollapsed));
+        this.collapsed$.subscribe((value) => {
+            this.expanded = !value;
+        });
     }
 
     constructor(private store$: Store<any>) {}
