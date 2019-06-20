@@ -1,7 +1,7 @@
 import * as CompanyDashboardLayoutActions from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { ActivatedRoute } from "@angular/router";
 import { appRoutePaths } from "../app.routes";
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CoreCompanyContainer } from "@shared/company/core-company.container";
 import { Logger } from "@util/logger";
 import { Store } from "@ngrx/store";
@@ -12,7 +12,7 @@ import { Store } from "@ngrx/store";
         <sbp-company-dashboard (expandOrCollapse)="expandOrCollapse($event)"></sbp-company-dashboard>
     `
 })
-export class CompanyDashboardContainer extends CoreCompanyContainer {
+export class CompanyDashboardContainer extends CoreCompanyContainer implements OnInit {
     /**
      * Internal logger.
      */
@@ -27,6 +27,14 @@ export class CompanyDashboardContainer extends CoreCompanyContainer {
         super(store$, route$, appRoutePaths.companyDashboard);
 
         CompanyDashboardContainer.logger.debug(`constructor()`);
+    }
+
+    /**
+     * Initialize the component.
+     */
+    public ngOnInit() {
+        super.ngOnInit();
+        CompanyDashboardContainer.logger.debug(`ngOnInit()`);
     }
 
     /**

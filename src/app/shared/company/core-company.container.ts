@@ -1,4 +1,5 @@
 import "rxjs/operators/first";
+import { LoadPortfolio } from "@core/state/flow/flow.actions";
 import * as _ from "lodash";
 import { ActivatedRoute } from "@angular/router";
 import { Company } from "../../core/domain/company.model";
@@ -15,6 +16,9 @@ export class CoreCompanyContainer implements OnInit {
     private componentUrl: string;
 
     ngOnInit() {
+        // Load the portfolio
+        this.store$.dispatch(new LoadPortfolio());
+
         // Ensure that the url is evaluated for company id and updates the selected company if it exists
         this.route$.params.subscribe((params) => {
             if (_.get(params, "id", null)) {
