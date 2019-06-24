@@ -1,6 +1,6 @@
-@import "../../../../assets/scss/variables";
-@import "../../../../assets/scss/pointers";
-@import "../../../../assets/scss/fonts/post-grotesk";
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/pointers";
+@import "../../../assets/scss/fonts/post-grotesk";
 
 :host {
     font-family: PostGrotesk;
@@ -8,10 +8,6 @@
     .container {
         padding: 17px 45px 21px 45px;
         background-color: $white;
-
-        .trend {
-            margin: 0 15px;
-        }
     }
 
     .content-container {
@@ -111,8 +107,7 @@
 
     .right-border {
         border-right: dashed 1px $light-grey-blue;
-        //margin: 0 30px 0 30px;
-        margin: 0px;
+        margin: 0 30px 0 30px;
     }
 
     .all-team-members,

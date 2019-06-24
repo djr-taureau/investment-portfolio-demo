@@ -11,6 +11,13 @@
         padding: 17px 45px 21px 45px;
         background-color: $white;
 
+        .logo-container {
+            .logo {
+                height: 60px;
+                width: 60px;
+            }
+        }
+
         .company-name {
             color: $dark;
             font-size: 32px;
@@ -68,11 +75,11 @@
         .team-member-avatar {
             width: 32px;
             height: 32px;
-            border: solid 1px rgba(18, 79, 140, 0.25);
+            border: solid 1px $macaroni-and-cheese;
             border-radius: 50%;
             text-align: center;
             background-color: $pale-grey;
-            font-family: Rubik;
+            //font-family: Rubik;
             font-size: 14px;
             font-weight: 500;
             font-style: normal;

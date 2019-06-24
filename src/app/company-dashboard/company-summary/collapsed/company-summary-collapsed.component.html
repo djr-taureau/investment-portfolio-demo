@@ -7,10 +7,12 @@
     // Logo
     ////////////////////////////////////////////////////////////////////////////////////
     -->
-    <div class="logo"
+    <div class="logo-container"
+         fxFlex="100px"
          fxLayout="column"
          fxLayoutAlign="center stretch">
-        <img [src]="company.logo"
+        <img class="logo"
+             [src]="company.logo"
              [alt]="company.name">
     </div>
 
@@ -85,7 +87,7 @@
             <div class="deployed-denomination">($M)</div>
         </div>
         <div class="deployed-value">{{ company.deployed }}</div>
-        <div class="deployed-total">/ {{ company.deployedTotal }}</div>
+        <div class="deployed-total">/ {{ company.deployedTotal | number:'1.2' }}</div>
     </div>
 
     <!--
@@ -153,10 +155,10 @@
     // Export
     ////////////////////////////////////////////////////////////////////////////////////
     -->
-    <div class="export-container hand-cursor"
+    <div class="export-container hand-cursor export"
          fxLayout="column"
-         fxLayoutAlign="center stretch">
-        <div class="export">Export</div>
+         fxLayoutAlign="center center">
+        <div>Export</div>
     </div>
 
 </div>

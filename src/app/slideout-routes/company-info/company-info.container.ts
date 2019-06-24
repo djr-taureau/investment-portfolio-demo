@@ -1,3 +1,6 @@
+import { ActivatedRoute } from "@angular/router";
+import { appRoutePaths } from "@app/app.routes";
+import { CoreCompanyContainer } from "@shared/company/core-company.container";
 import { CloseCompanyInfoPanel } from "../../core/state/flow/flow.actions";
 import { Company } from "../../core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
@@ -12,7 +15,7 @@ import { Store, select } from "@ngrx/store";
         <sbp-company-info [company]="company$ | async" (closePanel)="onClose()"> </sbp-company-info>
     `
 })
-export class CompanyInfoContainer implements OnInit {
+export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit {
     /**
      * Internal logger.
      */
@@ -35,7 +38,10 @@ export class CompanyInfoContainer implements OnInit {
      */
     public ngOnInit(): void {
         this.company$ = this.store$.pipe(select(getSelectedCompany));
+        super.ngOnInit();
     }
 
-    constructor(private store$: Store<any>) {}
+    constructor(protected store$: Store<any>, protected route$: ActivatedRoute) {
+        super(store$, route$, appRoutePaths.companyInfo);
+    }
 }

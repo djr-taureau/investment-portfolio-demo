@@ -7,10 +7,11 @@
     // Logo
     ////////////////////////////////////////////////////////////////////////////////////
     -->
-    <div class="logo"
+    <div class="logo-container"
          fxLayout="column"
          fxLayoutAlign="center stretch">
-        <img [src]="company.logo"
+        <img class="logo"
+             [src]="company.logo"
              [alt]="company.name">
     </div>
 
@@ -56,10 +57,10 @@
                 </div>
             </div>
 
-            <div class="export-container hand-cursor"
+            <div class="export-container hand-cursor export"
                  fxLayout="column"
-                 fxLayoutAlign="center stretch">
-                <div class="export hand-cursor">Export</div>
+                 fxLayoutAlign="center center">
+                <div>Export</div>
             </div>
 
         </div>
@@ -186,7 +187,8 @@
                     <div class="deployed-denomination">($M)</div>
                 </div>
 
-                <div>
+                <div fxLayout="row"
+                     fxLayoutAlign="center center">
                     <kendo-chart>
                         <kendo-chart-area [margin]="0"
                                           [width]="200"
@@ -227,48 +229,55 @@
             -->
             <div class="container"
                  fxLayout="row"
-                 fxLayoutAlign="start stretch">
-
-                <div fxLayout="column"
-                     fxLayoutAlign="space-between stretch">
-                    <div fxLayout="row"
+                 fxLayoutAlign="space-between stretch">
+                <div fxLayout="row"
+                     fxLayoutAlign="center stretch"
+                     fxFlex>
+                    <div fxLayout="column"
                          fxLayoutAlign="space-between stretch">
-                        <div class="valuation">Valuation</div>
-                        <div>&nbsp;</div>
-                        <div class="valuation-denomination">($M)</div>
+                        <div fxLayout="row"
+                             fxLayoutAlign="space-between stretch">
+                            <div class="valuation">Valuation</div>
+                            <div>&nbsp;</div>
+                            <div class="valuation-denomination">($M)</div>
+                        </div>
+                        <div class="valuation-moic-gross">MOIC / Gross IRR</div>
                     </div>
-                    <div class="valuation-moic-gross">MOIC / Gross IRR</div>
+                    <div class="trend"
+                         fxLayout="column"
+                         fxLayoutAlign="center stretch">
+                    </div>
+
+                    <sbp-valuation [header]="'Current'"
+                                   [value]="company.valuation.current.value"
+                                   [moic]="company.valuation.current.moic"
+                                   [grossIrr]="company.valuation.current.irr">
+                    </sbp-valuation>
+
+                    <div class="trend"
+                         fxLayout="column"
+                         fxLayoutAlign="center stretch">
+                        <img src="assets/image/right-trend.svg">
+                    </div>
+
+                    <sbp-valuation [header]="'+1 year'"
+                                   [value]="company.valuation.yearOne.value"
+                                   [moic]="company.valuation.yearOne.moic"
+                                   [grossIrr]="company.valuation.yearOne.irr">
+                    </sbp-valuation>
+
+                    <div class="trend"
+                         fxLayout="column"
+                         fxLayoutAlign="center stretch">
+                        <img src="assets/image/right-trend.svg">
+                    </div>
+
+                    <sbp-valuation [header]="'Exit'"
+                                   [value]="company.valuation.exit.value"
+                                   [moic]="company.valuation.exit.moic"
+                                   [grossIrr]="company.valuation.exit.irr">
+                    </sbp-valuation>
                 </div>
-
-                <sbp-valuation [header]="'Current'"
-                               [value]="company.valuation.current.value"
-                               [moic]="company.valuation.current.moic"
-                               [grossIrr]="company.valuation.current.irr">
-                </sbp-valuation>
-
-                <div class="trend"
-                     fxLayout="column"
-                     fxLayoutAlign="center stretch">
-                    <img src="assets/image/right-trend.svg">
-                </div>
-
-                <sbp-valuation [header]="'+1 year'"
-                               [value]="company.valuation.yearOne.value"
-                               [moic]="company.valuation.yearOne.moic"
-                               [grossIrr]="company.valuation.yearOne.irr">
-                </sbp-valuation>
-
-                <div class="trend"
-                     fxLayout="column"
-                     fxLayoutAlign="center stretch">
-                    <img src="assets/image/right-trend.svg">
-                </div>
-
-                <sbp-valuation [header]="'Exit'"
-                               [value]="company.valuation.exit.value"
-                               [moic]="company.valuation.exit.moic"
-                               [grossIrr]="company.valuation.exit.irr">
-                </sbp-valuation>
 
             </div>
 

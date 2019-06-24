@@ -1,9 +1,12 @@
 <div class="main"
      fxLayout="row"
-     fxLayoutAlign="space-between center">
+     fxFlex="70%"
+     fxLayoutAlign="center center"
+     fxLayoutGap="24px">
 
     <!-- SEARCH FOR COMPANY -->
-    <div>
+    <div fxLayout="row"
+         fxLayoutAlign="space-between center">
         <img src="assets/image/search.svg"
              class="search">
         <input matInput
@@ -12,8 +15,10 @@
                (keyup)="filter.emit($event.target.value)"
                placeholder="Search for Company">
     </div>
+
     <!-- START VERTCIAL LINE, FILTER ICON, VERTICAL LINE -->
-    <div>
+    <div fxLayout="row"
+         fxLayoutAlign="space-between center">
         <div class="vr"></div>
         <div fxLayoutGap="20px">
             <img src="assets/image/filter.svg"
@@ -25,7 +30,9 @@
     <!-- END VERTICAL LINE, FILTER ICON, VERTICAL LINE -->
 
     <!-- GROUP SELECT -->
-    <div fxLayoutGap="5px">
+    <div fxLayout="row"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="5px">
         <mat-icon class="grouping"
                   svgIcon="grouping"></mat-icon>
         <mat-select class="grouping dropdown"
@@ -40,23 +47,20 @@
             <mat-option value="amountInvested">Group By Amount Invested ($0-$500M)</mat-option>
         </mat-select>
     </div>
-
+    <div fxFlexFill></div>
     <!-- BY VALUTATION SORTING -->
-    <div fxLayout="column"
-         fxFlex="20">
-        <div fxLayout="row">
-            <div fxLayoutGap="1px">
-                <mat-icon class="sort"
-                          svgIcon="sort"></mat-icon>
-                <mat-select class="sort dropdown"
-                            placeholder="Sort By"
-                            (selectionChange)="sort.emit($event.value)">
-                    <mat-option value="Valuation">Valuation</mat-option>
-                    <mat-option value="Investment">Investment</mat-option>
-                    <mat-option value="Other">Other</mat-option>
-                </mat-select>
-            </div>
-        </div>
+    <div fxLayout="row"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="5px">
+        <mat-icon class="sort"
+                  svgIcon="sort"></mat-icon>
+        <mat-select class="sort dropdown"
+                    placeholder="Sort By"
+                    (selectionChange)="sort.emit($event.value)">
+            <mat-option value="Valuation">Valuation</mat-option>
+            <mat-option value="Investment">Investment</mat-option>
+            <mat-option value="Other">Other</mat-option>
+        </mat-select>
     </div>
 
 </div>

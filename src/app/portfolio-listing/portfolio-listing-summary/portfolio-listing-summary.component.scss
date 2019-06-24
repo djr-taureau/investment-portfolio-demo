@@ -13,6 +13,10 @@
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         background-color: $white;
 
+        &:first-child {
+            padding: 8px 22px; // Hack for the extra size created by the donut chart
+        }
+
         &__label {
             font-family: PostGrotesk;
             font-size: 12px;
