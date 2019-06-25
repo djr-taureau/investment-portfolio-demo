@@ -3,7 +3,7 @@
  * @param target
  * @param len
  */
-export const truncate = (target: string, len: number) => target.substr(0, len - 1) + (target.length > len ? "..." : "");
+export const truncate = (target: string, len: number) => (target || "").substr(0, len - 1) + ((target || "").length > len ? "..." : "");
 
 /**
  * Method used to replace tokens in a URL.
