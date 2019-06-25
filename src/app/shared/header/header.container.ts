@@ -1,7 +1,7 @@
-import { Company } from "../../core/domain/company.model";
-import * as AuthActions from "../../core/state/auth/auth.action";
-import * as fromState from "../../core/state";
-import { CloseCompanyInfoPanel, GoToPortfolio, OpenCompanyInfoPanel, SelectCompany } from "../../core/state/flow/flow.actions";
+import { Company } from "@core/domain/company.model";
+import * as AuthActions from "@core/state/auth/auth.action";
+import * as fromState from "@core/state";
+import { CloseCompanyInfoPanel, GoToPortfolio, OpenCompanyInfoPanel, SelectCompany } from "@core/state/flow/flow.actions";
 import * as TestUti from "../../util/test.util";
 import { Component, OnInit } from "@angular/core";
 import { getShowCompanyCombo } from "@core/state";

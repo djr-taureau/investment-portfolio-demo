@@ -1,7 +1,7 @@
 import "rxjs/operators/first";
 import * as _ from "lodash";
-import { getPortfolioNavLinks } from "../../core/state";
-import { LoadPortfolio } from "../../core/state/flow/flow.actions";
+import { getPortfolioNavLinks } from "@core/state";
+import { LoadPortfolio } from "@core/state/flow/flow.actions";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";

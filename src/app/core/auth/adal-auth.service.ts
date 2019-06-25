@@ -10,6 +10,7 @@ import { AdalAuthConfig } from "./adal-auth.config";
 import { AdalAuthConfigService } from "./auth-config.service";
 import { IAuthService } from "./auth-service.interface";
 import * as AuthActions from "@core/state/auth/auth.action";
+import * as StringUtil from "@util/string.util";
 
 @Injectable({
     providedIn: "root"
@@ -174,7 +175,7 @@ export class AdalAuthService implements IAuthService {
             this.store$.dispatch(new AuthActions.LoginFault(error));
         } else {
             const accessToken = this.accessToken;
-            AdalAuthService.logger.debug(`loginSuccess( accessToken: ${accessToken} )`);
+            AdalAuthService.logger.debug(`loginSuccess( accessToken: ${StringUtil.truncate(accessToken, 10)} )`);
 
             // If we've got a legit token in hand save it in the NGRX store.
             if (accessToken) {

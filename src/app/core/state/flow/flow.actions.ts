@@ -2,20 +2,44 @@ import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
 export enum FlowActionTypes {
+    OpenCompanyInfoPanel = "[Flow] Open Company Info Panel",
     CloseCompanyInfoPanel = "[Flow] Close Company Info Panel",
-    CollapseCompanyInfoSummaryPanel = "[Flow] Collapse Company Info Summary Panel",
-    CompanyNavigationItemClicked = "[Flow] Company Navigation Item Clicked",
+
+    OpenTakeawaysPanel = "[Flow] Open Takeaways Panel",
+    CloseTakeawaysPanel = "[Flow] Close Takeaways Panel",
+
     ExpandCompanyInfoSummaryPanel = "[Flow] Expand Company Info Summary Panel",
+    CollapseCompanyInfoSummaryPanel = "[Flow] Collapse Company Info Summary Panel",
+
+    CompanyNavigationItemClicked = "[Flow] Company Navigation Item Clicked",
+
     LoadPortfolio = "[Flow] Load Portfolio",
     GoToPortfolio = "[Flow] Go To Portfolio",
-    OpenCompanyInfoPanel = "[Flow] Open Company Info Panel",
     PortfolioNavigationItemClicked = "[Flow] Portfolio Navigation Item Clicked",
     SelectCompany = "[Flow] Select Company",
     FindCompanies = "[Flow] Find Companies"
 }
 
+export class OpenCompanyInfoPanel implements Action {
+    readonly type = FlowActionTypes.OpenCompanyInfoPanel;
+
+    constructor(public payload?: string) {}
+}
+
 export class CloseCompanyInfoPanel implements Action {
     readonly type = FlowActionTypes.CloseCompanyInfoPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class OpenTakeawaysPanel implements Action {
+    readonly type = FlowActionTypes.OpenTakeawaysPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class CloseTakeawaysPanel implements Action {
+    readonly type = FlowActionTypes.CloseTakeawaysPanel;
 
     constructor(public payload?: string) {}
 }
@@ -49,13 +73,9 @@ export class GoToPortfolio implements Action {
 
     constructor(public payload?: string) {}
 }
+
 export class LoadPortfolio implements Action {
     readonly type = FlowActionTypes.LoadPortfolio;
-
-    constructor(public payload?: string) {}
-}
-export class OpenCompanyInfoPanel implements Action {
-    readonly type = FlowActionTypes.OpenCompanyInfoPanel;
 
     constructor(public payload?: string) {}
 }
@@ -65,6 +85,7 @@ export class PortfolioNavigationItemClicked implements Action {
 
     constructor(public payload: NavigationBarLink) {}
 }
+
 export class SelectCompany implements Action {
     readonly type = FlowActionTypes.SelectCompany;
 
@@ -72,13 +93,15 @@ export class SelectCompany implements Action {
 }
 
 export type FlowActions =
+    | OpenCompanyInfoPanel
     | CloseCompanyInfoPanel
+    | OpenTakeawaysPanel
+    | CloseTakeawaysPanel
     | CollapseCompanyInfoSummaryPanel
     | CompanyNavigationItemClicked
     | ExpandCompanyInfoSummaryPanel
     | FindCompanies
     | GoToPortfolio
     | LoadPortfolio
-    | OpenCompanyInfoPanel
     | PortfolioNavigationItemClicked
     | SelectCompany;

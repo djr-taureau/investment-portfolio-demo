@@ -62,6 +62,13 @@ export class GoToCompanyInfo implements Action {
     constructor() {}
 }
 
+export class GoToTakeaways implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.takeaways, extras: { queryParamsHandling: "preserve", skipLocationChange: true } };
+
+    constructor() {}
+}
+
 export class GoToCompanyDashboard implements Action {
     readonly type = RouterActionTypes.Go;
     public payload = { path: "" };
@@ -103,6 +110,7 @@ export type RouterActions =
     | GoToCompanyDocuments
     | GoToCompanyFinancials
     | GoToCompanyInfo
+    | GoToTakeaways
     | GotoRegister
     | GoToPortfolioDashboard
     | GoToPortfolioListing

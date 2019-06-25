@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ChartColor } from "@core/domain/chart-data.model";
 import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
@@ -51,6 +51,12 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public takeaways: Takeaway[] = [];
 
     /**
+     * Request to see all takeaways.
+     */
+    @Output()
+    public seeAllTakeaways: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
      * The percent owned chart data.
      */
     public percentOwnershipChartData: any[] = [];
@@ -72,6 +78,15 @@ export class CompanySummaryExpandedComponent implements OnInit {
      */
     public ngOnInit() {
         CompanySummaryExpandedComponent.logger.debug(`ngOnInit()`);
+    }
+
+    /**
+     * Handles click of see all takeaways.
+     * @param id
+     */
+    public onSeeAllTakeaways(id: string): void {
+        CompanySummaryExpandedComponent.logger.debug(`onSeeAllTakeaways( Company ID: ${id} )`);
+        this.seeAllTakeaways.emit(id);
     }
 
     /**

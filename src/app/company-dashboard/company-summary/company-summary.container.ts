@@ -3,6 +3,7 @@ import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
+import * as FlowActions from "@core/state/flow/flow.actions";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as TestUtil from "@util/test.util";
 
@@ -18,6 +19,7 @@ import * as TestUtil from "@util/test.util";
             [teamMembers]="teamMembers$ | async"
             [tags]="tags$ | async"
             [takeaways]="takeaways$ | async"
+            (seeAllTakeaways)="seeAllTakeaways($event)"
         >
         </sbp-company-summary-expanded>
     `
@@ -136,5 +138,14 @@ export class CompanySummaryContainer implements OnInit {
                 content: "SoftBank should connect WeWork and PayTM to help WeWork develop compresensive financial infrastructure in Korea Market."
             })
         ]);
+    }
+
+    /**
+     * Fires off action to see all takeaways.
+     * @param id
+     */
+    public seeAllTakeaways(id: string): void {
+        CompanySummaryContainer.logger.debug(`seeAllTakeaways( Company ID: ${id} )`);
+        this.store$.dispatch(new FlowActions.OpenTakeawaysPanel(id));
     }
 }

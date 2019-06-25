@@ -1,10 +1,10 @@
 import { ActivatedRoute } from "@angular/router";
 import { appRoutePaths } from "@app/app.routes";
 import { CoreCompanyContainer } from "@shared/company/core-company.container";
-import { CloseCompanyInfoPanel } from "../../core/state/flow/flow.actions";
-import { Company } from "../../core/domain/company.model";
+import { CloseCompanyInfoPanel } from "@core/state/flow/flow.actions";
+import { Company } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
-import { getSelectedCompany } from "../../core/state";
+import { getSelectedCompany } from "@core/state";
 import { Logger } from "app/util/logger";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
