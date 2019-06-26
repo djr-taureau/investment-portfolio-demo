@@ -26,11 +26,9 @@ export class HeaderComponent implements OnInit {
     @Input()
     public set companies(value) {
         this._companies = value;
-        console.log(JSON.stringify(value));
         const asIconized = value.map((c: Company) => {
             return { id: Number(c.id), icon: _.get(c, "logo", "https://via.placeholder.com/30"), text: c.name } as IconizedItem;
         });
-        console.log(JSON.stringify(asIconized));
         this.listItems = asIconized;
     }
 

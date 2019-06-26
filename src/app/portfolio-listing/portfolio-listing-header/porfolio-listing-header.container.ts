@@ -50,20 +50,14 @@ export class PortfolioListingHeaderContainer implements OnInit {
     public ngOnInit(): void {
         PortfolioListingHeaderContainer.logger.debug(`ngOnInit()`);
         const foo = this.store$.pipe(select(getFilteredCompanies));
-        this.portcoFilter$.subscribe((v) => console.log(v));
-        foo.subscribe((v) => console.log("filtered companies", v));
     }
-    public applyFilter($event) {
-        console.log($event.target.value);
-    }
+    public applyFilter($event) {}
 
     filter(query: string) {
-        console.log(query);
         this.store$.dispatch(new FindCompanies(query));
     }
 
     group(group: string) {
-        console.log(group);
         const typeGroup = this.store$.pipe(select(getFilteredCompanies));
         typeGroup.subscribe((result) => {
             this.groupedResults = result.reduce((p, n) => {
@@ -74,13 +68,10 @@ export class PortfolioListingHeaderContainer implements OnInit {
                 return p;
             }, {});
         });
-        console.log("grouped", this.groupedResults);
-        console.log("group value", group);
         this.groupBy.emit(group);
     }
 
     sort(sortValue: string) {
-        console.log("sortValue", sortValue);
         this.sortBy.emit(sortValue);
     }
 }

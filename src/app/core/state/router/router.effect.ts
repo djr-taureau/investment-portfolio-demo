@@ -50,10 +50,6 @@ export class RouterEffect {
             // this.router
             // .createUrlTree([payload], {relativeTo: this.route})
             // .toString();
-            console.log(this.route.snapshot.toString());
-            this.route.firstChild.paramMap.subscribe((output) => {
-                console.log(JSON.stringify(output));
-            });
         })
     );
     /**
