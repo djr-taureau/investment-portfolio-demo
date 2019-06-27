@@ -83,9 +83,7 @@ export class SlideoutContainerComponent implements OnInit {
 
     public removeComponent(componentClass: Type<any>) {
         // Find the component.
-        const component: ComponentRef<any> = this.components.find(
-            (componentRef: ComponentRef<any>) => componentRef.instance instanceof componentClass
-        );
+        const component = this.components.find((componentRef) => componentRef.instance instanceof componentClass);
         const componentIndex = this.components.indexOf(component);
 
         // Remove component from both view and array.
