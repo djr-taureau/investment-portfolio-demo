@@ -1,3 +1,5 @@
+import { Template } from "@angular/compiler/src/render3/r3_ast";
+import { Type } from "@angular/core";
 import { Action } from "@ngrx/store";
 
 export enum LayoutActionTypes {
@@ -16,7 +18,7 @@ export class ObserveUrlChange implements Action {
 export class ToggleSlideout implements Action {
     readonly type = LayoutActionTypes.ToggleSlideout;
 
-    constructor(public payload: boolean) {}
+    constructor(public payload: boolean, public component: Type<any> = null) {}
 }
 
 export class SetSelectedCompanyLink implements Action {

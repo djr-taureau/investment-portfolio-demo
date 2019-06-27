@@ -1,5 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import * as AuthActions from "@core/state/auth/auth.action";
 import { select, Store } from "@ngrx/store";
 import { EMPTY, Observable, of } from "rxjs";
 import { first, mergeMap } from "rxjs/operators";
@@ -72,7 +73,7 @@ export class AddTokenHeaderHttpRequestInterceptor implements HttpInterceptor {
                     AddTokenHeaderHttpRequestInterceptor.logger.warn(
                         `addToken( The token was invalid so we're redirecting the user back to login. Invalid request: ${request.url} )`
                     );
-                    this.store$.dispatch(new RouterActions.Go({ path: appRoutePaths.login }));
+                    this.store$.dispatch(new AuthActions.Login());
 
                     // TODO: BMR: 04/25/2019: Come back to this as the comment is vlaid for unit tests but not at runtime in real app.
                     // NOTE: We cannot return an empty observable and must always return the legit request object

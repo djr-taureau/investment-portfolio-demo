@@ -31,7 +31,7 @@ export class AuthRouteGuard implements CanActivate {
         return this.checkStoreAuthentication().pipe(
             map((authed) => {
                 if (!authed) {
-                    this.store$.dispatch(new AuthActions.NavigateToLogin());
+                    this.store$.dispatch(new AuthActions.Login());
                     AuthRouteGuard.logger.debug(`canActivate( No. Redirect the user back to login. )`);
                     return false;
                 }

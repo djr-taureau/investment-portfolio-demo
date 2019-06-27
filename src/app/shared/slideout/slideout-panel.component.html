@@ -5,24 +5,31 @@
              fxLayoutAlign="space-between center">
             <div fxLayout="column">
                 <div class="pre-title"
-                     *ngIf="preTitleText">{{preTitleText}}</div>
+                     *ngIf="preTitleText">{{ preTitleText }}</div>
                 <div fxLayout="row"
                      fxLayoutAlign="start center"
                      fxLayoutGap="8px">
                     <div class="title">{{titleText}}</div>
                     <div class="item-count"
-                         *ngIf="itemCount > 0">({{itemCount}})</div>
+                         *ngIf="itemCount > 0">({{ itemCount }})</div>
                 </div>
             </div>
             <div class="close-btn"
-                 (click)="onClose()">X</div>
+                 (click)="onClose($event)">X</div>
         </div>
     </mat-card-title>
     <mat-card-content>
         <div fxLayout="column"
              fxLayoutAlign="start center"
              fxFlex>
+
+            <!--
+            ////////////////////////////////////////////////////////////////////////////////////
+            // Dynamic Content
+            ////////////////////////////////////////////////////////////////////////////////////
+            -->
             <ng-content></ng-content>
+
         </div>
     </mat-card-content>
 </mat-card>

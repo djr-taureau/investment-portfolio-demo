@@ -82,6 +82,11 @@ export const getShowSlideout = createSelector(
     fromLayout.getShowSlideout
 );
 
+export const getSlideoutComponent = createSelector(
+    selectLayoutState,
+    fromLayout.getSlideoutComponent
+);
+
 export const getPortfolioNavLinks = createSelector(
     selectLayoutState,
     fromLayout.getPortfolioNavLinks

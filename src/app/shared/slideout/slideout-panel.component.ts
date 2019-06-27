@@ -27,16 +27,25 @@ export class SlideoutPanelComponent implements OnInit {
     @Output()
     public close: EventEmitter<any> = new EventEmitter();
 
-    public onClose(): void {
-        this.close.emit();
+    /**
+     * Constructor.
+     */
+    constructor() {
+        SlideoutPanelComponent.logger.debug(`constructor()`);
     }
-
-    constructor() {}
 
     /**
      * Initialize the component.
      */
     public ngOnInit() {
         SlideoutPanelComponent.logger.debug(`ngOnInit()`);
+    }
+
+    /**
+     * Emits the close event for the slide out panel.
+     */
+    public onClose(event: any): void {
+        SlideoutPanelComponent.logger.debug(`onClose()`);
+        this.close.emit();
     }
 }

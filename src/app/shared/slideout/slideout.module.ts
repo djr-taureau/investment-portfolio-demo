@@ -11,6 +11,7 @@ const COMPONENTS: any = [SlideoutPanelComponent, SlideoutContainerComponent];
 @NgModule({
     imports: [CommonModule, FlexLayoutModule, MaterialModule, RouterModule],
     declarations: COMPONENTS,
-    exports: COMPONENTS
+    exports: COMPONENTS,
+    entryComponents: COMPONENTS
 })
 export class SlideoutModule {}

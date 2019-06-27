@@ -1,9 +1,11 @@
+import { Type } from "@angular/core";
 import { appRoutePaths } from "../../../app.routes";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { LayoutActions, LayoutActionTypes } from "./layout.actions";
 
 export interface LayoutState {
     showSlideout: boolean;
+    slideoutComponent: Type<any>;
     selectedPortfolioNavLink: string;
     selectedCompanyNavLink: string;
     portfolioNavLinks: NavigationBarLink[];
@@ -14,6 +16,7 @@ export interface LayoutState {
 
 export const initialState: LayoutState = {
     showSlideout: false,
+    slideoutComponent: null,
     selectedPortfolioNavLink: appRoutePaths.portfolioListing,
     selectedCompanyNavLink: appRoutePaths.companyDashboard,
     portfolioNavLinks: [
@@ -109,10 +112,11 @@ function observeUrlChange(url: string, state: LayoutState = initialState): Layou
     };
 }
 
-function toggleSlideout(show: boolean, state: LayoutState = initialState): LayoutState {
+function toggleSlideout(show: boolean, component: Type<any>, state: LayoutState = initialState): LayoutState {
     return {
         ...state,
-        showSlideout: show
+        showSlideout: show,
+        slideoutComponent: component
     };
 }
 
@@ -133,10 +137,13 @@ export function layoutReducer(state: LayoutState = initialState, action: LayoutA
     switch (action.type) {
         case LayoutActionTypes.ObserveUrlChange:
             return observeUrlChange(action.payload);
+
         case LayoutActionTypes.ToggleSlideout:
-            return toggleSlideout(action.payload, state);
+            return toggleSlideout(action.payload, action.component, state);
+
         case LayoutActionTypes.SetSelectedCompanyLink:
             return updateSelectedCompanyLinks(action.payload, state);
+
         case LayoutActionTypes.SetSelectedPortfolioLink:
             return updateSelectedPortfolioLinks(action.payload, state);
 
@@ -146,6 +153,7 @@ export function layoutReducer(state: LayoutState = initialState, action: LayoutA
 }
 
 export const getShowSlideout = (state: LayoutState) => state.showSlideout;
+export const getSlideoutComponent = (state: LayoutState) => state.slideoutComponent;
 
 export const getPortfolioNavLinks = (state: LayoutState) => state.portfolioNavLinks;
 export const getCompanyNavLinks = (state: LayoutState) => state.companyNavLinks;

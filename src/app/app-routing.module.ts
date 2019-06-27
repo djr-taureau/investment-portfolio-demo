@@ -80,11 +80,11 @@ const routes: Routes = [
     {
         path: AppRoutes.appRoutePaths.companyInfo,
         loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
-    },
-    {
-        path: AppRoutes.appRoutePaths.takeaways,
-        loadChildren: "./slideout-routes/takeaways/takeaways.module#TakeawaysModule"
     }
+    // {
+    //     path: AppRoutes.appRoutePaths.takeaways,
+    //     loadChildren: "./slideout-routes/takeaways/takeaways.module#TakeawaysModule"
+    // }
 
     //////////////////////////////////////////////////
     // Redirects
