@@ -1,0 +1,35 @@
+<sbp-slideout-panel [preTitleText]="company?.name"
+                    [titleText]="'Key Takeaways'"
+                    (close)="onClose($event)">
+
+    <div fxLayout="column"
+         fxLayoutAlign="space-between stretch"
+         class="takeaways-container">
+
+        <div fxLayout="row"
+             fxLayoutAlign="start center"
+             class="takeaways-header-container">
+
+            <div class="takeaways-header">Key Takeaways</div>
+            <div class="takeaways-total">({{ takeaways.length }})</div>
+            <div class="takeaways-date">Updated Mar 31, 2019</div>
+
+        </div>
+
+        <div *ngFor="let takeaway of takeaways; let i = index"
+             fxLayout="row"
+             fxLayoutAlign="start center"
+             class="takeaway-item-container">
+
+            <div fxLayout="column"
+                 fxLayoutAlign="center"
+                 class="takeaway-item-badge">
+                {{ i + 1 }}
+            </div>
+            <div>{{ takeaway.content }}</div>
+
+        </div>
+
+    </div>
+
+</sbp-slideout-panel>

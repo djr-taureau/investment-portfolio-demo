@@ -15,6 +15,5 @@ export const appRoutePaths = {
     portfolioInitiatives: "portfolio-initiatives",
     portfolioListing: "portfolio-listing",
     portfolioMapView: "portfolio-map-view",
-    register: "register",
-    takeaways: "company/:id/takeaways"
+    register: "register"
 };

@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { FooterComponent } from "./footer.component";
-import { FooterContainer } from "./footer.container";
+import { FooterComponent } from "@core/footer/footer.component";
+import { FooterContainer } from "@core/footer/footer.container";
 
 const COMPONENTS: any = [FooterComponent, FooterContainer];
 

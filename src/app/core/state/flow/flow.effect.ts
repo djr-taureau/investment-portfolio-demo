@@ -1,7 +1,5 @@
-import { TakeawaysComponent } from "@app/slideout-routes/takeaways/takeaways.component";
-import { TakeawaysContainer } from "@app/slideout-routes/takeaways/takeaways.container";
-import { SlideoutPanelComponent } from "@shared/slideout/slideout-panel.component";
-import { SlideoutContainerComponent } from "@shared/slideout/slideout.container.component";
+import { CompanyInfoContainer } from "@app/core/slideout/company-info/company-info.container";
+import { TakeawaysContainer } from "@app/core/slideout/takeaways/takeaways.container";
 import { getSelectedCompanyId } from "../index";
 import { LoadPortfolioFailure, LoadPortfolioSuccess, PortfolioActionTypes, SearchCompany } from "../portfolio-dashboard/portfolio-dashboard.actions";
 import { Action, select, Store } from "@ngrx/store";
@@ -10,7 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { appRoutePaths } from "@app/app.routes";
 import { catchError, concatMap, map, tap } from "rxjs/operators";
 import { FlowActionTypes } from "./flow.actions";
-import { ComponentFactoryResolver, Injectable, Injector, TemplateRef, Type } from "@angular/core";
+import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { Observable, of } from "rxjs";
 import { GetAll, SetSelectedCompany } from "../company/company.actions";
@@ -98,8 +96,7 @@ export class FlowEffect {
     openCompanyInfoPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.OpenCompanyInfoPanel>(FlowActionTypes.OpenCompanyInfoPanel),
         map((action) => action.payload),
-        // concatMap((companyId) => [new ToggleSlideout(true), new RouterActions.GoToCompanyInfo()])
-        concatMap((companyId) => [new ToggleSlideout(true)])
+        concatMap((companyId) => [new ToggleSlideout(true, CompanyInfoContainer)])
     );
 
     /**
@@ -110,10 +107,7 @@ export class FlowEffect {
     closeCompanyInfoPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.CloseCompanyInfoPanel>(FlowActionTypes.CloseCompanyInfoPanel),
         map((action) => action.payload),
-        concatMap((companyId) => [
-            // TODO: GMAN: Come up with action to clear the current route out of the sidebar-outlet
-            new ToggleSlideout(false)
-        ])
+        concatMap((companyId) => [new ToggleSlideout(false)])
     );
 
     // ------------------- TAKEAWAYS ---------------------------//
@@ -125,19 +119,7 @@ export class FlowEffect {
     openTakeawaysPanel: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.OpenTakeawaysPanel>(FlowActionTypes.OpenTakeawaysPanel),
         map((action) => action.payload),
-        // concatMap((companyId: string) => [new ToggleSlideout(true), new RouterActions.GoToTakeaways()])
-        // tap((companyId: string) => {
-        //
-        //
-        //     const factory = this.resolver.resolveComponentFactory(SlideoutContainerComponent);
-        //     const ngContent = this.resolveNgContent(TakeawaysContainer);
-        //     const componentRef = factory.create(this.injector, ngContent);
-        //
-        //     componentRef.hostView.detectChanges();
-        //
-        //     return companyId;
-        // }),
-        concatMap((companyId: string) => [new ToggleSlideout(true, TakeawaysComponent)])
+        concatMap((companyId: string) => [new ToggleSlideout(true, TakeawaysContainer)])
     );
 
     /**
@@ -148,10 +130,7 @@ export class FlowEffect {
     closeTakeawaysPanel: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.CloseTakeawaysPanel>(FlowActionTypes.CloseTakeawaysPanel),
         map((action) => action.payload),
-        concatMap((companyId: string) => [
-            // TODO: GMAN: Come up with action to clear the current route out of the sidebar-outlet
-            new ToggleSlideout(false)
-        ])
+        concatMap((companyId: string) => [new ToggleSlideout(false)])
     );
 
     // ------------------- COMPANY: NAVIGATION ---------------------------//

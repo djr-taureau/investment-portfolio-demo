@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { appRoutePaths } from "../../../app.routes";
+import { appRoutePaths } from "@app/app.routes";
 
 export enum RouterActionTypes {
     Go = "[Router] Go",
@@ -62,13 +62,6 @@ export class GoToCompanyInfo implements Action {
     constructor() {}
 }
 
-export class GoToTakeaways implements Action {
-    readonly type = RouterActionTypes.Go;
-    readonly payload = { path: appRoutePaths.takeaways, extras: { queryParamsHandling: "preserve", skipLocationChange: true } };
-
-    constructor() {}
-}
-
 export class GoToCompanyDashboard implements Action {
     readonly type = RouterActionTypes.Go;
     public payload = { path: "" };
@@ -110,7 +103,6 @@ export type RouterActions =
     | GoToCompanyDocuments
     | GoToCompanyFinancials
     | GoToCompanyInfo
-    | GoToTakeaways
     | GotoRegister
     | GoToPortfolioDashboard
     | GoToPortfolioListing

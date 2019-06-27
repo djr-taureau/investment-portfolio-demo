@@ -1,9 +1,9 @@
 import * as _ from "lodash";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Company } from "@core/domain/company.model";
-import { IconizedItem } from "../iconized-searchable-combo/iconized-item";
+import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
 import { Logger } from "@util/logger";
-import { PopupConfig } from "../iconized-searchable-combo/popup-config";
+import { PopupConfig } from "@shared/iconized-searchable-combo/popup-config";
 
 @Component({
     selector: "sbp-header",

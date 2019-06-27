@@ -2,7 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { RouterModule } from "@angular/router";
-import { MaterialModule } from "../material/material.module";
+import { MaterialModule } from "@shared/material/material.module";
 import { SlideoutPanelComponent } from "./slideout-panel.component";
 import { SlideoutContainerComponent } from "./slideout.container.component";
 
@@ -14,4 +14,4 @@ const COMPONENTS: any = [SlideoutPanelComponent, SlideoutContainerComponent];
     exports: COMPONENTS,
     entryComponents: COMPONENTS
 })
-export class SlideoutModule {}
+export class SlideoutInfrastructureModule {}

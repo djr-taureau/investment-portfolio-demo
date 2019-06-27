@@ -1,7 +1,9 @@
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule, Optional, SkipSelf } from "@angular/core";
-import { TakeawaysModule } from "@app/slideout-routes/takeaways/takeaways.module";
-import { AuthServiceModule } from "./auth/auth-service.module";
+import { FooterModule } from "@core/footer/footer.module";
+import { HeaderModule } from "@core/header/header.module";
+import { SlideoutModule } from "@core/slideout/slideout.module";
+import { AuthServiceModule } from "@core/auth/auth-service.module";
 import { ErrorInterceptorModule } from "@core/error-interceptor/error-interceptor.module";
 import { HttpInterceptorModule } from "@core/http-interceptor/http-interceptor.module";
 import { RouteGuardModule } from "@core/route-guard/route-guard.module";
@@ -12,11 +14,13 @@ const MODULES = [
     AuthServiceModule,
     HttpClientModule,
     ErrorInterceptorModule,
+    FooterModule,
+    HeaderModule,
     HttpInterceptorModule,
     RouteGuardModule,
     ServiceModule,
-    StateModule,
-    TakeawaysModule
+    SlideoutModule,
+    StateModule
 ];
 const PROVIDERS = [];
 

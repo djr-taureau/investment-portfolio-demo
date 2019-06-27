@@ -1,21 +1,16 @@
+import { NgModule } from "@angular/core";
+import { SlideoutInfrastructureModule } from "@core/slideout/slideout-infrastructure.module";
 import { CompanyInfoComponent } from "./company-info.component";
 import { CompanyInfoContainer } from "./company-info.container";
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
 import { BoardMemberComponent } from "./board-member/board-member.component";
 import { SharedModule } from "@shared/shared.module";
 
+const MODULES = [SharedModule, SlideoutInfrastructureModule];
 const COMPONENTS: any = [BoardMemberComponent, CompanyInfoContainer, CompanyInfoComponent];
-const COMPANY_INFO_ROUTES: Routes = [
-    {
-        path: "",
-        outlet: "sidebar-outlet",
-        component: CompanyInfoContainer
-    }
-];
 @NgModule({
-    imports: [SharedModule, RouterModule.forChild(COMPANY_INFO_ROUTES)],
+    imports: MODULES,
     declarations: COMPONENTS,
-    exports: COMPONENTS
+    exports: COMPONENTS,
+    entryComponents: COMPONENTS
 })
 export class CompanyInfoModule {}

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
 
-import { Company } from "@core/domain/company.model";
+import { Company, Takeaway } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -31,10 +31,16 @@ export class TakeawaysComponent {
     private _company: Company;
 
     /**
-     * Dispatched when the user closes the slider
+     * List of takeaways.
+     */
+    @Input()
+    public takeaways: Takeaway[] = [];
+
+    /**
+     * Dispatched when the user closes the slider.
      */
     @Output()
-    public closePanel: EventEmitter<any> = new EventEmitter();
+    public close: EventEmitter<void> = new EventEmitter<void>();
 
     /**
      * Constructor.
@@ -50,6 +56,6 @@ export class TakeawaysComponent {
      */
     public onClose(event: any): void {
         TakeawaysComponent.logger.debug(`onClose()`);
-        this.closePanel.emit();
+        this.close.emit();
     }
 }

@@ -73,18 +73,12 @@ const routes: Routes = [
     {
         path: AppRoutes.appRoutePaths.companyValuation,
         loadChildren: "./company-valuation/company-valuation.module#CompanyValuationModule"
-    },
+    }
+
     //////////////////////////////////////////////////
     // SLIDEOUT ROUTES
+    // Auxiliary routes don't workj with lazy loaded modules so we're not adding deep-linking to slide outs.
     //////////////////////////////////////////////////
-    {
-        path: AppRoutes.appRoutePaths.companyInfo,
-        loadChildren: "./slideout-routes/company-info/company-info.module#CompanyInfoModule"
-    }
-    // {
-    //     path: AppRoutes.appRoutePaths.takeaways,
-    //     loadChildren: "./slideout-routes/takeaways/takeaways.module#TakeawaysModule"
-    // }
 
     //////////////////////////////////////////////////
     // Redirects

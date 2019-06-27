@@ -5,7 +5,7 @@ import { CloseCompanyInfoPanel } from "@core/state/flow/flow.actions";
 import { Company } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
 import { getSelectedCompany } from "@core/state";
-import { Logger } from "app/util/logger";
+import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
 
