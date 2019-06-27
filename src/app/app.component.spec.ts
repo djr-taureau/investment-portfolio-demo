@@ -2,10 +2,10 @@ import { TestBed, async } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Store } from "@ngrx/store";
 import { AppComponent } from "@app/app.component";
-import { FooterModule } from "@shared/core/footer/footer.module";
-import { HeaderModule } from "@shared/core/header/header.module";
+import { FooterModule } from "@core/footer/footer.module";
+import { HeaderModule } from "@core/header/header.module";
 import { SharedModule } from "@shared/shared.module";
-import { SlideoutModule } from "@shared/core/slideout/slideout.module";
+import { SlideoutModule } from "@core/slideout/slideout.module";
 
 xdescribe("AppComponent", () => {
     // Spy on the NGRX Store so we can mock the `pipe()` and `dispatch()` methods.
