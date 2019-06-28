@@ -16,11 +16,19 @@ export class IconizedSearchableComboComponent implements OnInit {
      */
     @Input()
     set listItems(items: Array<IconizedItem>) {
-        this.data = items.slice();
-        this.source = items.slice();
+        if (items) {
+            this.data = items.slice();
+            this.source = items.slice();
+        }
     }
     public data: Array<IconizedItem>;
     public source: Array<IconizedItem>;
+
+    /**
+     * Path to the icon to use for the main icon of the control
+     */
+    @Input()
+    public mainIconSrc = "assets/image/company.svg";
 
     @Input()
     public popupSettings = { width: 200 };
