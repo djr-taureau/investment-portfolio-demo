@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
-import { catchError, exhaustMap, map } from "rxjs/operators";
+import { catchError, exhaustMap, map, mergeMap } from "rxjs/operators";
 import { AuthService } from "@core/auth/auth.service";
 import { AuthActionTypes } from "./auth.action";
 import * as AuthActions from "./auth.action";
@@ -35,6 +35,24 @@ export class AuthEffect {
                 catchError((err: Error) => of(new AuthActions.LogoutFault(err.message)))
             )
         )
+    );
+
+    /**
+     * Handles logout fault flow.
+     */
+    @Effect()
+    loginFault$: Observable<Action> = this.actions$.pipe(
+        ofType<AuthActions.LogoutFault>(AuthActionTypes.LogoutFault),
+        map((action) => new AuthActions.RestartApp())
+    );
+
+    /**
+     * Handles restart app flow.
+     */
+    @Effect()
+    restartApp$: Observable<Action> = this.actions$.pipe(
+        ofType<AuthActions.RestartApp>(AuthActionTypes.RestartApp),
+        mergeMap((action) => [new AuthActions.Reset(), new AuthActions.NavigateToLogin()])
     );
 
     /**

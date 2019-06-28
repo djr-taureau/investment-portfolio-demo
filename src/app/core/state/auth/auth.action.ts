@@ -12,7 +12,12 @@ export enum AuthActionTypes {
     LogoutSuccess = "[Auth] LogoutSuccess",
     LogoutFault = "[Auth] LogoutFault",
 
-    NavigateToLogin = "[Auth] NavigateToLogin"
+    NavigateToLogin = "[Auth] NavigateToLogin",
+
+    Reset = "[Auth] Reset",
+    ResetAuthError = "[Auth] ResetAuthError",
+    ResetPending = "[Auth] ResetPending",
+    RestartApp = "[Auth] RestartApp"
 }
 
 export class Login implements Action {
@@ -69,4 +74,41 @@ export class NavigateToLogin implements Action {
     constructor() {}
 }
 
-export type AuthActions = Login | LoginPending | LoginSuccess | LoginFault | Logout | LogoutPending | LogoutSuccess | LogoutFault | NavigateToLogin;
+export class Reset implements Action {
+    readonly type = AuthActionTypes.Reset;
+
+    constructor() {}
+}
+
+export class ResetAuthError implements Action {
+    readonly type = AuthActionTypes.ResetAuthError;
+
+    constructor() {}
+}
+
+export class ResetPending implements Action {
+    readonly type = AuthActionTypes.ResetPending;
+
+    constructor() {}
+}
+
+export class RestartApp implements Action {
+    readonly type = AuthActionTypes.RestartApp;
+
+    constructor() {}
+}
+
+export type AuthActions =
+    | Login
+    | LoginPending
+    | LoginSuccess
+    | LoginFault
+    | Logout
+    | LogoutPending
+    | LogoutSuccess
+    | LogoutFault
+    | NavigateToLogin
+    | Reset
+    | ResetAuthError
+    | ResetPending
+    | RestartApp;

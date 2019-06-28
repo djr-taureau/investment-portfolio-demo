@@ -1,12 +1,13 @@
 import { Actions, Effect, ofType } from "@ngrx/effects";
-import { Action } from "@ngrx/store";
+import { Action, Store } from "@ngrx/store";
 import { asyncScheduler, EMPTY as empty, Observable, of } from "rxjs";
 import { catchError, debounceTime, exhaustMap, map, skip, switchMap, takeUntil } from "rxjs/operators";
-import { Company, GetAllCompaniesResponse } from "../../domain/company.model";
-import { CompanyActionTypes, GetAllFailure, GetAllSuccess } from "./company.actions";
-import { CompanyService } from "../../service/company.service";
+import { Company, GetAllCompaniesResponse } from "@core/domain/company.model";
+import { CompanyActionTypes, GetAllFailure, GetAllSuccess } from "@core/state/company/company.actions";
+import { CompanyService } from "@core/service/company.service";
 import { Injectable } from "@angular/core";
-import { PortfolioActionTypes, SearchCompanyFailure, SearchCompanySuccess } from "../portfolio-dashboard/portfolio-dashboard.actions";
+import { PortfolioActionTypes, SearchCompanyFailure, SearchCompanySuccess } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
+import * as SnackBarActions from "@core/state/snackbar/snackbar.action";
 
 @Injectable()
 export class CompanyEffects {
@@ -46,5 +47,5 @@ export class CompanyEffects {
             })
         )
 
-    constructor(private actions$: Actions, private companyService: CompanyService) {}
+    constructor(private actions$: Actions, private companyService: CompanyService, private store$: Store<any>) {}
 }

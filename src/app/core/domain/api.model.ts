@@ -6,6 +6,7 @@ export interface BasicApiResponse {
     // Should be used by the client to create domain models or similar.
     data: {} | any[];
 }
+
 export interface ApiResponse extends BasicApiResponse {
     // Simple string message that can provide additional detail on the API response; perhaps
     // with details on the data returned.
@@ -36,4 +37,11 @@ export interface ApiError {
     // UUIDv4 used to track errors in logs especially when using PII data that's
     // omitted from logs.
     id: string;
+}
+
+/**
+ * List of API errors.
+ */
+export enum ApiErrorEnum {
+    unknown = "0 Unknown Error"
 }

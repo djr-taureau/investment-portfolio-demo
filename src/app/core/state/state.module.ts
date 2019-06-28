@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { SnackbarEffect } from "@core/state/snackbar/snackbar.effect";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
 import { StoreModule } from "@ngrx/store";
@@ -12,7 +13,7 @@ import { RouterEffect } from "./router/router.effect";
 import { CompanyEffects } from "./company/company.effects";
 import * as CompanyDashboard from "./company/dashboard";
 
-const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, CompanyEffects];
+const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, CompanyEffects, SnackbarEffect];
 
 const MODULES = [
     /**
