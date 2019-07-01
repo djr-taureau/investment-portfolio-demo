@@ -7,7 +7,6 @@ import { CompanyActionTypes, GetAllFailure, GetAllSuccess } from "@core/state/co
 import { CompanyService } from "@core/service/company.service";
 import { Injectable } from "@angular/core";
 import { PortfolioActionTypes, SearchCompanyFailure, SearchCompanySuccess } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
-import * as SnackBarActions from "@core/state/snackbar/snackbar.action";
 
 @Injectable()
 export class CompanyEffects {
