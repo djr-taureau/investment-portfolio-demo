@@ -1,0 +1,105 @@
+@import "../../../assets/scss/variables";
+
+$button-bar-radius: 6px;
+
+:host {
+    margin-top: 17px;
+    height: 32px;
+
+    // TODO: Gman - move to global
+    .button-bar {
+        button {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $grey-blue;
+            height: 32px;
+            background-color: $white;
+            border: solid 1px rgba($light-grey-blue, 0.5);
+            background-image: none;
+            background-clip: unset;
+
+            &.k-state-active {
+                color: $white;
+                background-color: $light-navy;
+            }
+
+            &:first-of-type {
+                border-top-left-radius: $button-bar-radius;
+                border-bottom-left-radius: $button-bar-radius;
+            }
+
+            &:last-of-type {
+                border-top-right-radius: $button-bar-radius;
+                border-bottom-right-radius: $button-bar-radius;
+            }
+        }
+    }
+
+    ::ng-deep {
+        kendo-dropdownlist {
+            height: 32px;
+        }
+    }
+
+    .date-unit-selector,
+    .currency-selector {
+        @extend .button-bar;
+    }
+
+    .fye,
+    .period-selector,
+    .historical-results,
+    .projected-results {
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        font-weight: 500;
+        letter-spacing: normal;
+        color: $grey-blue;
+        opacity: 1;
+
+        div {
+            &:nth-child(1) {
+                opacity: 0.75;
+                font-weight: normal;
+            }
+        }
+
+        .legend {
+            width: 16px;
+            height: 1px;
+            border-bottom: 1px $light-navy
+        }
+    }
+
+    .historical-results {
+        .legend {
+            border-bottom-style: solid;
+        }
+    }
+
+    .projected-results {
+        .legend {
+            border-bottom-style: dashed;
+        }
+    }
+
+    .period-selector {
+        img {
+            margin-top: 6px;
+        }
+    }
+
+    .fye {
+        text-transform: uppercase;
+    }
+
+
+}

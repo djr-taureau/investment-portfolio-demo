@@ -8,13 +8,14 @@
 
 .image-icon {
     width: 20px;
-    height: 25px;
+    height: 26.5px;
     padding: 3px 6px 0px 6px;
     background-color: $pale-grey;
     left: 0px;
     position: absolute;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
+    top: 0px;
 }
 
 /**
@@ -33,7 +34,7 @@
                         /** This is the menu item icn */
                         @extend .image-icon;
                         width: 20px;
-                        height: 25px;
+                        height: 24px;
                         padding: 0;
                         left: 7px;
                         background: none;
@@ -78,10 +79,13 @@ kendo-chart {
 }
 
 kendo-dropdownlist {
+    height: 32px;
+
     .k-dropdown-wrap {
-        background-color: $white;
+        background-color: $white !important;
         border-radius: 6px;
         border-color: rgba($light-grey-blue, .5);
+        background-image: none !important;
 
         &:hover {
             border-color: rgba($dark-sky-blue, .5);
@@ -118,36 +122,3 @@ kendo-dropdownlist {
         }
     }
 }
-
-//.icon {
-//    width: 20px;
-//    height: 28px;
-//    padding: 0px 15px 0px 5px;
-//    background-color: $pale-grey;
-//}
-//
-//.label {
-//    padding-left: 5px;
-//    background-color: white;
-//    font-family: PostGrotesk;
-//    font-size: 16px;
-//    font-weight: bold;
-//    font-style: normal;
-//    font-stretch: normal;
-//    line-height: normal;
-//    letter-spacing: 0.3px;
-//    color: $light-navy;
-//}
-//
-//.noDataMessage {
-//    opacity: 0.75;
-//    font-family: PostGrotesk;
-//    font-size: 14px;
-//    font-weight: normal;
-//    font-style: normal;
-//    font-stretch: normal;
-//    line-height: normal;
-//    letter-spacing: normal;
-//    color: $grey-blue;
-//    text-transform: none !important;
-//}

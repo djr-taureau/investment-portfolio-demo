@@ -15,7 +15,7 @@
                      let-dataItem>
             <img class="icon"
                  matListAvatar
-                 src="assets/image/company.svg">
+                 src="{{ mainIconSrc }}">
             <div class="label">
                 {{ dataItem?.text | sbpEllipsis: 10 }}
             </div>
@@ -25,6 +25,7 @@
         <ng-template kendoDropDownListItemTemplate
                      let-dataItem>
             <img class="icon"
+                 *ngIf="dataItem?.icon"
                  matListAvatar
                  src="{{dataItem?.icon}}">
             <div class="label">
