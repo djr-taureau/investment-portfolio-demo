@@ -1,3 +1,4 @@
+import { TeamEffects } from "./team/team.effects";
 import { NgModule } from "@angular/core";
 import { SnackbarEffect } from "@core/state/snackbar/snackbar.effect";
 import { EffectsModule } from "@ngrx/effects";
@@ -13,7 +14,7 @@ import { RouterEffect } from "./router/router.effect";
 import { CompanyEffects } from "./company/company.effects";
 import * as CompanyDashboard from "./company/dashboard";
 
-const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, CompanyEffects, SnackbarEffect];
+const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects];
 
 const MODULES = [
     /**

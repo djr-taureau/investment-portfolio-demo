@@ -1,0 +1,149 @@
+<sbp-slideout-panel [preTitleText]="companyName"
+                    [titleText]="'All Team Members'"
+                    [itemCount]="teamGroupMemberCount"
+                    (close)="onClose()">
+
+    <!-- MAIN COLUMN -->
+    <div class="main-column"
+         fxLayout="column"
+         fxLayoutAlign="start start">
+        <!-- BACK TO ALL TEAM MEMBERS ROW -->
+        <div class="back-link"
+             fxLayout="row"
+             (click)="onBackToTeamMembersClick()">
+            BACK TO ALL TEAM MEMBERS
+        </div>
+        <!-- MEMBER INFORMATION ROW -->
+        <div class="section-row"
+             fxLayout="row"
+             fxFlex="0 0 inherit"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px">
+            <!-- AVATAR -->
+            <img matListAvatar
+                 src="{{member.avatar}}">
+            <!-- PERSONAL INFO COLUMN -->
+            <div fxLayout="row"
+                 fxFlex="0 0 30"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="5px">
+                <div class="name_box"
+                     fxLayout="column"
+                     fxLayoutAlign="start start">
+                    <div fxLayout="row"
+                         fxLayoutAlign="space-between center"
+                         fxLayoutGap="5px">
+                        <div class="row__name">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>
+                        <div class="lead_tag"
+                             *ngIf="member.isLead">LEAD</div>
+                    </div>
+                    <!-- SLACK -->
+                    <div fxLayout="row"
+                         fxLayoutGap="5px">
+                        <img matListAvatar
+                             src="{{member.avatar}}">
+                        <div class="slack">{{member.slack | titlecase}}</div>
+                    </div>
+                    <!-- PHONE -->
+                    <div fxLayout="row"
+                         fxFlex="0 0 20"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="5px">
+                        <mat-icon>phone</mat-icon>
+                        <div class="row__phone">{{member.mobile}}</div>
+                    </div>
+                    <!-- EMAIL -->
+                    <div fxLayout="row"
+                         fxFlex="0 0 40"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="5px">
+                        <mat-icon>email</mat-icon>
+                        <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BIOGRAPHY ROW -->
+        <div class="section-row"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="10px">
+            <div class="biography-label">BIOGRAPHY</div>
+            <div class="biography-text">{{member.bio}}</div>
+        </div>
+        <!-- TEAN ROW -->
+        <div class="section-row"
+             fxLayout="column"
+             fxLayoutAlign="start start"
+             fxLayoutGap="10px">
+            <!-- TEAM AND COUNT LABELS -->
+            <div fxLayout="row"
+                 fxLayoutAlign="start start">
+                <div class="team-label">TEAM</div>
+                <div class="team-count">({{teamGroupMemberCount}})</div>
+            </div>
+            <!-- TEAM MEMBER WIDGETS ROW -->
+            <div fxLayout="row"
+                 flLayoutAlign="start start"
+                 fxLayoutGap="25px">
+                <div *ngFor="let person of teamGroup.members">
+                    <div fxLayout="row"
+                         fxLayoutAlign="start start">
+                        <img matListAvatar
+                             src="{{person.avatar}}">
+                        <div class="name_box"
+                             fxLayout="column"
+                             fxLayoutAlign="start start">
+                            <div class="row__name">{{person.firstName | titlecase}}</div>
+                            <div class="row__name">{{person.lastName | titlecase}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- RELATIONSHIPS ROW -->
+        <div class="section-row"
+             fxLayout="row"
+             fxLayoutAlign="space-between start"
+             fxLayoutGap="10px">
+            <!-- COMPANIES COVERED COLUMN -->
+            <div fxLayout="column"
+                 fxLayoutAlign="start start"
+                 fxFlex="50">
+                <!-- COMPANIES COVERED LABELS -->
+                <div fxLayout="row"
+                     fxLayoutAlign="start start">
+                    <div class="team-label">COMPANIES COVERED</div>
+                    <div class="team-count">({{companiesCoveredCount}})</div>
+                </div>
+                <!-- COMPANIES COVERED WIDGET ROW -->
+                <div fxLayout="row"
+                     fxLayoutAlign="start start"
+                     fxLayoutGap="8px">
+                    <div *ngFor="let company of companiesCovered">
+
+                    </div>
+                </div>
+            </div>
+            <!-- BOARD SEATS COLUMN -->
+            <div fxLayout="column"
+                 fxLayoutAlign="start start"
+                 fxFlex="50">
+                <!-- COMPANIES COVERED LABELS -->
+                <div fxLayout="row"
+                     fxLayoutAlign="start start">
+                    <div class="team-label">BOARD SEATS</div>
+                    <div class="team-count">({{boardSeatsCount}})</div>
+                </div>
+                <!-- COMPANIES COVERED WIDGET ROW -->
+                <div fxLayout="row"
+                     fxLayoutAlign="start start"
+                     fxLayoutGap="8px">
+                    <div *ngFor="let seat of boardSeats">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</sbp-slideout-panel>

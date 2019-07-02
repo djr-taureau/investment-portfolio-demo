@@ -1,0 +1,133 @@
+@import "../../../../assets/scss/variables.scss";
+@import "../../../../assets/scss/pointers";
+
+:host {
+
+    .mat-list-base {
+        padding-top: 0px !important;
+    }
+
+    .group {
+        padding: 10px 40px 15px 40px;
+        background-color: $white;
+        border-bottom: dashed 1px $light-grey-blue;
+
+        .category {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: $grey-blue;
+            padding-right: 6px;
+            padding-top: 5px;
+        }
+
+        .count {
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $grey-blue;
+            padding-top: 5px;
+        }
+
+        .name_box {
+            @extend .hand-cursor;
+
+            img {
+                width: 16px;
+                height: 16px;
+            }
+
+            .slack {
+                font-family: PostGrotesk;
+                font-size: 10px;
+                font-weight: bold;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                color: $grey-blue;
+            }
+
+            .lead_tag {
+                // opacity: 0.5;
+                padding: 0px 3px 0px 3px;
+                border-radius: 2px;
+                background-color: $macaroni-and-cheese;
+                mix-blend-mode: multiply;
+                font-family: PostGrotesk;
+                font-size: 10px;
+                font-weight: bold;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                text-align: center;
+                text-transform: uppercase;
+                text-align: center;
+                color: $grey-blue;
+            }
+        }
+
+        .row {
+            width: 650px;
+
+            img {
+                @extend .hand-cursor;
+            }
+        }
+
+        .row__name {
+            font-family: PostGrotesk;
+            font-size: 20px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $dark-gray;
+        }
+
+        .row__company {
+            font-family: PostGrotesk;
+            font-size: 10px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: grey;
+        }
+
+        .row__phone {
+            font-family: PostGrotesk;
+            font-size: 10px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: grey;
+        }
+
+        .row__email {
+            font-family: PostGrotesk;
+            font-size: 10px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: grey;
+        }
+    }
+}

@@ -5,6 +5,7 @@ import { Company, Tag, TeamMember, ValuationValue } from "@core/domain/company.m
 import { Logger } from "@util/logger";
 import * as fromState from "@core/state";
 import * as FlowActions from "@core/state/flow/flow.actions";
+import * as TeamActions from "@core/state/team/team.actions";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as TestUtil from "@util/test.util";
 
@@ -19,6 +20,7 @@ import * as TestUtil from "@util/test.util";
             [yearPlusOneValuation]="yearPlusOneValuation$ | async"
             [exitValuation]="exitValuation$ | async"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
+            (seeAllTeamMembers)="seeAllTeamMembers($event)"
         >
         </sbp-company-summary-collapsed>
 
@@ -33,6 +35,7 @@ import * as TestUtil from "@util/test.util";
             [exitValuation]="exitValuation$ | async"
             (seeAllTakeaways)="seeAllTakeaways($event)"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
+            (seeAllTeamMembers)="seeAllTeamMembers($event)"
         >
         </sbp-company-summary-expanded>
     `
@@ -144,5 +147,15 @@ export class CompanySummaryContainer implements OnInit {
     public seeMoreCompanyInfo(id: string): void {
         CompanySummaryContainer.logger.debug(`seeMoreCompanyInfo( Company ID: ${id} )`);
         this.store$.dispatch(new FlowActions.OpenCompanyInfoPanel(id));
+    }
+
+    /**
+     * Fires off action to see all takeaways.
+     * @param id
+     */
+    public seeAllTeamMembers(id: string): void {
+        CompanySummaryContainer.logger.debug(`seeAllTeamMembers( Company ID: ${id} )`);
+        // this.store$.dispatch(new TeamActions.GetAll(id));
+        this.store$.dispatch(new FlowActions.OpenTeamMemberListPanel(id));
     }
 }

@@ -60,6 +60,12 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public seeMoreCompanyInfo: EventEmitter<string> = new EventEmitter<string>();
 
     /**
+     * Request to see all team members.
+     */
+    @Output()
+    public seeAllTeamMembers: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
      * The percent owned chart data.
      */
     public chartData: any[] = [];
@@ -85,5 +91,14 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public onSeeMoreCompanyInfo(id: string): void {
         CompanySummaryCollapsedComponent.logger.debug(`onSeeMoreCompanyInfo( Company ID: ${id} )`);
         this.seeMoreCompanyInfo.emit(id);
+    }
+
+    /**
+     * Handles click of All Team Members
+     * @param id
+     */
+    public onAllTeamMembersClick(id: string): void {
+        CompanySummaryCollapsedComponent.logger.debug(`onAllTeamMembersClick( Company ID: ${id} )`);
+        this.seeAllTeamMembers.emit(id);
     }
 }

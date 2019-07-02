@@ -31,6 +31,9 @@ export class HeaderContainer implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("HeaderContainer");
 
+    // TODO: TJM DON"T REMOVRE
+    // (toggleTeamSlideout)="toggleTeamSlideout($event)"
+    // (toggleTeamListSlideout)="toggleTeamListSlideout($event)"
     /**
      * The companies observable.
      */

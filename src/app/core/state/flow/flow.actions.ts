@@ -8,6 +8,12 @@ export enum FlowActionTypes {
     OpenTakeawaysPanel = "[Flow] Open Takeaways Panel",
     CloseTakeawaysPanel = "[Flow] Close Takeaways Panel",
 
+    OpenTeamMemberListPanel = "[Flow] Open Team Member List Panel",
+    CloseTeamMemberListPanel = "[Flow] Close Team Member List Panel",
+
+    OpenTeamMemberDetailPanel = "[Flow] Open Team Member Detail Panel",
+    CloseTeamMemberDetailPanel = "[Flow] Close Team Member Detail Panel",
+
     ExpandCompanyInfoSummaryPanel = "[Flow] Expand Company Info Summary Panel",
     CollapseCompanyInfoSummaryPanel = "[Flow] Collapse Company Info Summary Panel",
 
@@ -15,6 +21,7 @@ export enum FlowActionTypes {
 
     LoadPortfolio = "[Flow] Load Portfolio",
     GoToPortfolio = "[Flow] Go To Portfolio",
+
     PortfolioNavigationItemClicked = "[Flow] Portfolio Navigation Item Clicked",
     SelectCompany = "[Flow] Select Company",
     FindCompanies = "[Flow] Find Companies"
@@ -44,6 +51,17 @@ export class CloseTakeawaysPanel implements Action {
     constructor(public payload?: string) {}
 }
 
+export class CloseTeamMemberDetailPanel implements Action {
+    readonly type = FlowActionTypes.CloseTeamMemberDetailPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class CloseTeamMemberListPanel implements Action {
+    readonly type = FlowActionTypes.CloseTeamMemberListPanel;
+
+    constructor(public payload?: string) {}
+}
 export class CollapseCompanyInfoSummaryPanel implements Action {
     readonly type = FlowActionTypes.CollapseCompanyInfoSummaryPanel;
 
@@ -80,6 +98,17 @@ export class LoadPortfolio implements Action {
     constructor(public payload?: string) {}
 }
 
+export class OpenTeamMemberDetailPanel implements Action {
+    readonly type = FlowActionTypes.OpenTeamMemberDetailPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class OpenTeamMemberListPanel implements Action {
+    readonly type = FlowActionTypes.OpenTeamMemberListPanel;
+
+    constructor(public payload?: string) {}
+}
 export class PortfolioNavigationItemClicked implements Action {
     readonly type = FlowActionTypes.PortfolioNavigationItemClicked;
 
@@ -97,11 +126,16 @@ export type FlowActions =
     | CloseCompanyInfoPanel
     | OpenTakeawaysPanel
     | CloseTakeawaysPanel
+    | OpenTeamMemberListPanel
+    | CloseTeamMemberListPanel
+    | OpenTeamMemberDetailPanel
+    | CloseTeamMemberDetailPanel
     | CollapseCompanyInfoSummaryPanel
     | CompanyNavigationItemClicked
     | ExpandCompanyInfoSummaryPanel
     | FindCompanies
     | GoToPortfolio
     | LoadPortfolio
+    | OpenCompanyInfoPanel
     | PortfolioNavigationItemClicked
     | SelectCompany;

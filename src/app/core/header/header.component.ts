@@ -49,6 +49,10 @@ export class HeaderComponent implements OnInit {
      */
     @Output()
     public toggleSlideout: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output()
+    public toggleTeamSlideout: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output()
+    public toggleTeamListSlideout: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * Broadcasts an event to login.
@@ -115,6 +119,14 @@ export class HeaderComponent implements OnInit {
     public onToggleSlideout(event: any) {
         HeaderComponent.logger.debug(`onToggleSlideout()`);
         this.toggleSlideout.emit(!this.slideoutOpen);
+    }
+    public onToggleTeamSlideout(event: any) {
+        HeaderComponent.logger.debug(`onToggleTeamSlideout()`);
+        this.toggleTeamSlideout.emit(!this.slideoutOpen);
+    }
+    public onToggleTeamListSlideout(event: any) {
+        HeaderComponent.logger.debug(`onToggleTeamListSlideout()`);
+        this.toggleTeamListSlideout.emit(!this.slideoutOpen);
     }
 
     /**

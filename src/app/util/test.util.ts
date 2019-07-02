@@ -1,7 +1,7 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
+import { Company, Tag, Takeaway, TeamMember, Team } from "@core/domain/company.model";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 import { strict } from "assert";
 
@@ -133,6 +133,34 @@ export const getPortfolioTableItemDefault = (): PortfolioTableItem => {
 };
 
 /**
+ * Creates a deafault Team
+ */
+export const getTeamDefault = (): Team => {
+    return {
+        groups: [
+            {
+                category: "",
+                members: [
+                    {
+                        id: "",
+                        companyName: "",
+                        firstName: "",
+                        lastName: "",
+                        avatar: "",
+                        slack: "",
+                        mobile: "",
+                        email: "",
+                        bio: "",
+                        position: "",
+                        companyRelationships: []
+                    }
+                ]
+            }
+        ]
+    };
+};
+
+/**
  * Creates a default Tag.
  */
 export const getTagDefault = (): Tag => {
@@ -141,6 +169,11 @@ export const getTagDefault = (): Tag => {
         name: ""
     };
 };
+
+export const getTeamMock = (partial?: Partial<Team>): Team => ({
+    ...getTeamDefault(),
+    ...partial
+});
 
 /**
  * Creates a default Takeaway.

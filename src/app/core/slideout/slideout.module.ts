@@ -6,8 +6,19 @@ import { CompanyInfoModule } from "@core/slideout/company-info/company-info.modu
 import { SlideoutInfrastructureModule } from "@core/slideout/slideout-infrastructure.module";
 import { TakeawaysModule } from "@core/slideout/takeaways/takeaways.module";
 import { MaterialModule } from "@shared/material/material.module";
+import { TeamMemberListModule } from "./team-member-list/team-member-list.module";
+import { TeamMemberDetailModule } from "./team-member-detail/team-member-detail.module";
 
-const IMPORTS = [CommonModule, CompanyInfoModule, FlexLayoutModule, MaterialModule, RouterModule, TakeawaysModule];
+const IMPORTS = [
+    CommonModule,
+    CompanyInfoModule,
+    FlexLayoutModule,
+    MaterialModule,
+    RouterModule,
+    TakeawaysModule,
+    TeamMemberListModule,
+    TeamMemberDetailModule
+];
 
 const EXPORTS = [SlideoutInfrastructureModule];
 

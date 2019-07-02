@@ -62,6 +62,19 @@ export class GoToCompanyInfo implements Action {
     constructor() {}
 }
 
+export class GoToTeamMemberDetail implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.teamMemberDetail, extras: { queryParamsHandling: "preserve", skipLocationChange: true } };
+
+    constructor() {}
+}
+
+export class GoToTeamMemberList implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.teamMemberList, extras: { queryParamsHandling: "preserve", skipLocationChange: true } };
+
+    constructor() {}
+}
 export class GoToCompanyDashboard implements Action {
     readonly type = RouterActionTypes.Go;
     public payload = { path: "" };
@@ -106,4 +119,6 @@ export type RouterActions =
     | GotoRegister
     | GoToPortfolioDashboard
     | GoToPortfolioListing
+    | GoToTeamMemberDetail
+    | GoToTeamMemberList
     | UpdateUrlParams;

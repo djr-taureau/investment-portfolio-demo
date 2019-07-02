@@ -150,6 +150,7 @@ export interface TeamMember {
     bio: string;
     position: string;
     companyRelationships: CompanyRelationship[];
+    isLead?: boolean;
 }
 
 export enum CompanyRelationshipTypes {
@@ -255,4 +256,10 @@ export interface Address {
     countryCodeISO: string;
     countryName: string;
     postal: string;
+}
+
+export interface GetAllTeamsResponse extends ApiResponse {
+    data: {
+        teams: TeamMemberGroup[];
+    };
 }

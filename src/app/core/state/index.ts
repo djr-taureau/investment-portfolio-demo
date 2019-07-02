@@ -6,6 +6,7 @@ import * as fromLayout from "./layout/layout.reducer";
 import * as fromPortfolioDashboard from "./portfolio-dashboard/porfolio-dashboard.reducer";
 import * as fromPortfolioListing from "./portfolio-list/portfolio-list.reducer";
 import * as fromRouter from "@ngrx/router-store";
+import * as fromTeam from "./team/team.reducer";
 import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import { Company } from "../domain/company.model";
@@ -18,6 +19,7 @@ export interface AppState {
     layout: fromLayout.LayoutState;
     portfolioDashboard: fromPortfolioDashboard.State;
     router: fromRouter.RouterReducerState<RouterStateUrl>;
+    team: fromTeam.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -26,7 +28,8 @@ export const reducers: ActionReducerMap<AppState> = {
     portfolioListing: fromPortfolioListing.reducer,
     portfolioDashboard: fromPortfolioDashboard.reducer,
     layout: fromLayout.layoutReducer,
-    router: fromRouter.routerReducer
+    router: fromRouter.routerReducer,
+    team: fromTeam.reducer
 };
 
 // -------------------------------------------------------------------
@@ -112,6 +115,23 @@ export const getSelectedCompanyNavLink = createSelector(
 export const getShowCompanyCombo = createSelector(
     selectLayoutState,
     fromLayout.getShowCompanyCombo
+);
+
+// -------------------------------------------------------------------
+// TEAM SELECTORS
+// -------------------------------------------------------------------
+export const selectTeamState = createFeatureSelector<fromTeam.State>("team");
+
+export const {
+    selectIds: getTeamIds,
+    selectEntities: getTeamEntities,
+    selectAll: getAllTeams,
+    selectTotal: getTotalTeamss
+} = fromTeam.adapter.getSelectors(selectTeamState);
+
+export const getTeams = createSelector(
+    getAllTeams,
+    (teams) => teams
 );
 
 // -------------------------------------------------------------------

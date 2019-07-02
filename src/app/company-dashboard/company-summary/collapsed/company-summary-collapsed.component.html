@@ -65,7 +65,8 @@
                 {{ teamMember.initials }}
             </div>
         </div>
-        <div class="more-company-info hand-cursor">All Team Members</div>
+        <div class="more-company-info hand-cursor"
+             (click)="onAllTeamMembersClick(company.id)">All Team Members</div>
     </div>
 
     <!--

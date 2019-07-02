@@ -1,21 +1,24 @@
+import { TeamMemberListContainer } from "@app/core/slideout/team-member-list/team-member-list.container";
 import { CompanyInfoContainer } from "@app/core/slideout/company-info/company-info.container";
 import { TakeawaysContainer } from "@app/core/slideout/takeaways/takeaways.container";
 import { getSelectedCompanyId } from "../index";
 import { LoadPortfolioFailure, LoadPortfolioSuccess, PortfolioActionTypes, SearchCompany } from "../portfolio-dashboard/portfolio-dashboard.actions";
+import { GoToTeamMemberDetail } from "./../router/router.action";
 import { Action, select, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { ActivatedRoute, Router } from "@angular/router";
-import { appRoutePaths } from "@app/app.routes";
-import { catchError, concatMap, map, tap } from "rxjs/operators";
+import { appRoutePaths } from "../../../app.routes";
+import { catchError, concatMap, map } from "rxjs/operators";
 import { FlowActionTypes } from "./flow.actions";
 import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
-import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
+import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
 import { Observable, of } from "rxjs";
 import { SetSelectedCompanyLink, SetSelectedPortfolioLink, ToggleSlideout } from "../layout/layout.actions";
 import { withLatestFrom } from "rxjs/operators";
 import * as FlowActions from "./flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
 import * as CompanyActions from "../company/company.actions";
+import * as TeamActions from "./../team/team.actions";
 
 @Injectable()
 export class FlowEffect {
@@ -133,6 +136,51 @@ export class FlowEffect {
         concatMap((companyId: string) => [new ToggleSlideout(false)])
     );
 
+    // ------------------- TEAM: DETAIL PANEL ---------------------------//
+    /**
+     * Handles opening the team member detail panel flow
+     */
+    @Effect()
+    openTeamMemberDetailPanel$: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.OpenTeamMemberDetailPanel>(FlowActionTypes.OpenTeamMemberDetailPanel),
+        map((action) => action.payload),
+        concatMap((companyId) => [new ToggleSlideout(true), new GoToTeamMemberDetail()])
+    );
+
+    /**
+     * Handles closing the team member detail panel flow
+     */
+    @Effect()
+    closeTeamMemberDetailPanel$: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.CloseTeamMemberDetailPanel>(FlowActionTypes.CloseTeamMemberDetailPanel),
+        map((action) => action.payload),
+        concatMap((companyId) => [
+            // TODO: GMAN: Come up with action to clear the current route out of the sidebar-outlet
+            new ToggleSlideout(false)
+        ])
+    );
+
+    // ------------------- TEAM: LIST PANEL ---------------------------//
+    /**
+     * Handles opening the team member detail panel flow
+     */
+    @Effect()
+    openTeamMemberListPanel$: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.OpenTeamMemberListPanel>(FlowActionTypes.OpenTeamMemberListPanel),
+        map((action) => action.payload),
+        concatMap((companyId) => [new ToggleSlideout(true, TeamMemberListContainer)])
+    );
+
+    /**
+     * Handles closing the team member detail panel flow
+     */
+    @Effect()
+    closeTeamMemberListPanel$: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.CloseTeamMemberListPanel>(FlowActionTypes.CloseTeamMemberListPanel),
+        map((action) => action.payload),
+        concatMap((companyId) => [new ToggleSlideout(false)])
+    );
+
     // ------------------- COMPANY: NAVIGATION ---------------------------//
     /**
      * Handles clicks to go to company navigation bar
@@ -173,6 +221,7 @@ export class FlowEffect {
             // set the selected company
             actions.push(new CompanyActions.SetSelectedCompany(companyId));
             actions.push(new CompanyActions.Get(companyId));
+            actions.push(new TeamActions.GetAll(companyId));
             actions.push(new RouterActions.UpdateUrlParams({ id: companyId }));
             // go to the current url but with the new id
             // actions.push(new CompanyNavigationItemClicked())

@@ -57,13 +57,19 @@ export class ApiEndpointService {
         REGISTER: `auth/register/`,
         EXAMPLE_DETAILS: "example/{id}/details/{id}",
         COMPANIES: "companies",
-        COMPANY: "companies/{id}"
+        COMPANY: "companies/{id}",
+        TEAMS: "companies/{id}/team-members",
+        TEAM_MEMBER: "companies/{id}/team-members/{member_id}"
     };
 
     /**
      * List of secure API endpoints.
      */
-    public static secureEndpoints = [ApiEndpointService.ENDPOINT.COMPANIES];
+    public static secureEndpoints = [
+        ApiEndpointService.ENDPOINT.COMPANIES,
+        ApiEndpointService.ENDPOINT.TEAMS,
+        ApiEndpointService.ENDPOINT.TEAM_MEMBER
+    ];
 
     /**
      * Constructor.
