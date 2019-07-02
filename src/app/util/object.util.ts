@@ -33,6 +33,23 @@ export const convertMapToObject = (map: Map<any, any>) =>
 /**
  * Attempts to locate a deeply nested property by path. Optionally provide a default value if
  * the property is not found.
+ *
+ * Examples:
+ *
+ *      1)  Object: const foo = { bar: { name: "John Smith" } }
+ *
+ *          // Gets the expected value
+ *          getNestedPropIfExists(foo, ["bar", "name"]);
+ *
+ *          // Can't find expected value and uses default
+ *          getNestedPropIfExists(foo, ["bar", "name"], "default value);
+ *
+ *      2)  Object: const foo = [ { bar: { name: "John Smith" }, { bar: { name: "Jane Doe" } ]
+ *
+ *          // Uses index based array accessors
+ *          getNestedPropIfExists(foo, ["0", "bar", "name"]);
+ *          getNestedPropIfExists(foo, ["1", "bar", "name"]);
+ *
  * @param item
  * @param path
  * @param defaultValue

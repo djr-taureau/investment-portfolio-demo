@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
-import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
+import { Company, Tag, TeamMember, ValuationValue } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
+import * as fromState from "@core/state";
 import * as FlowActions from "@core/state/flow/flow.actions";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as TestUtil from "@util/test.util";
@@ -10,7 +11,15 @@ import * as TestUtil from "@util/test.util";
 @Component({
     selector: "sbp-company-summary-container",
     template: `
-        <sbp-company-summary-collapsed *ngIf="collapsed$ | async" [company]="company$ | async" [teamMembers]="teamMembers$ | async">
+        <sbp-company-summary-collapsed
+            *ngIf="collapsed$ | async"
+            [company]="company$ | async"
+            [teamMembers]="teamMembers$ | async"
+            [currentValuation]="currentValuation$ | async"
+            [yearPlusOneValuation]="yearPlusOneValuation$ | async"
+            [exitValuation]="exitValuation$ | async"
+            (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
+        >
         </sbp-company-summary-collapsed>
 
         <sbp-company-summary-expanded
@@ -19,7 +28,11 @@ import * as TestUtil from "@util/test.util";
             [teamMembers]="teamMembers$ | async"
             [tags]="tags$ | async"
             [takeaways]="takeaways$ | async"
+            [currentValuation]="currentValuation$ | async"
+            [yearPlusOneValuation]="yearPlusOneValuation$ | async"
+            [exitValuation]="exitValuation$ | async"
             (seeAllTakeaways)="seeAllTakeaways($event)"
+            (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
         >
         </sbp-company-summary-expanded>
     `
@@ -34,6 +47,11 @@ export class CompanySummaryContainer implements OnInit {
      * Boolean indicating if the summary is collapsed.
      */
     public collapsed$: Observable<boolean>;
+
+    /**
+     * The selected company observable.
+     */
+    public selectedCompany$: Observable<Company>;
 
     /**
      * Boolean indicating if the summary is expanded.
@@ -53,7 +71,22 @@ export class CompanySummaryContainer implements OnInit {
     /**
      * The takeaways observable.
      */
-    public takeaways$: Observable<Takeaway[]>;
+    public takeaways$: Observable<string[]>;
+
+    /**
+     * The current valuation.
+     */
+    public currentValuation$: Observable<ValuationValue>;
+
+    /**
+     * The current valuation.
+     */
+    public yearPlusOneValuation$: Observable<ValuationValue>;
+
+    /**
+     * The current valuation.
+     */
+    public exitValuation$: Observable<ValuationValue>;
 
     /**
      * The selected company observable.
@@ -75,68 +108,23 @@ export class CompanySummaryContainer implements OnInit {
 
         this.collapsed$ = this.store$.pipe(select(fromCompanyDashboardLayout.getCollapsed));
         this.expanded$ = this.store$.pipe(select(fromCompanyDashboardLayout.getExpanded));
+        this.company$ = this.store$.pipe(select(fromState.getSelectedCompany));
+        this.takeaways$ = this.store$.pipe(select(fromState.getSelectedCompanyTakeaways));
+        this.currentValuation$ = this.store$.pipe(select(fromState.getSelectedCompanyCurrentValuation));
+        this.yearPlusOneValuation$ = this.store$.pipe(select(fromState.getSelectedCompanyYearPlusOneValuation));
+        this.exitValuation$ = this.store$.pipe(select(fromState.getSelectedCompanyYearExitValuation));
 
-        this.company$ = of(
-            TestUtil.getCompanyMock({
-                name: "WeWork",
-                description:
-                    "WeWork is a platform for creators that transforms buildings into dynamic environments for creativity, focus, and collaboration.",
-                percentOwnership: 0.122,
-                deployed: 80,
-                deployedTotal: 300,
-                valuation: {
-                    id: "valuationId-1234567890",
-                    name: "valuation-name",
-                    desc: "valuation-desc",
-                    entry: 0,
-                    current: {
-                        value: 110.0,
-                        moic: 1.0,
-                        irr: 0
-                    },
-                    yearOne: {
-                        value: 160.5,
-                        moic: 1.5,
-                        irr: 38.5
-                    },
-                    yearTwo: {
-                        value: 110.0,
-                        moic: 1.0,
-                        irr: 0
-                    },
-                    yearThree: {
-                        value: 110.0,
-                        moic: 1.0,
-                        irr: 0
-                    },
-                    exit: {
-                        value: 1873.2,
-                        moic: 4.4,
-                        irr: 42.5
-                    }
-                }
-            })
-        );
-
+        // TODO: Need to get this from API
         this.teamMembers$ = of([
             TestUtil.getMock(TestUtil.getTeamMemberDefault, { firstName: "Tom", lastName: "Brady", initials: "TB" }),
             TestUtil.getMock(TestUtil.getTeamMemberDefault, { firstName: "Julian", lastName: "Edleman", initials: "JE" }),
             TestUtil.getMock(TestUtil.getTeamMemberDefault, { firstName: "Rob", lastName: "Gronkowski", initials: "RB" })
         ]);
 
+        // TODO: Need to get this from API
         this.tags$ = of([
             TestUtil.getMock(TestUtil.getTagDefault, { name: "Private" }),
             TestUtil.getMock(TestUtil.getTagDefault, { name: "Real Estate" })
-        ]);
-
-        this.takeaways$ = of([
-            TestUtil.getMock(TestUtil.getTakeawayDefault, { content: "In the middle of closing Series J fundraising." }),
-            TestUtil.getMock(TestUtil.getTakeawayDefault, {
-                content: "With $500M in funding, WeWork will be expanding their core business as well as launching into fintect / O2O."
-            }),
-            TestUtil.getMock(TestUtil.getTakeawayDefault, {
-                content: "SoftBank should connect WeWork and PayTM to help WeWork develop compresensive financial infrastructure in Korea Market."
-            })
         ]);
     }
 
@@ -147,5 +135,14 @@ export class CompanySummaryContainer implements OnInit {
     public seeAllTakeaways(id: string): void {
         CompanySummaryContainer.logger.debug(`seeAllTakeaways( Company ID: ${id} )`);
         this.store$.dispatch(new FlowActions.OpenTakeawaysPanel(id));
+    }
+
+    /**
+     * Fires off action to see all takeaways.
+     * @param id
+     */
+    public seeMoreCompanyInfo(id: string): void {
+        CompanySummaryContainer.logger.debug(`seeMoreCompanyInfo( Company ID: ${id} )`);
+        this.store$.dispatch(new FlowActions.OpenCompanyInfoPanel(id));
     }
 }

@@ -73,7 +73,10 @@
         <div fxLayout="row"
              fxLayoutAlign="start center">
             <div class="description">{{ company.description }}</div>
-            <div class="more-company-info hand-cursor">More company info</div>
+            <div class="more-company-info hand-cursor"
+                 (click)="onSeeMoreCompanyInfo(company.id)">
+                More company info
+            </div>
         </div>
 
         <!--
@@ -140,7 +143,7 @@
 
                     <div class="takeaways-header">Key Takeaways</div>
                     <div class="takeaways-total">({{ takeaways.length }})</div>
-                    <div class="takeaways-date">Updated Mar 31, 2019</div>
+                    <div class="takeaways-date">Updated {{ company.takeawayDate | date : "MMM d, y" }}</div>
 
                 </div>
 
@@ -154,7 +157,7 @@
                          class="takeaway-item-badge">
                         {{ i + 1 }}
                     </div>
-                    <div>{{ takeaway.content }}</div>
+                    <div>{{ takeaway }}</div>
 
                 </div>
 
@@ -250,9 +253,9 @@
                     </div>
 
                     <sbp-valuation [header]="'Current'"
-                                   [value]="company.valuation.current.value"
-                                   [moic]="company.valuation.current.moic"
-                                   [grossIrr]="company.valuation.current.irr">
+                                   [value]="currentValuation.totalValue"
+                                   [moic]="currentValuation.moic"
+                                   [grossIrr]="currentValuation.irr">
                     </sbp-valuation>
 
                     <div class="trend"
@@ -262,9 +265,9 @@
                     </div>
 
                     <sbp-valuation [header]="'+1 year'"
-                                   [value]="company.valuation.yearOne.value"
-                                   [moic]="company.valuation.yearOne.moic"
-                                   [grossIrr]="company.valuation.yearOne.irr">
+                                   [value]="yearPlusOneValuation.totalValue"
+                                   [moic]="yearPlusOneValuation.moic"
+                                   [grossIrr]="yearPlusOneValuation.irr">
                     </sbp-valuation>
 
                     <div class="trend"
@@ -274,9 +277,9 @@
                     </div>
 
                     <sbp-valuation [header]="'Exit'"
-                                   [value]="company.valuation.exit.value"
-                                   [moic]="company.valuation.exit.moic"
-                                   [grossIrr]="company.valuation.exit.irr">
+                                   [value]="exitValuation.totalValue"
+                                   [moic]="exitValuation.moic"
+                                   [grossIrr]="exitValuation.irr">
                     </sbp-valuation>
                 </div>
 

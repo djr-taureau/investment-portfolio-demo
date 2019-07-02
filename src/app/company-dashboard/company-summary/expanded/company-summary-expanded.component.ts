@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ChartColor } from "@core/domain/chart-data.model";
-import { Company, Tag, Takeaway, TeamMember } from "@core/domain/company.model";
+import { Company, Tag, Takeaway, TeamMember, ValuationValue } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -48,7 +48,31 @@ export class CompanySummaryExpandedComponent implements OnInit {
      * List of takeaways.
      */
     @Input()
-    public takeaways: Takeaway[] = [];
+    public takeaways: string[] = [];
+
+    /**
+     * Current company valuation.
+     */
+    @Input()
+    public currentValuation: ValuationValue = null;
+
+    /**
+     * Year plus one company valuation.
+     */
+    @Input()
+    public yearPlusOneValuation: ValuationValue = null;
+
+    /**
+     * Exit company valuation.
+     */
+    @Input()
+    public exitValuation: ValuationValue = null;
+
+    /**
+     * Request to see all takeaways.
+     */
+    @Output()
+    public seeMoreCompanyInfo: EventEmitter<string> = new EventEmitter<string>();
 
     /**
      * Request to see all takeaways.
@@ -87,6 +111,15 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public onSeeAllTakeaways(id: string): void {
         CompanySummaryExpandedComponent.logger.debug(`onSeeAllTakeaways( Company ID: ${id} )`);
         this.seeAllTakeaways.emit(id);
+    }
+
+    /**
+     * Handles click of see more company info.
+     * @param id
+     */
+    public onSeeMoreCompanyInfo(id: string): void {
+        CompanySummaryExpandedComponent.logger.debug(`onSeeMoreCompanyInfo( Company ID: ${id} )`);
+        this.seeMoreCompanyInfo.emit(id);
     }
 
     /**

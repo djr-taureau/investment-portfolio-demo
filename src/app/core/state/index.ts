@@ -1,3 +1,4 @@
+import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromAuth from "./auth/auth.reducer";
 import * as fromCompany from "./company/company.reducer";
@@ -5,6 +6,7 @@ import * as fromLayout from "./layout/layout.reducer";
 import * as fromPortfolioDashboard from "./portfolio-dashboard/porfolio-dashboard.reducer";
 import * as fromPortfolioListing from "./portfolio-list/portfolio-list.reducer";
 import * as fromRouter from "@ngrx/router-store";
+import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import { Company } from "../domain/company.model";
 import { RouterStateUrl } from "./router/custom-router-state.serializer";
@@ -134,10 +136,10 @@ export const getSelectedCompanyId = createSelector(
 );
 
 export const getSelectedCompany = createSelector(
-    getAllCompanies,
+    getCompanyEntities,
     getSelectedCompanyId,
     (entities, selectedId) => {
-        return selectedId && entities[selectedId];
+        return (selectedId && entities[selectedId]) || TestUtil.getMock(TestUtil.getCompanyDefault);
     }
 );
 
@@ -155,6 +157,32 @@ export const getCompanySortOrder = createSelector(
     selectCompanyState,
     fromCompany.getSortOrder
 );
+
+export const getSelectedCompanyTakeaways = createSelector(
+    getSelectedCompany,
+    (company: Company) => (company ? company.takeaways : []) || []
+);
+
+export const getSelectedCompanyTakeawayDate = createSelector(
+    getSelectedCompany,
+    (company: Company) => (company ? company.takeawayDate : "") || ""
+);
+
+export const getSelectedCompanyCurrentValuation = createSelector(
+    getSelectedCompany,
+    (company: Company) => ObjectUtil.getNestedPropIfExists(company, ["valuation", "topLineValuations", "0", "current"], {})
+);
+
+export const getSelectedCompanyYearPlusOneValuation = createSelector(
+    getSelectedCompany,
+    (company: Company) => ObjectUtil.getNestedPropIfExists(company, ["valuation", "topLineValuations", "1", "year_plus_one"], {})
+);
+
+export const getSelectedCompanyYearExitValuation = createSelector(
+    getSelectedCompany,
+    (company: Company) => ObjectUtil.getNestedPropIfExists(company, ["valuation", "topLineValuations", "2", "exit"], {})
+);
+
 // -------------------------------------------------------------------
 // PORTFOLIO LISTING SELECTORS
 // -------------------------------------------------------------------

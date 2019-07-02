@@ -40,7 +40,10 @@
                 </kendo-chart>
             </div>
             <div class="percent-owned">{{ company.percentOwnership * 100 }}% OWN</div>
-            <div class="more-company-info hand-cursor">More company info</div>
+            <div class="more-company-info hand-cursor"
+                 (click)="onSeeMoreCompanyInfo(company.id)">
+                More company info
+            </div>
         </div>
     </div>
 
@@ -114,9 +117,9 @@
     </div>
 
     <sbp-valuation [header]="'Current'"
-                   [value]="company.valuation.current.value"
-                   [moic]="company.valuation.current.moic"
-                   [grossIrr]="company.valuation.current.irr">
+                   [value]="currentValuation.totalValue"
+                   [moic]="currentValuation.moic"
+                   [grossIrr]="currentValuation.irr">
     </sbp-valuation>
 
     <div class="trend"
@@ -126,9 +129,9 @@
     </div>
 
     <sbp-valuation [header]="'+1 year'"
-                   [value]="company.valuation.yearOne.value"
-                   [moic]="company.valuation.yearOne.moic"
-                   [grossIrr]="company.valuation.yearOne.irr">
+                   [value]="yearPlusOneValuation.totalValue"
+                   [moic]="yearPlusOneValuation.moic"
+                   [grossIrr]="yearPlusOneValuation.irr">
     </sbp-valuation>
 
     <div class="trend"
@@ -138,9 +141,9 @@
     </div>
 
     <sbp-valuation [header]="'Exit'"
-                   [value]="company.valuation.exit.value"
-                   [moic]="company.valuation.exit.moic"
-                   [grossIrr]="company.valuation.exit.irr">
+                   [value]="exitValuation.totalValue"
+                   [moic]="exitValuation.moic"
+                   [grossIrr]="exitValuation.irr">
     </sbp-valuation>
 
     <!--

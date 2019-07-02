@@ -4,11 +4,11 @@ import { CoreCompanyContainer } from "@shared/company/core-company.container";
 import { CloseTakeawaysPanel } from "@core/state/flow/flow.actions";
 import { Company, Takeaway } from "@core/domain/company.model";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { getSelectedCompany } from "@core/state";
-import { Logger } from "@util/logger";
-import * as TestUtil from "@util/test.util";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
+import { Logger } from "@util/logger";
+import * as TestUtil from "@util/test.util";
+import * as fromState from "@core/state";
 
 @Component({
     selector: "sbp-takeaways-container",
@@ -36,7 +36,7 @@ export class TakeawaysContainer extends CoreCompanyContainer implements OnInit {
     /**
      * The takeaways observable.
      */
-    public takeaways$: Observable<Takeaway[]>;
+    public takeaways$: Observable<string[]>;
 
     /**
      * Constructor.
@@ -54,17 +54,9 @@ export class TakeawaysContainer extends CoreCompanyContainer implements OnInit {
     public ngOnInit(): void {
         super.ngOnInit();
         TakeawaysContainer.logger.debug(`constructor()`);
-        this.company$ = this.store$.pipe(select(getSelectedCompany));
 
-        this.takeaways$ = of([
-            TestUtil.getMock(TestUtil.getTakeawayDefault, { content: "In the middle of closing Series J fundraising." }),
-            TestUtil.getMock(TestUtil.getTakeawayDefault, {
-                content: "With $500M in funding, WeWork will be expanding their core business as well as launching into fintect / O2O."
-            }),
-            TestUtil.getMock(TestUtil.getTakeawayDefault, {
-                content: "SoftBank should connect WeWork and PayTM to help WeWork develop compresensive financial infrastructure in Korea Market."
-            })
-        ]);
+        this.company$ = this.store$.pipe(select(fromState.getSelectedCompany));
+        this.takeaways$ = this.store$.pipe(select(fromState.getSelectedCompanyTakeaways));
     }
 
     /**

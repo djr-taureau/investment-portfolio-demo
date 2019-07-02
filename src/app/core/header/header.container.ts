@@ -1,5 +1,4 @@
 import { Company } from "@core/domain/company.model";
-import { CloseCompanyInfoPanel, GoToPortfolio, OpenCompanyInfoPanel, SelectCompany } from "@core/state/flow/flow.actions";
 import { Component, OnInit } from "@angular/core";
 import { getShowCompanyCombo } from "@core/state";
 import { Logger } from "@util/logger";
@@ -7,7 +6,7 @@ import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
 import * as AuthActions from "@core/state/auth/auth.action";
 import * as fromState from "@core/state";
-import * as TestUti from "@util/test.util";
+import * as FlowActions from "@core/state/flow/flow.actions";
 
 @Component({
     selector: "sbp-header-container",
@@ -57,18 +56,18 @@ export class HeaderContainer implements OnInit {
      * @param $event
      */
     public toggleSlideout(slideOut: boolean): void {
-        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel("1")) : this.store$.dispatch(new CloseCompanyInfoPanel("1"));
+        slideOut ? this.store$.dispatch(new FlowActions.OpenCompanyInfoPanel("1")) : this.store$.dispatch(new FlowActions.CloseCompanyInfoPanel("1"));
     }
 
     public portfolioClick(): void {
-        this.store$.dispatch(new GoToPortfolio());
+        this.store$.dispatch(new FlowActions.GoToPortfolio());
     }
     /**
      * Dispatch action to select role in store.
      */
     public selectCompany(event: string | number) {
         HeaderContainer.logger.debug(`onCompanySelect( ${event} )`);
-        this.store$.dispatch(new SelectCompany(event));
+        this.store$.dispatch(new FlowActions.SelectCompany(event));
     }
 
     /**
@@ -99,15 +98,10 @@ export class HeaderContainer implements OnInit {
      */
     public ngOnInit() {
         HeaderContainer.logger.debug(`ngOnInit()`);
-        // TODO: BMR: 05/23/2019: Integrate with Dave's company NGRX.
-        // this.companies$ = this.store$.pipe(select(fromState.selectAllRoles));
-        this.selectedCompany$ = of(TestUti.getCompanyMock({ name: "Foo, Inc." }));
+
+        this.companies$ = this.store$.pipe(select(fromState.getAllCompanies));
+        this.selectedCompany$ = this.store$.pipe(select(fromState.getSelectedCompany));
         this.showCompanyCombo$ = this.store$.pipe(select(getShowCompanyCombo));
-        this.companies$ = of([
-            TestUti.getCompanyMock({ name: "Foo, Inc." }),
-            TestUti.getCompanyMock({ name: "Bar, LLC." }),
-            TestUti.getCompanyMock({ name: "Dogs and Cats" })
-        ]);
         this.slideoutOpen$ = this.store$.pipe(select(fromState.getShowSlideout));
     }
 }

@@ -46,7 +46,7 @@ export interface Company {
     percentOwnership: number;
 
     // Displayed in the company header under the team members as a list.
-    takeaways: Takeaway[];
+    takeaways: string[];
 
     // Displayed in the company header with the list of takeaways.
     takeawayDate: string;
@@ -193,7 +193,7 @@ export interface ValuationDetail {
 }
 
 export interface ValuationValue {
-    value: number;
+    totalValue: number;
     moic: number;
     irr: number;
 }
@@ -239,6 +239,10 @@ export interface CompanyRevenueResponse {
 
 export interface GetAllCompaniesResponse extends ApiResponse {
     data: Company[];
+}
+
+export interface GetCompanyResponse extends ApiResponse {
+    data: Company;
 }
 
 export interface Address {

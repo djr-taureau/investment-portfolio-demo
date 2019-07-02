@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { UrlUtil } from "@util/url.util";
 import * as StringUtil from "@util/string.util";
 
 @Injectable({
@@ -57,16 +56,8 @@ export class ApiEndpointService {
         LOGIN: `auth/login/`,
         REGISTER: `auth/register/`,
         EXAMPLE_DETAILS: "example/{id}/details/{id}",
-        COMPANIES: "companies"
-    };
-    /**
-     * Map of API endpoints.
-     */
-    public static MOCK_ENDPOINT = {
-        LOGIN: `auth/login/`,
-        REGISTER: `auth/register/`,
-        EXAMPLE_DETAILS: "example/{id}/details/{id}",
-        COMPANIES: "companies"
+        COMPANIES: "companies",
+        COMPANY: "companies/{id}"
     };
 
     /**

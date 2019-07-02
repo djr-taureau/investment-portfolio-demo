@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { Company, TeamMember } from "@core/domain/company.model";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Company, TeamMember, ValuationValue } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -36,6 +36,30 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public teamMembers: TeamMember[] = null;
 
     /**
+     * Current company valuation.
+     */
+    @Input()
+    public currentValuation: ValuationValue = null;
+
+    /**
+     * Year plus one company valuation.
+     */
+    @Input()
+    public yearPlusOneValuation: ValuationValue = null;
+
+    /**
+     * Exit company valuation.
+     */
+    @Input()
+    public exitValuation: ValuationValue = null;
+
+    /**
+     * Request to see all takeaways.
+     */
+    @Output()
+    public seeMoreCompanyInfo: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
      * The percent owned chart data.
      */
     public chartData: any[] = [];
@@ -52,5 +76,14 @@ export class CompanySummaryCollapsedComponent implements OnInit {
      */
     public ngOnInit() {
         CompanySummaryCollapsedComponent.logger.debug(`ngOnInit()`);
+    }
+
+    /**
+     * Handles click of see more company info.
+     * @param id
+     */
+    public onSeeMoreCompanyInfo(id: string): void {
+        CompanySummaryCollapsedComponent.logger.debug(`onSeeMoreCompanyInfo( Company ID: ${id} )`);
+        this.seeMoreCompanyInfo.emit(id);
     }
 }

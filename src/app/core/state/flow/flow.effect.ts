@@ -11,11 +11,11 @@ import { FlowActionTypes } from "./flow.actions";
 import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { Observable, of } from "rxjs";
-import { GetAll, SetSelectedCompany } from "../company/company.actions";
 import { SetSelectedCompanyLink, SetSelectedPortfolioLink, ToggleSlideout } from "../layout/layout.actions";
 import { withLatestFrom } from "rxjs/operators";
 import * as FlowActions from "./flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
+import * as CompanyActions from "../company/company.actions";
 
 @Injectable()
 export class FlowEffect {
@@ -26,7 +26,7 @@ export class FlowEffect {
     @Effect()
     loadPortfolio$: Observable<Action> = this.actions$.pipe(
         ofType(FlowActionTypes.LoadPortfolio),
-        concatMap(() => [new GetAll(), new LoadPortfolioSuccess()]),
+        concatMap(() => [new CompanyActions.GetAll(), new LoadPortfolioSuccess()]),
         catchError((err) => of(new LoadPortfolioFailure(err)))
     );
 
@@ -171,7 +171,8 @@ export class FlowEffect {
         concatMap((companyId) => {
             const actions = [];
             // set the selected company
-            actions.push(new SetSelectedCompany(companyId));
+            actions.push(new CompanyActions.SetSelectedCompany(companyId));
+            actions.push(new CompanyActions.Get(companyId));
             actions.push(new RouterActions.UpdateUrlParams({ id: companyId }));
             // go to the current url but with the new id
             // actions.push(new CompanyNavigationItemClicked())

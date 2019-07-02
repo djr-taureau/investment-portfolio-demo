@@ -1,6 +1,6 @@
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
-import { Company, GetAllCompaniesResponse } from "../domain/company.model";
+import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "../domain/company.model";
 import { environment } from "../../../environments/environment";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -19,25 +19,42 @@ export class CompanyService {
 
     /**
      * Constructor.
-     * @param http
+     * @param apiService
      */
-    constructor(private store$: Store<any>, private apiService: ApiService) {
+    constructor(private apiService: ApiService) {
         CompanyService.logger.debug(`constructor()`);
     }
 
     /**
-     * Retrieves all the companies
+     * Retrieves all the companies.
      */
-    public getCompanies(isMock: boolean = false): Observable<GetAllCompaniesResponse> {
-        CompanyService.logger.debug(`getCompanies( isMock: ${isMock} )`);
+    public getCompanies(): Observable<GetAllCompaniesResponse> {
+        CompanyService.logger.debug(`getCompanies()`);
 
-        const url = isMock
-            ? ApiEndpointService.getEndpoint(ApiEndpointService.MOCK_ENDPOINT.COMPANIES)
-            : ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
+        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
 
         return this.apiService.get(url).pipe(
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`companiesFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Retrieves the company entity by ID.
+     */
+    public getCompany(id: string): Observable<GetCompanyResponse> {
+        CompanyService.logger.debug(`getCompany( ID: ${id} )`);
+
+        const params = {
+            id
+        };
+        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY, params);
+
+        return this.apiService.get(url).pipe(
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getCompanyFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

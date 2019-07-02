@@ -1,0 +1,128 @@
+{
+  "success": true,
+  "data": {
+    "id": 7,
+    "name": "Clover Biotech",
+    "description": "Clover Biotech develops cutting edge biopharmaceuticals for chronic illnesses",
+    "type": "PRIVATE",
+    "publicTicker": null,
+    "internalTicker": null,
+    "region": null,
+    "logo": null,
+    "aka": "Clover Biotechnical Industries",
+    "headquarters": "Boston, MA US",
+    "founders": "not-mvp-AFAIK",
+    "foundedDate": "not-mvp-AFAIK",
+    "website": "http://cloverbio.com",
+    "fiscalYearEnd": null,
+    "investingEntity": "tbd",
+    "initialInvestmentDate": null,
+    "latestFollowOnDate": "tbd",
+    "fdOwnership": "tbd",
+    "company.revenue": null,
+    "slackName": "not-mvp",
+    "slackUrl": "not-mvp",
+    "takeaways": [
+      "Consider integrating 3d Print technology",
+      "Develop surgeion outreach campaign"
+    ],
+    "takeawayDate": "2019-04-01",
+    "valuation": {
+      "topLineValuations": [
+        {
+          "current": {
+            "totalValue": 110000000,
+            "moic": 1.3,
+            "irr": 0
+          }
+        },
+        {
+          "year_plus_one": {
+            "totalValue": 160500000,
+            "moic": 1.5,
+            "irr": 0.385
+          }
+        },
+        {
+          "exit": {
+            "totalValue": 1873200000,
+            "moic": 4.4,
+            "irr": 0.425
+          }
+        }
+      ],
+      "valuationDetail": [
+        {
+          "name": "ic_initial",
+          "valuation": {
+            "approved": 110000000,
+            "invested": 82000000,
+            "realizedValue": 390100000,
+            "unrealizedValue": 500000000,
+            "totalValue": 890100000,
+            "moic": 1.0,
+            "irr": 0.1,
+            "companyEquityValue": 110000000,
+            "ownership": 0.1
+          }
+        },
+        {
+          "name": "ic_latest_follow_on",
+          "valuation": {
+            "approved": 110000000,
+            "invested": 82000000,
+            "realizedValue": 390100000,
+            "unrealizedValue": 500000000,
+            "totalValue": 890100000,
+            "moic": 1.0,
+            "irr": 0.1,
+            "companyEquityValue": 110000000,
+            "ownership": 0.1
+          }
+        },
+        {
+          "name": "current",
+          "valuation": {
+            "approved": 110000000,
+            "invested": 82000000,
+            "realizedValue": 390100000,
+            "unrealizedValue": 500000000,
+            "totalValue": 890100000,
+            "moic": 1.0,
+            "irr": 0.1,
+            "companyEquityValue": 110000000,
+            "ownership": 0.1
+          }
+        },
+        {
+          "name": "year_plus_one",
+          "valuation": {
+            "approved": 110000000,
+            "invested": 82000000,
+            "realizedValue": 390100000,
+            "unrealizedValue": 500000000,
+            "totalValue": 890100000,
+            "moic": 1.0,
+            "irr": 0.1,
+            "companyEquityValue": 110000000,
+            "ownership": 0.1
+          }
+        },
+        {
+          "name": "exit",
+          "valuation": {
+            "approved": 110000000,
+            "invested": 82000000,
+            "realizedValue": 390100000,
+            "unrealizedValue": 500000000,
+            "totalValue": 890100000,
+            "moic": 1.0,
+            "irr": 0.1,
+            "companyEquityValue": 110000000,
+            "ownership": 0.1
+          }
+        }
+      ]
+    }
+  }
+}

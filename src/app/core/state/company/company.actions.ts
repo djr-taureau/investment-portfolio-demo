@@ -1,4 +1,4 @@
-import { Action, createAction, props, union } from "@ngrx/store";
+import { Action } from "@ngrx/store";
 import { Company } from "../../domain/company.model";
 
 export enum CompanyActionTypes {

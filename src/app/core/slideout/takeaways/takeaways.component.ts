@@ -34,7 +34,7 @@ export class TakeawaysComponent {
      * List of takeaways.
      */
     @Input()
-    public takeaways: Takeaway[] = [];
+    public takeaways: string[] = [];
 
     /**
      * Dispatched when the user closes the slider.
