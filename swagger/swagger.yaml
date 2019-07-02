@@ -75,7 +75,7 @@ paths:
           description: "Invalid request"
         404:
           description: "Companies not found"
-  /company/{companyId}/revenue:
+  /companies/{companyId}/revenue:
     get:
       tags:
         - "revenue data"
@@ -100,7 +100,7 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Company revenue data not found"
-  /company/{companyId}/valuation:
+  /companies/{companyId}/valuation:
     get:
       tags:
         - "valuation data"
@@ -125,7 +125,7 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Company valuation data not found"
-  /company/{companyId}/cashburn:
+  /companies/{companyId}/cashburn:
     get:
       tags:
         - "cashburn data"
@@ -155,7 +155,7 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Company cashburn data not found"
-  /company/{companyId}/ebitda:
+  /companies/{companyId}/ebitda:
     get:
       tags:
         - "ebitda data"
@@ -185,13 +185,13 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Company ebitda data not found"
-  /company/{companyId}/team-members:
+  /companies/{companyId}/team-members:
     get:
       tags:
         - "team"
       summary: "Retrieve list of teams/members for this company"
       description: ""
-      operationId: "getPortfolioTeams"
+      operationId: "getTeamMembersForCompany"
       produces:
         - "application/json"
       parameters:
@@ -207,13 +207,13 @@ paths:
             $ref: "#/definitions/Team"
         400:
           description: "Invalid status value"
-  /company/{companyId}/team-members/(teamMemberId}:
+  /companies/{companyId}/team-members/{teamMemberId}:
     get:
       tags:
         - "team"
       summary: "Retrieve specifica for a selected team member"
       description: ""
-      operationId: "getPortfolioTeams"
+      operationId: "getTeamMemberForCompany"
       produces:
         - "application/json"
       parameters:
@@ -222,7 +222,7 @@ paths:
           description: "Id for the portfolio company being requested"
           required: true
           type: "number"
-      - name: "teamMemberId"
+        - name: "teamMemberId"
           in: "path"
           description: "Id for the team member summary being requested"
           required: true
@@ -234,7 +234,7 @@ paths:
             $ref: "#/definitions/TeamMember"
         400:
           description: "Invalid id"
-  /portfolio/:id:
+  /portfolio/{id}:
     get:
       tags:
         - "portfolio"
@@ -368,7 +368,8 @@ definitions:
       takeaways:
         type: "array"
         items:
-          $ref: '#/definitions/Takeaway'
+#          $ref: '#/definitions/Takeaway'
+          type: "string"
       takeawayDate:
         type: "string"
         description: "Displayed in the company header with the list of takeaways."
