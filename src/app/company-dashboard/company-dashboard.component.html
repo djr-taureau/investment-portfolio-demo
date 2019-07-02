@@ -8,39 +8,5 @@
 
     <sbp-period-selector></sbp-period-selector>
 
-    <div class="charts">
-        <div class="chart">
-            <sbp-kpi-summary [data]="timelineData"
-                             [title]="'Revenue'"
-                             [denomination]="'USD'"
-                             [value]="325.3"
-                             [pyLabel]="'vs PY'"
-                             [pyValue]="-44.1"
-                             [icLabel]="'vs Bud'"
-                             [icValue]="'-42'">
-            </sbp-kpi-summary>
-        </div>
-        <div class="chart">
-            <sbp-kpi-summary [data]="timelineData2"
-                             [title]="'EBITDA'"
-                             [denomination]="'USD'"
-                             [value]="-81.2"
-                             [pyLabel]="'vs PY'"
-                             [pyValue]="+10.0"
-                             [icLabel]="'vs Bud'"
-                             [icValue]="'-5.0'">
-            </sbp-kpi-summary>
-        </div>
-        <div class="chart">
-            <sbp-kpi-summary [data]="timelineData3"
-                             [title]="'Cash Burn'"
-                             [denomination]="'USD'"
-                             [value]="-34.60"
-                             [pyLabel]="'vs PY'"
-                             [pyValue]="+10.0"
-                             [icLabel]="'vs Bud'"
-                             [icValue]="'-5.0'">
-            </sbp-kpi-summary>
-        </div>
-    </div>
+    <sbp-company-kpi-container></sbp-company-kpi-container>
 </div>

@@ -5,7 +5,7 @@ import { DimensionsType, getUniqueId } from "../chart/utils";
 import { ScaleType } from "../interfaces/types";
 import { TimelineDataPointFin } from "../interfaces/types";
 @Component({
-    selector: "app-micro-histogram",
+    selector: "sbp-micro-histogram",
     templateUrl: "./micro-histogram.component.html",
     styleUrls: ["./micro-histogram.component.scss"]
 })
@@ -67,8 +67,6 @@ export class MicroHistogramComponent implements AfterContentInit, OnChanges {
 
     ngAfterContentInit() {
         this.updateDimensions();
-        console.log("micro", this.data);
-        console.log(this.projectedAccessor);
     }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -81,12 +79,8 @@ export class MicroHistogramComponent implements AfterContentInit, OnChanges {
         } else {
             const numberOfThresholds = 5;
             this.data.map((v) => {
-                console.log(v.projected);
-                console.log(v.date);
-                console.log(v.value);
                 if (v.projected) {
                     this.barFillStyle = true;
-                    console.log(this.barFillStyle);
                 }
             });
 
@@ -104,13 +98,6 @@ export class MicroHistogramComponent implements AfterContentInit, OnChanges {
 
             this.bins = binsGenerator(this.data);
 
-            // const periodDomain = [true, false];
-            // const historicalColor =
-            // const color = {
-            //   const maleColor:  "#42adf4",
-            //   const femaleColor = "#ff96ca";
-            //   return d3.scaleOrdinal().range([maleColor, femaleColor]).domain(periodDomain);
-            // }
             const yAccessor = (d) => d.length;
             this.yScale = d3
                 .scaleLinear()

@@ -13,8 +13,13 @@
         align-self: left;
     }
 
+    .display-none {
+        display: none;
+    }
+
     .display {
         display: none;
+        stroke-width: 2;
     }
 
     .dot {

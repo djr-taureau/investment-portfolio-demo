@@ -1,8 +1,8 @@
 <div #container
      class="card">
-    <app-chart [dimensions]="dimensions">
+    <sbp-chart [dimensions]="dimensions">
         <svg:defs>
-            <svg:g appGradient
+            <svg:g sbpGradient
                    [id]="gradientId"
                    [colors]="gradientColors"
                    x2="0"
@@ -10,7 +10,7 @@
             </svg:g>
         </svg:defs>
         <svg:g class="dislay"
-               appAxis
+               sbpAxis
                dimension="x"
                [dimensions]="dimensions"
                [scale]="xScale"
@@ -18,13 +18,13 @@
                [label]="label">
             </g>
             <svg:g class="dislay"
-                   appAxis
+                   sbpAxis
                    dimension="y"
                    [dimensions]="dimensions"
                    [scale]="yScale"
                    [label]="label">
                 </g>
-                <svg:g appLine
+                <svg:g sbpLine
                        class="area"
                        type="area"
                        [data]="data"
@@ -32,20 +32,19 @@
                        [yAccessor]="yAccessorScaled"
                        [y0Accessor]="y0AccessorScaled">
                 </svg:g>
-                <svg:g appLine
+                <svg:g sbpLine
                        class="line"
                        [data]="data"
                        [xAccessor]="xAccessorScaled"
                        [yAccessor]="yAccessorScaled"
-                       [colorAccessor]="colorAccessorScaled"
-                       [fillColor]="fillColor">
+                       [colorAccessor]="colorAccessorScaled">
                 </svg:g>
-                <svg:g appCircles
+                <svg:g sbpCircles
                        class="dot"
                        [data]="data"
                        [keyAccessor]="keyAccessor"
                        [xAccessor]="xAccessorScaled"
                        [yAccessor]="yAccessorScaled">
                 </svg:g>
-    </app-chart>
+    </sbp-chart>
 </div>

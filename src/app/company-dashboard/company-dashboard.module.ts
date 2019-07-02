@@ -3,6 +3,7 @@ import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanySummaryCollapsedComponent } from "./company-summary/collapsed/company-summary-collapsed.component";
 import { CompanySummaryContainer } from "./company-summary/company-summary.container";
+import { CompanyKpiContainer } from "./company-kpi-container/company-kpi.container";
 import { CompanySummaryExpandedComponent } from "./company-summary/expanded/company-summary-expanded.component";
 import { IconizedSearchableComboModule } from "@shared/iconized-searchable-combo/iconized-searchable-combo.module";
 import { NgModule } from "@angular/core";
@@ -15,6 +16,7 @@ const COMPONENTS: any = [
     CompanyDashboardContainer,
     CompanyDashboardComponent,
     CompanySummaryContainer,
+    CompanyKpiContainer,
     CompanySummaryCollapsedComponent,
     CompanySummaryExpandedComponent,
     PeriodSelectorComponent,

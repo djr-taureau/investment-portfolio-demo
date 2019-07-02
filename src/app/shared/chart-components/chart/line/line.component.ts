@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
 
 @Component({
-    selector: "[appLine]",
+    selector: "[sbpLine]",
     template: `
         <svg:path
             [ngClass]="type"
@@ -27,7 +27,7 @@ export class LineComponent implements OnChanges, AfterContentInit {
     @Input() interpolation?: any;
     @Input() fill?: string;
     lineString: any;
-    condition = false;
+    condition = null;
 
     updateLineString(): void {
         this.interpolation = curveLinear;
@@ -35,16 +35,14 @@ export class LineComponent implements OnChanges, AfterContentInit {
             .x(this.xAccessor)
             .y(this.yAccessor)
             .curve(this.interpolation);
-        // todo : figure out how to get the area from the line instance.
-        // if (this.type == "area") {
-        //   lineGenerator.y0(this.y0Accessor).y1(this.yAccessor);
-        // }
+
+        if (this.type === "area") {
+            lineGenerator.y0(this.y0Accessor).y1(this.yAccessor);
+        }
         this.lineString = lineGenerator(this.data);
-        // this.lineString.y0(this.y0Accessor).y1(this.yAccessor);
     }
 
     ngAfterContentInit() {
-        console.log("fill", this.fill);
         this.condition = true;
     }
     ngOnChanges(changes: SimpleChanges): void {

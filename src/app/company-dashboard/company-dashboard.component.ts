@@ -10,18 +10,6 @@ import { TimelineDataPointFin, TimelineDataPoint } from "@shared/chart-component
     styleUrls: ["./company-dashboard.component.scss"]
 })
 export class CompanyDashboardComponent implements OnInit {
-    timelineData: TimelineDataPointFin[];
-    timelineData2: TimelineDataPointFin[];
-    timelineData3: TimelineDataPointFin[];
-
-    constructor(private store$: Store<any>) {
-        this.timelineData = revenue;
-        this.timelineData2 = ebitda;
-        this.timelineData3 = cashburn;
-    }
-    ngOnInit() {
-        this.timelineData = revenue;
-        this.timelineData2 = ebitda;
-        this.timelineData3 = cashburn;
-    }
+    constructor(private store$: Store<any>) {}
+    ngOnInit() {}
 }

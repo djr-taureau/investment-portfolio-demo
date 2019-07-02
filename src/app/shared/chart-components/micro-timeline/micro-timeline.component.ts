@@ -1,11 +1,12 @@
 import { Component, Input, ViewChild, ElementRef, AfterContentInit, OnChanges, OnInit, SimpleChanges, HostListener } from "@angular/core";
 import * as d3 from "d3";
+// import "zone.js";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
 import { TimelineDataPoint, TimelineDataPointFin } from "../interfaces/types";
 
 @Component({
-    selector: "app-micro-timeline",
+    selector: "sbp-micro-timeline",
     templateUrl: "./micro-timeline.component.html",
     styleUrls: ["./micro-timeline.component.scss"]
 })
@@ -48,14 +49,12 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
-        console.log("data", this.data);
     }
 
     updateDimensions() {
         const width = this.container.nativeElement.offsetWidth;
         this.dimensions.width = this.container.nativeElement.offsetWidth;
         this.dimensions.boundedWidth = Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0);
-        console.log("data", this.data);
         this.updateScales();
     }
 
@@ -65,10 +64,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     ngAfterContentInit() {
         this.data.map((v) => {
-            let idx = 0;
-            idx = idx + 1;
             if (v.projected) {
-                console.log("dotted");
                 this.fillColor = "light-grey";
                 this.display = true;
             }

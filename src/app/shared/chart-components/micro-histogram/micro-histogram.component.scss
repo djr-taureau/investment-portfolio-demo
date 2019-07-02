@@ -17,4 +17,12 @@
         shape-rendering: crispEdges;
     }
 
+    .xaxis line {
+        stroke-width: 2;
+    }
+
+    .display-axis {
+        stroke-width: 1;
+    }
+
 }

@@ -2,7 +2,7 @@ import { Component, Input, AfterContentInit, OnInit } from "@angular/core";
 import { useAccessor } from "../utils";
 
 @Component({
-    selector: "[appBars]",
+    selector: "[sbpBars]",
     template: `
         <svg:rect
             *ngFor="let bar of data; trackBy: keyAccessor"
@@ -35,7 +35,7 @@ export class BarsComponent implements AfterContentInit, OnInit {
     barStylePositive = "historical-negative";
     barStyle3 = "blinking";
     blink = false;
-    condition = false;
+    condition = true;
 
     constructor() {}
 

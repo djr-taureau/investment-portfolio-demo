@@ -1,23 +1,21 @@
-import { Component, Input, AfterContentInit } from "@angular/core";
+import { Component, Input, AfterContentInit, OnInit, ViewEncapsulation } from "@angular/core";
 import { useAccessor } from "../utils";
 
 @Component({
-    selector: "[appCircles]",
+    selector: "[sbpCircles]",
     template: `
         <svg:circle
             *ngFor="let circle of data; trackBy: keyAccessor"
             [attr.cx]="xAccessor(circle, $index)"
             [attr.cy]="yAccessor(circle, $index)"
             [attr.r]="radius"
-            [ngClass]="{
-                projected: condition,
-                dot: !condition
-            }"
+            [attr.fill]="'#ffffff'"
+            [attr.stroke]="'#124f8c'"
         ></svg:circle>
     `,
     styleUrls: ["./circles.component.scss"]
 })
-export class CirclesComponent implements AfterContentInit {
+export class CirclesComponent implements AfterContentInit, OnInit {
     @Input() data: any[];
     @Input() keyAccessor: any;
     @Input() xAccessor: any;
@@ -26,8 +24,12 @@ export class CirclesComponent implements AfterContentInit {
     accessorFunction = useAccessor;
     borderStyleProp = "border";
     borderStyleValue = "#124f8c";
-    circleStyles = ["present-value"];
-    condition = true;
+    circleStyles = ["dot"];
+    condition = false;
+
+    ngOnInit() {
+        this.condition = false;
+    }
 
     ngAfterContentInit(): void {
         // Called after ngOnInit when the component's or directive's content has been initialized.

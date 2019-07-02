@@ -9,7 +9,7 @@ import { TimelineDataPointFin } from "../interfaces/types";
     styleUrls: ["./kpi-summary.component.scss"]
 })
 export class KpiSummaryComponent implements OnInit {
-    parseDate: any;
+    parseDate = d3.timeParse("%m/%d/%Y");
     dateAccessor: any;
     financialsAccessor: any;
     projectedAccessor: any;
@@ -70,7 +70,6 @@ export class KpiSummaryComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.parseDate = d3.timeParse("%m/%d/%Y");
         this.data.map(() => {
             // todo : figure out how to get this to work
             this.dateAccessor = (v) => this.parseDate(v.date);

@@ -1,7 +1,7 @@
 import { Component, Input, SimpleChanges, OnChanges } from "@angular/core";
 
 @Component({
-    selector: "[appGradient]",
+    selector: "[sbpGradient]",
     template: `
         <svg:linearGradient [id]="id" gradientUnits="userSpaceOnUse" spreadMethod="pad" [attr.x1]="x1" [attr.x2]="x2" [attr.y1]="y1" [attr.y2]="y2">
             <svg:stop *ngFor="let stop of colorStops" [attr.offset]="stop.offset" [attr.stop-color]="stop.color"></svg:stop>

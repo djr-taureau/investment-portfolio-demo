@@ -4,7 +4,6 @@
 
     <div class="title">{{title}} ($M)</div>
 
-
     <!-- CHARTS ROW -->
 
     <!-- VALUE COLUMN -->
@@ -12,25 +11,25 @@
     <div class="py-label">{{pyLabel}} <span class="py-value">{{pyString}}</span></div>
     <div class="ic-label">{{icLabel}} <span class="ic-value">{{icString}}%</span></div>
     <div class="micro-timeline">
-        <app-micro-timeline [data]="data"
+        <sbp-micro-timeline [data]="data"
                             [xAccessor]="dateAccessor"
                             [yAccessor]="financialsAccessor"
                             [projectedAccessor]="projectedAccessor"
-                            [label]="'test'">
-        </app-micro-timeline>
+                            [label]="'revenue'">
+        </sbp-micro-timeline>
     </div>
     <div class="micro-py">
-        <app-micro-histogram [data]="data"
+        <sbp-micro-histogram [data]="data"
                              [xAccessor]="dateAccessor"
                              [projectedAccessor]="projectedAccessor"
                              [pyAccessor]="pyAccessor"
-                             [label]="'py'"></app-micro-histogram>
+                             [label]="'py'"></sbp-micro-histogram>
     </div>
     <div class="micro-ic">
-        <app-micro-histogram [data]="data"
+        <sbp-micro-histogram [data]="data"
                              [xAccessor]="dateAccessor"
                              [projectedAccessor]="projectedAccessor"
                              [icAccessor]="icAccessor"
-                             [label]="'IC'"></app-micro-histogram>
+                             [label]="'IC'"></sbp-micro-histogram>
     </div>
 </div>
