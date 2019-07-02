@@ -1,0 +1,51 @@
+<div #container
+     class="card">
+    <app-chart [dimensions]="dimensions">
+        <svg:defs>
+            <svg:g appGradient
+                   [id]="gradientId"
+                   [colors]="gradientColors"
+                   x2="0"
+                   y2="100%">
+            </svg:g>
+        </svg:defs>
+        <svg:g class="dislay"
+               appAxis
+               dimension="x"
+               [dimensions]="dimensions"
+               [scale]="xScale"
+               [formatTick]="formatDate"
+               [label]="label">
+            </g>
+            <svg:g class="dislay"
+                   appAxis
+                   dimension="y"
+                   [dimensions]="dimensions"
+                   [scale]="yScale"
+                   [label]="label">
+                </g>
+                <svg:g appLine
+                       class="area"
+                       type="area"
+                       [data]="data"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="yAccessorScaled"
+                       [y0Accessor]="y0AccessorScaled">
+                </svg:g>
+                <svg:g appLine
+                       class="line"
+                       [data]="data"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="yAccessorScaled"
+                       [colorAccessor]="colorAccessorScaled"
+                       [fillColor]="fillColor">
+                </svg:g>
+                <svg:g appCircles
+                       class="dot"
+                       [data]="data"
+                       [keyAccessor]="keyAccessor"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="yAccessorScaled">
+                </svg:g>
+    </app-chart>
+</div>

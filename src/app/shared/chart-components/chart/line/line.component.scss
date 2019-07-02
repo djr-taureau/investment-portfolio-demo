@@ -1,0 +1,40 @@
+@import "../../../../../assets/scss/variables.scss";
+
+
+path {
+    transition: all 0.3s ease-out;
+    cursor: crosshair;
+    visibility: none;
+    stroke-width: 3;
+}
+
+path:hover {
+    fill: none;
+    stroke-width: 5;
+}
+
+
+path.line {
+    transition: all 0.3s ease-out;
+    stroke: $light-navy;
+    stroke-linecap: round;
+    fill: none;
+    stroke-width: 5;
+    stroke-dasharray: 3, 3;
+}
+
+path.projected {
+    stroke: #99a8bf;
+    stroke-width: 5;
+    stroke-dasharray: 3, 3;
+
+}
+
+.area {
+    fill: #47a2d6;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    opacity: 0.15;
+    border: solid 2px $dark-sky-blue;
+    background-color: $white;
+}

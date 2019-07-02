@@ -1,0 +1,55 @@
+@import "../../../../../assets/scss/variables.scss";
+
+:host {
+    rect {
+        transition: all 0.3s ease-out;
+        border-radius: 2px;
+    }
+
+    rect:hover {
+        fill: none;
+        stroke-width: 5;
+    }
+
+    rect.projected-positive {
+        border-radius: 2px;
+        fill: $jade;
+        stroke: #115449;
+        stroke-width: 2;
+        opacity: 0.25;
+    }
+
+    rect.historical-positive {
+        fill: $jade;
+        stroke: #115449;
+        border-radius: 2px;
+    }
+
+    rect.historical-negative {
+        border-radius: 2px;
+        stroke: solid 2px #6b291d;
+        fill: $pale-red;
+    }
+
+    rect.projected-negative {
+        border-radius: 2px;
+        stroke: solid 2px #6b291d;
+        fill: $pale-red;
+        opacity: 0.25;
+    }
+
+    rect.blinking {
+        animation: blinkingText 0.3s;
+    }
+
+    // @keyframes blinkingText {
+    //     0% {
+    //         color: #000;
+    //     }
+
+    //     49% {
+    //         color: transparent;
+    //     }
+
+
+}

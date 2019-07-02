@@ -7,6 +7,7 @@ import { MaterialModule } from "./material/material.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { PortfolioNavbarModule } from "./portfolio-navbar/portfolio-navbar.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
+import { D3ChartsModule } from "@shared/chart-components/D3Charts.module";
 import { DirectivesModule } from "./directives/directives.module";
 import { PipeModule } from "./pipes/pipe.module";
 import "hammerjs";
@@ -27,7 +28,8 @@ const MODULES = [
     MaterialModule,
     PipeModule,
     PortfolioNavbarModule,
-    ValuationModule
+    ValuationModule,
+    D3ChartsModule
 ];
 
 const DECLARATIONS = [];

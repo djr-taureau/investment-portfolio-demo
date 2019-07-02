@@ -1,0 +1,114 @@
+@import "../../../../assets/scss/variables.scss";
+
+:host {
+    .container {
+        width: 450px;
+        height: 250px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        border: solid 2px #47a2d6;
+        background-color: white;
+
+        display: grid;
+        grid-gap: 2px;
+        border-radius: 6px;
+        border: solid 2px #47a2d6;
+        grid-template-columns: repeat(5, [col] auto);
+        grid-template-rows: repeat(5, [row] auto);
+    }
+
+    .title {
+        grid-row: row 1;
+        grid-column: col 1 / span 1;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $grey-blue;
+        padding-left: 10px;
+        margin-left: 10px;
+        padding-top: 5px;
+        margin-top: 10px;
+        text-transform: uppercase;
+    }
+
+
+
+    .value {
+        grid-row: row 2 / span 1;
+        grid-column: col 1 / span 1;
+        font-family: PostGrotesk;
+        font-size: 40px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: -0.3px;
+        text-align: left;
+        margin-left: 20px;
+        color: $black
+    }
+
+    .py-label {
+        grid-row: row 2;
+        grid-column: col 3 / span 1;
+        justify-self: right;
+        align-self: right;
+        color: $grey-blue;
+    }
+
+    .py-value {
+        width: 58px;
+        height: 18px;
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: right;
+        color: $jade;
+    }
+
+    .ic-label {
+        grid-row: row 2;
+        grid-column: col 4 / span 1;
+        justify-content: center;
+        color: $grey-blue;
+    }
+
+    .ic-value {
+        width: 58px;
+        height: 18px;
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: right;
+        color: $pale-red;
+    }
+
+    .micro-timeline {
+        grid-row: row 3 / span 2;
+        grid-column: col 1 / span 1;
+        // justify-self: left;
+        align-self: left;
+    }
+
+    .micro-py {
+        grid-row: row 3 / span 2;
+        grid-column: col 3 / span 1;
+    }
+
+    .micro-ic {
+        grid-row: row 3 / span 2;
+        grid-column: col 4 / span 1;
+    }
+}

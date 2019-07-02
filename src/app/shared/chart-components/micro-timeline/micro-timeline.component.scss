@@ -1,0 +1,31 @@
+:host {
+    .container {
+        height: 60px;
+        min-width: 98.3px;
+        width: 97.9;
+        margin-bottom: 2em;
+        background: white;
+        padding: 0.6em 1em;
+        margin: 0.5em;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        background-color: white;
+        border-radius: 6px;
+        align-self: left;
+    }
+
+    .display {
+        display: none;
+    }
+
+    .dot {
+        border-width: 12px;
+    }
+
+    .y-axis-label {
+        fill: #34495e;
+        font-size: 1.4em;
+        text-anchor: middle;
+        transform: rotate(-90deg);
+
+    }
+}

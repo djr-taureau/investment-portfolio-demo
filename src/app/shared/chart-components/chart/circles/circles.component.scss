@@ -1,0 +1,25 @@
+circle {
+    fill: #ffffff;
+    transition: all 0.3s ease-out;
+    width: 12px;
+    height: 12px;
+    border-width: 3px;
+    box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+    border-style: solid;
+    stroke-width: 1;
+    stroke: #124f8c;
+
+}
+
+circle.dot {
+    stroke-width: 4;
+}
+
+circle.projected {
+    display: none;
+}
+
+circle.focus {
+    fill: none;
+    stroke: steelblue;
+}

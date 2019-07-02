@@ -1,0 +1,36 @@
+<!-- CONTAINER -->
+<div class="container">
+    <!-- TITLE ROW -->
+
+    <div class="title">{{title}} ($M)</div>
+
+
+    <!-- CHARTS ROW -->
+
+    <!-- VALUE COLUMN -->
+    <div class="value">{{value}}</div>
+    <div class="py-label">{{pyLabel}} <span class="py-value">{{pyString}}</span></div>
+    <div class="ic-label">{{icLabel}} <span class="ic-value">{{icString}}%</span></div>
+    <div class="micro-timeline">
+        <app-micro-timeline [data]="data"
+                            [xAccessor]="dateAccessor"
+                            [yAccessor]="financialsAccessor"
+                            [projectedAccessor]="projectedAccessor"
+                            [label]="'test'">
+        </app-micro-timeline>
+    </div>
+    <div class="micro-py">
+        <app-micro-histogram [data]="data"
+                             [xAccessor]="dateAccessor"
+                             [projectedAccessor]="projectedAccessor"
+                             [pyAccessor]="pyAccessor"
+                             [label]="'py'"></app-micro-histogram>
+    </div>
+    <div class="micro-ic">
+        <app-micro-histogram [data]="data"
+                             [xAccessor]="dateAccessor"
+                             [projectedAccessor]="projectedAccessor"
+                             [icAccessor]="icAccessor"
+                             [label]="'IC'"></app-micro-histogram>
+    </div>
+</div>
