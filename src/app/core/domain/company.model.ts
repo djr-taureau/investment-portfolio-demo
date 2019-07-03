@@ -1,8 +1,15 @@
+import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { ApiResponse } from "./api.model";
+
+export interface AvailablePeriod {
+    quarter: string;
+    year: number;
+}
 
 export interface Company {
     id: string;
     type: string; // enum
+    defaultCurency: CurrencyType;
     data: any;
     sectors: Sector[];
     region: string;
@@ -28,6 +35,7 @@ export interface Company {
     IRR: number;
     logo: string;
     revenue?: CompanyRevenue[];
+    availablePeriods: AvailablePeriod[];
 
     ///////////////////////////////////////////////////////////////////
     // DASHBOARD HEADER SECTION
@@ -140,6 +148,7 @@ export interface TeamMemberGroup {
 export interface TeamMember {
     id: string;
     companyName: string;
+    name: string;
     firstName: string;
     lastName: string;
     initials?: string;
@@ -150,7 +159,7 @@ export interface TeamMember {
     bio: string;
     position: string;
     companyRelationships: CompanyRelationship[];
-    isLead?: boolean;
+    teamLead: boolean;
 }
 
 export enum CompanyRelationshipTypes {

@@ -3,19 +3,26 @@
                     [itemCount]="teamMemberCount"
                     (close)="onClose()">
     <!-- MAIN COLUMN -->
-    <div>
-        <div *ngFor="let group of teams">
+    <div fxLayout="column"
+         fxLayoutAlign="start stretch"
+         fxLayoutGap="12px"
+         fxFlexFill
+         class="main-container">
+        <ng-container *ngFor="let group of teams">
             <!-- GROUP CONTAINER -->
             <div class="group"
+                 fxFlexFill
                  fxLayout="row"
                  fxLayoutAlign="space-between stretch"
                  fxLayoutGap="60px">
                 <div fxLayout="row"
+                     fxFlex="100px"
                      fxLayoutAlign="start start">
                     <div class="category">{{group.category}} TEAM</div>
                     <div class="count">({{group.members.length}})</div>
                 </div>
                 <div fxLayout="column"
+                     fxFlex="100%"
                      fxLayoutAlign="start stretch"
                      fxLayoutGap="20">
                     <mat-list>
@@ -24,10 +31,9 @@
                                  fxLayout="row"
                                  fxFlex="0 0 inherit"
                                  fxLayoutAlign="start center"
-                                 fxLayoutGap="10px">
-                                <img matListAvatar
-                                     src="{{member.avatar}}"
-                                     (click)="goToMemberDetail(member)">
+                                 fxLayoutGap="20px">
+                                <sbp-team-member-avatar [teamMember]="member"
+                                                        (click)="goToMemberDetail(member)"></sbp-team-member-avatar>
                                 <div fxLayout="row"
                                      fxFlex="0 0 30"
                                      fxLayoutAlign="start center"
@@ -41,7 +47,7 @@
                                              fxLayoutGap="5px">
                                             <div class="row__name">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>
                                             <div class="lead_tag"
-                                                 *ngIf="member.isLead">LEAD</div>
+                                                 *ngIf="member.teamLead">LEAD</div>
                                         </div>
                                         <div fxLayout="row"
                                              fxLayoutGap="5px">
@@ -54,14 +60,16 @@
                                 <div fxLayout="row"
                                      fxFlex="0 0 20"
                                      fxLayoutAlign="start center"
-                                     fxLayoutGap="5px">
+                                     fxLayoutGap="5px"
+                                     class="row__icon phone">
                                     <mat-icon>phone</mat-icon>
                                     <div class="row__phone">{{member.mobile}}</div>
                                 </div>
                                 <div fxLayout="row"
                                      fxFlex="0 0 40"
                                      fxLayoutAlign="start center"
-                                     fxLayoutGap="5px">
+                                     fxLayoutGap="5px"
+                                     class="row__icon email">
                                     <mat-icon>email</mat-icon>
                                     <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
                                 </div>
@@ -71,6 +79,6 @@
                 </div>
 
             </div>
-        </div>
+        </ng-container>
     </div>
 </sbp-slideout-panel>

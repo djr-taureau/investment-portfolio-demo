@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
+import * as _ from "lodash";
 import { BoardMember } from "@core/domain/company.model";
+import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -19,6 +20,11 @@ export class BoardMemberComponent implements OnInit {
      */
     @Input()
     public boardMembers: BoardMember[];
+
+    @Input()
+    public getBoardMemberCount() {
+        return _.get(this, "boardMembers", []).length;
+    }
 
     constructor() {
         BoardMemberComponent.logger.debug(`constructor()`);

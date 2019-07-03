@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { AvailablePeriod } from "@core/domain/company.model";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
@@ -9,10 +10,8 @@ import * as _ from "lodash";
 /**
  * Interface for the period selector items
  */
-export interface SelectorPeriod {
+export interface SelectorPeriod extends AvailablePeriod {
     id: number;
-    year: number;
-    quarter: number;
 }
 
 @Component({
@@ -34,13 +33,13 @@ export class PeriodSelectorComponent implements OnInit {
      * The currency the user has selected
      */
     @Input()
-    public selectedCurrency: CurrencyTypeEnum = CurrencyTypeEnum.USD;
+    public selectedCurrency: CurrencyType;
 
     /**
      * The alternative, non-USD currency that the user can select (if available)
      */
     @Input()
-    public alternateCurrency: CurrencyType = CurrencyTypeEnum.YEN;
+    public alternateCurrency: CurrencyType;
 
     /**
      * Which date unit has the user selected - quarter or year?
@@ -52,7 +51,7 @@ export class PeriodSelectorComponent implements OnInit {
      * The periods available for the selector
      */
     @Input()
-    public availablePeriods: SelectorPeriod[] = [{} as SelectorPeriod];
+    public availablePeriods: SelectorPeriod[];
 
     /**
      * The 'as of' period (the selected period in the available periods)
@@ -64,7 +63,7 @@ export class PeriodSelectorComponent implements OnInit {
      * The month of the financial year end
      */
     @Input()
-    public fye = new Date();
+    public fye: string;
 
     /**
      * Period selector popup settings
@@ -157,6 +156,17 @@ export class PeriodSelectorComponent implements OnInit {
         return _.get(_.last(this.projectedUnits), "date", new Date());
     }
 
+    public getAltCurrencyName() {
+        return _.get(this.alternateCurrency, "name", "");
+    }
+
+    public getAltCurrencySymbol() {
+        return _.get(this.alternateCurrency, "symbol", "");
+    }
+
+    public getSelectedDatePartName() {
+        return _.get(this.selectedDatePartType, "name", "") + "s";
+    }
     /**
      * Handles changes to the selected currency
      * @param $event

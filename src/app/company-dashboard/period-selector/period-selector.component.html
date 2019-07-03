@@ -7,14 +7,16 @@
         <kendo-buttongroup [selection]="'single'">
             <button kendoButton
                     [toggleable]="true"
-                    [selected]="selectedCurrency === currencies.USD"
+                    [selected]="selectedCurrency?.code === currencies.USD.code"
                     [value]="currencies.USD"
-                    (click)="onCurrencyChange(currencies.USD)">{{ currencies.USD.symbol }}{{ currencies.USD.name }}</button>
+                    [disabled]="!alternateCurrency"
+                    (click)="onCurrencyChange(currencies.USD)">{{ currencies.USD.symbol }} {{ currencies.USD.code }}</button>
             <button kendoButton
+                    *ngIf="alternateCurrency"
                     [toggleable]="true"
-                    [selected]="selectedCurrency === alternateCurrency"
+                    [selected]="selectedCurrency?.code === alternateCurrency?.code"
                     [value]="alternateCurrency"
-                    (click)="onCurrencyChange(alternateCurrency)">{{ alternateCurrency.symbol }}{{ alternateCurrency.name }}</button>
+                    (click)="onCurrencyChange(alternateCurrency)">{{ getAltCurrencySymbol() }} {{ getAltCurrencyName()}}</button>
         </kendo-buttongroup>
     </div>
 
@@ -41,7 +43,7 @@
          fxLayoutAlign="start center"
          fxLayoutGap="5px">
         <div>FYE:</div>
-        <div>{{ fye | date: 'MMM' }}</div>
+        <div>{{fye}}</div>
     </div>
 
     <!-- Period Selector -->
@@ -53,9 +55,10 @@
         <div>As of:</div>
         <sbp-iconized-searchable-combo class="combo"
                                        [mainIconSrc]="'assets/image/calendar.svg'"
+                                       [selectedItem]="selectedPeriod"
                                        [popupSettings]="popupSettings"
                                        (selectionChange)="onPeriodChange($event)"
-                                       [listItems]="historicalUnits">
+                                       [listItems]="availablePeriods">
         </sbp-iconized-searchable-combo>
     </div>
 
@@ -66,7 +69,7 @@
          fxLayoutGap="10px">
         <span class="legend"></span>
         <div>Historical Results:</div>
-        <div>{{ getHistoricalUnitCount()}} {{ selectedDatePartType.name + "s" }}</div>
+        <div>{{ getHistoricalUnitCount()}} {{ getSelectedDatePartName() }}</div>
         <div>({{ getFirstHistoricalUnit() | date: 'MMM yyyy'}} - {{ getLastHistoricalUnit() | date: 'MMM yyyy' }})</div>
     </div>
 
@@ -77,7 +80,7 @@
          fxLayoutGap="10px">
         <span class="legend"></span>
         <div>Projected Results:</div>
-        <div>{{ getProjectedUnitCount()}} {{ selectedDatePartType.name + "s"  }}</div>
+        <div>{{ getProjectedUnitCount()}} {{ getSelectedDatePartName()  }}</div>
         <div>({{ getFirstProjectedUnit() | date: 'MMM yyyy'}}<span *ngIf="getProjectedUnitCount() > 0"> - {{ getLastProjectedUnit() | date: 'MMM yyyy' }}</span>)</div>
     </div>
 </div>

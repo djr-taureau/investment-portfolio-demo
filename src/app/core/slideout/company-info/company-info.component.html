@@ -4,6 +4,7 @@
 
     <!-- MAIN CONTAINER -->
     <div class="main"
+         fxFlexFill
          fxLayout="column"
          fxLayoutAlign="start stretch"
          fxLayoutGap="15px">
@@ -18,10 +19,10 @@
              fxLayoutGap="5px"
              fxLayoutAlign="start center">
             <div class="tag"
-                 *ngFor="let tag of company?.tags"
+                 *ngFor="let sector of getCompanySectors()"
                  fxLayout="column"
                  fxLayoutAlign="center start">
-                <div class="tag__text">{{tag.name | uppercase}}</div>
+                <div class="tag__text">{{sector.name | uppercase}}</div>
             </div>
             <img class="tag__img"
                  matListAvatar
@@ -42,12 +43,13 @@
                     <kendo-chart-legend [visible]="false"></kendo-chart-legend>
                 </kendo-chart>
             </div>
-            <div class="slack__text">{{company.percentOwnership*100}}% OWNERSHIP</div>
+            <div class="slack__text">{{getOwnershipPercent()}}% OWNERSHIP</div>
         </div>
         <!-- DATA SECTION ROW -->
         <div class="data"
              fxLayout="row"
-             fxLayoutAlign="space-between center">
+             fxFlex
+             fxLayoutAlign="space-between stretch">
             <div class="data__left-column"
                  fxFlex="50%"
                  fxLayout="column"

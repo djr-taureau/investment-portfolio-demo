@@ -58,12 +58,9 @@
         <div fxLayout="row"
              fxLayoutAlign="center stretch"
              class="team-member-avatar-container">
-            <div *ngFor="let teamMember of teamMembers"
-                 fxLayout="column"
-                 fxLayoutAlign="center stretch"
-                 class="team-member-avatar hand-cursor">
-                {{ teamMember.initials }}
-            </div>
+            <ng-container *ngFor="let teamMember of teamMembers">
+                <sbp-team-member-avatar [teamMember]="teamMember"></sbp-team-member-avatar>
+            </ng-container>
         </div>
         <div class="more-company-info hand-cursor"
              (click)="onAllTeamMembersClick(company.id)">All Team Members</div>

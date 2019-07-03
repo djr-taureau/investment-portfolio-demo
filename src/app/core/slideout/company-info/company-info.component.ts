@@ -1,7 +1,6 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
 import * as _ from "lodash";
-
-import { Company, BoardMember } from "@core/domain/company.model";
+import { Company } from "@core/domain/company.model";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -10,14 +9,6 @@ import { Logger } from "@util/logger";
     styleUrls: ["./company-info.component.scss"]
 })
 export class CompanyInfoComponent {
-    /**
-     * Internal logger.
-     */
-    private static logger: Logger = Logger.getLogger("CompanyInfoComponent");
-
-    // Local props
-    public chartData: any[] = [];
-    public sectorList: string;
 
     /**
      * The Company in context
@@ -39,13 +30,29 @@ export class CompanyInfoComponent {
     public get company(): Company {
         return this._company;
     }
+    /**
+     * Internal logger.
+     */
+    private static logger: Logger = Logger.getLogger("CompanyInfoComponent");
+
     private _company: Company;
 
+    // Local props
+    public chartData: any[] = [];
+    public sectorList: string;
     /**
      * Dispatched when the user closes the slider
      */
     @Output()
     public closePanel: EventEmitter<any> = new EventEmitter();
+
+    public getOwnershipPercent() {
+        return _.get(this, "company.percentOwnership", 0) * 100;
+    }
+
+    public getCompanySectors() {
+        return _.get(this, "company.sectors", []);
+    }
 
     /**
      * Handles the close of the slider by dispatching an event

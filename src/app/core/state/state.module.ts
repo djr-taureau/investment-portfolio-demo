@@ -1,20 +1,21 @@
-import { TeamEffects } from "./team/team.effects";
-import { NgModule } from "@angular/core";
-import { SnackbarEffect } from "@core/state/snackbar/snackbar.effect";
-import { EffectsModule } from "@ngrx/effects";
-import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
-import { StoreModule } from "@ngrx/store";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { environment } from "../../../environments/environment";
+import * as CompanyDashboard from "./company/dashboard";
 import { AuthEffect } from "./auth/auth.effect";
-import { FlowEffect } from "./flow/flow.effect";
+import { CompanyEffects } from "./company/company.effects";
+import { CompanyFlowEffect } from "@core/state/flow/company-flow.effect";
 import { CustomRouterStateSerializer } from "./router/custom-router-state.serializer";
+import { EffectsModule } from "@ngrx/effects";
+import { environment } from "../../../environments/environment";
+import { FlowEffect } from "./flow/flow.effect";
+import { NgModule } from "@angular/core";
 import { reducers } from "./index";
 import { RouterEffect } from "./router/router.effect";
-import { CompanyEffects } from "./company/company.effects";
-import * as CompanyDashboard from "./company/dashboard";
+import { SnackbarEffect } from "@core/state/snackbar/snackbar.effect";
+import { StoreDevtoolsModule } from "@ngrx/store-devtools";
+import { StoreModule } from "@ngrx/store";
+import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
+import { TeamEffects } from "./team/team.effects";
 
-const EFFECTS = [RouterEffect, AuthEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects];
+const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects];
 
 const MODULES = [
     /**

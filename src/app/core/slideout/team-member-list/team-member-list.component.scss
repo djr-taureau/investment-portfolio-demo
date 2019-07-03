@@ -3,6 +3,10 @@
 
 :host {
 
+    .main-container {
+        padding: 20px 40px;
+    }
+
     .mat-list-base {
         padding-top: 0px !important;
     }
@@ -108,18 +112,11 @@
             color: grey;
         }
 
-        .row__phone {
-            font-family: PostGrotesk;
-            font-size: 10px;
-            font-weight: bold;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: 0.5px;
-            color: grey;
+        .material-icons {
+            font-size: 16px;
         }
 
-        .row__email {
+        .row__icon {
             font-family: PostGrotesk;
             font-size: 10px;
             font-weight: bold;
@@ -128,6 +125,16 @@
             line-height: normal;
             letter-spacing: 0.5px;
             color: grey;
+
+            &.phone,
+            &.email {
+                mat-icon {
+                    width: 16px;
+                    height: 16px;
+                    border: solid 1px $light-periwinkle;
+                    object-fit: contain;
+                }
+            }
         }
     }
 }

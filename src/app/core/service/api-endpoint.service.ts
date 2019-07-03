@@ -14,7 +14,7 @@ export class ApiEndpointService {
      */
     public static BASE_URL = {
         LOCAL: "http://localhost:4401/",
-        REMOTE: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v4/",
+        REMOTE: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v5/",
         BUILD: "https://DOMAIN_URL"
     };
 

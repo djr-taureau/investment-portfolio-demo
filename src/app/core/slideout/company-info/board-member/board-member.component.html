@@ -1,6 +1,6 @@
 <div fxLayout="column"
      fxLayoutGap="20">
-    <div class="board-members__label">BOARD MEMBERS ({{boardMembers.length}})</div>
+    <div class="board-members__label">BOARD MEMBERS ({{ getBoardMemberCount() }})</div>
     <mat-list>
         <mat-list-item *ngFor="let boardMember of boardMembers">
             <div class="row"

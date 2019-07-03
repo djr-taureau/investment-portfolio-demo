@@ -1,8 +1,10 @@
 <sbp-slideout-panel [preTitleText]="company?.name"
                     [titleText]="'Key Takeaways'"
+                    [itemCount]="takeaways.length"
                     (close)="onClose($event)">
 
     <div fxLayout="column"
+         fxFlexFill
          fxLayoutAlign="space-between stretch"
          class="takeaways-container">
 
@@ -10,8 +12,8 @@
              fxLayoutAlign="start center"
              class="takeaways-header-container">
 
-            <div class="takeaways-header">Key Takeaways</div>
-            <div class="takeaways-total">({{ takeaways.length }})</div>
+            <!--            <div class="takeaways-header">Key Takeaways</div>-->
+            <!--            <div class="takeaways-total">({{ takeaways.length }})</div>-->
             <div class="takeaways-date">Updated {{ company.takeawayDate | date : "MMM d, y" }}</div>
 
         </div>

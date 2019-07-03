@@ -10,8 +10,7 @@
     }
 
     .main {
-        padding-left: 20px;
-        padding-top: 20px;
+        padding: 20px 40px;
     }
 
     .description {
@@ -28,6 +27,7 @@
 
     .tag {
         height: 18px;
+        padding: 0 8px;
         opacity: 0.5;
         border-radius: 2px;
         background-color: #DCE3F0;
@@ -70,6 +70,11 @@
         padding-bottom: 20px;
     }
 
+    .data__left-column,
+    .data__left-column {
+        // height: 100%;
+    }
+
     .data__left-column {
         border-right: solid 1px $grey-blue;
         border-right-style: dashed;
@@ -90,6 +95,7 @@
         line-height: normal;
         letter-spacing: normal;
         color: $grey-blue;
+        padding: 6px 0px;
     }
 
     .data__value {

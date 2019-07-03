@@ -90,7 +90,6 @@ export class TeamMemberDetailComponent implements OnInit {
             this._teamGroup = theTeamGroup;
             theTeamGroup.members.forEach((member) => {
                 this.teamGroupMemberCount++;
-                member.isLead = member.position === "LEAD";
             });
         }
     }

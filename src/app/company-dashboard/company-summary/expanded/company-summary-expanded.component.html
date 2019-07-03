@@ -99,12 +99,7 @@
                  fxLayout="row"
                  fxLayoutAlign="start center"
                  class="team-member-avatar-container">
-
-                <div fxLayout="column"
-                     fxLayoutAlign="center stretch"
-                     class="team-member-avatar hand-cursor">
-                    {{ teamMember.initials }}
-                </div>
+                <sbp-team-member-avatar [teamMember]="teamMember"></sbp-team-member-avatar>
                 <div fxLayout="column"
                      fxLayoutAlign="center stretch"
                      class="team-member-name">

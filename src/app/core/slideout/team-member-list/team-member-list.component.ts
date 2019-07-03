@@ -36,7 +36,6 @@ export class TeamMemberListComponent implements OnInit {
             this._teams = theTeams;
             theTeams.forEach((team) => {
                 this.teamMemberCount += team.members.length;
-                team.members.forEach((member) => (member.isLead = member.position === "LEAD"));
             });
             // TODO: do we need to filter the groups so they are ordered by group category in any way?
         }

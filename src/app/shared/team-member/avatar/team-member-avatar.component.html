@@ -1,0 +1,11 @@
+<div class="team-member-avatar hand-cursor"
+     *ngIf="hasAvatar()"
+     [ngClass]="{'is-lead': teamMember.teamLead}">
+    {{ teamMember.initials }}
+</div>
+<img matListAvatar
+     *ngIf="!hasAvatar()"
+     [ngClass]="{'is-lead': teamMember.teamLead}"
+     src="{{teamMember.avatar}}">
+<span class="lead-star"><img src="assets/image/star.svg"
+         *ngIf="teamMember.teamLead"></span>

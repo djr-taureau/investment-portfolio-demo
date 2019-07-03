@@ -35,9 +35,11 @@ export class IconizedSearchableComboComponent implements OnInit {
 
     @Output()
     public selectionChange: EventEmitter<IconizedItem> = new EventEmitter();
+
     /**
      * ngModel must be used since the list items are object based
      */
+    @Input()
     public selectedItem: IconizedItem;
 
     public currentSearchValue = "";

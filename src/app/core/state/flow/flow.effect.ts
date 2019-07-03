@@ -1,9 +1,9 @@
 import { TeamMemberListContainer } from "@app/core/slideout/team-member-list/team-member-list.container";
 import { CompanyInfoContainer } from "@app/core/slideout/company-info/company-info.container";
 import { TakeawaysContainer } from "@app/core/slideout/takeaways/takeaways.container";
+import { GoToTeamMemberDetail } from "@core/state/router/router.action";
 import { getSelectedCompanyId } from "../index";
 import { LoadPortfolioFailure, LoadPortfolioSuccess, PortfolioActionTypes, SearchCompany } from "../portfolio-dashboard/portfolio-dashboard.actions";
-import { GoToTeamMemberDetail } from "./../router/router.action";
 import { Action, select, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { ActivatedRoute, Router } from "@angular/router";

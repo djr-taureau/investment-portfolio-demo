@@ -1,6 +1,6 @@
 {
   "name": "sbproot-ui",
-  "version": "0.0.172",
+  "version": "0.0.175",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -116,6 +116,7 @@
     "karma-jasmine-html-reporter": "1.4.2",
     "karma-junit-reporter": "1.2.0",
     "lint-staged": "8.1.6",
+    "moment": "^2.24.0",
     "ng-bullet": "1.0.3",
     "ngrx-store-freeze": "0.2.4",
     "prettier": "1.17.1",

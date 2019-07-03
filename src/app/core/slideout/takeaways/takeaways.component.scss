@@ -3,7 +3,9 @@
 :host {
     font-family: PostGrotesk;
 
-    .takeaways-container {}
+    .takeaways-container {
+        padding: 20px 40px;
+    }
 
     .takeaways-header-container {
         margin: 0 0 15px 0;

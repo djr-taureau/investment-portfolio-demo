@@ -55,6 +55,8 @@ export const getCompanyDefault = (): Company => {
     return {
         aka: "",
         amountInvested: 0,
+        availablePeriods: [],
+        defaultCurency: { code: "USD", symbol: "$" },
         boardMembers: [],
         companyUpdates: [],
         currentValuation: 0,
@@ -101,6 +103,7 @@ export const getTeamMemberDefault = (): TeamMember => {
     return {
         id: "",
         companyName: "",
+        name: "",
         firstName: "",
         lastName: "",
         initials: "",
@@ -110,7 +113,8 @@ export const getTeamMemberDefault = (): TeamMember => {
         email: "",
         bio: "",
         position: "",
-        companyRelationships: []
+        companyRelationships: [],
+        teamLead: false
     };
 };
 
@@ -144,15 +148,18 @@ export const getTeamDefault = (): Team => {
                     {
                         id: "",
                         companyName: "",
+                        name: "",
                         firstName: "",
                         lastName: "",
+                        initials: "",
                         avatar: "",
                         slack: "",
                         mobile: "",
                         email: "",
                         bio: "",
                         position: "",
-                        companyRelationships: []
+                        companyRelationships: [],
+                        teamLead: false
                     }
                 ]
             }

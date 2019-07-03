@@ -35,7 +35,7 @@
                          fxLayoutGap="5px">
                         <div class="row__name">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>
                         <div class="lead_tag"
-                             *ngIf="member.isLead">LEAD</div>
+                             *ngIf="member.teamLead">LEAD</div>
                     </div>
                     <!-- SLACK -->
                     <div fxLayout="row"
