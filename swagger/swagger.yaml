@@ -337,15 +337,12 @@ definitions:
           $ref: '#/definitions/Sector'
       region:
         type: "string"
+      defaultCurrency:
+        $ref: '#/definitions/Currency'
       funds:
         type: "array"
         items:
           $ref: "#/definitions/Fund"
-      amountInvested:
-        type: "number"
-      deployed:
-        type: "number"
-        description: "Displayed in the company header to the right of the takeaways."
       logo:
         type: "string"
       revenue:
@@ -389,14 +386,14 @@ definitions:
         type: "string"
       website:
         type: "string"
-      stage:
+      revenueStage:
         type: "string"
         enum:
           - "PREREV"
           - "PRIVATE"
           - "PUBLIC"
       fiscalYearEnd:
-        type: "string"
+        $ref: '#/definitions/MonthDay'
       investingEntity:
         type: "string"
       initialInvestmentDate:
@@ -501,6 +498,13 @@ definitions:
         type: "string"
       position:
         type: "string"
+  Currency:
+    type: "object"
+    properties:
+      code:
+        type: "string"
+      name:
+        type: "string"
   Address:
     type: "object"
     properties:
@@ -555,8 +559,10 @@ definitions:
       year:
         type: "integer"
         format: "int64"
-      amount:
-        type: "integer"
+      amountInNative:
+        type: "number"
+      amountInUSD:
+        type: "number"
   Fund:
     type: "object"
     properties:
@@ -598,6 +604,14 @@ definitions:
       description:
         type: "string"
         description: "Long form description of the industry (ie, for tooltips)"
+  MonthDay:
+    type: "object"
+    properties:
+      month:
+        type: "string"
+      day:
+        type: "integer"
+        format: "int64"
   Tag:
     type: "object"
     properties:
