@@ -501,6 +501,8 @@ definitions:
   Currency:
     type: "object"
     properties:
+      symbol:
+        type: "string"
       code:
         type: "string"
       name:
