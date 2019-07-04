@@ -20,3 +20,11 @@ steps:
     npm install
     npm run prod
   displayName: 'npm install and build'
+
+# THis may go away perhaps overkill if the "publish" bit below works, just different than I'm used to
+- script: |
+    ./zip-deploy.sh
+  displayName: 'release to azure artifacts'
+
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: Spa
