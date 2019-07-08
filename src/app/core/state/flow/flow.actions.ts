@@ -1,5 +1,6 @@
 import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
+import { TeamMember } from "@app/core/domain/company.model";
 
 export enum FlowActionTypes {
     OpenCompanyInfoPanel = "[Flow] Open Company Info Panel",
@@ -101,7 +102,7 @@ export class LoadPortfolio implements Action {
 export class OpenTeamMemberDetailPanel implements Action {
     readonly type = FlowActionTypes.OpenTeamMemberDetailPanel;
 
-    constructor(public payload?: string) {}
+    constructor(public payload?: TeamMember) {}
 }
 
 export class OpenTeamMemberListPanel implements Action {

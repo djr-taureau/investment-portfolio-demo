@@ -1,1 +1,212 @@
+@import "../../../../assets/scss/variables.scss";
+@import "../../../../assets/scss/pointers";
 
+:host {
+
+    .main-column {
+        padding: 0 40px;
+
+        .back-link {
+            padding: 17px 0;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $dark-sky-blue;
+            @extend .hand-cursor;
+        }
+
+        .section-row {
+            padding: 30px 0;
+            border-bottom: dashed 1px $light-grey-blue;
+            width: 650px;
+
+            .main-avatar {
+                width: 72px;
+                height: 72px;
+                padding-right: 36px
+            }
+
+            .member-avatar {
+                width: 32px;
+                height: 32px;
+                padding-right: 8px;
+            }
+
+            .biography-label {
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                color: $grey-blue;
+            }
+
+            .biography-text {
+                font-family: PostGrotesk;
+                font-size: 14px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.25px;
+                color: $slate;
+            }
+
+            .team-label {
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                color: $grey-blue;
+                margin-right: 5px;
+            }
+
+            .team-count {
+                opacity: 0.75;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                color: $grey-blue;
+            }
+
+            .widget {
+                padding: 16px 0;
+
+
+                img {
+                    width: 40px;
+                    height: 40px;
+                }
+
+                font-family: PostGrotesk;
+                font-size: 16px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                color: $dark;
+            }
+
+            .name_box {
+                @extend .hand-cursor;
+
+                img {
+                    width: 16px;
+                    height: 16px;
+                }
+
+                .slack {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: $grey-blue;
+                }
+
+                .lead_tag {
+                    // opacity: 0.5;
+                    padding: 0px 3px 0px 3px;
+                    border-radius: 2px;
+                    background-color: $macaroni-and-cheese;
+                    mix-blend-mode: multiply;
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    text-align: center;
+                    color: $grey-blue;
+                }
+
+                .row__phone {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: grey;
+                }
+
+                .row__email {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: grey;
+                }
+
+                .team-label {
+                    font-family: PostGrotesk;
+                    font-size: 12px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: $grey-blue;
+                }
+
+                .team-count {
+                    opacity: 0.75;
+                    font-family: PostGrotesk;
+                    font-size: 12px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: normal;
+                    color: $grey-blue;
+                }
+
+                .member__header {
+                    font-family: PostGrotesk;
+                    font-size: 36px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: $dark;
+                }
+
+                .row__name {
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.14;
+                    letter-spacing: normal;
+                    color: $dark-gray;
+                }
+            }
+        }
+
+    }
+}

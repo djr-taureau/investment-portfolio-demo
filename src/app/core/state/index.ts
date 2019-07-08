@@ -1,3 +1,4 @@
+import { CompanyRelationshipTypes } from "./../domain/company.model";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromAuth from "./auth/auth.reducer";
@@ -7,6 +8,7 @@ import * as fromPortfolioDashboard from "./portfolio-dashboard/porfolio-dashboar
 import * as fromPortfolioListing from "./portfolio-list/portfolio-list.reducer";
 import * as fromRouter from "@ngrx/router-store";
 import * as fromTeam from "./team/team.reducer";
+import * as fromTeamMember from "./team-member/team-member.reducer";
 import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import { Company } from "../domain/company.model";
@@ -20,6 +22,7 @@ export interface AppState {
     portfolioDashboard: fromPortfolioDashboard.State;
     router: fromRouter.RouterReducerState<RouterStateUrl>;
     team: fromTeam.State;
+    teamMember: fromTeamMember.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -29,7 +32,8 @@ export const reducers: ActionReducerMap<AppState> = {
     portfolioDashboard: fromPortfolioDashboard.reducer,
     layout: fromLayout.layoutReducer,
     router: fromRouter.routerReducer,
-    team: fromTeam.reducer
+    team: fromTeam.reducer,
+    teamMember: fromTeamMember.reducer
 };
 
 // -------------------------------------------------------------------
@@ -134,6 +138,11 @@ export const getTeams = createSelector(
     (teams) => teams
 );
 
+export const getSelectedTeamGroup = createSelector(
+    selectTeamState,
+    fromTeam.getSelectedTeamMemberGroup
+);
+
 // -------------------------------------------------------------------
 // COMPANY SELECTORS
 // -------------------------------------------------------------------
@@ -201,6 +210,30 @@ export const getSelectedCompanyYearPlusOneValuation = createSelector(
 export const getSelectedCompanyYearExitValuation = createSelector(
     getSelectedCompany,
     (company: Company) => ObjectUtil.getNestedPropIfExists(company, ["valuation", "topLineValuations", "2", "exit"], {})
+);
+
+// -------------------------------------------------------------------
+// TEAM MEMBER SELECTORS
+// -------------------------------------------------------------------
+export const selectTeamMemberState = createFeatureSelector<fromTeamMember.State>("teamMember");
+
+export const getSelectedTeamMember = createSelector(
+    selectTeamMemberState,
+    fromTeamMember.getSelectedTeamMember
+);
+
+export const getSelectedTeamMemberAndRelatedCompanies = createSelector(
+    getSelectedTeamMember,
+    getCompanyEntities,
+    (member, companies) => {
+        member.companyRelationships.forEach((relation) => {
+            if (relation.relationship === CompanyRelationshipTypes.BOARD_SEAT || relation.relationship === CompanyRelationshipTypes.COMPANY_COVERED) {
+                relation.companyLogo = companies[relation.companyId].logo;
+                relation.companyName = companies[relation.companyId].name;
+            }
+        });
+        return member;
+    }
 );
 
 // -------------------------------------------------------------------

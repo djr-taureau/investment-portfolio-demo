@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from "@angular/core";
 import { MatTableDataSource, MatSort, MatPaginator, Sort } from "@angular/material";
 import { Company } from "@core/domain/company.model";
 import { Column } from "@core/domain/data-table.ui-model";
@@ -31,6 +31,9 @@ export class PortfolioListingTableComponent implements OnInit {
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("PortfolioListingTableComponent");
+
+    @Output()
+    public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
 
     @Input()
     public set tableData(value: PortfolioTableItem[]) {
@@ -168,6 +171,9 @@ export class PortfolioListingTableComponent implements OnInit {
         }
     }
 
+    public onRowClick(company: PortfolioTableItem) {
+        this.openCompanyDashboard.emit(company.companyId);
+    }
     /**
      * Not in use, but if we wanted to click on header to sort
      */

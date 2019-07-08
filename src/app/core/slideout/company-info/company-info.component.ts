@@ -9,7 +9,6 @@ import { Logger } from "@util/logger";
     styleUrls: ["./company-info.component.scss"]
 })
 export class CompanyInfoComponent {
-
     /**
      * The Company in context
      */

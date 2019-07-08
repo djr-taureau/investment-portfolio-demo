@@ -1,3 +1,4 @@
+import { TeamMemberEffects } from "./team-member/team-member.effects";
 import * as CompanyDashboard from "./company/dashboard";
 import { AuthEffect } from "./auth/auth.effect";
 import { CompanyEffects } from "./company/company.effects";
@@ -15,7 +16,7 @@ import { StoreModule } from "@ngrx/store";
 import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
 import { TeamEffects } from "./team/team.effects";
 
-const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects];
+const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects, TeamMemberEffects];
 
 const MODULES = [
     /**

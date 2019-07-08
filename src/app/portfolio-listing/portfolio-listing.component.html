@@ -16,7 +16,8 @@
     <sbp-portfolio-listing-table [tableData]="tableData"
                                  [groupByColumn]="'region'"
                                  [sortByColumn]="'companyName'"
-                                 [filter]="[]"></sbp-portfolio-listing-table>
+                                 [filter]="[]"
+                                 (openCompanyDashboard)="onOpenCompanyDashboard($event)"></sbp-portfolio-listing-table>
 
 
     <div>{{ mocks }}</div>

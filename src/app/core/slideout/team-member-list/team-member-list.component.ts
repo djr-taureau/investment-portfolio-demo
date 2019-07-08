@@ -25,7 +25,7 @@ export class TeamMemberListComponent implements OnInit {
      * Dispatched when user clicks a member to view the detail page
      */
     @Output()
-    public goToDetail = new EventEmitter<string>();
+    public goToDetail = new EventEmitter<any>();
 
     /**
      * The Company Groups
@@ -33,10 +33,14 @@ export class TeamMemberListComponent implements OnInit {
     @Input()
     public set teams(theTeams: TeamMemberGroup[]) {
         if (theTeams) {
-            this._teams = theTeams;
             theTeams.forEach((team) => {
                 this.teamMemberCount += team.members.length;
+                // TODO: REMOVE THIS
+                team.members.forEach((member) => {
+                    member.avatar = "assets/image/slack.png";
+                });
             });
+            this._teams = theTeams;
             // TODO: do we need to filter the groups so they are ordered by group category in any way?
         }
     }
@@ -50,6 +54,7 @@ export class TeamMemberListComponent implements OnInit {
     @Input()
     public set company(theCompany: Company) {
         if (theCompany) {
+            this._company = theCompany;
             this.companyName = theCompany.name;
         }
     }
@@ -72,9 +77,10 @@ export class TeamMemberListComponent implements OnInit {
         this.closePanel.emit();
     }
 
-    public goToMemberDetail(member: TeamMember): void {
-        TeamMemberListComponent.logger.debug(`goToMemberDetail() detail for ${member.id}`);
-        this.goToDetail.emit(member.id);
+    public goToMemberDetail(member: TeamMember, group: TeamMemberGroup): void {
+        TeamMemberListComponent.logger.debug(`goToMemberDetail() detail for ${member.id} ${group.category}`);
+        this.goToDetail.emit({ member, group, companyId: this.company.id });
+        // this.closePanel.emit();
     }
     constructor() {}
 

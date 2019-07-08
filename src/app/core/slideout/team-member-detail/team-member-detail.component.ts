@@ -6,6 +6,10 @@ import { Company } from "@core/domain/company.model";
 import { Input } from "@angular/core";
 import { Component, OnInit } from "@angular/core";
 
+export interface Relationship {
+    name: string;
+    logo: string;
+}
 @Component({
     selector: "sbp-team-member-detail",
     templateUrl: "./team-member-detail.component.html",
@@ -23,12 +27,20 @@ export class TeamMemberDetailComponent implements OnInit {
     public companiesCoveredCount = 0;
     public boardSeatsCount = 0;
     public titleText = `All Team Members`;
+    public companiesCovered: Relationship[] = [];
+    public boardSeats: Relationship[] = [];
 
     /**
      * Dispatched when user clicks a member to view the detail page
      */
     @Output()
-    public goToList = new EventEmitter<void>();
+    public goToList: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
+     * Dispatched when the user closes the slider
+     */
+    @Output()
+    public closePanel: EventEmitter<any> = new EventEmitter();
 
     /**
      * The TeamMember in context
@@ -36,14 +48,25 @@ export class TeamMemberDetailComponent implements OnInit {
     @Input()
     public set member(theMember: TeamMember) {
         if (theMember) {
-            this._member = theMember;
             theMember.companyRelationships.forEach((relationship) => {
                 if (relationship.relationship === CompanyRelationshipTypes.BOARD_SEAT) {
                     this.boardSeatsCount++;
+                    // TODO: REMOVE THIS
+                    relationship.companyLogo = "assets/image/slack.png";
+                    this.boardSeats.push({ name: relationship.companyName, logo: relationship.companyLogo });
                 } else if (relationship.relationship === CompanyRelationshipTypes.COMPANY_COVERED) {
                     this.companiesCoveredCount++;
+                    // TODO: REMOVE THIS
+                    relationship.companyLogo = "assets/image/slack.png";
+                    this.companiesCovered.push({ name: relationship.companyName, logo: relationship.companyLogo });
                 }
             });
+            // TODO: REMOVE THIS
+            theMember.avatar = "assets/image/slack.png";
+            theMember.bio = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. `;
+            this._member = theMember;
         }
     }
     public get member(): TeamMember {
@@ -52,45 +75,18 @@ export class TeamMemberDetailComponent implements OnInit {
     private _member: TeamMember;
 
     /**
-     * The compaines covered for the team member in context
-     */
-    @Input()
-    public set companiesCovered(theCompanies: Company[]) {
-        if (theCompanies) {
-            this._companiesCovered = theCompanies;
-            this.companiesCoveredCount = theCompanies.length;
-        }
-    }
-    public get companiesCovered(): Company[] {
-        return this._companiesCovered;
-    }
-    private _companiesCovered: Company[];
-
-    /**
-     * The board seats for the team member in context
-     */
-    @Input()
-    public set boardSeats(theCompanies: Company[]) {
-        if (theCompanies) {
-            this._boardSeats = theCompanies;
-            this.boardSeatsCount = theCompanies.length;
-        }
-    }
-    public get boardSeats(): Company[] {
-        return this._boardSeats;
-    }
-    private _boardSeats: Company[];
-
-    /**
      * The TeamGroup for this Team member
      */
     @Input()
     public set teamGroup(theTeamGroup: TeamMemberGroup) {
         if (theTeamGroup) {
-            this._teamGroup = theTeamGroup;
             theTeamGroup.members.forEach((member) => {
                 this.teamGroupMemberCount++;
+                member.teamLead = member.position === "LEAD";
+                // TODO: REMOVE THIS
+                member.avatar = "assets/image/slack.png";
             });
+            this._teamGroup = theTeamGroup;
         }
     }
     public get teamGroup(): TeamMemberGroup {
@@ -106,6 +102,7 @@ export class TeamMemberDetailComponent implements OnInit {
         if (theCompany) {
             this.companyName = theCompany.name;
         }
+        this._company = theCompany;
     }
     public get company(): Company {
         return this._company;
@@ -113,10 +110,13 @@ export class TeamMemberDetailComponent implements OnInit {
     private _company: Company;
 
     /**
-     * Dispatched when the user closes the slider
+     * Hacky way to get the team lead for the member the detail is for
+     * since they aren't returning the teamLead prop in both places
      */
-    @Output()
-    public closePanel: EventEmitter<any> = new EventEmitter();
+    public isLead(): boolean {
+        const result = this.teamGroup.members.find((member) => member.id === this.member.id);
+        return result.teamLead;
+    }
 
     /**
      * Handles the close of the slider by dispatching an event
@@ -128,7 +128,7 @@ export class TeamMemberDetailComponent implements OnInit {
 
     public onBackToTeamMembersClick(): void {
         TeamMemberDetailComponent.logger.debug(`onBackToTeamMembersClick()`);
-        this.goToList.emit();
+        this.goToList.emit(this.company.id);
     }
     constructor() {}
 

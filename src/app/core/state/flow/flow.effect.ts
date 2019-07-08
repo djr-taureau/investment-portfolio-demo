@@ -19,6 +19,7 @@ import * as FlowActions from "./flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
 import * as CompanyActions from "../company/company.actions";
 import * as TeamActions from "./../team/team.actions";
+import { TeamMemberDetailContainer } from "@app/core/slideout/team-member-detail/team-member-detail.container";
 
 @Injectable()
 export class FlowEffect {
@@ -144,7 +145,7 @@ export class FlowEffect {
     openTeamMemberDetailPanel$: Observable<Action> = this.actions$.pipe(
         ofType<FlowActions.OpenTeamMemberDetailPanel>(FlowActionTypes.OpenTeamMemberDetailPanel),
         map((action) => action.payload),
-        concatMap((companyId) => [new ToggleSlideout(true), new GoToTeamMemberDetail()])
+        concatMap((teamMember) => [new ToggleSlideout(true, TeamMemberDetailContainer)])
     );
 
     /**

@@ -16,49 +16,52 @@
         <!-- MEMBER INFORMATION ROW -->
         <div class="section-row"
              fxLayout="row"
-             fxFlex="0 0 inherit"
              fxLayoutAlign="start center"
              fxLayoutGap="10px">
             <!-- AVATAR -->
             <img matListAvatar
+                 class="main-avatar"
                  src="{{member.avatar}}">
             <!-- PERSONAL INFO COLUMN -->
             <div fxLayout="row"
-                 fxFlex="0 0 30"
                  fxLayoutAlign="start center"
                  fxLayoutGap="5px">
                 <div class="name_box"
                      fxLayout="column"
                      fxLayoutAlign="start start">
+                    <!-- NAME ROW -->
                     <div fxLayout="row"
                          fxLayoutAlign="space-between center"
                          fxLayoutGap="5px">
-                        <div class="row__name">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>
+                        <div class="member__header">{{member.name | titlecase}}</div>
                         <div class="lead_tag"
-                             *ngIf="member.teamLead">LEAD</div>
+                             *ngIf="isLead()">LEAD</div>
                     </div>
-                    <!-- SLACK -->
+                    <!-- COMM ROW -->
                     <div fxLayout="row"
                          fxLayoutGap="5px">
-                        <img matListAvatar
-                             src="{{member.avatar}}">
-                        <div class="slack">{{member.slack | titlecase}}</div>
-                    </div>
-                    <!-- PHONE -->
-                    <div fxLayout="row"
-                         fxFlex="0 0 20"
-                         fxLayoutAlign="start center"
-                         fxLayoutGap="5px">
-                        <mat-icon>phone</mat-icon>
-                        <div class="row__phone">{{member.mobile}}</div>
-                    </div>
-                    <!-- EMAIL -->
-                    <div fxLayout="row"
-                         fxFlex="0 0 40"
-                         fxLayoutAlign="start center"
-                         fxLayoutGap="5px">
-                        <mat-icon>email</mat-icon>
-                        <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
+                        <!-- SLACK -->
+                        <div fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="5px">
+                            <img matListAvatar
+                                 src="{{member.avatar}}">
+                            <div class="slack">{{member.slack | titlecase}}</div>
+                        </div>
+                        <!-- PHONE -->
+                        <div fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="5px">
+                            <mat-icon>phone</mat-icon>
+                            <div class="row__phone">{{member.mobile}}</div>
+                        </div>
+                        <!-- EMAIL -->
+                        <div fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="5px">
+                            <mat-icon>email</mat-icon>
+                            <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,12 +93,12 @@
                     <div fxLayout="row"
                          fxLayoutAlign="start start">
                         <img matListAvatar
+                             class="member-avatar"
                              src="{{person.avatar}}">
                         <div class="name_box"
                              fxLayout="column"
                              fxLayoutAlign="start start">
-                            <div class="row__name">{{person.firstName | titlecase}}</div>
-                            <div class="row__name">{{person.lastName | titlecase}}</div>
+                            <div class="row__name">{{person.name | titlecase}}</div>
                         </div>
                     </div>
                 </div>
@@ -117,11 +120,13 @@
                     <div class="team-count">({{companiesCoveredCount}})</div>
                 </div>
                 <!-- COMPANIES COVERED WIDGET ROW -->
-                <div fxLayout="row"
-                     fxLayoutAlign="start start"
-                     fxLayoutGap="8px">
-                    <div *ngFor="let company of companiesCovered">
-
+                <div *ngFor="let company of companiesCovered">
+                    <div fxLayout="row"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="8px"
+                         class="widget">
+                        <img src="{{company.logo}}">
+                        <div>{{company.name}}</div>
                     </div>
                 </div>
             </div>

@@ -16,6 +16,7 @@
         <div>&#47;</div>
         <sbp-iconized-searchable-combo *ngIf="showCompanyCombo"
                                        class="combo"
+                                       [selectedItem]="selectedCompany"
                                        [popupSettings]="popupSettings"
                                        (selectionChange)="onCompanySelect($event)"
                                        [listItems]="listItems">
@@ -23,15 +24,6 @@
     </div>
 
     <div class="user">
-        <button (click)="onToggleTeamListSlideout($event)">
-            Test Open/Close team list Panel
-        </button>
-        <button (click)="onToggleTeamSlideout($event)">
-            Test Open/Close team member Panel
-        </button>
-        <button (click)="onToggleSlideout($event)">
-            Test Open/Close Panel
-        </button>
 
         <button mat-button
                 [matMenuTriggerFor]="menu">

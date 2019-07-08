@@ -142,15 +142,17 @@ export interface Team {
     groups: TeamMemberGroup[];
 }
 export interface TeamMemberGroup {
+    id?: string;
+    companyId?: string;
     category: string; // of TeamMemberGroupTypes
     members: TeamMember[];
 }
 export interface TeamMember {
     id: string;
     companyName: string;
-    name: string;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string;
+    name?: string;
     initials?: string;
     avatar: string;
     slack: string;
@@ -170,6 +172,8 @@ export enum CompanyRelationshipTypes {
 export interface CompanyRelationship {
     memberId: string;
     companyId: string;
+    companyLogo?: string;
+    companyName?: string;
     relationship: string; // one of CompanyRelationshipTypes
 }
 
@@ -271,4 +275,8 @@ export interface GetAllTeamsResponse extends ApiResponse {
     data: {
         teams: TeamMemberGroup[];
     };
+}
+
+export interface GetTeamMemberResponse extends ApiResponse {
+    data: TeamMember;
 }

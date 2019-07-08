@@ -40,6 +40,15 @@ export class PortfolioListingComponent implements OnInit {
     @Output()
     public loadCompanies: EventEmitter<void> = new EventEmitter<void>();
 
+    @Output()
+    public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
+
+    /**`
+     * Handles the table click of a company row
+     */
+    public onOpenCompanyDashboard(companyId: string) {
+        this.openCompanyDashboard.emit(companyId);
+    }
     /**
      * Constructor.
      */
