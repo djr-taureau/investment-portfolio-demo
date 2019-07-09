@@ -1,16 +1,14 @@
-import { GoToCompanyDashboard } from "./../core/state/router/router.action";
-import * as fromCompanyState from "../core/state/";
-import { appRoutePaths } from "../app.routes";
-import { Company } from "../core/domain/company.model";
+import { GoToCompanyDashboard } from "@core/state/router/router.action";
+import { appRoutePaths } from "@app/app.routes";
+import { Company } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
-import { CorePortfolioContainer } from "../shared/portfolio/core-portfolio.container";
-import { Logger } from "../util/logger";
-import { Observable, of, Subscription } from "rxjs";
+import { CorePortfolioContainer } from "@shared/portfolio/core-portfolio.container";
+import { Logger } from "@util/logger";
+import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";
-import { companies } from "./portfolio-listing-table/sample-data";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
-import { getPortfolioTableItemDefault, getPortfolioTableItemMock } from "@app/util/test.util";
 import * as TeamActions from "@app/core/state/team/team.actions";
+import * as fromCompanyState from "@core/state/";
 
 @Component({
     selector: "sbp-portfolio-listing-container",

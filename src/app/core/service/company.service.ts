@@ -1,6 +1,6 @@
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
-import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "../domain/company.model";
+import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "@core/domain/company.model";
 import { environment } from "../../../environments/environment";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";

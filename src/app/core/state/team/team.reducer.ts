@@ -1,6 +1,6 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { TeamActions, TeamActionTypes } from "./team.actions";
-import { TeamMember, TeamMemberGroup } from "../../domain/company.model";
+import { TeamMember, TeamMemberGroup } from "@core/domain/company.model";
 import * as _ from "lodash";
 
 export interface State extends EntityState<TeamMemberGroup> {

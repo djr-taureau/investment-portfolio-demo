@@ -1,7 +1,7 @@
 import { catchError } from "rxjs/operators";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { Observable, throwError as _throw } from "rxjs";
 /*
  * @description:

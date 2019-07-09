@@ -11,7 +11,7 @@ import * as fromTeam from "./team/team.reducer";
 import * as fromTeamMember from "./team-member/team-member.reducer";
 import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
-import { Company } from "../domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { RouterStateUrl } from "./router/custom-router-state.serializer";
 
 export interface AppState {

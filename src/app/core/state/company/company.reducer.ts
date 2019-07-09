@@ -1,5 +1,5 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { CompanyActions, CompanyActionTypes } from "./company.actions";
 
 function sortByValuation(e1: Company, e2: Company) {

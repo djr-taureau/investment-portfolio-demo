@@ -1,4 +1,4 @@
-import { TeamMember } from "./../../domain/company.model";
+import { TeamMember } from "@core/domain/company.model";
 import { Action } from "@ngrx/store";
 
 export enum TeamMemberActionTypes {

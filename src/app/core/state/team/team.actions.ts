@@ -1,6 +1,5 @@
-import { TeamMemberGroup, TeamMember } from "./../../domain/company.model";
-import { Action, createAction, props, union } from "@ngrx/store";
-import { Team } from "../../domain/company.model";
+import { TeamMemberGroup } from "@core/domain/company.model";
+import { Action } from "@ngrx/store";
 
 export enum TeamActionTypes {
     GetAll = "[Team] Get All",

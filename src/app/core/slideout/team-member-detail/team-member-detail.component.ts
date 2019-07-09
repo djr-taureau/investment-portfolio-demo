@@ -1,4 +1,4 @@
-import { TeamMemberGroup, TeamMember, CompanyRelationshipTypes } from "./../../domain/company.model";
+import { TeamMemberGroup, TeamMember, CompanyRelationshipTypes } from "@core/domain/company.model";
 import { Logger } from "app/util/logger";
 import { EventEmitter } from "@angular/core";
 import { Output } from "@angular/core";

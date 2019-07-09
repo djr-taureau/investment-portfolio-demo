@@ -1,7 +1,7 @@
 import { appRoutePaths } from "../app.routes";
 import { Component, OnInit } from "@angular/core";
-import { CorePortfolioContainer } from "../shared/portfolio/core-portfolio.container";
-import { Logger } from "../util/logger";
+import { CorePortfolioContainer } from "@shared/portfolio/core-portfolio.container";
+import { Logger } from "@util/logger";
 import { Store } from "@ngrx/store";
 
 @Component({

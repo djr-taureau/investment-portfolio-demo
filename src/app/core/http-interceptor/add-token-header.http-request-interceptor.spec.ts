@@ -1,7 +1,7 @@
 import { HttpRequest } from "@angular/common/http";
 import { Store } from "@ngrx/store";
 import { of } from "rxjs";
-import { appRoutePaths } from "../../app.routes";
+import { appRoutePaths } from "@app/app.routes";
 import { AddTokenHeaderHttpRequestInterceptor } from "./add-token-header.http-request-interceptor";
 import * as RouterActions from "@core/state/router/router.action";
 

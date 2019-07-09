@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { getFilteredCompanies, getSearchQuery } from "@core/state";
 import { FindCompanies } from "@core/state/flow/flow.actions";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { take } from "rxjs/operators";

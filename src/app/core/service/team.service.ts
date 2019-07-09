@@ -1,7 +1,7 @@
 import { GetTeamMemberResponse } from "./../domain/company.model";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
-import { GetAllTeamsResponse, TeamMember } from "../domain/company.model";
+import { GetAllTeamsResponse, TeamMember } from "@core/domain/company.model";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Logger } from "@util/logger";

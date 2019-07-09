@@ -1,5 +1,5 @@
 import { Action } from "@ngrx/store";
-import { Company } from "../../domain/company.model";
+import { Company } from "@core/domain/company.model";
 
 export enum CompanyActionTypes {
     GetAll = "[Company] Get All",
