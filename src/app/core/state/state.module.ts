@@ -1,5 +1,4 @@
 import { TeamMemberEffects } from "./team-member/team-member.effects";
-import * as CompanyDashboard from "./company/dashboard";
 import { AuthEffect } from "./auth/auth.effect";
 import { CompanyEffects } from "./company/company.effects";
 import { CompanyFlowEffect } from "@core/state/flow/company-flow.effect";
@@ -15,6 +14,8 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { StoreModule } from "@ngrx/store";
 import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
 import { TeamEffects } from "./team/team.effects";
+import * as CompanyDashboard from "@core/state/company/dashboard";
+import * as PortfolioListingLayout from "@core/state/portfolio-list";
 
 const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects, TeamMemberEffects];
 
@@ -28,7 +29,9 @@ const MODULES = [
      */
     StoreModule.forRoot(reducers),
     // StoreModule.forFeature("portfolio", portfolioReducers),
+
     StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
+    StoreModule.forFeature("portfolioListing", PortfolioListingLayout.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and

@@ -1,11 +1,10 @@
-import { CompanyRelationshipTypes } from "./../domain/company.model";
+import { CompanyRelationshipTypes } from "@core/domain/company.model";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromAuth from "./auth/auth.reducer";
 import * as fromCompany from "./company/company.reducer";
 import * as fromLayout from "./layout/layout.reducer";
 import * as fromPortfolioDashboard from "./portfolio-dashboard/porfolio-dashboard.reducer";
-import * as fromPortfolioListing from "./portfolio-list/portfolio-list.reducer";
 import * as fromRouter from "@ngrx/router-store";
 import * as fromTeam from "./team/team.reducer";
 import * as fromTeamMember from "./team-member/team-member.reducer";
@@ -17,7 +16,6 @@ import { RouterStateUrl } from "./router/custom-router-state.serializer";
 export interface AppState {
     auth: fromAuth.AuthState;
     company: fromCompany.State;
-    portfolioListing: fromPortfolioListing.State;
     layout: fromLayout.LayoutState;
     portfolioDashboard: fromPortfolioDashboard.State;
     router: fromRouter.RouterReducerState<RouterStateUrl>;
@@ -28,7 +26,6 @@ export interface AppState {
 export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.authReducer,
     company: fromCompany.reducer,
-    portfolioListing: fromPortfolioListing.reducer,
     portfolioDashboard: fromPortfolioDashboard.reducer,
     layout: fromLayout.layoutReducer,
     router: fromRouter.routerReducer,
@@ -237,36 +234,6 @@ export const getTeams = createSelector(
 export const getSelectedTeamGroup = createSelector(
     selectTeamState,
     fromTeam.getSelectedTeamMemberGroup
-);
-
-// -------------------------------------------------------------------
-// PORTFOLIO LISTING SELECTORS
-// -------------------------------------------------------------------
-export const selectCompanyListingState = createFeatureSelector<fromPortfolioListing.State>("portfolioListing");
-
-export const getCompanyCount = createSelector(
-    selectCompanyListingState,
-    fromPortfolioListing.getCompanyCount
-);
-export const getInvested = createSelector(
-    selectCompanyListingState,
-    fromPortfolioListing.getInvested
-);
-export const getTotalFund = createSelector(
-    selectCompanyListingState,
-    fromPortfolioListing.getTotalFund
-);
-export const getValuation = createSelector(
-    selectCompanyListingState,
-    fromPortfolioListing.getValuation
-);
-export const getMOIC = createSelector(
-    selectCompanyListingState,
-    fromPortfolioListing.getMOIC
-);
-export const getIRR = createSelector(
-    selectCompanyListingState,
-    fromPortfolioListing.getIRR
 );
 
 // --------------------------------------------------

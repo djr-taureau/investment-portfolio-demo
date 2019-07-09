@@ -19,6 +19,10 @@ export class PortfolioListingComponent implements OnInit {
      */
     @Input()
     public companies: Company[];
+
+    /**
+     * Table data.
+     */
     @Input()
     public tableData: PortfolioTableItem[];
 

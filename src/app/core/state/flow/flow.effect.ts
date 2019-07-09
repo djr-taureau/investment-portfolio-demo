@@ -1,7 +1,8 @@
-import { TeamMemberListContainer } from "@app/core/slideout/team-member-list/team-member-list.container";
-import { CompanyInfoContainer } from "@app/core/slideout/company-info/company-info.container";
-import { TakeawaysContainer } from "@app/core/slideout/takeaways/takeaways.container";
-import { getSelectedCompanyId } from "../index";
+import { TeamMemberListContainer } from "@core/slideout/team-member-list/team-member-list.container";
+import { CompanyInfoContainer } from "@core/slideout/company-info/company-info.container";
+import { TakeawaysContainer } from "@core/slideout/takeaways/takeaways.container";
+import { TeamMemberDetailContainer } from "@core/slideout/team-member-detail/team-member-detail.container";
+import { getSelectedCompanyId } from "@core/state";
 import { LoadPortfolioFailure, LoadPortfolioSuccess, PortfolioActionTypes, SearchCompany } from "../portfolio-dashboard/portfolio-dashboard.actions";
 import { Action, select, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
@@ -16,9 +17,9 @@ import { SetSelectedCompanyLink, SetSelectedPortfolioLink, ToggleSlideout } from
 import { withLatestFrom } from "rxjs/operators";
 import * as FlowActions from "./flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
-import * as CompanyActions from "../company/company.actions";
-import * as TeamActions from "./../team/team.actions";
-import { TeamMemberDetailContainer } from "@app/core/slideout/team-member-detail/team-member-detail.container";
+import * as CompanyActions from "@core/state/company/company.actions";
+import * as TeamActions from "@core/state/team/team.actions";
+import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 
 @Injectable()
 export class FlowEffect {
@@ -235,8 +236,7 @@ export class FlowEffect {
         map((action) => action.query),
         concatMap((query) => {
             const actions = [];
-            // set the selected company
-            actions.push(new SearchCompany(query));
+            actions.push(new PortfolioListingLayoutActions.Search(query));
             return actions;
         })
     );

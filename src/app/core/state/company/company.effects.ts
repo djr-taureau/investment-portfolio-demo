@@ -38,29 +38,6 @@ export class CompanyEffects {
         )
     );
 
-    @Effect()
-    search$ = ({ debounce = 300, scheduler = asyncScheduler } = {}): Observable<Action> =>
-        this.actions$.pipe(
-            ofType(PortfolioActionTypes.SearchCompany),
-            debounceTime(debounce, scheduler),
-            switchMap(({ query }) => {
-                if (query === "") {
-                    return empty;
-                }
-
-                const nextSearch$ = this.actions$.pipe(
-                    ofType(PortfolioActionTypes.SearchCompany),
-                    skip(1)
-                );
-
-                return this.companyService.searchCompanies(query).pipe(
-                    takeUntil(nextSearch$),
-                    map((companies: Company[]) => new SearchCompanySuccess(companies)),
-                    catchError((err) => of(new SearchCompanyFailure(err)))
-                );
-            })
-        )
-
     /**
      * Constructor.
      * @param actions$

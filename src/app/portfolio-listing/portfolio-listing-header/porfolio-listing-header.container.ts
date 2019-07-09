@@ -53,11 +53,15 @@ export class PortfolioListingHeaderContainer implements OnInit {
     }
     public applyFilter($event) {}
 
-    filter(query: string) {
+    /**
+     * Dispatches an action to filter the table.
+     * @param query
+     */
+    public filter(query: string) {
         this.store$.dispatch(new FindCompanies(query));
     }
 
-    group(group: string) {
+    public group(group: string) {
         const typeGroup = this.store$.pipe(select(getFilteredCompanies));
         typeGroup.subscribe((result) => {
             this.groupedResults = result.reduce((p, n) => {
@@ -71,7 +75,7 @@ export class PortfolioListingHeaderContainer implements OnInit {
         this.groupBy.emit(group);
     }
 
-    sort(sortValue: string) {
+    public sort(sortValue: string) {
         this.sortBy.emit(sortValue);
     }
 }

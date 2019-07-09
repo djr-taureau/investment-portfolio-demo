@@ -1,4 +1,4 @@
-import * as fromState from "@core/state";
+import * as fromPortfolioListingState from "@core/state/portfolio-list";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";
@@ -51,12 +51,12 @@ export class PortfolioListingSummaryContainer implements OnInit {
      * Initialize the component.
      */
     public ngOnInit(): void {
-        this.companyCount$ = this.store$.pipe(select(fromState.getCompanyCount));
-        this.invested$ = this.store$.pipe(select(fromState.getInvested));
-        this.totalFund$ = this.store$.pipe(select(fromState.getTotalFund));
-        this.valuation$ = this.store$.pipe(select(fromState.getValuation));
-        this.moic$ = this.store$.pipe(select(fromState.getMOIC));
-        this.irr$ = this.store$.pipe(select(fromState.getIRR));
+        this.companyCount$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCount));
+        this.invested$ = this.store$.pipe(select(fromPortfolioListingState.getInvested));
+        this.totalFund$ = this.store$.pipe(select(fromPortfolioListingState.getTotalFund));
+        this.valuation$ = this.store$.pipe(select(fromPortfolioListingState.getValuation));
+        this.moic$ = this.store$.pipe(select(fromPortfolioListingState.getMoic));
+        this.irr$ = this.store$.pipe(select(fromPortfolioListingState.getIrr));
     }
 
     constructor(private store$: Store<any>) {}

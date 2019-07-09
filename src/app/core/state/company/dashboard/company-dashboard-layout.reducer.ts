@@ -3,28 +3,28 @@ import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 
-export interface CompanyDashboardLayout {
+export interface CompanyDashboardLayoutState {
     collapsed: boolean;
     selectedCurrency: CurrencyType;
     selectedDatePart: DatePartType;
     selectedPeriod: SelectorPeriod;
 }
 
-export const initialState: CompanyDashboardLayout = {
+export const initialState: CompanyDashboardLayoutState = {
     collapsed: true,
     selectedCurrency: CurrencyTypeEnum.USD,
     selectedDatePart: DatePartTypeEnum.QTR,
     selectedPeriod: null
 };
 
-function expandOrCollapse(state: CompanyDashboardLayout = initialState): CompanyDashboardLayout {
+function expandOrCollapse(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
     return {
         ...state,
         collapsed: !state.collapsed
     };
 }
 
-export function reducer(state: CompanyDashboardLayout = initialState, action: CompanyDashboardLayoutActions): CompanyDashboardLayout {
+export function reducer(state: CompanyDashboardLayoutState = initialState, action: CompanyDashboardLayoutActions): CompanyDashboardLayoutState {
     switch (action.type) {
         case CompanyDashboardLayoutActionTypes.ExpandOrCollapse:
             return expandOrCollapse(state);
@@ -48,7 +48,7 @@ export function reducer(state: CompanyDashboardLayout = initialState, action: Co
     }
 }
 
-export const getCollapsed = (state: CompanyDashboardLayout) => state.collapsed;
-export const getSelectedCurrency = (state: CompanyDashboardLayout) => state.selectedCurrency;
-export const getSelectedDatePart = (state: CompanyDashboardLayout) => state.selectedDatePart;
-export const getSelectedPeriod = (state: CompanyDashboardLayout) => state.selectedPeriod;
+export const getCollapsed = (state: CompanyDashboardLayoutState) => state.collapsed;
+export const getSelectedCurrency = (state: CompanyDashboardLayoutState) => state.selectedCurrency;
+export const getSelectedDatePart = (state: CompanyDashboardLayoutState) => state.selectedDatePart;
+export const getSelectedPeriod = (state: CompanyDashboardLayoutState) => state.selectedPeriod;

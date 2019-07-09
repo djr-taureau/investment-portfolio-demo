@@ -9,11 +9,12 @@
          fxLayoutAlign="space-between center">
         <img src="assets/image/search.svg"
              class="search">
+
         <input matInput
                class="search-for-company"
+               placeholder="Search for Company"
                [value]="companyFilter"
-               (keyup)="filter.emit($event.target.value)"
-               placeholder="Search for Company">
+               (keyup)="onFilter($event)">
     </div>
 
     <!-- START VERTCIAL LINE, FILTER ICON, VERTICAL LINE -->

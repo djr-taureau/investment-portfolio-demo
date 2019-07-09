@@ -1,4 +1,3 @@
-import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { Company } from "@core/domain/company.model";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
 import { getSelectedCompany } from "../../";
@@ -8,7 +7,7 @@ import * as fromCompanyDashboardLayout from "./company-dashboard-layout.reducer"
 import * as _ from "lodash";
 
 export interface CompanyDashboard {
-    layout: fromCompanyDashboardLayout.CompanyDashboardLayout;
+    layout: fromCompanyDashboardLayout.CompanyDashboardLayoutState;
 }
 
 export interface State extends fromRoot.AppState {
