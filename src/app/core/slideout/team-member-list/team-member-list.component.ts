@@ -77,9 +77,9 @@ export class TeamMemberListComponent implements OnInit {
         this.closePanel.emit();
     }
 
-    public goToMemberDetail(member: TeamMember, group: TeamMemberGroup): void {
-        TeamMemberListComponent.logger.debug(`goToMemberDetail() detail for ${member.id} ${group.category}`);
-        this.goToDetail.emit({ member, group, companyId: this.company.id });
+    public goToMemberDetail(event: { member; group; companyId }): void {
+        TeamMemberListComponent.logger.debug(`goToMemberDetail() detail for ${event.member.id} ${event.group.category}`);
+        this.goToDetail.emit(event);
         // this.closePanel.emit();
     }
     constructor() {}

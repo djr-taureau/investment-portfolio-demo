@@ -1,0 +1,54 @@
+<div fxLayout="row"
+     fxLayoutAlign="start start"
+     fxFlex
+     fxLayoutGap="24px">
+
+    <sbp-team-member-avatar [teamMember]="member"
+                            (click)="goToMemberDetail(member, group)"></sbp-team-member-avatar>
+
+    <div fxLayout="column"
+         fxLayoutAlign="start stretch"
+         fxFlex>
+        <!-- Name Row -->
+        <div class="name_box"
+             fxLayout="row"
+             fxFlex
+             fxLayoutAlign="start center"
+             fxLayoutGap="20px"
+             (click)="goToMemberDetail(member, group)">
+            <div class="row__name">{{member.name | titlecase}}</div>
+            <div class="lead_tag"
+                 *ngIf="member.teamLead">LEAD</div>
+        </div>
+
+        <!-- Socials Row -->
+        <div class="socials_box"
+             fxLayout="row"
+             fxLayoutAlign="space-between center"
+             fxFlex="100%">
+            <div fxLayout="row"
+                 fxFlex="0 0 30"
+                 fxLayoutGap="5px">
+                <img matListAvatar
+                     src="{{member.avatar}}">
+                <div class="slack">{{member.slack | titlecase}}</div>
+            </div>
+            <div fxLayout="row"
+                 fxFlex="0 0 30"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="5px"
+                 class="row__icon phone">
+                <mat-icon>phone</mat-icon>
+                <div class="row__phone">{{member.mobile}}</div>
+            </div>
+            <div fxLayout="row"
+                 fxFlex="0 0 40"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="5px"
+                 class="row__icon email">
+                <mat-icon>email</mat-icon>
+                <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
+            </div>
+        </div>
+    </div>
+</div>

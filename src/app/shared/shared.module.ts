@@ -1,6 +1,7 @@
 import "hammerjs";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { CommonModule } from "@angular/common";
+import { FilterablePanelModule } from "@shared/filterable-panel/filterable-panel.module";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { D3ChartsModule } from "@shared/chart-components/D3Charts.module";
 import { DirectivesModule } from "./directives/directives.module";
@@ -26,6 +27,7 @@ const MODULES = [
     // Application Shared Feature Modules
     CompanyNavbarModule,
     DirectivesModule,
+    FilterablePanelModule,
     MaterialModule,
     PipeModule,
     PortfolioNavbarModule,

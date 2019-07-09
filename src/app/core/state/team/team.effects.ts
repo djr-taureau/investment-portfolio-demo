@@ -1,4 +1,5 @@
 import * as TeamActions from "./team.actions";
+import * as _ from "lodash";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { asyncScheduler, EMPTY as empty, Observable, of } from "rxjs";
@@ -18,6 +19,8 @@ export class TeamEffects {
         exhaustMap((companyId: string) =>
             this.teamService.getTeams(companyId).pipe(
                 map((result: GetAllTeamsResponse) => {
+                    result.data.teams.map((team) => _.extend(team, { id: team.category + "_" + companyId, companyId }));
+
                     return new GetAllSuccess(result.data.teams);
                 }),
                 catchError((error) => of(new GetAllFailure(error)))

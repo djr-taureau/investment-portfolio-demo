@@ -30,6 +30,17 @@
     }
 }
 
+.parenthetical {
+    opacity: 0.75;
+    font-family: PostGrotesk;
+    font-weight: 300;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: $grey-blue;
+}
+
 .all-normal {
     font-style: normal;
     font-stretch: normal;

@@ -122,28 +122,6 @@ export const getShowCompanyCombo = createSelector(
 );
 
 // -------------------------------------------------------------------
-// TEAM SELECTORS
-// -------------------------------------------------------------------
-export const selectTeamState = createFeatureSelector<fromTeam.State>("team");
-
-export const {
-    selectIds: getTeamIds,
-    selectEntities: getTeamEntities,
-    selectAll: getAllTeams,
-    selectTotal: getTotalTeamss
-} = fromTeam.adapter.getSelectors(selectTeamState);
-
-export const getTeams = createSelector(
-    getAllTeams,
-    (teams) => teams
-);
-
-export const getSelectedTeamGroup = createSelector(
-    selectTeamState,
-    fromTeam.getSelectedTeamMemberGroup
-);
-
-// -------------------------------------------------------------------
 // COMPANY SELECTORS
 // -------------------------------------------------------------------
 export const selectCompanyState = createFeatureSelector<fromCompany.State>("company");
@@ -234,6 +212,31 @@ export const getSelectedTeamMemberAndRelatedCompanies = createSelector(
         });
         return member;
     }
+);
+
+// -------------------------------------------------------------------
+// TEAM SELECTORS
+// -------------------------------------------------------------------
+export const selectTeamState = createFeatureSelector<fromTeam.State>("team");
+
+export const {
+    selectIds: getTeamIds,
+    selectEntities: getTeamEntities,
+    selectAll: getAllTeams,
+    selectTotal: getTotalTeamss
+} = fromTeam.adapter.getSelectors(selectTeamState);
+
+export const getTeams = createSelector(
+    getAllTeams,
+    getSelectedCompanyId,
+    (teams, selectedCompanyId) => {
+        return teams.filter((team) => team.companyId === selectedCompanyId);
+    }
+);
+
+export const getSelectedTeamGroup = createSelector(
+    selectTeamState,
+    fromTeam.getSelectedTeamMemberGroup
 );
 
 // -------------------------------------------------------------------

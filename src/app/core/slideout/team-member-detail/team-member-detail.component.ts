@@ -13,7 +13,7 @@ export interface Relationship {
 @Component({
     selector: "sbp-team-member-detail",
     templateUrl: "./team-member-detail.component.html",
-    styleUrls: ["./team-member-detail.component.scss"]
+    styleUrls: ["../team-member-list/team-member-list-item.component.scss", "./team-member-detail.component.scss"]
 })
 export class TeamMemberDetailComponent implements OnInit {
     /**
@@ -82,9 +82,6 @@ export class TeamMemberDetailComponent implements OnInit {
         if (theTeamGroup) {
             theTeamGroup.members.forEach((member) => {
                 this.teamGroupMemberCount++;
-                member.teamLead = member.position === "LEAD";
-                // TODO: REMOVE THIS
-                member.avatar = "assets/image/slack.png";
             });
             this._teamGroup = theTeamGroup;
         }
@@ -110,15 +107,6 @@ export class TeamMemberDetailComponent implements OnInit {
     private _company: Company;
 
     /**
-     * Hacky way to get the team lead for the member the detail is for
-     * since they aren't returning the teamLead prop in both places
-     */
-    public isLead(): boolean {
-        const result = this.teamGroup.members.find((member) => member.id === this.member.id);
-        return result.teamLead;
-    }
-
-    /**
      * Handles the close of the slider by dispatching an event
      */
     public onClose(): void {
@@ -126,6 +114,17 @@ export class TeamMemberDetailComponent implements OnInit {
         this.closePanel.emit();
     }
 
+    /**
+     * Determines if the team member is lead for this company
+     */
+    public isLead(): boolean {
+        const leads = this.member.companyRelationships.filter((rel) => rel.companyId === this.company.id && rel.relationship === "LEAD");
+        return (leads || []).length > -1;
+    }
+
+    /**
+     * Handles clicking on the go back to all team memebers
+     */
     public onBackToTeamMembersClick(): void {
         TeamMemberDetailComponent.logger.debug(`onBackToTeamMembersClick()`);
         this.goToList.emit(this.company.id);

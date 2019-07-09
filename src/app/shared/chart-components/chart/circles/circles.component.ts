@@ -2,16 +2,17 @@ import { Component, Input, AfterContentInit, OnInit, ViewEncapsulation } from "@
 import { useAccessor } from "../utils";
 
 @Component({
-    selector: "[sbpCircles]",
+    selector: "[sbpDots]",
     template: `
-        <svg:circle
-            *ngFor="let circle of data; trackBy: keyAccessor"
-            [attr.cx]="xAccessor(circle, $index)"
-            [attr.cy]="yAccessor(circle, $index)"
-            [attr.r]="radius"
-            [attr.fill]="'#ffffff'"
-            [attr.stroke]="'#124f8c'"
-        ></svg:circle>
+        <ng-container *ngFor="let circle of data; trackBy: keyAccessor">
+            <svg:circle
+                [attr.cx]="xAccessor(circle, $index)"
+                [attr.cy]="yAccessor(circle, $index)"
+                [attr.r]="radius"
+                [attr.fill]="'#ffffff'"
+                [attr.stroke]="'#124f8c'"
+            ></svg:circle>
+        </ng-container>
     `,
     styleUrls: ["./circles.component.scss"]
 })

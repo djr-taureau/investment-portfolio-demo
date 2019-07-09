@@ -101,7 +101,8 @@ export class MicroHistogramComponent implements AfterContentInit, OnChanges {
             const yAccessor = (d) => d.length;
             this.yScale = d3
                 .scaleLinear()
-                .domain([0, d3.max(this.bins, yAccessor)])
+                // .domain([0, d3.max(this.bins, yAccessor)])
+                .domain(d3.extent(this.bins, yAccessor))
                 .range([this.dimensions.boundedHeight, 0])
                 .nice();
 

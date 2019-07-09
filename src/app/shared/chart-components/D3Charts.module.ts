@@ -15,15 +15,15 @@ import { MicroHistogramComponent } from "./micro-histogram/micro-histogram.compo
 import { KpiSummaryComponent } from "./kpi-summary/kpi-summary.component";
 
 export const COMPONENTS = [
-    ChartComponent,
     AxisComponent,
-    LineComponent,
-    CirclesComponent,
     BarsComponent,
+    ChartComponent,
+    CirclesComponent,
     GradientComponent,
-    MicroTimelineComponent,
+    KpiSummaryComponent,
+    LineComponent,
     MicroHistogramComponent,
-    KpiSummaryComponent
+    MicroTimelineComponent
 ];
 @NgModule({
     declarations: COMPONENTS,

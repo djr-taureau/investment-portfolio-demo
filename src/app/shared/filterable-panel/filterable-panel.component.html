@@ -1,0 +1,44 @@
+<mat-card>
+    <mat-card-title fxLayout="column"
+                    fxLayoutAlign="center stretch">
+        <div fxLayout="row"
+             fxLayoutAlign="space-between center">
+            <!-- Card title -->
+            <div class="title">{{title}}</div>
+
+            <!-- Item count (optional) -->
+            <div class="item-count"
+                 *ngIf="itemCount > 0">({{ itemCount }})
+            </div>
+
+            <!-- Filter Lists -->
+            <div fxLayout="row"
+                 fxLayoutAlign="end center"
+                 fxLayoutGap="16px"
+                 fxFlex>
+                <sbp-iconized-searchable-combo [listItems]="filterListOne"
+                                               [selectedItem]=""
+                                               [popupSettings]="popupSettingsOne"
+                                               [mainIconSrc]="filterIconOne"></sbp-iconized-searchable-combo>
+                <sbp-iconized-searchable-combo [listItems]="filterListTwo"
+                                               [selectedItem]=""
+                                               [popupSettings]="popupSettingsTwo"
+                                               [mainIconSrc]="filterIconTwo"></sbp-iconized-searchable-combo>
+            </div>
+        </div>
+    </mat-card-title>
+    <mat-card-content>
+        <div fxLayout="column"
+             fxLayoutAlign="start center"
+             fxFlex>
+
+            <!--
+			////////////////////////////////////////////////////////////////////////////////////
+			// Dynamic Content
+			////////////////////////////////////////////////////////////////////////////////////
+			-->
+            <ng-content></ng-content>
+
+        </div>
+    </mat-card-content>
+</mat-card>

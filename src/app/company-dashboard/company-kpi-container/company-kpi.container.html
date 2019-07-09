@@ -1,0 +1,47 @@
+<div fxLayout="row"
+     fxLayoutAlign="space-between center">
+    <div class="chart">
+        <sbp-kpi-summary [data]="timelineData"
+                         [title]="'Revenue'"
+                         [denomination]="'USD'"
+                         [value]="325.3"
+                         [pyLabel]="'vs PY'"
+                         [pyValue]="-44.1"
+                         [icLabel]="'vs Bud'"
+                         [icValue]="'-42'">
+        </sbp-kpi-summary>
+    </div>
+    <div class="chart">
+        <sbp-kpi-summary [data]="timelineData2"
+                         [title]="'EBITDA'"
+                         [denomination]="'USD'"
+                         [value]="-81.2"
+                         [pyLabel]="'vs PY'"
+                         [pyValue]="+10.0"
+                         [icLabel]="'vs Bud'"
+                         [icValue]="'-5.0'">
+        </sbp-kpi-summary>
+    </div>
+    <div class="chart">
+        <sbp-kpi-summary [data]="timelineData3"
+                         [title]="'Cash Burn'"
+                         [denomination]="'USD'"
+                         [value]="-34.6"
+                         [pyLabel]="'vs PY'"
+                         [pyValue]="+10.0"
+                         [icLabel]="'vs Bud'"
+                         [icValue]="'-5.0'">
+        </sbp-kpi-summary>
+    </div>
+    <div class="chart">
+        <sbp-kpi-summary [data]="timelineData3"
+                         [title]="'Placeholder KPI'"
+                         [denomination]="'USD'"
+                         [value]="-34.6"
+                         [pyLabel]="'vs PY'"
+                         [pyValue]="+10.0"
+                         [icLabel]="'vs Bud'"
+                         [icValue]="'-5.0'">
+        </sbp-kpi-summary>
+    </div>
+</div>

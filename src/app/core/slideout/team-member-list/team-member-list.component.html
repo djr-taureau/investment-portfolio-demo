@@ -3,74 +3,37 @@
                     [itemCount]="teamMemberCount"
                     (close)="onClose()">
     <!-- MAIN COLUMN -->
-    <div>
-        <div *ngFor="let group of teams">
+    <div fxLayout="column"
+         fxLayoutAlign="start stretch"
+         fxLayoutGap="12px"
+         fxFlexFill
+         class="main-container">
+        <ng-container *ngFor="let group of teams">
             <!-- GROUP CONTAINER -->
             <div class="group"
                  fxLayout="row"
-                 fxLayoutAlign="space-between stretch"
-                 fxLayoutGap="60px">
+                 fxLayoutAlign="space-between stretch">
                 <div fxLayout="row"
+                     fxFlex="125px"
                      fxLayoutAlign="start start">
                     <div class="category">{{group.category}} TEAM</div>
                     <div class="count">({{group.members.length}})</div>
                 </div>
                 <div fxLayout="column"
+                     fxFlex="100%"
                      fxLayoutAlign="start stretch"
                      fxLayoutGap="20">
                     <mat-list>
                         <mat-list-item *ngFor="let member of group.members">
-                            <div class="row"
-                                 fxLayout="row"
-                                 fxFlex="0 0 inherit"
-                                 fxLayoutAlign="start end"
-                                 fxLayoutGap="10px">
-                                <img matListAvatar
-                                     src="{{member.avatar}}"
-                                     (click)="goToMemberDetail(member, group)">
-                                <div fxLayout="row"
-                                     fxFlex="0 0 30"
-                                     fxLayoutAlign="start center"
-                                     fxLayoutGap="5px">
-                                    <div class="name_box"
-                                         fxLayout="column"
-                                         fxLayoutAlign="start start"
-                                         (click)="goToMemberDetail(member, group)">
-                                        <div fxLayout="row"
-                                             fxLayoutAlign="space-between center"
-                                             fxLayoutGap="5px">
-                                            <div class="row__name">{{member.name | titlecase}}</div>
-                                            <div class="lead_tag"
-                                                 *ngIf="member.teamLead">LEAD</div>
-                                        </div>
-                                        <div fxLayout="row"
-                                             fxLayoutGap="5px">
-                                            <img matListAvatar
-                                                 src="{{member.avatar}}">
-                                            <div class="slack">{{member.slack | titlecase}}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div fxLayout="row"
-                                     fxFlex="0 0 20"
-                                     fxLayoutAlign="start end"
-                                     fxLayoutGap="5px">
-                                    <mat-icon>phone</mat-icon>
-                                    <div class="row__phone">{{member.mobile}}</div>
-                                </div>
-                                <div fxLayout="row"
-                                     fxFlex="0 0 40"
-                                     fxLayoutAlign="start start"
-                                     fxLayoutGap="5px">
-                                    <mat-icon>email</mat-icon>
-                                    <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
-                                </div>
-                            </div>
+                            <sbp-team-member-list-item [member]="member"
+                                                       [company]="company"
+                                                       [group]="group"
+                                                       (goToDetail)="goToMemberDetail($event)"></sbp-team-member-list-item>
                         </mat-list-item>
                     </mat-list>
                 </div>
 
             </div>
-        </div>
+        </ng-container>
     </div>
 </sbp-slideout-panel>

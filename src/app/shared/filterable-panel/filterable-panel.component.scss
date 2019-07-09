@@ -1,0 +1,55 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/font-styles";
+
+:host {
+    height: 100%;
+    width: 100%;
+
+    .mat-card {
+        padding: 0 20px;
+        background-color: $white;
+        height: 100%;
+
+        .mat-card-title {
+            height: 79px;
+            border-bottom: 1px dashed rgba($light-grey-blue, .5);
+
+            .pre-title {
+                color: $grey-blue;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+            }
+
+            .title {
+                color: $dark;
+                font-family: PostGrotesk;
+                font-size: 24px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.3px;
+            }
+
+            .item-count {
+                @extend .parenthetical;
+                margin-left: 5px;
+                font-size: 20px;
+            }
+
+            .close-btn {
+                color: $dark;
+            }
+        }
+    }
+
+    .mat-card-content {
+        background-color: $white;
+        //height: 100%;
+    }
+}

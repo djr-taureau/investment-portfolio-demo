@@ -2,11 +2,33 @@
      fxLayoutAlign="start stretch"
      fxFlex>
 
+    <!-- Company Summary Header -->
     <sbp-company-summary-container></sbp-company-summary-container>
 
+    <!-- Sub navigation (tab navigator) -->
     <sbp-company-navbar-container></sbp-company-navbar-container>
 
+    <!-- Period selector for financial widgets -->
     <sbp-period-selector-container></sbp-period-selector-container>
 
-    <sbp-company-kpi-container></sbp-company-kpi-container>
+    <!-- Horizontal divider line -->
+    <div class="h-line"
+         fxFlexOffset="15px"></div>
+
+    <!-- Widget Row line 1 -->
+    <sbp-company-kpi-container fxFlexOffset="15px"></sbp-company-kpi-container>
+
+    <!-- Horizontal divider line -->
+    <div class="h-line"
+         fxFlexOffset="15px"></div>
+
+    <!-- TEMP -->
+    <div class="panel-container"
+         fxLayout="row"
+         fxLayoutAlign="center center"
+         fxLayoutGap="12px">
+        <sbp-filterable-panel [title]="'Initiatives'"
+                              [itemCount]="30"></sbp-filterable-panel>
+        <sbp-filterable-panel [title]="'Updates'"></sbp-filterable-panel>
+    </div>
 </div>
