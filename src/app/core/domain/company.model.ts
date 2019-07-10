@@ -5,10 +5,14 @@ export interface AvailablePeriod {
     quarter: string;
     year: number;
 }
+export enum CompanyTypeEnum {
+    PUBLIC = "PUBLIC",
+    PRIVATE = "PRIVATE"
+}
 
 export interface Company {
     id: string;
-    type: string; // enum
+    type: CompanyTypeEnum; // enum
     defaultCurency: CurrencyType;
     data: any;
     sectors: Sector[];
@@ -29,7 +33,7 @@ export interface Company {
     investingEntity: string;
     initialInvestmentDate: string;
     latestFollowOnDate: string;
-    FDOwnership: string;
+    fdOwnership: string;
     boardMembers: BoardMember[];
     MOIC: number;
     IRR: number;
@@ -167,7 +171,8 @@ export interface TeamMember {
 export enum CompanyRelationshipTypes {
     OTHER_COMPANY = "OTHER_COMPANY",
     COMPANY_COVERED = "COMPANY_COVERED",
-    BOARD_SEAT = "BOARD_SEAT"
+    BOARD_SEAT = "BOARD_SEAT",
+    LEAD = "LEAD"
 }
 export interface CompanyRelationship {
     memberId: string;

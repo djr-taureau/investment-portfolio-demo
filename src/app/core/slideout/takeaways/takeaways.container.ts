@@ -1,14 +1,13 @@
+import * as fromState from "@core/state";
 import { ActivatedRoute } from "@angular/router";
 import { appRoutePaths } from "@app/app.routes";
-import { CoreCompanyContainer } from "@shared/company/core-company.container";
-import { CloseTakeawaysPanel } from "@core/state/flow/flow.actions";
-import { Company, Takeaway } from "@core/domain/company.model";
+import { CloseTakeawaysPanel } from "@core/state/flow/company-flow.actions";
+import { Company } from "@core/domain/company.model";
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { CoreCompanyContainer } from "@shared/company/core-company.container";
+import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
-import { Logger } from "@util/logger";
-import * as TestUtil from "@util/test.util";
-import * as fromState from "@core/state";
 
 @Component({
     selector: "sbp-takeaways-container",

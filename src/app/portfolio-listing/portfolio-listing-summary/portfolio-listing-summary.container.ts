@@ -7,6 +7,7 @@ import { select, Store } from "@ngrx/store";
     selector: "sbp-portfolio-listing-summary-container",
     template: `
         <sbp-portfolio-listing-summary
+            fxFlex
             [companyCount]="companyCount$ | async"
             [invested]="invested$ | async"
             [irr]="irr$ | async"

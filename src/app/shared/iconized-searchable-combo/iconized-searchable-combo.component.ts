@@ -31,6 +31,9 @@ export class IconizedSearchableComboComponent implements OnInit {
     public mainIconSrc = "assets/image/company.svg";
 
     @Input()
+    public showFilter = true;
+
+    @Input()
     public popupSettings = { width: 200 };
 
     @Output()

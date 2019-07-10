@@ -2,13 +2,11 @@
 @import "../../../assets/scss/pointers";
 
 :host {
-    width: 100%;
-    padding: 12px;
-    //background-color: $white;
+    margin: 0 40px;
 
     table {
-        border-radius: 0px;
-        width: 95%;
+        border-radius: 6px;
+        width: 100%;
         background: rgba(255, 255, 255, 0) !important;
         background-color: rgba(255, 255, 255, 0) !important;
         -webkit-box-shadow: none;
@@ -18,7 +16,6 @@
 
         .group-header {
             height: 32px !important;
-            height: 32px;
             opacity: 0.5;
             background-color: $light-grey-blue !important;
             font-family: PostGrotesk;
@@ -195,7 +192,6 @@
     }
 
     .tag {
-
         height: 18px;
         opacity: 0.5;
         border-radius: 2px;
@@ -224,19 +220,6 @@
         border: none;
     }
 
-    //th.mat-header-cell {
-    //    background-color: $white;
-    //    padding-left: 2.4rem;
-    //
-    //    &:not(:last-child) {
-    //        border-right: 1px solid #c3c7c8;
-    //    }
-    //
-    //    color: #153c3f;
-    //    font-size: 1.8rem;
-    //    letter-spacing: 0.015rem;
-    //}
-
     mat-cell.group_bkg {
         height: 32px;
         opacity: 0.5;
@@ -250,7 +233,7 @@
     }
 
     .Total-Valuation {
-        width: 51px;
+        //width: 51px;
         height: 16px;
         font-family: PostGrotesk;
         font-size: 12px;
@@ -264,7 +247,7 @@
     }
 
     .column-name {
-        width: 102px;
+        //width: 102px;
         height: 16px;
         opacity: 0.75;
         font-family: PostGrotesk;
@@ -280,7 +263,7 @@
 
 
     .company-name-text {
-        width: 180px;
+        //width: 180px;
         height: 21px;
         font-family: PostGrotesk;
         font-size: 16px;
@@ -294,7 +277,7 @@
 
 
     .mat-cell data-grid-text {
-        width: 60px;
+        //width: 60px;
         height: 15px;
         opacity: 0.75;
         font-family: PostGrotesk;

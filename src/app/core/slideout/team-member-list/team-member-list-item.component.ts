@@ -25,9 +25,13 @@ export class TeamMemberListItemComponent {
     @Output()
     public goToDetail = new EventEmitter<any>();
 
+    /**
+     * Handles clicks to view member details
+     * @param member
+     * @param group
+     */
     public goToMemberDetail(member: TeamMember, group: TeamMemberGroup): void {
         TeamMemberListItemComponent.logger.debug(`goToMemberDetail() detail for ${member.id} ${group.category}`);
         this.goToDetail.emit({ member, group, companyId: this.company.id });
-        // this.closePanel.emit();
     }
 }

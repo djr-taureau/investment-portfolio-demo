@@ -5,7 +5,7 @@
                         [valueField]="'id'"
                         [valuePrimitive]="false"
                         [(ngModel)]="selectedItem"
-                        [filterable]="true"
+                        [filterable]="showFilter"
                         (filterChange)="handleFilter($event)"
                         [popupSettings]="popupSettings"
                         (selectionChange)="onSelectionChange($event)"

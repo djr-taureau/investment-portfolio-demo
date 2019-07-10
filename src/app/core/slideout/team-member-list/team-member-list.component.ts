@@ -77,10 +77,13 @@ export class TeamMemberListComponent implements OnInit {
         this.closePanel.emit();
     }
 
+    /**
+     * Handles clicks to viewing a member details
+     * @param event
+     */
     public goToMemberDetail(event: { member; group; companyId }): void {
         TeamMemberListComponent.logger.debug(`goToMemberDetail() detail for ${event.member.id} ${event.group.category}`);
         this.goToDetail.emit(event);
-        // this.closePanel.emit();
     }
     constructor() {}
 

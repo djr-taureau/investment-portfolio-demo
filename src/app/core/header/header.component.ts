@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit {
      */
     public onCompanySelect(event: IconizedItem) {
         HeaderComponent.logger.debug(`onCompanySelect( ${event} )`);
-        this.selectCompany.emit(event.id);
+        this.selectCompany.emit(Number(event.id));
     }
 
     /**

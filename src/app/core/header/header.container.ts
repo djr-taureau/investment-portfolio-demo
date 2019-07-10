@@ -1,12 +1,13 @@
+import * as AuthActions from "@core/state/auth/auth.action";
+import * as fromState from "@core/state";
+import { CloseCompanyInfoPanel, OpenCompanyInfoPanel, SelectCompany } from "@core/state/flow/company-flow.actions";
 import { Company } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
 import { getShowCompanyCombo } from "@core/state";
+import { GoToPortfolio } from "@core/state/flow/portfolio-flow.actions";
 import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
-import * as AuthActions from "@core/state/auth/auth.action";
-import * as fromState from "@core/state";
-import * as FlowActions from "@core/state/flow/flow.actions";
 
 @Component({
     selector: "sbp-header-container",
@@ -59,18 +60,18 @@ export class HeaderContainer implements OnInit {
      * @param $event
      */
     public toggleSlideout(slideOut: boolean): void {
-        slideOut ? this.store$.dispatch(new FlowActions.OpenCompanyInfoPanel("1")) : this.store$.dispatch(new FlowActions.CloseCompanyInfoPanel("1"));
+        slideOut ? this.store$.dispatch(new OpenCompanyInfoPanel("1")) : this.store$.dispatch(new CloseCompanyInfoPanel("1"));
     }
 
     public portfolioClick(): void {
-        this.store$.dispatch(new FlowActions.GoToPortfolio());
+        this.store$.dispatch(new GoToPortfolio());
     }
     /**
      * Dispatch action to select role in store.
      */
     public selectCompany(event: string | number) {
         HeaderContainer.logger.debug(`onCompanySelect( ${event} )`);
-        this.store$.dispatch(new FlowActions.SelectCompany(event));
+        this.store$.dispatch(new SelectCompany(event));
     }
 
     /**

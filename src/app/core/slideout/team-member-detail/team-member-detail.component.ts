@@ -118,7 +118,9 @@ export class TeamMemberDetailComponent implements OnInit {
      * Determines if the team member is lead for this company
      */
     public isLead(): boolean {
-        const leads = this.member.companyRelationships.filter((rel) => rel.companyId === this.company.id && rel.relationship === "LEAD");
+        const leads = this.member.companyRelationships.filter(
+            (rel) => rel.companyId === this.company.id && rel.relationship === CompanyRelationshipTypes.LEAD
+        );
         return (leads || []).length > -1;
     }
 

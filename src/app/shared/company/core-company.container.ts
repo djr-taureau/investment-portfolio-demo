@@ -1,5 +1,5 @@
 import "rxjs/operators/first";
-import { LoadPortfolio } from "@core/state/flow/flow.actions";
+import { LoadPortfolio } from "@core/state/flow/portfolio-flow.actions";
 import * as _ from "lodash";
 import { ActivatedRoute } from "@angular/router";
 import { Company } from "@core/domain/company.model";

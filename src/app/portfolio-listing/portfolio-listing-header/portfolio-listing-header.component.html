@@ -1,67 +1,70 @@
 <div class="main"
      fxLayout="row"
-     fxFlex="70%"
-     fxLayoutAlign="center center"
-     fxLayoutGap="24px">
+     fxLayoutAlign="space-between center">
 
     <!-- SEARCH FOR COMPANY -->
     <div fxLayout="row"
-         fxLayoutAlign="space-between center">
-        <img src="assets/image/search.svg"
-             class="search">
-
-        <input matInput
-               class="search-for-company"
-               placeholder="Search for Company"
-               [value]="companyFilter"
-               (keyup)="onFilter($event)">
-    </div>
-
-    <!-- START VERTCIAL LINE, FILTER ICON, VERTICAL LINE -->
-    <div fxLayout="row"
-         fxLayoutAlign="space-between center">
-        <div class="vr"></div>
-        <div fxLayoutGap="20px">
-            <img src="assets/image/filter.svg"
-                 class="filter">
+         fxLayoutAlign="start center"
+         fxLayoutGap="25px"
+         fxFlex="0 0 25">
+        <div fxLayout="row"
+             fxFlex="200px"
+             fxLayoutAlign="start center">
+            <img src="assets/image/search.svg"
+                 class="search"
+                 fxFlex="24px">
+            <input matInput
+                   fxFlex
+                   class="search-for-company"
+                   [value]="companyFilter"
+                   placeholder="Search for Company"
+                   (keyup)="onFilter($event)">
         </div>
-        <div fxLayoutGap="20px"
-             class="vr"></div>
-    </div>
-    <!-- END VERTICAL LINE, FILTER ICON, VERTICAL LINE -->
 
-    <!-- GROUP SELECT -->
-    <div fxLayout="row"
-         fxLayoutAlign="space-between center"
-         fxLayoutGap="5px">
-        <mat-icon class="grouping"
-                  svgIcon="grouping"></mat-icon>
-        <mat-select class="grouping dropdown"
-                    panelClass="dropDownPanel"
-                    placeholder="Group By"
-                    [formControl]="groupBy"
-                    (selectionChange)="group.emit($event.value)">
-            <mat-option value="region">Group By Region</mat-option>
-            <mat-option value="teamLeadName">Group By Deal Lead</mat-option>
-            <mat-option value="sectors">Group By Sector</mat-option>
-            <mat-option value="countries">Group By Country</mat-option>
-            <mat-option value="amountInvested">Group By Amount Invested ($0-$500M)</mat-option>
-        </mat-select>
+        <!-- START VERTCIAL LINE, FILTER ICON, VERTICAL LINE -->
+        <div fxLayout="row"
+             fxLayoutAlign="space-between center"
+             fxLayoutGap="20px">
+            <div class="vr"></div>
+            <div fxLayoutGap="20px">
+                <img src="assets/image/filter.svg"
+                     class="filter">
+            </div>
+            <div class="vr"></div>
+        </div>
+        <!-- END VERTICAL LINE, FILTER ICON, VERTICAL LINE -->
+
+        <!-- GROUP SELECT -->
+        <div fxLayout="row"
+             fxLayoutAlign="space-between center"
+             fxLayoutGap="5px">
+            <sbp-iconized-searchable-combo [mainIconSrc]="'assets/image/grouping.svg'"
+                                           [listItems]="groupingOptions"
+                                           [popupSettings]="popupSettings"
+                                           [selectedItem]="selectedGroupOption"
+                                           [title]="'foo'"
+                                           [showFilter]="false"
+                                           (selectionChange)="onGroupChange($event)"></sbp-iconized-searchable-combo>
+        </div>
     </div>
-    <div fxFlexFill></div>
-    <!-- BY VALUTATION SORTING -->
+
+    <!-- Spacer -->
+    <div fxFlex
+         fxFlex="0 0 25"></div>
+
+
+    <!-- SORT SELECT -->
     <div fxLayout="row"
-         fxLayoutAlign="space-between center"
+         fxFlex="0 0 25"
+         fxLayoutAlign="end center"
          fxLayoutGap="5px">
-        <mat-icon class="sort"
-                  svgIcon="sort"></mat-icon>
-        <mat-select class="sort dropdown"
-                    placeholder="Sort By"
-                    (selectionChange)="sort.emit($event.value)">
-            <mat-option value="Valuation">Valuation</mat-option>
-            <mat-option value="Investment">Investment</mat-option>
-            <mat-option value="Other">Other</mat-option>
-        </mat-select>
+        <sbp-iconized-searchable-combo [mainIconSrc]="'assets/image/sort.svg'"
+                                       [listItems]="sortingOptions"
+                                       [popupSettings]="popupSettings"
+                                       [selectedItem]="selectedSortOption"
+                                       [showFilter]="false"
+                                       [title]="'bar'"
+                                       (selectionChange)="onSortChange($event)"></sbp-iconized-searchable-combo>
     </div>
 
 </div>

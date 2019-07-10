@@ -1,12 +1,13 @@
 import "hammerjs";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { CommonModule } from "@angular/common";
-import { FilterablePanelModule } from "@shared/filterable-panel/filterable-panel.module";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { D3ChartsModule } from "@shared/chart-components/D3Charts.module";
 import { DirectivesModule } from "./directives/directives.module";
+import { FilterablePanelModule } from "@shared/filterable-panel/filterable-panel.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IconizedSearchableComboModule } from "@shared/iconized-searchable-combo/iconized-searchable-combo.module";
 import { MaterialModule } from "./material/material.module";
 import { NgModule } from "@angular/core";
 import { PipeModule } from "./pipes/pipe.module";
@@ -27,6 +28,7 @@ const MODULES = [
     // Application Shared Feature Modules
     CompanyNavbarModule,
     DirectivesModule,
+    IconizedSearchableComboModule,
     FilterablePanelModule,
     MaterialModule,
     PipeModule,

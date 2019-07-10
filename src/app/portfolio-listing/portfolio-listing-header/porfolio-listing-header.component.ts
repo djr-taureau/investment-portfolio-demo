@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output } from "@angular/core";
 import { MatSelectChange } from "@angular/material/select";
 import { FormControl } from "@angular/forms";
+import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
 import { Logger } from "@util/logger";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -23,37 +24,40 @@ export class PortfolioListingHeaderComponent {
     constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private customIconService: CustomIconService) {
         customIconService.init();
     }
+    @Input() regions: any[];
+    @Input() sortingOptions: IconizedItem[];
+    @Input() groupingOptions: IconizedItem[];
+    @Input() companyFilter = "";
 
-    @Input()
-    public regions: any[];
-
-    @Input()
-    public sortCategories: any[];
-
-    @Input()
-    public companyFilter = "";
-
-    @Output()
-    public selectionChange: EventEmitter<MatSelectChange>;
+    @Input() selectedGroupOption: IconizedItem;
+    @Input() selectedSortOption: IconizedItem;
 
     /**
-     * Dispatches an event to filter the table.
+     * Filter List One popup settings
      */
-    @Output()
-    public filter: EventEmitter<string> = new EventEmitter<string>();
+    @Input()
+    public popupSettings = { width: 200 };
+
+    @Output() selectionChange: EventEmitter<MatSelectChange>;
+    @Output() filter = new EventEmitter<string>();
+    @Output() group = new EventEmitter<IconizedItem>();
+    @Output() sort = new EventEmitter<IconizedItem>();
 
     /**
-     * Dispatches an event to group the table.
+     * Handles changes to the group by selection
+     * @param $event
      */
-    @Output()
-    public group = new EventEmitter<string>();
+    public onGroupChange($event): void {
+        PortfolioListingHeaderComponent.logger.debug(`onGroupChange(${JSON.stringify($event)})`);
+    }
 
     /**
-     * Dispatches an event to sort the table.
+     * Handles changes to the sort by selection
+     * @param $event
      */
-    @Output()
-    public sort = new EventEmitter<string>();
-
+    public onSortChange($event): void {
+        PortfolioListingHeaderComponent.logger.debug(`onSortChange(${JSON.stringify($event)})`);
+    }
     /**
      * Event handler to filter the table.
      */

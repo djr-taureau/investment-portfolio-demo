@@ -5,7 +5,7 @@ import { CompanyFlowEffect } from "@core/state/flow/company-flow.effect";
 import { CustomRouterStateSerializer } from "./router/custom-router-state.serializer";
 import { EffectsModule } from "@ngrx/effects";
 import { environment } from "../../../environments/environment";
-import { FlowEffect } from "./flow/flow.effect";
+import { PortfolioFlowEffect } from "./flow/portfolio-flow.effect";
 import { NgModule } from "@angular/core";
 import { reducers } from "./index";
 import { RouterEffect } from "./router/router.effect";
@@ -17,7 +17,7 @@ import { TeamEffects } from "./team/team.effects";
 import * as CompanyDashboard from "@core/state/company/dashboard";
 import * as PortfolioListingLayout from "@core/state/portfolio-list";
 
-const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, FlowEffect, CompanyEffects, SnackbarEffect, TeamEffects, TeamMemberEffects];
+const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, PortfolioFlowEffect, CompanyEffects, SnackbarEffect, TeamEffects, TeamMemberEffects];
 
 const MODULES = [
     /**

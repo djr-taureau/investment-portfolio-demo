@@ -1,14 +1,14 @@
-import { OpenTeamMemberDetailPanel } from "@core/state/flow/flow.actions";
-import { GetTeamMemberSuccess, GetTeamMemberFailure } from "./../team-member/team-member.actions";
-import { GetTeamMemberResponse } from "@core/domain/company.model";
+import { OpenTeamMemberDetailPanel } from "@core/state/flow/company-flow.actions";
 import * as TeamMemberActions from "./team-member.actions";
-import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
-import { Observable, of } from "rxjs";
+import { Actions, Effect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, concatMap } from "rxjs/operators";
+import { GetTeamMemberResponse } from "@core/domain/company.model";
+import { GetTeamMemberSuccess, GetTeamMemberFailure } from "./../team-member/team-member.actions";
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
 import { TeamMemberActionTypes } from "@core/state/team-member/team-member.actions";
 import { TeamService } from "@core/service/team.service";
-import { Injectable } from "@angular/core";
 
 @Injectable()
 export class TeamMemberEffects {

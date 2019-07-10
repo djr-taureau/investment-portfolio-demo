@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
+import { OpenCompanyInfoPanel, OpenTakeawaysPanel, OpenTeamMemberListPanel } from "@core/state/flow/company-flow.actions";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { Company, Tag, TeamMember, ValuationValue } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as fromState from "@core/state";
-import * as FlowActions from "@core/state/flow/flow.actions";
+import * as FlowActions from "@core/state/flow/portfolio-flow.actions";
 import * as TeamActions from "@core/state/team/team.actions";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as TestUtil from "@util/test.util";
@@ -137,7 +138,7 @@ export class CompanySummaryContainer implements OnInit {
      */
     public seeAllTakeaways(id: string): void {
         CompanySummaryContainer.logger.debug(`seeAllTakeaways( Company ID: ${id} )`);
-        this.store$.dispatch(new FlowActions.OpenTakeawaysPanel(id));
+        this.store$.dispatch(new OpenTakeawaysPanel(id));
     }
 
     /**
@@ -146,7 +147,7 @@ export class CompanySummaryContainer implements OnInit {
      */
     public seeMoreCompanyInfo(id: string): void {
         CompanySummaryContainer.logger.debug(`seeMoreCompanyInfo( Company ID: ${id} )`);
-        this.store$.dispatch(new FlowActions.OpenCompanyInfoPanel(id));
+        this.store$.dispatch(new OpenCompanyInfoPanel(id));
     }
 
     /**
@@ -156,6 +157,6 @@ export class CompanySummaryContainer implements OnInit {
     public seeAllTeamMembers(id: string): void {
         CompanySummaryContainer.logger.debug(`seeAllTeamMembers( Company ID: ${id} )`);
         // this.store$.dispatch(new TeamActions.GetAll(id));
-        this.store$.dispatch(new FlowActions.OpenTeamMemberListPanel(id));
+        this.store$.dispatch(new OpenTeamMemberListPanel(id));
     }
 }

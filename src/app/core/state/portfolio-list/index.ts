@@ -81,13 +81,29 @@ export const getSearch = createSelector(
     fromPortfolioListingTable.getSearch
 );
 
+export const getGroupByOptions = createSelector(
+    selectPortfolioListingTableState,
+    fromPortfolioListingTable.getGroupingOptions
+);
+export const getSortOptions = createSelector(
+    selectPortfolioListingTableState,
+    fromPortfolioListingTable.getSortOptions
+);
+export const getSelectedGroupByOption = createSelector(
+    selectPortfolioListingTableState,
+    fromPortfolioListingTable.getSelectedGroupingOption
+);
+export const getSelectedSortOption = createSelector(
+    selectPortfolioListingTableState,
+    fromPortfolioListingTable.getSelectedSortOption
+);
 export const getTableData = createSelector(
     fromCompanyState.getAllCompanies,
     getSearch,
     (companies: Company[], search: string) => {
         // Create the table data from the list of companies.
-        const tableData: PortfolioTableItem[] = companies.map((company: Company) => {
-            const secs: string[] = company.sectors.map((sector: Sector) => sector.name);
+        const tableData: PortfolioTableItem[] = (companies || []).map((company: Company) => {
+            const secs: string[] = (company.sectors || []).map((sector: Sector) => sector.name);
             const pti: PortfolioTableItem = {
                 logo: company.logo || "assets/image/slack.png",
                 companyId: company.id,

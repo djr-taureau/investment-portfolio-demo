@@ -1,7 +1,7 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company, Tag, Takeaway, TeamMember, Team } from "@core/domain/company.model";
+import { Company, Tag, Takeaway, TeamMember, Team, CompanyTypeEnum } from "@core/domain/company.model";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 import { strict } from "assert";
 
@@ -64,7 +64,7 @@ export const getCompanyDefault = (): Company => {
         deployed: 0,
         deployedTotal: 0,
         description: "",
-        FDOwnership: "",
+        fdOwnership: "",
         fiscalYearEnd: "",
         foundedDate: "",
         founders: [],
@@ -90,7 +90,7 @@ export const getCompanyDefault = (): Company => {
         tags: [],
         takeawayDate: "",
         takeaways: [],
-        type: "",
+        type: CompanyTypeEnum.PUBLIC,
         valuation: null,
         website: ""
     };

@@ -1,8 +1,8 @@
 import { Company, Team, TeamMemberGroupTypes, TeamMemberGroup, TeamMember } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
+import { CloseCompanyInfoPanel } from "@core/state/flow/company-flow.actions";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
-import { CloseCompanyInfoPanel, OpenTeamMemberDetailPanel } from "@core/state/flow/flow.actions";
 import { Logger } from "@util/logger";
 import { getSelectedCompany, getTeams } from "@app/core/state";
 import * as fromTeamActions from "@app/core/state/team/team.actions";
