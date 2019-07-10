@@ -12,7 +12,7 @@ import { select, Store } from "@ngrx/store";
     selector: "sbp-company-navbar-container",
     template: `
         <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)">
-            <div fxLayout="row" fxLayoutAlign="start center" (click)="onExpandOrCollapse($event)">
+            <div [ngClass]="{ 'btn-hidden': !showExpandCollapse }" fxLayout="row" fxLayoutAlign="start center" (click)="onExpandOrCollapse($event)">
                 <div [ngClass]="{ 'btn-expanded-img': expanded, 'btn-collapsed-img': !expanded }"></div>
                 <div [ngClass]="{ 'btn-expanded': expanded, 'btn-collapsed': !expanded }">{{ collapsed$ | async | expandOrCollapse }}</div>
             </div>
@@ -47,11 +47,17 @@ export class CompanyNavbarContainer implements OnInit {
     public expanded: boolean;
 
     /**
+     * Used to show/hide the expand collapse button
+     */
+    public showExpandCollapse = true;
+
+    /**
      * Handles clicking a link
      * @param link
      */
     public onLinkClick(link: NavigationBarLink): void {
         CompanyNavbarContainer.logger.debug(`onLinkClick( ${JSON.stringify(link)} )`);
+        this.showExpandCollapse = link.route === "company/:id/dashboard";
         this.store$.dispatch(new CompanyNavigationItemClicked(link));
     }
 
@@ -71,6 +77,9 @@ export class CompanyNavbarContainer implements OnInit {
     public ngOnInit(): void {
         this.links$ = this.store$.pipe(select(fromState.getCompanyNavLinks));
         this.selectedLink$ = this.store$.pipe(select(fromState.getSelectedCompanyNavLink));
+        this.selectedLink$.subscribe((value) => {
+            this.showExpandCollapse = value === "company/:id/dashboard";
+        });
         this.collapsed$ = this.store$.pipe(select(fromCompanyDashboardLayout.getCollapsed));
         this.collapsed$.subscribe((value) => {
             this.expanded = !value;
