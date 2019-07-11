@@ -32,6 +32,4 @@ export const VERSION: AppVersion = {
     suffix: "d943419-dirty",
     semverString: null,
     version: "0.0.196"
-
-
 };

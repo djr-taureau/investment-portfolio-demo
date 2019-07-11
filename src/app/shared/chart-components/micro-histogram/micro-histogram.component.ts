@@ -123,14 +123,8 @@ export class MicroHistogramComponent implements AfterContentInit, OnChanges {
             const yAccessor = (d) => d.length;
             this.yScale = d3
                 .scaleLinear()
-
                 .domain([d3.min(this.bins, yAccessor), d3.max(this.bins, yAccessor)])
                 .range([this.dimensions.boundedHeight - d3.min(this.bins, yAccessor), 0])
-
-                // .domain([0, d3.max(this.bins, yAccessor)])
-                .domain(d3.extent(this.bins, yAccessor))
-                .range([this.dimensions.boundedHeight, 0])
-
                 .nice();
 
             const barPadding = 3;

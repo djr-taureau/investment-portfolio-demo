@@ -29,8 +29,8 @@ export const COMPONENTS = [
     KpiSummaryComponent,
     LineComponent,
     MicroHistogramComponent,
-
     MicroBarComponent,
+    KpiSummaryComponent,
     KpiSummaryComponent,
     MicroBarComponent
     MicroTimelineComponent

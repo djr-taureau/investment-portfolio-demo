@@ -1,10 +1,10 @@
 import "zone.js";
 import { Component, OnInit } from "@angular/core";
 import { ebitda, revenue, cashburn } from "../financials-data";
-import { TimelineDataPointFin, TimelineDataPoint, DataPoint } from "@shared/chart-components/interfaces/types";
 import { Logger } from "@util/logger";
 import { Store } from "@ngrx/store";
 import { TimelineDataPointFin, TimelineDataPoint } from "@shared/chart-components/interfaces/types";
+
 
 
 @Component({
