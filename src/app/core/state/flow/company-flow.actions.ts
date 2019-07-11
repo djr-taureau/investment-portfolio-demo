@@ -33,7 +33,8 @@ export enum CompanyFlowActionTypes {
     ToggleKPIDetail = "[Company Flow] Dashboard - Toggle KPI Detail",
 
     SelectCompany = "[Flow] Select Company",
-    FindCompanies = "[Flow] Find Companies"
+    FindCompanies = "[Flow] Find Companies",
+    GroupCompanies = "[Flow] Group Companies"
 }
 
 export class CloseCompanyInfoPanel implements Action {
@@ -99,6 +100,12 @@ export class FindCompanies implements Action {
     constructor(public query: string) {}
 }
 
+export class GroupCompanies implements Action {
+    readonly type = CompanyFlowActionTypes.GroupCompanies;
+
+    constructor(public value: string) {}
+}
+
 export class OpenCompanyInfoPanel implements Action {
     readonly type = CompanyFlowActionTypes.OpenCompanyInfoPanel;
 
@@ -141,6 +148,7 @@ export type CompanyFlowActions =
     | CompanyNavigationItemClicked
     | ExpandCompanyInfoSummaryPanel
     | FindCompanies
+    | GroupCompanies
     | OpenCompanyInfoPanel
     | OpenTakeawaysPanel
     | OpenTeamMemberDetailPanel

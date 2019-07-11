@@ -3,6 +3,7 @@ import { PortfolioListingTableActions, PortfolioListingTableActionTypes } from "
 
 export interface PortfolioListingLayoutState {
     search: string;
+    groupBy: string;
     groupingOptions: IconizedItem[];
     selectedGroupingOption: IconizedItem;
     sortOptions: IconizedItem[];
@@ -11,6 +12,7 @@ export interface PortfolioListingLayoutState {
 
 export const initialState: PortfolioListingLayoutState = {
     search: "",
+    groupBy: "",
     groupingOptions: [
         {
             id: "NONE",
@@ -23,7 +25,7 @@ export const initialState: PortfolioListingLayoutState = {
             text: "Group By Region"
         },
         {
-            id: "SECTOR",
+            id: "sectors",
             icon: "",
             text: "Group By Sector"
         },
@@ -94,10 +96,20 @@ function search(value: string, state: PortfolioListingLayoutState = initialState
     };
 }
 
+function groupBy(value: string, state: PortfolioListingLayoutState = initialState): PortfolioListingLayoutState {
+    return {
+        ...state,
+        groupBy: value
+    };
+}
+
 export function reducer(state: PortfolioListingLayoutState = initialState, action: PortfolioListingTableActions): PortfolioListingLayoutState {
     switch (action.type) {
         case PortfolioListingTableActionTypes.Search:
             return search(action.payload, state);
+
+        case PortfolioListingTableActionTypes.GroupBy:
+            return groupBy(action.payload, state);
 
         default:
             return state;
@@ -105,6 +117,7 @@ export function reducer(state: PortfolioListingLayoutState = initialState, actio
 }
 
 export const getSearch = (state: PortfolioListingLayoutState) => state.search;
+export const getGroupBy = (state: PortfolioListingLayoutState) => state.groupBy;
 export const getGroupingOptions = (state: PortfolioListingLayoutState) => state.groupingOptions;
 export const getSelectedGroupingOption = (state: PortfolioListingLayoutState) => state.selectedGroupingOption;
 export const getSortOptions = (state: PortfolioListingLayoutState) => state.sortOptions;

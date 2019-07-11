@@ -21,7 +21,14 @@ export class PortfolioListingHeaderComponent {
 
     public groupBy = new FormControl();
 
+    /**
+     * Constructor.
+     * @param matIconRegistry
+     * @param domSanitizer
+     * @param customIconService
+     */
     constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer, private customIconService: CustomIconService) {
+        PortfolioListingHeaderComponent.logger.debug(`constructor()`);
         customIconService.init();
     }
     @Input() regions: any[];
@@ -40,29 +47,33 @@ export class PortfolioListingHeaderComponent {
 
     @Output() selectionChange: EventEmitter<MatSelectChange>;
     @Output() filter = new EventEmitter<string>();
-    @Output() group = new EventEmitter<IconizedItem>();
-    @Output() sort = new EventEmitter<IconizedItem>();
+    @Output() group = new EventEmitter<string>();
+    @Output() sort = new EventEmitter<string>();
 
     /**
      * Handles changes to the group by selection
-     * @param $event
+     * @param event
      */
-    public onGroupChange($event): void {
-        PortfolioListingHeaderComponent.logger.debug(`onGroupChange(${JSON.stringify($event)})`);
+    public onGroupChange(event: IconizedItem): void {
+        const groupBy: string = event.id;
+        PortfolioListingHeaderComponent.logger.debug(`onGroupChange( ${groupBy} )`);
+        this.group.emit(groupBy);
     }
 
     /**
      * Handles changes to the sort by selection
-     * @param $event
+     * @param event
      */
-    public onSortChange($event): void {
-        PortfolioListingHeaderComponent.logger.debug(`onSortChange(${JSON.stringify($event)})`);
+    public onSortChange(event): void {
+        PortfolioListingHeaderComponent.logger.debug(`onSortChange( ${JSON.stringify(event)} )`);
+        this.sort.emit(event);
     }
     /**
      * Event handler to filter the table.
      */
     public onFilter(event: KeyboardEvent): void {
         const value: string = EventUtil.getValueFromEvent(event) as string;
+        PortfolioListingHeaderComponent.logger.debug(`onFilter( ${value} )`);
         this.filter.emit(value);
     }
 }

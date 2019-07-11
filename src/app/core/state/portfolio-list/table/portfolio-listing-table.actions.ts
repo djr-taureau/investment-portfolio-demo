@@ -1,7 +1,8 @@
 import { Action } from "@ngrx/store";
 
 export enum PortfolioListingTableActionTypes {
-    Search = "[PortfolioListingTable] Search"
+    Search = "[PortfolioListingTable] Search",
+    GroupBy = "[PortfolioListingTable] GroupBy"
 }
 
 export class Search implements Action {
@@ -10,4 +11,10 @@ export class Search implements Action {
     constructor(public payload: string) {}
 }
 
-export type PortfolioListingTableActions = Search;
+export class GroupBy implements Action {
+    readonly type = PortfolioListingTableActionTypes.GroupBy;
+
+    constructor(public payload: string) {}
+}
+
+export type PortfolioListingTableActions = Search | GroupBy;

@@ -91,7 +91,10 @@ export interface CompanyUpdate {
 export interface Sector {
     id: string;
     name: string;
-    desription: string;
+    description?: string;
+
+    // FK to the parent company.
+    companyId: string;
 }
 
 export interface Region {

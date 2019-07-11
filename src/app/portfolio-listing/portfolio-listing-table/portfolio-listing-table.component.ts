@@ -1,9 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, AfterViewInit, ViewChild, Output, EventEmitter } from "@angular/core";
-import { MatTableDataSource, MatSort, MatPaginator, Sort } from "@angular/material";
-import { Company } from "@core/domain/company.model";
-import { Column } from "@core/domain/data-table.ui-model";
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
+import { MatTableDataSource } from "@angular/material";
 import { Logger } from "@util/logger";
-import * as _ from "lodash";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 
 export class Group {

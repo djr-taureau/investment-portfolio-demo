@@ -17,6 +17,7 @@ import * as fromPortfolioListingState from "@core/state/portfolio-list";
         <sbp-portfolio-listing
             [companies]="companies$ | async"
             [tableData]="tableData$ | async"
+            [groupBy]="groupBy$ | async"
             (openCompanyDashboard)="openCompanyDashboard($event)"
         >
         </sbp-portfolio-listing>
@@ -39,6 +40,11 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
     public tableData$: Observable<PortfolioTableItem[]>;
 
     /**
+     * The group by property for the table data.
+     */
+    public groupBy$: Observable<string>;
+
+    /**
      * Switches to the company dashboard view for the company selected
      */
     public openCompanyDashboard(companyId: string) {
@@ -53,6 +59,7 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
         PortfolioListingContainer.logger.debug(`ngOnInit()`);
         this.companies$ = this.store$.pipe(select(fromCompanyState.getAllCompanies));
         this.tableData$ = this.store$.pipe(select(fromPortfolioListingState.getTableData));
+        this.groupBy$ = this.store$.pipe(select(fromPortfolioListingState.getGroupBy));
 
         super.ngOnInit();
     }

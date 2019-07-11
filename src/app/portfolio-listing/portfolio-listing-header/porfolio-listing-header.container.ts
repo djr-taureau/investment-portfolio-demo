@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
-import { FindCompanies } from "@core/state/flow/company-flow.actions";
+import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { getFilteredCompanies, getSearchQuery } from "@core/state";
 import { getGroupByOptions, getSelectedGroupByOption, getSelectedSortOption, getSortOptions } from "@core/state/portfolio-list";
 import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
-import { Logger } from "../../util/logger";
+import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { take } from "rxjs/operators";
@@ -58,7 +58,6 @@ export class PortfolioListingHeaderContainer implements OnInit {
      */
     public ngOnInit(): void {
         PortfolioListingHeaderContainer.logger.debug(`ngOnInit()`);
-        // const foo = this.store$.pipe(select(getFilteredCompanies));
         this.groupingOptions$ = this.store$.pipe(select(getGroupByOptions));
         this.selectedGroupingOption$ = this.store$.pipe(select(getSelectedGroupByOption));
         this.sortingOptions$ = this.store$.pipe(select(getSortOptions));
@@ -66,26 +65,21 @@ export class PortfolioListingHeaderContainer implements OnInit {
     }
 
     public applyFilter($event) {}
+
     /**
      * Dispatches an action to filter the table.
      * @param query
      */
     public filter(query: string) {
-        this.store$.dispatch(new FindCompanies(query));
+        this.store$.dispatch(new CompanyFlowActions.FindCompanies(query));
     }
 
+    /**
+     * Dispatches an action to group the table.
+     * @param group
+     */
     public group(group: string) {
-        const typeGroup = this.store$.pipe(select(getFilteredCompanies));
-        typeGroup.subscribe((result) => {
-            this.groupedResults = result.reduce((p, n) => {
-                if (!p[n.type]) {
-                    p[n.type] = [];
-                }
-                p[n.type].push(n);
-                return p;
-            }, {});
-        });
-        this.groupBy.emit(group);
+        this.store$.dispatch(new CompanyFlowActions.GroupCompanies(group));
     }
 
     public sort(sortValue: string) {

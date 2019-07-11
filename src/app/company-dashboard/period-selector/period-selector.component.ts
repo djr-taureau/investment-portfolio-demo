@@ -88,7 +88,14 @@ export class PeriodSelectorComponent implements OnInit {
      */
     @Input()
     public historicalUnits: ChartUnit[] = [
-        { date: new Date(), quarter: 3, id: new Date().getTime(), text: "FQ3 2019", icon: "" } // TODO: GMAN: Remove in future integration effort
+        // TODO: GMAN: Remove in future integration effort
+        {
+            date: new Date(),
+            quarter: 3,
+            id: String(new Date().getTime()),
+            text: "FQ3 2019",
+            icon: ""
+        }
     ];
 
     /**

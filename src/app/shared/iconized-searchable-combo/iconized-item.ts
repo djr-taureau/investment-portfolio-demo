@@ -1,5 +1,5 @@
 export interface IconizedItem {
-    id: number | string;
+    id: string;
     icon: string;
     text: string;
     data?: any;

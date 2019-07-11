@@ -15,7 +15,7 @@
     <!-- This is where this list will go -->
     <!-- https://casertaconcepts.atlassian.net/browse/SBMVP-77 -->
     <sbp-portfolio-listing-table [tableData]="tableData"
-                                 [groupByColumn]="'sector'"
+                                 [groupByColumn]="groupBy"
                                  [sortByColumn]="'companyName'"
                                  [filter]="[]"
                                  (openCompanyDashboard)="onOpenCompanyDashboard($event)">

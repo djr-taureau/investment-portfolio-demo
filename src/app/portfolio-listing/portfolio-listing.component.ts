@@ -27,6 +27,12 @@ export class PortfolioListingComponent implements OnInit {
     public tableData: PortfolioTableItem[];
 
     /**
+     * Table data's group by value.
+     */
+    @Input()
+    public groupBy: string;
+
+    /**
      * TODO: REMOVE: BME: Mock data stream from the Mock API.
      */
     @Input()

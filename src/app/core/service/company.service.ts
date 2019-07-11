@@ -1,6 +1,7 @@
+import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
-import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "@core/domain/company.model";
+import { Company, GetAllCompaniesResponse, GetCompanyResponse, Sector } from "@core/domain/company.model";
 import { environment } from "../../../environments/environment";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -8,7 +9,6 @@ import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { throwError } from "rxjs";
-import * as _ from "lodash";
 
 @Injectable()
 export class CompanyService {
@@ -20,8 +20,9 @@ export class CompanyService {
     /**
      * Constructor.
      * @param apiService
+     * @param mapper
      */
-    constructor(private apiService: ApiService) {
+    constructor(private apiService: ApiService, private mapper: ApiResponseDataTransformationService) {
         CompanyService.logger.debug(`constructor()`);
     }
 
@@ -35,16 +36,9 @@ export class CompanyService {
         return this.apiService.get(url).pipe(
             map((response: GetAllCompaniesResponse) => {
                 const data = response.data || [];
-                CompanyService.logger.debug(`getCompaniesSuccess( Returning ${data.length} entities. )`);
-                const companies: Company[] = data.map((item) => {
-                    return {
-                        ...item,
-                        id: String(item.id)
-                    };
-                });
-
-                // NOTE: At times the API was passing back duplicates so we'll give them a hand and remove them.
-                return _.uniqBy(companies, "id");
+                const entities: Company[] = this.mapper.mapEntitiesFromApiToClient(this.mapper.mapCompanyFromApiToClient, data);
+                CompanyService.logger.debug(`getCompaniesSuccess( Returning ${entities.length} entities. )`);
+                return entities;
             }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`companiesFault( ${fault.error.message} )`);

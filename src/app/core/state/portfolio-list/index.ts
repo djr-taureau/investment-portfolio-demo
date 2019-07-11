@@ -81,22 +81,31 @@ export const getSearch = createSelector(
     fromPortfolioListingTable.getSearch
 );
 
+export const getGroupBy = createSelector(
+    selectPortfolioListingTableState,
+    fromPortfolioListingTable.getGroupBy
+);
+
 export const getGroupByOptions = createSelector(
     selectPortfolioListingTableState,
     fromPortfolioListingTable.getGroupingOptions
 );
+
 export const getSortOptions = createSelector(
     selectPortfolioListingTableState,
     fromPortfolioListingTable.getSortOptions
 );
+
 export const getSelectedGroupByOption = createSelector(
     selectPortfolioListingTableState,
     fromPortfolioListingTable.getSelectedGroupingOption
 );
+
 export const getSelectedSortOption = createSelector(
     selectPortfolioListingTableState,
     fromPortfolioListingTable.getSelectedSortOption
 );
+
 export const getTableData = createSelector(
     fromCompanyState.getAllCompanies,
     getSearch,

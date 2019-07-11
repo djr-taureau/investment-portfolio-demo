@@ -22,6 +22,7 @@ import {
     CompanyFlowActionTypes,
     CompanyNavigationItemClicked,
     FindCompanies,
+    GroupCompanies,
     OpenCompanyInfoPanel,
     OpenTakeawaysPanel,
     OpenTeamMemberDetailPanel,
@@ -202,8 +203,18 @@ export class CompanyFlowEffect {
         map((action) => action.query),
         concatMap((query) => {
             const actions = [];
-            // set the selected company
             actions.push(new PortfolioListingLayoutActions.Search(query));
+            return actions;
+        })
+    );
+
+    @Effect()
+    groupCompanies: Observable<Action> = this.actions$.pipe(
+        ofType<GroupCompanies>(CompanyFlowActionTypes.GroupCompanies),
+        map((action) => action.value),
+        concatMap((value: string) => {
+            const actions = [];
+            actions.push(new PortfolioListingLayoutActions.GroupBy(value));
             return actions;
         })
     );
