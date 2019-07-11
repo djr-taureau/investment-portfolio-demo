@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit, AfterContentInit } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, OnInit, AfterContentInit, ViewEncapsulation } from "@angular/core";
 import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
 
@@ -7,10 +7,11 @@ import { curveLinear } from "d3-shape";
     template: `
         <svg:path
             [ngClass]="type"
+            [ngClass]="projectedAccessor"
             [attr.d]="lineString"
             [ngClass]="{
-                projected: condition,
-                line: !condition
+                projected: projectedValue,
+                line: !projectedValue
             }"
         ></svg:path>
     `,
@@ -22,12 +23,16 @@ export class LineComponent implements OnChanges, AfterContentInit {
     @Input() data: any[];
     @Input() xAccessor: any;
     @Input() yAccessor: any;
+    @Input() projectedAccessor?: any;
     @Input() colorAccessor: any;
     @Input() y0Accessor?: any;
     @Input() interpolation?: any;
     @Input() fill?: string;
     lineString: any;
-    condition = null;
+    projectedValue = null;
+    stroke = null;
+    lineStyle: string;
+    line;
 
     updateLineString(): void {
         this.interpolation = curveLinear;
@@ -39,11 +44,25 @@ export class LineComponent implements OnChanges, AfterContentInit {
         if (this.type === "area") {
             lineGenerator.y0(this.y0Accessor).y1(this.yAccessor);
         }
+
+        if (this.type === "line") {
+            this.data.map((v) => {
+                if (this.projectedAccessor) {
+                    if (this.projectedAccessor(v)) {
+                        this.projectedValue = this.projectedAccessor(v);
+                    } else {
+                        this.projectedValue = this.projectedAccessor(v);
+                    }
+                }
+            });
+        }
         this.lineString = lineGenerator(this.data);
     }
 
     ngAfterContentInit() {
-        this.condition = true;
+        // TODO:: Still working on this
+        // this.historical = this.data.filter((v) => v.projected === false);
+        // this.projected = this.data.filter((v) => v.projected === true);
     }
     ngOnChanges(changes: SimpleChanges): void {
         this.updateLineString();

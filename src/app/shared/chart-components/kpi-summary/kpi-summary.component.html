@@ -15,21 +15,13 @@
                             [xAccessor]="dateAccessor"
                             [yAccessor]="financialsAccessor"
                             [projectedAccessor]="projectedAccessor"
-                            [label]="'revenue'">
+                            [label]="title">
         </sbp-micro-timeline>
     </div>
     <div class="micro-py">
-        <sbp-micro-histogram [data]="data"
-                             [xAccessor]="dateAccessor"
-                             [projectedAccessor]="projectedAccessor"
-                             [pyAccessor]="pyAccessor"
-                             [label]="'py'"></sbp-micro-histogram>
+        <sbp-micro-bar [data]="data"></sbp-micro-bar>
     </div>
     <div class="micro-ic">
-        <sbp-micro-histogram [data]="data"
-                             [xAccessor]="dateAccessor"
-                             [projectedAccessor]="projectedAccessor"
-                             [icAccessor]="icAccessor"
-                             [label]="'IC'"></sbp-micro-histogram>
+        <sbp-micro-bar [data]="data"></sbp-micro-bar>
     </div>
 </div>

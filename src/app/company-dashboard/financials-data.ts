@@ -78,6 +78,13 @@ export const ebitda = [
         PY: 20,
         IC: -10,
         projected: true
+    },
+    {
+        date: "12/31/2019",
+        value: -73.0,
+        PY: 20,
+        IC: 10,
+        projected: true
     }
 ];
 
@@ -86,35 +93,136 @@ export const cashburn = [
         date: "12/31/2017",
         value: -36.0,
         PY: 1200,
-        IC: 1400,
+        IC: 10,
         projected: false
     },
     {
         date: "03/31/2018",
         value: -37.0,
         PY: 1200,
-        IC: 1400,
+        IC: 20,
         projected: false
     },
     {
         date: "06/30/2018",
         value: -38.0,
         PY: 1200,
-        IC: 1400,
+        IC: 30,
         projected: false
     },
     {
         date: "09/30/2018",
         value: -40,
         PY: 1200,
-        IC: 1400,
+        IC: -30,
         projected: false
     },
     {
-        date: "12/31/2018",
+        date: "01/31/2019",
         value: -50,
         PY: 1200,
-        IC: 1400,
+        IC: -60,
+        projected: true
+    },
+    {
+        date: "12/31/2019",
+        value: -60,
+        PY: 1200,
+        IC: -80,
+        projected: true
+    }
+];
+
+export const ebitda2 = [
+    {
+        quarter: 2,
+        year: 2018,
+        value: -72.0,
+        PY: 8.0,
+        IC: 0,
         projected: false
+    },
+    {
+        quarter: 3,
+        year: 2018,
+        PY: 10,
+        IC: -10,
+        projected: false
+    },
+    {
+        quarter: 4,
+        year: 2018,
+        PY: 15,
+        IC: -20,
+        projected: false
+    },
+    {
+        quarter: 1,
+        year: 2019,
+        PY: 20,
+        IC: -10,
+        projected: true
+    },
+    {
+        quarter: 2,
+        year: 2019,
+        value: -73.0,
+        PY: 20,
+        IC: -10,
+        projected: true
+    },
+    {
+        quarter: 3,
+        year: 2019,
+        PY: 20,
+        IC: 10,
+        projected: true
+    }
+];
+
+export const cashburn2 = [
+    {
+        quarter: 2,
+        year: 2018,
+        value: -72.0,
+        PY: 8.0,
+        IC: 0,
+        projected: false
+    },
+    {
+        quarter: 3,
+        year: 2018,
+        PY: 10,
+        IC: -10,
+        projected: false
+    },
+    {
+        quarter: 4,
+        year: 2018,
+        PY: 15,
+        IC: -20,
+        projected: false
+    },
+    {
+        quarter: 1,
+        year: 2019,
+        PY: 20,
+        IC: -10,
+        projected: true
+    },
+    {
+        quarter: 2,
+        year: 2019,
+        value: -73.0,
+        PY: 20,
+        IC: -10,
+        projected: true
+    },
+    {
+        quarter: 3,
+        year: 2019,
+        PY: 20,
+        IC: 10,
+        projected: true
     }
 ];

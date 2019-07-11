@@ -16,3 +16,9 @@ export interface DimensionsType {
     boundedHeight?: number;
     boundedWidth?: number;
 }
+
+export function quarter(date: Date) {
+    date.setMonth(date.getMonth() - 1);
+    const q = Math.ceil(date.getMonth() / 3);
+    return "Q" + q;
+}

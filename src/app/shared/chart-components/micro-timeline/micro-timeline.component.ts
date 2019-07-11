@@ -1,16 +1,17 @@
 import { Component, Input, ViewChild, ElementRef, AfterContentInit, OnChanges, OnInit, SimpleChanges, HostListener } from "@angular/core";
 import * as d3 from "d3";
-// import "zone.js";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
-import { TimelineDataPoint, TimelineDataPointFin } from "../interfaces/types";
-
+import { TimelineDataPointFin } from "../interfaces/types";
+import { Logger } from "@util/logger";
 @Component({
     selector: "sbp-micro-timeline",
     templateUrl: "./micro-timeline.component.html",
     styleUrls: ["./micro-timeline.component.scss"]
 })
 export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChanges {
+    private static logger: Logger = Logger.getLogger("MicroTimelineComponent");
+
     @Input() data: any[];
     @Input() label: string;
 
@@ -33,16 +34,17 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     @ViewChild("container") container: ElementRef;
     fillColor;
     display = false;
-    // * expermenting with margins and dimensions
-
+    historicalData: TimelineDataPointFin[];
+    projectedData: TimelineDataPointFin[];
     constructor() {
+        MicroTimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
             marginTop: 20,
             marginRight: 11,
             marginBottom: 37.5,
-            marginLeft: 3,
+            marginLeft: 1,
             height: 150,
-            width: 300
+            width: 120
         };
         this.dimensions = {
             ...this.dimensions,
@@ -59,16 +61,17 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     }
 
     ngOnInit() {
+        MicroTimelineComponent.logger.debug(`ngOnInit()`);
+
+        if (this.projectedAccessor) {
+            this.historicalData = this.data.filter((v) => v.projected === false);
+            this.projectedData = this.data.filter((v) => v.projected === true);
+        }
         this.updateDimensions();
     }
 
     ngAfterContentInit() {
-        this.data.map((v) => {
-            if (v.projected) {
-                this.fillColor = "light-grey";
-                this.display = true;
-            }
-        });
+        MicroTimelineComponent.logger.debug(`ngAfterContentInit()`);
         this.updateDimensions();
     }
 

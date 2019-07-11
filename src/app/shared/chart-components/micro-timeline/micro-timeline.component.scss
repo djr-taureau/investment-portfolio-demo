@@ -14,6 +14,23 @@
             align-self: flex-start;
         }
 
+
+    .dot {
+        fill: #ffffff;
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+        border-style: solid;
+        stroke-width: 1;
+        stroke: #124f8c;
+    }
+
+    .y-axis-label {
+        fill: #34495e;
+        font-size: 1.4em;
+        text-anchor: middle;
+        transform: rotate(-90deg);
         .display {
             //display: none;
             stroke-width: 2;
@@ -34,6 +51,7 @@
             transform: rotate(-90deg);
 
         }
+
 
     }
 }

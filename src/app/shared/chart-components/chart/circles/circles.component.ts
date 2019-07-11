@@ -1,40 +1,51 @@
+import { DomSanitizer } from "@angular/platform-browser";
 import { Component, Input, AfterContentInit, OnInit, ViewEncapsulation } from "@angular/core";
 import { useAccessor } from "../utils";
+import { Logger } from "@util/logger";
 
 @Component({
     selector: "[sbpDots]",
     template: `
-        <ng-container *ngFor="let circle of data; trackBy: keyAccessor">
+
+        <ng-container>
             <svg:circle
+                class="dot"
+                *ngFor="let circle of data; trackBy: keyAccessor"
                 [attr.cx]="xAccessor(circle, $index)"
                 [attr.cy]="yAccessor(circle, $index)"
-                [attr.r]="radius"
-                [attr.fill]="'#ffffff'"
-                [attr.stroke]="'#124f8c'"
-            ></svg:circle>
+                [attr.r]="5"
+                [ngClass]="{
+                    projected: presentValue,
+                    dot: !presentValue
+                }"
+          </svg:circle>
         </ng-container>
     `,
     styleUrls: ["./circles.component.scss"]
 })
 export class CirclesComponent implements AfterContentInit, OnInit {
+    private static logger: Logger = Logger.getLogger("CirclesComponent");
     @Input() data: any[];
     @Input() keyAccessor: any;
     @Input() xAccessor: any;
     @Input() yAccessor: any;
+    @Input() projectedAccessor?: any;
     @Input() radius?: 5 | null;
     accessorFunction = useAccessor;
     borderStyleProp = "border";
     borderStyleValue = "#124f8c";
     circleStyles = ["dot"];
-    condition = false;
+    presentValue: boolean;
+
+    constructor(private domSanitizer: DomSanitizer) {}
 
     ngOnInit() {
-        this.condition = false;
+        CirclesComponent.logger.debug(`OnInit()`);
+        // this.presentValue = true;
     }
 
     ngAfterContentInit(): void {
-        // Called after ngOnInit when the component's or directive's content has been initialized.
-        // Add 'implements AfterContentInit' to the class.
-        this.condition = false;
+        CirclesComponent.logger.debug(`AfterContentInit()`);
+        this.presentValue = true;
     }
 }

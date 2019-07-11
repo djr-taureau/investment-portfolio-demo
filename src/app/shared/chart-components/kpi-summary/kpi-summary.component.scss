@@ -14,15 +14,13 @@
         grid-template-columns: repeat(5, [col] auto);
         grid-template-rows: repeat(5, [row] auto);
         grid-gap: 2px;
-        // justify-items: stretch;
-        // align-items: stretch;
-
+        margin: 2px, 2px, 2px, 2px;
+        padding: 2px, 2px, 2px, 2px
     }
 
     .title {
         grid-row: row 1;
         grid-column: col 1 / span 1;
-        ;
         font-family: PostGrotesk;
         font-size: 12px;
         font-weight: 500;
@@ -37,8 +35,6 @@
         margin-top: 10px;
         text-transform: uppercase;
     }
-
-
 
     .value {
         grid-row: row 2 / span 1;
@@ -67,7 +63,7 @@
         width: 58px;
         height: 18px;
         font-family: PostGrotesk;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         font-style: normal;
         font-stretch: normal;
@@ -75,6 +71,7 @@
         letter-spacing: normal;
         text-align: right;
         color: $jade;
+        align-self: right;
     }
 
     .ic-label {
@@ -88,7 +85,7 @@
         width: 58px;
         height: 18px;
         font-family: PostGrotesk;
-        font-size: 14px;
+        font-size: 16px;
         font-weight: bold;
         font-style: normal;
         font-stretch: normal;
@@ -101,18 +98,22 @@
     .micro-timeline {
         grid-row: row 3 / span 2;
         grid-column: col 1 / span 1;
-        // justify-self: left;
         align-self: left;
+        justify-self: left;
     }
 
     .micro-py {
         grid-row: row 3 / span 2;
         grid-column: col 3 / span 1;
+        margin: 2px, 2px, 2px, 2px;
+        padding: 2px, 2px, 2px, 2px
     }
 
     .micro-ic {
         grid-row: row 3 / span 2;
         grid-column: col 4 / span 1;
+        margin: 2px, 2px, 2px, 2px;
+        padding: 2px, 2px, 2px, 2px
     }
 
 }
