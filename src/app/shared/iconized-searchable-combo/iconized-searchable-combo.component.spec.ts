@@ -16,7 +16,10 @@ describe("IconizedSearchableComboComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(IconizedSearchableComboComponent);
         component = fixture.componentInstance;
-        component.listItems = [{ id: 0, icon: "assets/image/nauset.jpg", text: "nauset" }, { id: 1, icon: "assets/image/notes.jpg", text: "notes" }];
+        component.listItems = [
+            { id: "0", icon: "assets/image/nauset.jpg", text: "nauset" },
+            { id: "1", icon: "assets/image/notes.jpg", text: "notes" }
+        ];
         fixture.detectChanges();
     });
 
