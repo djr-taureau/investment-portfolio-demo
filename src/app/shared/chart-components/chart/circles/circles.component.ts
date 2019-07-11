@@ -4,7 +4,7 @@ import { useAccessor } from "../utils";
 import { Logger } from "@util/logger";
 
 @Component({
-    selector: "[sbpDots]",
+    selector: "[sbpCircles]",
     template: `
         <ng-container>
             <svg:circle
@@ -18,7 +18,6 @@ import { Logger } from "@util/logger";
                     dot: !presentValue
                 }"
             ></svg:circle>
-
         </ng-container>
     `,
     styleUrls: ["./circles.component.scss"]

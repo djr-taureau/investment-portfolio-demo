@@ -32,7 +32,7 @@ export const COMPONENTS = [
     MicroBarComponent,
     KpiSummaryComponent,
     KpiSummaryComponent,
-    MicroBarComponent
+    MicroBarComponent,
     MicroTimelineComponent
 ];
 @NgModule({
