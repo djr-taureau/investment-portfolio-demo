@@ -1,9 +1,33 @@
 @import "../../../assets/scss/variables";
 
 .mat-toolbar {
-    background-color: $header-background;
+    background-color: $light-periwinkle;
     //font-family: Montserrat, sans-serif;
     color: $header-font;
+    height: 44px;
+    padding: 0 0 0 0;
+
+    .logo-container {
+        background-color: $white;
+        opacity: 0.5;
+        height: 100%;
+    }
+
+    .mat-button {
+        padding: 0 0 0 0;
+
+        &.cdk-mouse-focused {
+            &::after {
+                content: "";
+                position: absolute;
+                height: 5px;
+                background-color: $lighter-yellow;
+                bottom: 0px;
+                width: 100%;
+                left: 0px;
+            }
+        }
+    }
 
     mat-icon {
         width: inherit;
@@ -11,6 +35,17 @@
         img {
             width: 80px;
         }
+    }
+
+    .portfolio {
+        font-family: PostGrotesk;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.25px;
+        color: $light-navy;
     }
 
     .menu {
@@ -23,7 +58,7 @@
         .mat-button {
             position: relative;
             border-radius: 0px;
-            padding: 14px 16px;
+            padding: 0 0 0 0;
             //font-family: Montserrat, sans-serif;
 
             &.cdk-mouse-focused {

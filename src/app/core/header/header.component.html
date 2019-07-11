@@ -1,19 +1,22 @@
 <mat-toolbar color="primary">
 
-    <button mat-button
-            routerLink="/">
-        <mat-icon>
-            <img src="/assets/image/header-logo.png"
-                 alt="SoftBank">
-        </mat-icon>
-    </button>
+    <div class="logo-container">
+        <button mat-button
+                routerLink="/">
+            <mat-icon>
+                <img src="/assets/image/header-logo.png"
+                     alt="SoftBank">
+            </mat-icon>
+        </button>
+    </div>
 
     <div fxLayout="row"
          fxLayoutGap="16px"
          fxLayoutAlign="space-between end"
          class="menu">
-        <div (click)="onPortfolioClick()">Portfolio</div>
-        <div>&#47;</div>
+        <div class="portfolio"
+             (click)="onPortfolioClick()">Portfolio</div>
+        <div *ngIf="showCompanyCombo">&#47;</div>
         <sbp-iconized-searchable-combo *ngIf="showCompanyCombo"
                                        class="combo"
                                        [selectedItem]="selectedCompany"
