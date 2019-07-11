@@ -4,14 +4,16 @@ import { DimensionsType, ScaleType } from "../../interfaces/types";
 import { quarter } from "../utils";
 
 @Component({
-    selector: "[sbpAxis]",
-    templateUrl: "./axis.component.html",
-    styleUrls: ["./axis.component.scss"]
+    selector: "[sbpAxisBar]",
+    templateUrl: "./axis-bar.component.html",
+    styleUrls: ["./axis-bar.component.scss"]
 })
-export class AxisComponent implements OnChanges, AfterContentInit {
+export class AxisBarComponent implements OnChanges, AfterContentInit {
     @Input() dimensions: DimensionsType;
     @Input() dimension: "x" | "y";
     @Input() scale: ScaleType;
+    @Input() tickFormat: any;
+    @Input() orient: string;
     @Input() label: string;
     @Input() projectedAccessor: any;
     @Input() formatTick: any;
@@ -40,3 +42,10 @@ export class AxisComponent implements OnChanges, AfterContentInit {
         this.updateTicks();
     }
 }
+
+// svg.append("line")
+//     .attr("x1", -6)
+//     .attr("y1", y(0))//so that the line passes through the y 0
+//     .attr("x2", width)
+//     .attr("y2", y(0))//so that the line passes through the y 0
+//     .style("stroke", "black");

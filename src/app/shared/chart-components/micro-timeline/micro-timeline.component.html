@@ -17,7 +17,7 @@
                [formatTick]="formatDate"
                [label]="label">
         </svg:g>
-        <svg:g class="display"
+        <svg:g class="dislay"
                sbpAxis
                dimension="y"
                [dimensions]="dimensions"
@@ -32,7 +32,29 @@
                [yAccessor]="yAccessorScaled"
                [y0Accessor]="y0AccessorScaled">
         </svg:g>
-        <svg:g sbpDots
+
+        <svg:g sbpLine
+               [data]="historicalData"
+               [xAccessor]="xAccessorScaled"
+               [projectedAccessor]="projectedAccessor"
+               [yAccessor]="yAccessorScaled"
+               [colorAccessor]="colorAccessorScaled">
+        </svg:g>
+        <svg:g sbpLine
+               [data]="projectedData"
+               [xAccessor]="xAccessorScaled"
+               [projectedAccessor]="projectedAccessor"
+               [yAccessor]="yAccessorScaled"
+               [colorAccessor]="colorAccessorScaled">
+        </svg:g>
+        <svg:g sbpCircles
+               [data]="data"
+               [projectedAccessor]="projectedAccessor"
+               [keyAccessor]="keyAccessor"
+               [xAccessor]="xAccessorScaled"
+               [yAccessor]="yAccessorScaled">
+        </svg:g>
+        <svg:g sbpCircles
                class="dots"
                [data]="data"
                [keyAccessor]="keyAccessor"
@@ -46,6 +68,5 @@
                [yAccessor]="yAccessorScaled"
                [colorAccessor]="colorAccessorScaled">
         </svg:g>
-
     </sbp-chart>
 </div>

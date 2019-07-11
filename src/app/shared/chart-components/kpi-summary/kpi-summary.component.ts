@@ -1,14 +1,16 @@
 import { numberToSignedString } from "./string.utli";
 import { Component, OnInit, Input } from "@angular/core";
 import * as d3 from "d3";
-import { TimelineDataPointFin } from "../interfaces/types";
-
+import { TimelineDataPointFin, TimelineDataPoint } from "../interfaces/types";
+import { Logger } from "@util/logger";
 @Component({
     selector: "sbp-kpi-summary",
     templateUrl: "./kpi-summary.component.html",
     styleUrls: ["./kpi-summary.component.scss"]
 })
 export class KpiSummaryComponent implements OnInit {
+    private static logger: Logger = Logger.getLogger("KpiSummaryComponent");
+
     parseDate = d3.timeParse("%m/%d/%Y");
     dateAccessor: any;
     financialsAccessor: any;
@@ -43,11 +45,6 @@ export class KpiSummaryComponent implements OnInit {
     @Input()
     public pyLabel: string;
 
-    /**
-     * Input for the pyValue on the graph
-     * creates two local props, one for evaluation
-     * in view and the other for display
-     */
     @Input()
     set pyValue(value: number) {
         this.pyString = numberToSignedString(value);
@@ -67,16 +64,16 @@ export class KpiSummaryComponent implements OnInit {
     public ic: number;
     public icString: string;
 
-    constructor() {}
+    constructor() {
+        KpiSummaryComponent.logger.debug(`constructor()`);
+    }
 
     ngOnInit() {
-        this.data.map(() => {
-            // todo : figure out how to get this to work
-            this.dateAccessor = (v) => this.parseDate(v.date);
-            this.financialsAccessor = (v) => v.value;
-            this.projectedAccessor = (v) => v.projected;
-            this.pyAccessor = (v) => v.PY;
-            this.icAccessor = (v) => v.IC;
-        });
+        KpiSummaryComponent.logger.debug(`ngOnInit()`);
+        this.dateAccessor = (v) => this.parseDate(v.date);
+        this.financialsAccessor = (v) => v.value;
+        this.projectedAccessor = (v) => v.projected;
+        this.pyAccessor = (v) => v.PY;
+        this.icAccessor = (v) => v.IC;
     }
 }

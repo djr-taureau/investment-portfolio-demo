@@ -1,3 +1,33 @@
+circle {
+    fill: #ffffff;
+    transition: all 0.3s ease-out;
+    width: 12px;
+    height: 12px;
+    border-width: 3px;
+    box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+    border-style: solid;
+    stroke-width: 2;
+    stroke: #124f8c;
+
+}
+
+circle.dot {
+    display: none;
+}
+
+circle.projected {
+    fill: #ffffff;
+    transition: all 0.3s ease-out;
+    width: 12px;
+    height: 12px;
+    border-width: 3px;
+    box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+    border-style: solid;
+    stroke-width: 2;
+    stroke: #124f8c;
+}
+
+
 :host {
     ::ng-deep {
         circle {
@@ -33,26 +63,6 @@
             }
         }
 
-        //circle.dot {
-        //    fill: #ffffff;
-        //    transition: all 0.3s ease-out;
-        //    width: 12px;
-        //    height: 12px;
-        //    border-width: 3px;
-        //    box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
-        //    border-style: solid;
-        //    stroke-width: 2;
-        //    stroke: #124f8c;
-        //}
-        //
-        //
-        //circle.projected {
-        //    stroke-width: 5;
-        //}
-        //
-        //circle.focus {
-        //    fill: none;
-        //    stroke: steelblue;
-        //}
+
     }
 }

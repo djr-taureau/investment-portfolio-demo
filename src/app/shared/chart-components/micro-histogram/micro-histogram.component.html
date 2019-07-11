@@ -1,5 +1,4 @@
 <div #container
-     class="card"
      class="container">
     <sbp-chart [dimensions]="dimensions">
         <svg:defs>
@@ -10,7 +9,7 @@
                    y2="100%">
             </svg:g>
         </svg:defs>
-        <svg:g sbpAxis
+        <svg:g sbpAxisBar
                dimension="x"
                [dimensions]="dimensions"
                [scale]="xScale"
@@ -28,6 +27,7 @@
                [xAccessor]="xAccessorScaled"
                [yAccessor]="yAccessorScaled"
                [projected]="barFillStyle"
+               [projectedAccessor]="projectedAccessor"
                [widthAccessor]="widthAccessorScaled"
                [heightAccessor]="heightAccessorScaled"
                fill="url(#{{ barId }})">

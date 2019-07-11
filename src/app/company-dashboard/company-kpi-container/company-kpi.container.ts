@@ -16,6 +16,7 @@ export class CompanyKpiContainer implements OnInit {
     timelineData: TimelineDataPointFin[];
     timelineData2: TimelineDataPointFin[];
     timelineData3: TimelineDataPointFin[];
+    chartData: Array<any>;
     /**
      * Internal logger.
      */
@@ -38,5 +39,18 @@ export class CompanyKpiContainer implements OnInit {
         this.timelineData = revenue;
         this.timelineData2 = ebitda;
         this.timelineData3 = cashburn;
+        setTimeout(() => {
+            this.generateData();
+
+            // change the data periodically
+            setInterval(() => this.generateData(), 3000);
+        }, 1000);
+    }
+
+    generateData() {
+        this.chartData = [];
+        for (let i = 0; i < 8 + Math.floor(Math.random() * 10); i++) {
+            this.chartData.push([`Index ${i}`, Math.floor(Math.random() * 100)]);
+        }
     }
 }

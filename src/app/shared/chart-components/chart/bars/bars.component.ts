@@ -1,21 +1,24 @@
 import { Component, Input, AfterContentInit, OnInit } from "@angular/core";
 import { useAccessor } from "../utils";
+import { TimelineDataPointFin } from "../../interfaces/types";
 
+// todo:: check adding max and min to height to get full pos and neg values
 @Component({
     selector: "[sbpBars]",
     template: `
-        <svg:rect
-            *ngFor="let bar of data; trackBy: keyAccessor"
-            [attr.x]="accessorFunction(xAccessor, bar)"
-            [attr.y]="accessorFunction(yAccessor, bar, $index)"
-            [attr.width]="max(accessorFunction(widthAccessor, bar, $index), 0)"
-            [attr.height]="max(accessorFunction(heightAccessor, bar, $index), 0)"
-            [attr.stroke-width]="'5'"
-            [ngClass]="{
-                'projected-positive': condition,
-                'projected-negative': !condition
-            }"
-        ></svg:rect>
+        <ng-container *ngFor="let bar of data; trackBy: keyAccessor">
+            <svg:rect
+                [attr.x]="accessorFunction(xAccessor, bar)"
+                [attr.y]="accessorFunction(newYAccessor, bar)"
+                [attr.width]="max(accessorFunction(widthAccessor, bar), 0)"
+                [attr.height]="max(accessorFunction(heightAccessor, bar), 0)"
+                [attr.stroke-width]="'3'"
+                [ngClass]="{
+                    'projected-positive': projectedValue,
+                    'historical-negative': !projectedValue
+                }"
+            ></svg:rect>
+        </ng-container>
     `,
     styleUrls: ["./bars.component.scss"]
 })
@@ -28,18 +31,37 @@ export class BarsComponent implements AfterContentInit, OnInit {
     @Input() projected: boolean;
     @Input() widthAccessor: any;
     @Input() heightAccessor: any;
+    @Input() boundedHeight: any;
     @Input() fill?: string;
     accessorFunction = useAccessor;
+    projectedValue: boolean;
+    positiveValue: boolean;
+    newYAccessor: any;
+
     max = Math.max;
-    barStyle = "projected-positive";
+    min = Math.min;
+    barStyle = "historical-negative";
     barStylePositive = "historical-negative";
-    barStyle3 = "blinking";
-    blink = false;
-    condition = true;
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.heightAccessor = (d) => Math.abs(this.yAccessor(d));
+        this.newYAccessor = (d) => this.heightAccessor(d) - Math.max(this.yAccessor(d));
+    }
 
-    ngAfterContentInit() {}
+    ngAfterContentInit() {
+        this.data.map((v) => {
+            if (this.projectedAccessor) {
+                if (this.projectedAccessor(v)) {
+                    this.projectedValue = this.projectedAccessor(v);
+                } else {
+                    this.projectedValue = this.projectedAccessor(v);
+                }
+            }
+            if (v.date > Date.now().toString()) {
+                const projected = true;
+            }
+        });
+    }
 }

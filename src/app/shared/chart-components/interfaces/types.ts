@@ -17,7 +17,18 @@ export interface DimensionsType {
 }
 
 export interface TimelineDataPoint {
-    date: string;
+    quarter: number;
+    year: number;
+    value: number;
+    key: any;
+    PY: number;
+    IC: number;
+    projected: boolean;
+}
+
+export interface DataPoint {
+    quarter: number;
+    year: number;
     value: number;
     key: any;
     PY: number;
