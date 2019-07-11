@@ -69,7 +69,7 @@ export class HeaderContainer implements OnInit {
     /**
      * Dispatch action to select role in store.
      */
-    public selectCompany(event: string | number) {
+    public selectCompany(event: string) {
         HeaderContainer.logger.debug(`onCompanySelect( ${event} )`);
         this.store$.dispatch(new SelectCompany(event));
     }

@@ -43,7 +43,7 @@ export class GetSuccess implements Action {
 
 export class SetSelectedCompany implements Action {
     readonly type = CompanyActionTypes.SetSelectedCompany;
-    constructor(public payload: number | string) {}
+    constructor(public payload: string) {}
 }
 
 export type CompanyActions = GetAll | GetAllFailure | GetAllSuccess | Get | GetFailure | GetSuccess | SetSelectedCompany;

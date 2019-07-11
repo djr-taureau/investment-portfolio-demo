@@ -16,8 +16,8 @@ export class CompanyEffects {
         ofType<CompanyActions.GetAll>(CompanyActionTypes.GetAll),
         exhaustMap(() =>
             this.companyService.getCompanies().pipe(
-                map((result: GetAllCompaniesResponse) => {
-                    return new CompanyActions.GetAllSuccess(result.data);
+                map((result: Company[]) => {
+                    return new CompanyActions.GetAllSuccess(result);
                 }),
                 catchError((error) => of(new CompanyActions.GetAllFailure(error)))
             )

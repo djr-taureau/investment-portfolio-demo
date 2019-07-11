@@ -103,7 +103,7 @@ export const getTableData = createSelector(
     (companies: Company[], search: string) => {
         // Create the table data from the list of companies.
         const tableData: PortfolioTableItem[] = (companies || []).map((company: Company) => {
-            const secs: string[] = (company.sectors || []).map((sector: Sector) => sector.name);
+            const secs: string[] = (company.sectors || []).map((sector: Sector, index: number) => sector.name);
             const pti: PortfolioTableItem = {
                 logo: company.logo || "assets/image/slack.png",
                 companyId: company.id,

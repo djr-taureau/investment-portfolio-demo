@@ -126,7 +126,7 @@ export class OpenTeamMemberListPanel implements Action {
 export class SelectCompany implements Action {
     readonly type = CompanyFlowActionTypes.SelectCompany;
 
-    constructor(public payload: number | string) {}
+    constructor(public payload: string) {}
 }
 
 export type CompanyFlowActions =

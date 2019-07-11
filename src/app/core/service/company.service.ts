@@ -7,8 +7,8 @@ import { Injectable } from "@angular/core";
 import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
-import { Store } from "@ngrx/store";
 import { throwError } from "rxjs";
+import * as _ from "lodash";
 
 @Injectable()
 export class CompanyService {
@@ -28,12 +28,24 @@ export class CompanyService {
     /**
      * Retrieves all the companies.
      */
-    public getCompanies(): Observable<GetAllCompaniesResponse> {
-        CompanyService.logger.debug(`getCompanies()`);
-
+    public getCompanies(): Observable<Company[]> {
         const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
+        CompanyService.logger.debug(`getCompanies( ${url} )`);
 
         return this.apiService.get(url).pipe(
+            map((response: GetAllCompaniesResponse) => {
+                const data = response.data || [];
+                CompanyService.logger.debug(`getCompaniesSuccess( Returning ${data.length} entities. )`);
+                const companies: Company[] = data.map((item) => {
+                    return {
+                        ...item,
+                        id: String(item.id)
+                    };
+                });
+
+                // NOTE: At times the API was passing back duplicates so we'll give them a hand and remove them.
+                return _.uniqBy(companies, "id");
+            }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`companiesFault( ${fault.error.message} )`);
                 return throwError(fault);
