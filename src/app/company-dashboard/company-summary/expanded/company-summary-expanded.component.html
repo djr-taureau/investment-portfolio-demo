@@ -191,18 +191,20 @@
                      fxLayoutAlign="center center">
                     <kendo-chart>
                         <kendo-chart-area [margin]="0"
-                                          [width]="200"
-                                          [height]="200"></kendo-chart-area>
+                                          [width]="108"
+                                          [height]="108"></kendo-chart-area>
                         <ng-template kendoChartDonutCenterTemplate>
-                            <div fxLayout="column"
-                                 fxLayoutAlign="space-between stretch"
-                                 class="deployed-container">
-                                <div class="deployed-value">{{ company.deployed }}</div>
-                                <div class="deployed-total">/ {{ company.deployedTotal }}</div>
+                            <div fxLayout="column">
+                                <div class="deployed-value">{{ currentInvested }}</div>
+                                <div class="deployed-total">/ {{ currentApproved }}</div>
                             </div>
                         </ng-template>
                         <kendo-chart-series>
                             <kendo-chart-series-item type="donut"
+                                                     [padding]="0"
+                                                     [size]="5"
+                                                     [margin]="0"
+                                                     [holeSize]="48"
                                                      field="value"
                                                      colorField="color"
                                                      width="2"
@@ -228,30 +230,37 @@
             ////////////////////////////////////////////////////////////////////////////////////
             -->
             <div class="container"
-                 fxLayout="row"
-                 fxLayoutAlign="space-between stretch">
+                 fxLayout="column"
+                 fxLayoutAlign="space-between stretch"
+                 fxLayoutGap="10px">
+                <div fxLayout="row"
+                     fxLayoutAlign="start start">
+                    <div class="valuation">Valuation</div>
+                    <div>&nbsp;</div>
+                    <div class="valuation-denomination">($M)</div>
+                </div>
                 <div fxLayout="row"
                      fxLayoutAlign="center stretch"
                      fxFlex>
+                    <!-- LABEL COLUMN -->
                     <div fxLayout="column"
-                         fxLayoutAlign="space-between stretch">
-                        <div fxLayout="row"
-                             fxLayoutAlign="space-between stretch">
-                            <div class="valuation">Valuation</div>
-                            <div>&nbsp;</div>
-                            <div class="valuation-denomination">($M)</div>
-                        </div>
-                        <div class="valuation-moic-gross">MOIC / Gross IRR</div>
+                         fxLayoutAlign="end end">
+                        <div class="valuation-moic-gross">MOIC</div>
+                        <div class="valuation-moic-gross">Gross IRR</div>
                     </div>
+                    <!-- CURRENT COLUMN -->
+                    <!-- YEAR PLUS 1 COLUMN -->
+                    <!-- EXIT COLUMN -->
                     <div class="trend"
                          fxLayout="column"
                          fxLayoutAlign="center stretch">
                     </div>
 
                     <sbp-valuation [header]="'Current'"
-                                   [value]="currentValuation.totalValue"
-                                   [moic]="currentValuation.moic"
-                                   [grossIrr]="currentValuation.irr">
+                                   [value]="currentTotalValue | number:'1.1-1'"
+                                   [moic]="currentMoic | number:'1.1-1'"
+                                   [grossIrr]="currentIrr | number:'1.1-1'"
+                                   [columnar]="true">
                     </sbp-valuation>
 
                     <div class="trend"
@@ -261,9 +270,10 @@
                     </div>
 
                     <sbp-valuation [header]="'+1 year'"
-                                   [value]="yearPlusOneValuation.totalValue"
-                                   [moic]="yearPlusOneValuation.moic"
-                                   [grossIrr]="yearPlusOneValuation.irr">
+                                   [value]="plusOneTotalValue | number:'1.1-1'"
+                                   [moic]="plusOneMoic | number:'1.1-1'"
+                                   [grossIrr]="plusOneIrr | number:'1.1-1'"
+                                   [columnar]="true">
                     </sbp-valuation>
 
                     <div class="trend"
@@ -273,9 +283,10 @@
                     </div>
 
                     <sbp-valuation [header]="'Exit'"
-                                   [value]="exitValuation.totalValue"
-                                   [moic]="exitValuation.moic"
-                                   [grossIrr]="exitValuation.irr">
+                                   [value]="exitTotalValue | number:'1.1-1'"
+                                   [moic]="exitMoic | number:'1.1-1'"
+                                   [grossIrr]="exitIrr | number:'1.1-1'"
+                                   [columnar]="true">
                     </sbp-valuation>
                 </div>
 

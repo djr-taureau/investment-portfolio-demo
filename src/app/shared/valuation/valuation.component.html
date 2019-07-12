@@ -1,14 +1,20 @@
 <div fxLayout="column"
-     fxLayoutAlign="space-between"
+     fxLayoutAlign="space-between end"
      class="container">
     <div class="header">{{ header }}</div>
     <div class="value">{{ value }}</div>
 
-    <div fxLayout="row"
+    <div *ngIf="!columnar"
+         fxLayout="row"
          fxLayoutAlign="center">
         <div class="moic-gross-irr">{{ moic }}x</div>
         <div class="divide">/</div>
         <div class="moic-gross-irr">{{ grossIrr }}%</div>
     </div>
-
+    <div *ngIf="columnar"
+         fxLayout="column"
+         fxLayoutAlign="start end">
+        <div class="moic-gross-irr">{{ moic }}x</div>
+        <div class="moic-gross-irr">{{ grossIrr }}%</div>
+    </div>
 </div>

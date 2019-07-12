@@ -37,6 +37,12 @@ export class ValuationComponent implements OnInit {
     public grossIrr = 0;
 
     /**
+     * Controls display of the moic and irr values based upon collapsed or expanded
+     */
+    @Input()
+    public columnar = false;
+
+    /**
      * Constructor.
      */
     constructor() {

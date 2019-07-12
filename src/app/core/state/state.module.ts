@@ -16,8 +16,19 @@ import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } fro
 import { TeamEffects } from "./team/team.effects";
 import * as CompanyDashboard from "@core/state/company/dashboard";
 import * as PortfolioListingLayout from "@core/state/portfolio-list";
+import { ValuationEffects } from "./valuation/valuation.effects";
 
-const EFFECTS = [RouterEffect, AuthEffect, CompanyFlowEffect, PortfolioFlowEffect, CompanyEffects, SnackbarEffect, TeamEffects, TeamMemberEffects];
+const EFFECTS = [
+    RouterEffect,
+    AuthEffect,
+    CompanyFlowEffect,
+    PortfolioFlowEffect,
+    CompanyEffects,
+    SnackbarEffect,
+    TeamEffects,
+    TeamMemberEffects,
+    ValuationEffects
+];
 
 const MODULES = [
     /**

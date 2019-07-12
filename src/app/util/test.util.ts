@@ -91,7 +91,7 @@ export const getCompanyDefault = (): Company => {
         takeawayDate: "",
         takeaways: [],
         type: CompanyTypeEnum.PUBLIC,
-        valuation: null,
+        // valuation: null,
         website: ""
     };
 };

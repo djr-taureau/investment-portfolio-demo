@@ -1,7 +1,8 @@
+import * as ValuationActions from "./../valuation/valuation.actions";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
 import { asyncScheduler, EMPTY as empty, Observable, of } from "rxjs";
-import { catchError, debounceTime, exhaustMap, map, skip, switchMap, takeUntil } from "rxjs/operators";
+import { catchError, debounceTime, exhaustMap, map, skip, switchMap, takeUntil, concatMap } from "rxjs/operators";
 import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "@core/domain/company.model";
 import { CompanyActionTypes } from "@core/state/company/company.actions";
 import { CompanyService } from "@core/service/company.service";
@@ -30,8 +31,8 @@ export class CompanyEffects {
         map((action) => action.payload),
         exhaustMap((id: string) =>
             this.companyService.getCompany(id).pipe(
-                map((result: GetCompanyResponse) => {
-                    return new CompanyActions.GetSuccess(result.data);
+                concatMap((result: GetCompanyResponse) => {
+                    return [new CompanyActions.GetSuccess(result.data), new ValuationActions.GetAll(id)];
                 }),
                 catchError((error) => of(new CompanyActions.GetFailure(error)))
             )

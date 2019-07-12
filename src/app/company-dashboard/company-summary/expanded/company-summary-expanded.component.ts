@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ChartColor } from "@core/domain/chart-data.model";
-import { Company, Tag, Takeaway, TeamMember, ValuationValue } from "@core/domain/company.model";
+import { Company, Tag, Takeaway, TeamMember, Valuation } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -24,7 +24,7 @@ export class CompanySummaryExpandedComponent implements OnInit {
 
             // Create chart data.
             this.percentOwnershipChartData = this.createPercentOwnershipChartData(value);
-            this.amountDeployedChartData = this.createAmountDeployedChartData(value);
+            // this.amountDeployedChartData = this.createAmountDeployedChartData(value);
         }
     }
     public get company(): Company {
@@ -51,22 +51,32 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public takeaways: string[] = [];
 
     /**
-     * Current company valuation.
+     * Valuation props
      */
     @Input()
-    public currentValuation: ValuationValue = null;
-
-    /**
-     * Year plus one company valuation.
-     */
+    public currentTotalValue = 0;
     @Input()
-    public yearPlusOneValuation: ValuationValue = null;
-
-    /**
-     * Exit company valuation.
-     */
+    public currentMoic = 0;
     @Input()
-    public exitValuation: ValuationValue = null;
+    public currentIrr = 0;
+    @Input()
+    public plusOneTotalValue = 0;
+    @Input()
+    public plusOneMoic = 0;
+    @Input()
+    public plusOneIrr = 0;
+    @Input()
+    public exitTotalValue = 0;
+    @Input()
+    public exitMoic = 0;
+    @Input()
+    public exitIrr = 0;
+    @Input()
+    public currentInvested = 0;
+    @Input()
+    public currentApproved = 0;
+    @Input()
+    public amountDeployedChartData: any[];
 
     /**
      * Request to see all takeaways.
@@ -90,11 +100,6 @@ export class CompanySummaryExpandedComponent implements OnInit {
      * The percent owned chart data.
      */
     public percentOwnershipChartData: any[] = [];
-
-    /**
-     * The amount deployed chart data.
-     */
-    public amountDeployedChartData: any[] = [];
 
     /**
      * Constructor.
@@ -153,6 +158,6 @@ export class CompanySummaryExpandedComponent implements OnInit {
      * @param company
      */
     private createAmountDeployedChartData(company: Company): any[] {
-        return [{ value: company.deployed, color: ChartColor.lightNavy }, { value: company.deployedTotal, color: ChartColor.lightPeriwinkle }];
+        return [{ value: this.currentInvested, color: ChartColor.lightNavy }, { value: this.currentApproved, color: ChartColor.lightPeriwinkle }];
     }
 }

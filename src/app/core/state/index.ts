@@ -8,6 +8,7 @@ import * as fromPortfolioDashboard from "./portfolio-dashboard/porfolio-dashboar
 import * as fromRouter from "@ngrx/router-store";
 import * as fromTeam from "./team/team.reducer";
 import * as fromTeamMember from "./team-member/team-member.reducer";
+import * as fromValuation from "./valuation/valuation.reducer";
 import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import { Company } from "@core/domain/company.model";
@@ -21,6 +22,7 @@ export interface AppState {
     router: fromRouter.RouterReducerState<RouterStateUrl>;
     team: fromTeam.State;
     teamMember: fromTeamMember.State;
+    valuation: fromValuation.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -30,7 +32,8 @@ export const reducers: ActionReducerMap<AppState> = {
     layout: fromLayout.layoutReducer,
     router: fromRouter.routerReducer,
     team: fromTeam.reducer,
-    teamMember: fromTeamMember.reducer
+    teamMember: fromTeamMember.reducer,
+    valuation: fromValuation.reducer
 };
 
 // -------------------------------------------------------------------
@@ -299,4 +302,14 @@ export const sortCompaniesValuation = createSelector(
         allCompanies.sort(sortByValuation);
         return allCompanies;
     }
+);
+
+// -------------------------------------------------------------------
+// COMPANY SELECTORS
+// -------------------------------------------------------------------
+export const selectValuationState = createFeatureSelector<fromValuation.State>("valuation");
+
+export const getSelectedValuation = createSelector(
+    selectValuationState,
+    fromValuation.getSelected
 );

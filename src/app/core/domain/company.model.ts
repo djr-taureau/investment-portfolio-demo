@@ -68,7 +68,7 @@ export interface Company {
     deployedTotal: number;
 
     // Displayed in the company header to the right of the deployed.
-    valuation: ValuationDetail;
+    // valuation: ValuationDetail;
 
     ///////////////////////////////////////////////////////////////////
     // DASHBOARD BODY SECTION
@@ -202,22 +202,44 @@ export interface CompanyRevenue {
     forecast: number;
 }
 
-export interface ValuationDetail {
-    id: string;
-    name: string;
-    desc: string;
-    entry: number;
-    current: ValuationValue;
-    yearOne: ValuationValue;
-    yearTwo: ValuationValue;
-    yearThree: ValuationValue;
-    exit: ValuationValue;
-}
-
-export interface ValuationValue {
+export interface TopLineValuationData {
     totalValue: number;
     moic: number;
     irr: number;
+}
+export interface TopLineValuation {
+    current: TopLineValuationData;
+    yearPlus1: TopLineValuationData;
+    exit: TopLineValuationData;
+}
+
+export interface ValuationDetailData {
+    id: string;
+    reportingPeriod: string;
+    approved: number;
+    companyEquityValue: number;
+    invested: number;
+    irr: number;
+    moic: number;
+    name: string;
+    ownership: number;
+    realizedValue: number;
+    scenarioTypeID: number;
+    sequence: number;
+    totalValue: number;
+    unrealizedValue: number;
+}
+export interface ValuationDetail {
+    icInitial: ValuationDetailData;
+    icFollowOn1: ValuationDetailData;
+    actuals: ValuationDetailData;
+    yearPlus1: ValuationDetailData;
+    exit: ValuationDetailData;
+}
+export interface Valuation {
+    companyId?: string;
+    topLineValuations: TopLineValuation;
+    valuationDetail: ValuationDetail;
 }
 
 // This interface supports the Initiative card

@@ -87,8 +87,8 @@
             <div>&nbsp;</div>
             <div class="deployed-denomination">($M)</div>
         </div>
-        <div class="deployed-value">{{ company.deployed }}</div>
-        <div class="deployed-total">/ {{ company.deployedTotal | number:'1.2' }}</div>
+        <div class="deployed-value">{{ currentInvested | number:'1.1-1'  }}</div>
+        <div class="deployed-total">/ {{ currentApproved | number:'1.1-1' }}</div>
     </div>
 
     <!--
@@ -115,9 +115,9 @@
     </div>
 
     <sbp-valuation [header]="'Current'"
-                   [value]="currentValuation.totalValue"
-                   [moic]="currentValuation.moic"
-                   [grossIrr]="currentValuation.irr">
+                   [value]="currentTotalValue | number:'1.1-1'"
+                   [moic]="currentMoic | number:'1.1-1'"
+                   [grossIrr]="currentIrr | number:'1.1-1'">
     </sbp-valuation>
 
     <div class="trend"
@@ -127,9 +127,9 @@
     </div>
 
     <sbp-valuation [header]="'+1 year'"
-                   [value]="yearPlusOneValuation.totalValue"
-                   [moic]="yearPlusOneValuation.moic"
-                   [grossIrr]="yearPlusOneValuation.irr">
+                   [value]="plusOneTotalValue | number:'1.1-1'"
+                   [moic]="plusOneMoic | number:'1.1-1'"
+                   [grossIrr]="plusOneIrr | number:'1.1-1'">
     </sbp-valuation>
 
     <div class="trend"
@@ -139,9 +139,9 @@
     </div>
 
     <sbp-valuation [header]="'Exit'"
-                   [value]="exitValuation.totalValue"
-                   [moic]="exitValuation.moic"
-                   [grossIrr]="exitValuation.irr">
+                   [value]="exitTotalValue | number:'1.1-1'"
+                   [moic]="exitMoic | number:'1.1-1'"
+                   [grossIrr]="exitIrr | number:'1.1-1'">
     </sbp-valuation>
 
     <!--

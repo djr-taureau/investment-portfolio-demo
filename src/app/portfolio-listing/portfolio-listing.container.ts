@@ -8,6 +8,7 @@ import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 import * as TeamActions from "@app/core/state/team/team.actions";
+import * as CompanyActions from "@app/core/state/company/company.actions";
 import * as fromCompanyState from "@core/state/";
 import * as fromPortfolioListingState from "@core/state/portfolio-list";
 
@@ -48,6 +49,7 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
      * Switches to the company dashboard view for the company selected
      */
     public openCompanyDashboard(companyId: string) {
+        this.store$.dispatch(new CompanyActions.Get(companyId));
         this.store$.dispatch(new GoToCompanyDashboard(companyId));
         this.store$.dispatch(new TeamActions.GetAll(companyId));
     }

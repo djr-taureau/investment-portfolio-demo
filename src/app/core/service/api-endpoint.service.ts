@@ -60,7 +60,9 @@ export class ApiEndpointService {
         COMPANIES: "companies",
         COMPANY: "companies/{id}",
         TEAMS: "companies/{id}/team-members",
-        TEAM_MEMBER: "companies/{id}/team-members/{member_id}"
+        TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
+        VALUATION: "companies/{id}/valuation",
+        REVENUE: "companies/{id}/revenue"
     };
 
     /**

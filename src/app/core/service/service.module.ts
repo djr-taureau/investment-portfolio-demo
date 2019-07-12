@@ -6,8 +6,18 @@ import { ApiService } from "./api.service";
 import { CompanyService } from "./company.service";
 import { CustomIconService } from "./custom-icon.service";
 import { TeamService } from "./team.service";
+import { ValuationService } from "./valuation.service";
 
-const PROVIDERS = [ApiService, ApiEndpointService, AuthService, AdalAuthContextService, CompanyService, CustomIconService, TeamService];
+const PROVIDERS = [
+    ApiService,
+    ApiEndpointService,
+    AuthService,
+    AdalAuthContextService,
+    CompanyService,
+    CustomIconService,
+    TeamService,
+    ValuationService
+];
 
 @NgModule({
     providers: PROVIDERS

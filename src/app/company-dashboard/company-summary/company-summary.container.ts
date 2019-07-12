@@ -1,14 +1,16 @@
+import { ChartColor } from "@core/domain/chart-data.model";
 import { Component, OnInit } from "@angular/core";
 import { OpenCompanyInfoPanel, OpenTakeawaysPanel, OpenTeamMemberListPanel } from "@core/state/flow/company-flow.actions";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
-import { Company, Tag, TeamMember, ValuationValue } from "@core/domain/company.model";
+import { Company, Tag, TeamMember, Valuation } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as fromState from "@core/state";
 import * as FlowActions from "@core/state/flow/portfolio-flow.actions";
 import * as TeamActions from "@core/state/team/team.actions";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as TestUtil from "@util/test.util";
+import * as _ from "lodash";
 
 @Component({
     selector: "sbp-company-summary-container",
@@ -17,9 +19,17 @@ import * as TestUtil from "@util/test.util";
             *ngIf="collapsed$ | async"
             [company]="company$ | async"
             [teamMembers]="teamMembers$ | async"
-            [currentValuation]="currentValuation$ | async"
-            [yearPlusOneValuation]="yearPlusOneValuation$ | async"
-            [exitValuation]="exitValuation$ | async"
+            [currentIrr]="currentIrr"
+            [currentMoic]="currentMoic"
+            [currentTotalValue]="currentTotalValue"
+            [plusOneIrr]="plusOneIrr"
+            [plusOneMoic]="plusOneMoic"
+            [plusOneTotalValue]="plusOneTotalValue"
+            [exitIrr]="exitIrr"
+            [exitMoic]="exitMoic"
+            [exitTotalValue]="exitTotalValue"
+            [currentInvested]="currentInvested"
+            [currentApproved]="currentApproved"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
         >
@@ -31,9 +41,18 @@ import * as TestUtil from "@util/test.util";
             [teamMembers]="teamMembers$ | async"
             [tags]="tags$ | async"
             [takeaways]="takeaways$ | async"
-            [currentValuation]="currentValuation$ | async"
-            [yearPlusOneValuation]="yearPlusOneValuation$ | async"
-            [exitValuation]="exitValuation$ | async"
+            [currentIrr]="currentIrr"
+            [currentMoic]="currentMoic"
+            [currentTotalValue]="currentTotalValue"
+            [plusOneIrr]="plusOneIrr"
+            [plusOneMoic]="plusOneMoic"
+            [plusOneTotalValue]="plusOneTotalValue"
+            [exitIrr]="exitIrr"
+            [exitMoic]="exitMoic"
+            [exitTotalValue]="exitTotalValue"
+            [currentInvested]="currentInvested"
+            [currentApproved]="currentApproved"
+            [amountDeployedChartData]="amountDeployedChartData"
             (seeAllTakeaways)="seeAllTakeaways($event)"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
@@ -80,17 +99,23 @@ export class CompanySummaryContainer implements OnInit {
     /**
      * The current valuation.
      */
-    public currentValuation$: Observable<ValuationValue>;
+    public valuation$: Observable<Valuation>;
 
     /**
-     * The current valuation.
+     * Valuation props
      */
-    public yearPlusOneValuation$: Observable<ValuationValue>;
-
-    /**
-     * The current valuation.
-     */
-    public exitValuation$: Observable<ValuationValue>;
+    public currentTotalValue = 0;
+    public currentMoic = 0;
+    public currentIrr = 0;
+    public plusOneTotalValue = 0;
+    public plusOneMoic = 0;
+    public plusOneIrr = 0;
+    public exitTotalValue = 0;
+    public exitMoic = 0;
+    public exitIrr = 0;
+    public currentInvested = 0;
+    public currentApproved = 0;
+    public amountDeployedChartData: any[];
 
     /**
      * The selected company observable.
@@ -114,9 +139,26 @@ export class CompanySummaryContainer implements OnInit {
         this.expanded$ = this.store$.pipe(select(fromCompanyDashboardLayout.getExpanded));
         this.company$ = this.store$.pipe(select(fromState.getSelectedCompany));
         this.takeaways$ = this.store$.pipe(select(fromState.getSelectedCompanyTakeaways));
-        this.currentValuation$ = this.store$.pipe(select(fromState.getSelectedCompanyCurrentValuation));
-        this.yearPlusOneValuation$ = this.store$.pipe(select(fromState.getSelectedCompanyYearPlusOneValuation));
-        this.exitValuation$ = this.store$.pipe(select(fromState.getSelectedCompanyYearExitValuation));
+        this.valuation$ = this.store$.pipe(select(fromState.getSelectedValuation));
+        this.valuation$.subscribe((value) => {
+            if (value) {
+                this.currentIrr = _.get(value, "topLineValuations.current.irr", 0);
+                this.currentMoic = _.get(value, "topLineValuations.current.moic", 0);
+                this.currentTotalValue = _.get(value, "topLineValuations.current.totalValue", 0) / 1000000;
+                this.plusOneIrr = _.get(value, "topLineValuations.yearPlus1.irr", 0);
+                this.plusOneMoic = _.get(value, "topLineValuations.yearPlus1.moic", 0);
+                this.plusOneTotalValue = _.get(value, "topLineValuations.yearPlus1.totalValue", 0) / 1000000;
+                this.exitIrr = _.get(value, "topLineValuations.exit.irr", 0);
+                this.exitMoic = _.get(value, "topLineValuations.exit.moic", 0);
+                this.exitTotalValue = _.get(value, "topLineValuations.exit.totalValue", 0) / 1000000;
+                this.currentInvested = _.get(value, "valuationDetail.actuals.invested", 0) / 1000000;
+                this.currentApproved = _.get(value, "valuationDetail.actuals.approved", 0) / 1000000;
+                this.amountDeployedChartData = [
+                    { value: this.currentInvested, color: ChartColor.lightNavy },
+                    { value: this.currentApproved - this.currentInvested, color: ChartColor.lightPeriwinkle }
+                ];
+            }
+        });
 
         // TODO: Need to get this from API
         this.teamMembers$ = of([

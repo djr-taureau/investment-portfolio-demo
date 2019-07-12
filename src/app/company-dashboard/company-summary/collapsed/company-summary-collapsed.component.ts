@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Company, TeamMember, ValuationValue } from "@core/domain/company.model";
+import { Company, TeamMember } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -30,28 +30,40 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     private _company: Company;
 
     /**
+     * Valuation props
+     */
+    @Input()
+    public currentTotalValue = 0;
+    @Input()
+    public currentMoic = 0;
+    @Input()
+    public currentIrr = 0;
+    @Input()
+    public plusOneTotalValue = 0;
+    @Input()
+    public plusOneMoic = 0;
+    @Input()
+    public plusOneIrr = 0;
+    @Input()
+    public exitTotalValue = 0;
+    @Input()
+    public exitMoic = 0;
+    @Input()
+    public exitIrr = 0;
+    @Input()
+    public currentInvested = 0;
+    @Input()
+    public currentApproved = 0;
+    /**
+     * The percent owned chart data.
+     */
+    public chartData: any[] = [];
+
+    /**
      * List of team members.
      */
     @Input()
     public teamMembers: TeamMember[] = null;
-
-    /**
-     * Current company valuation.
-     */
-    @Input()
-    public currentValuation: ValuationValue = null;
-
-    /**
-     * Year plus one company valuation.
-     */
-    @Input()
-    public yearPlusOneValuation: ValuationValue = null;
-
-    /**
-     * Exit company valuation.
-     */
-    @Input()
-    public exitValuation: ValuationValue = null;
 
     /**
      * Request to see all takeaways.
@@ -64,11 +76,6 @@ export class CompanySummaryCollapsedComponent implements OnInit {
      */
     @Output()
     public seeAllTeamMembers: EventEmitter<string> = new EventEmitter<string>();
-
-    /**
-     * The percent owned chart data.
-     */
-    public chartData: any[] = [];
 
     /**
      * Constructor.
