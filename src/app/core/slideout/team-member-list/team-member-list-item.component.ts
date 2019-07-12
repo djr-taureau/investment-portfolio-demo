@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { Company, TeamMember, TeamMemberGroup } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
@@ -25,6 +25,19 @@ export class TeamMemberListItemComponent {
     @Output()
     public goToDetail = new EventEmitter<any>();
 
+    @ViewChild("emailBox")
+    public emailBox;
+
+    @ViewChild("slackBox")
+    public slackBox;
+
+    public getEmailWidth(): number {
+        return Math.max(this.emailBox.clientWidth - 10, 25);
+    }
+
+    public getSlackWidth(): number {
+        return Math.max(this.emailBox.clientWidth - 10, 25);
+    }
     /**
      * Handles clicks to view member details
      * @param member

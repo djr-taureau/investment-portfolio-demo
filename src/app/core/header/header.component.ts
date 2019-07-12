@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
      * The currently selected company
      */
     @Input()
-    public selectedCompany: Company = null;
+    public selectedCompany: Company;
 
     /**
      * Flag indicating if the slide-out panel is open.
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit {
      * Dispatches an event when user selects a role.
      */
     @Output()
-    public selectCompany: EventEmitter<number> = new EventEmitter<number>();
+    public selectCompany: EventEmitter<string> = new EventEmitter<string>();
 
     /**
      * Alerts the parent component that the user has clicked the  'portfolio' breadcrumb
@@ -109,7 +109,7 @@ export class HeaderComponent implements OnInit {
      */
     public onCompanySelect(event: IconizedItem) {
         HeaderComponent.logger.debug(`onCompanySelect( ${event} )`);
-        this.selectCompany.emit(Number(event.id));
+        this.selectCompany.emit(String(event.id));
     }
 
     /**

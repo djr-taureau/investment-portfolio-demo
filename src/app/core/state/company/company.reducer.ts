@@ -6,7 +6,7 @@ function sortByValuation(e1: Company, e2: Company) {
     return e1.currentValuation - e2.currentValuation;
 }
 export interface State extends EntityState<Company> {
-    selectedCompanyId: string | null;
+    selectedCompanyId: string;
     sortValue: string;
     sortOrder: string;
 }
@@ -17,7 +17,7 @@ export const adapter: EntityAdapter<Company> = createEntityAdapter<Company>({
 });
 
 export const initialState: State = adapter.getInitialState({
-    selectedCompanyId: null,
+    selectedCompanyId: "",
     sortValue: "valuation",
     sortOrder: "asc"
 });
@@ -25,10 +25,10 @@ export const initialState: State = adapter.getInitialState({
 export function reducer(state = initialState, action: CompanyActions): State {
     switch (action.type) {
         case CompanyActionTypes.GetAllSuccess:
-            return adapter.addMany(action.payload, state);
+            return action.payload.length > 0 ? adapter.addAll(action.payload, state) : state;
 
         case CompanyActionTypes.GetSuccess:
-            return adapter.upsertOne(action.payload, state);
+            return action.payload ? adapter.upsertOne(action.payload, state) : state;
 
         case CompanyActionTypes.SetSelectedCompany:
             return { ...state, selectedCompanyId: action.payload };

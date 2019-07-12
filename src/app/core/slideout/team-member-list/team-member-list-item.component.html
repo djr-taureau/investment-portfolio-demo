@@ -23,18 +23,21 @@
 
         <!-- Socials Row -->
         <div class="socials_box"
-             fxLayout="row"
+             fxLayout="row wrap"
              fxLayoutAlign="space-between center"
-             fxFlex="100%">
+             fxFlex>
             <div fxLayout="row"
-                 fxFlex="0 0 30"
+                 #slackBox
+                 fxFlex="33%"
+                 fxFlex.lt-lg="100"
                  fxLayoutGap="5px">
                 <img matListAvatar
                      src="{{member.avatar}}">
-                <div class="slack">{{member.slack | titlecase}}</div>
+                <div class="slack">{{member.slack | titlecase | sbpEllipsis: getSlackWidth()}}</div>
             </div>
             <div fxLayout="row"
-                 fxFlex="0 0 30"
+                 fxFlex="33%"
+                 fxFlex.lt-lg="100"
                  fxLayoutAlign="start center"
                  fxLayoutGap="5px"
                  class="row__icon phone">
@@ -42,12 +45,13 @@
                 <div class="row__phone">{{member.mobile}}</div>
             </div>
             <div fxLayout="row"
-                 fxFlex="0 0 40"
+                 #emailBox
+                 fxFlex
                  fxLayoutAlign="start center"
                  fxLayoutGap="5px"
                  class="row__icon email">
                 <mat-icon>email</mat-icon>
-                <div class="row__email">{{member.email | uppercase | sbpEllipsis: 25}}</div>
+                <div class="row__email">{{member.email | uppercase | sbpEllipsis: getEmailWidth()}}</div>
             </div>
         </div>
     </div>

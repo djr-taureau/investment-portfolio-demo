@@ -146,7 +146,7 @@ export const getSelectedCompany = createSelector(
     getCompanyEntities,
     getSelectedCompanyId,
     (entities, selectedId) => {
-        return (selectedId && entities[selectedId]) || TestUtil.getMock(TestUtil.getCompanyDefault);
+        return selectedId && entities[selectedId];
     }
 );
 
@@ -230,7 +230,7 @@ export const getTeams = createSelector(
     getAllTeams,
     getSelectedCompanyId,
     (teams, selectedCompanyId) => {
-        return teams.filter((team) => team.companyId === selectedCompanyId);
+        return teams.filter((team) => String(team.companyId) === selectedCompanyId);
     }
 );
 
