@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 import { Logger } from "@util/logger";
 import { Observable, throwError as _throw } from "rxjs";
 /*
- * @description:
+ * @currencyDesc:
  *
  *  Base class for all API service interaction.
  */

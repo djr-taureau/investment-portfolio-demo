@@ -2,8 +2,11 @@ import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { ApiResponse } from "./api.model";
 
 export interface AvailablePeriod {
-    quarter: string;
-    year: number;
+    // quarter: string;
+    // year: number;
+    financialQuarter: number;
+    date: string;
+    isProjection?: boolean;
 }
 export enum CompanyTypeEnum {
     PUBLIC = "PUBLIC",
@@ -13,7 +16,7 @@ export enum CompanyTypeEnum {
 export interface Company {
     id: string;
     type: CompanyTypeEnum; // enum
-    defaultCurency: CurrencyType;
+    defaultCurrency: CurrencyType;
     data: any;
     sectors: Sector[];
     region: string;

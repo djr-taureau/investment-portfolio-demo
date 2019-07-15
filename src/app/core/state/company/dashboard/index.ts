@@ -1,4 +1,5 @@
 import { Company } from "@core/domain/company.model";
+import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
 import { getSelectedCompany } from "../../";
 import { CompanyDashboardLayoutActions } from "./company-dashboard-layout.actions";
@@ -55,7 +56,10 @@ export const getExpanded = createSelector(
  */
 export const getSelectedCompanyFYE = createSelector(
     getSelectedCompany,
-    (selectedCompany: Company) => _.get(selectedCompany, "fiscalYearEnd", "--")
+    (selectedCompany: Company) =>
+        _.get(selectedCompany, "fiscalYearEnd.month", "---")
+            .substring(0, 3)
+            .toUpperCase()
 );
 
 /**
@@ -66,7 +70,7 @@ export const getSelectedCompanyAvailablePeriods = createSelector(
     (selectedCompany: Company) => {
         const periods = _.get(selectedCompany, "availablePeriods", []);
         return _.each(periods, (item) => {
-            return { ...item, id: item.quarter + " " + item.year };
+            return _.extend(item, { id: "Q" + item.financialQuarter + " " + new Date(item.date).getFullYear() });
         });
     }
 );
@@ -85,7 +89,7 @@ export const getShowCurrencySelector = createSelector(
 export const getSelectedCompanyAlternateCurrency = createSelector(
     getSelectedCompany,
     (selectedCompany: Company) => {
-        const defaultCurrency = _.get(selectedCompany, "defaultCurrency", "");
-        return defaultCurrency.name !== "USD" ? defaultCurrency : null;
+        const defaultCurrency = _.get(selectedCompany, "defaultCurrency", "") as CurrencyType;
+        return defaultCurrency.currencyCode !== "USD" ? defaultCurrency : null;
     }
 );

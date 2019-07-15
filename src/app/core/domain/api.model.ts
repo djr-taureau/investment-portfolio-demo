@@ -14,7 +14,7 @@ export interface ApiResponse extends BasicApiResponse {
 
     // List of errors associated with the API request. Example:
     // {
-    //      "code": 1001,
+    //      "currencyCode": 1001,
     //      "field": "firstName",
     //      "message": "must not be blank Received value:null",
     //      "id": "5b1bdcf3-39da-47e1-ad8d-e5dc36cb4ca5"
@@ -23,7 +23,7 @@ export interface ApiResponse extends BasicApiResponse {
 }
 
 export interface ApiError {
-    // Specific API error code that clients can use to map to unique error messages
+    // Specific API error currencyCode that clients can use to map to unique error messages
     // or create specific error flows.
     code: number;
 

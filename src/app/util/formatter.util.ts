@@ -109,7 +109,7 @@ export const formatDate = (event: Event): string => {
 };
 
 /**
- * Formats a string into the form of a zip code: 11111-1111.
+ * Formats a string into the form of a zip currencyCode: 11111-1111.
  * @param {Event} event
  */
 export const formatZipCode = (event: Event) => {

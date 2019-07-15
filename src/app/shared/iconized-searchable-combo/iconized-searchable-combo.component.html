@@ -1,8 +1,8 @@
 <div class="example-wrapper">
     <!-- ICON IN THE BOX -->
     <kendo-dropdownlist [data]="data"
-                        [textField]="'text'"
-                        [valueField]="'id'"
+                        [textField]="textField"
+                        [valueField]="valueField"
                         [valuePrimitive]="false"
                         [(ngModel)]="selectedItem"
                         [filterable]="showFilter"
@@ -17,7 +17,7 @@
                  matListAvatar
                  src="{{ mainIconSrc }}">
             <div class="label">
-                {{ dataItem?.text | sbpEllipsis: 10 }}
+                {{ getDataItemLabel(dataItem) | sbpEllipsis: 10 }}
             </div>
 
         </ng-template>
@@ -29,7 +29,7 @@
                  matListAvatar
                  src="{{dataItem?.icon}}">
             <div class="label">
-                {{ dataItem?.text | sbpEllipsis: 18}}
+                {{ getDataItemLabel(dataItem) | sbpEllipsis: 18}}
             </div>
         </ng-template>
         <ng-template kendoDropDownListNoDataTemplate>

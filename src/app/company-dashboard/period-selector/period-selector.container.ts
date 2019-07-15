@@ -1,12 +1,11 @@
-import { ChartUnit } from "@util/chart-data.util";
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import { Component, OnInit } from "@angular/core";
-import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
+import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DashboardAsOfDateChanged, DashboardCurrencyChanged, DashboardDatePartChanged } from "@core/state/flow/company-flow.actions";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
 import { Observable, of } from "rxjs";
-import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { select, Store } from "@ngrx/store";
-import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 
 @Component({
     selector: "sbp-period-selector-container",
@@ -63,12 +62,12 @@ export class PeriodSelectorContainer implements OnInit {
     /**
      * Unit representing historical data
      */
-    public historicalUnits$: Observable<ChartUnit[]>;
+    public historicalUnits$: Observable<SelectorPeriod[]>;
 
     /**
      * Unit representing projected data
      */
-    public projectedUnits: Observable<ChartUnit[]>;
+    public projectedUnits: Observable<SelectorPeriod[]>;
 
     /**
      * Determines if the currency selector is visible

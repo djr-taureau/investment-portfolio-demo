@@ -1,14 +1,16 @@
+import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
+import * as _ from "lodash";
+import * as CompanyActions from "../company/company.actions";
 import * as ValuationActions from "./../valuation/valuation.actions";
-import { Actions, Effect, ofType } from "@ngrx/effects";
+import { Observable, of } from "rxjs";
 import { Action, Store } from "@ngrx/store";
-import { asyncScheduler, EMPTY as empty, Observable, of } from "rxjs";
-import { catchError, debounceTime, exhaustMap, map, skip, switchMap, takeUntil, concatMap } from "rxjs/operators";
-import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "@core/domain/company.model";
+import { Actions, Effect, ofType } from "@ngrx/effects";
+import { catchError, exhaustMap, map, concatMap } from "rxjs/operators";
+import { Company, GetCompanyResponse } from "@core/domain/company.model";
 import { CompanyActionTypes } from "@core/state/company/company.actions";
 import { CompanyService } from "@core/service/company.service";
+import { DashboardAsOfDateChanged, DashboardCurrencyChanged } from "@core/state/flow/company-flow.actions";
 import { Injectable } from "@angular/core";
-import { PortfolioActionTypes, SearchCompanyFailure, SearchCompanySuccess } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
-import * as CompanyActions from "../company/company.actions";
 
 @Injectable()
 export class CompanyEffects {
@@ -37,6 +39,19 @@ export class CompanyEffects {
                 catchError((error) => of(new CompanyActions.GetFailure(error)))
             )
         )
+    );
+
+    @Effect()
+    getCompany$Success: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyActions.GetSuccess>(CompanyActionTypes.GetSuccess),
+        map((action) => action.payload),
+        concatMap((result: Company) => {
+            const comp = result as Company;
+            // TODO: Gman - update this to use the latest NON-FUTURE available period (once appropriate data for doing so is returned from API)
+            const lastPeriod = _.takeRight(_.get(comp, "availablePeriods", []), 1)[0] as SelectorPeriod;
+            return [new DashboardAsOfDateChanged(lastPeriod), new DashboardCurrencyChanged(comp.defaultCurrency)];
+        }),
+        catchError((error) => of(new CompanyActions.GetFailure(error)))
     );
 
     /**

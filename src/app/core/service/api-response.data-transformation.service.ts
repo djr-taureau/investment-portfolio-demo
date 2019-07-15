@@ -48,7 +48,7 @@ export class ApiResponseDataTransformationService {
             companyId: companyId || data.company_id || "",
             id: this.mapApiIdToClientId(data.id) || "",
             name: data.name || "",
-            description: data.description || ""
+            description: data.currencyDesc || ""
         };
     }
 

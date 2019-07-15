@@ -1,5 +1,5 @@
 /**
- * Determines if the key code passed in is the left arrow key.
+ * Determines if the key currencyCode passed in is the left arrow key.
  * @param {number} keyCode - The keycode to check if left arrow.
  */
 export const isLeftArrowKey = (keyCode: number) => {
@@ -7,7 +7,7 @@ export const isLeftArrowKey = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the up arrow key.
+ * Determines if the key currencyCode passed in is the up arrow key.
  * @param {number} keyCode - The keycode to check if up arrow.
  */
 export const isUpArrowKey = (keyCode: number) => {
@@ -15,7 +15,7 @@ export const isUpArrowKey = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the right arrow key.
+ * Determines if the key currencyCode passed in is the right arrow key.
  * @param {number} keyCode - The keycode to check if right arrow.
  */
 export const isRightArrowKey = (keyCode: number) => {
@@ -23,7 +23,7 @@ export const isRightArrowKey = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the down arrow key.
+ * Determines if the key currencyCode passed in is the down arrow key.
  * @param {number} keyCode - The keycode to check if down arrow.
  */
 export const isDownArrowKey = (keyCode: number) => {
@@ -31,7 +31,7 @@ export const isDownArrowKey = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is one of the arrow keys.
+ * Determines if the key currencyCode passed in is one of the arrow keys.
  * @param {number} keyCode - The keycode to check if arrow.
  */
 export const isArrowKey = (keyCode: number) => {
@@ -39,7 +39,7 @@ export const isArrowKey = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the enter key.
+ * Determines if the key currencyCode passed in is the enter key.
  * @param {number} keyCode - The keycode to check if enter.
  */
 export const isEnterKey = (keyCode: number) => {
@@ -47,7 +47,7 @@ export const isEnterKey = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the backspace key.
+ * Determines if the key currencyCode passed in is the backspace key.
  * @param {number} keyCode - The keycode to check if backspace.
  */
 export const isBackspace = (keyCode: number) => {
@@ -55,7 +55,7 @@ export const isBackspace = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the delete key.
+ * Determines if the key currencyCode passed in is the delete key.
  * @param {number} keyCode - The keycode to check if delete.
  */
 export const isDelete = (keyCode: number) => {
@@ -63,7 +63,7 @@ export const isDelete = (keyCode: number) => {
 };
 
 /**
- * Determines if the key code passed in is the backspace or delete key.
+ * Determines if the key currencyCode passed in is the backspace or delete key.
  * @param {number} keyCode - The keycode to check if backspace or delete.
  */
 export const isBackspaceOrDelete = (keyCode: number) => {

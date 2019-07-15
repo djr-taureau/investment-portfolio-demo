@@ -233,7 +233,7 @@ definitions:
     type: "object"
     properties:
       code:
-        description: "Specific API error code that clients can use to map to unique error messages or create specific error flows."
+        description: "Specific API error currencyCode that clients can use to map to unique error messages or create specific error flows."
         type: "integer"
       field:
         type: "string"
@@ -321,7 +321,7 @@ definitions:
       #      Note: This should be accomplished via the /team endpoint which includes deal team and other team info and is useful elsewhere
       #      dealTeam:
       #        type: "array"
-      #        description: "Displayed in the company header under the description as a list."
+      #        currencyDesc: "Displayed in the company header under the currencyDesc as a list."
       #        items:
       #          $ref: '#/definitions/TeamMember'
       takeaways:
@@ -527,7 +527,7 @@ definitions:
         description: "name of the fund"
       descrtiption:
         type: "string"
-        description: "description of the fund"
+        description: "currencyDesc of the fund"
   PortfolioSummary:
     type: "object"
     properties:
@@ -556,7 +556,7 @@ definitions:
         description: "The name of the industry"
       description:
         type: "string"
-        description: "Long form description of the industry (ie, for tooltips)"
+        description: "Long form currencyDesc of the industry (ie, for tooltips)"
   Tag:
     type: "object"
     properties:

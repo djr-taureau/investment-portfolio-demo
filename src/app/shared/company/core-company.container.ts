@@ -1,14 +1,14 @@
 import "rxjs/operators/first";
-import { LoadPortfolio } from "@core/state/flow/portfolio-flow.actions";
 import * as _ from "lodash";
+import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { ActivatedRoute } from "@angular/router";
 import { Company } from "@core/domain/company.model";
 import { getCompanyNavLinks } from "@core/state";
+import { LoadPortfolio } from "@core/state/flow/portfolio-flow.actions";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
 import { OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
-import { SetSelectedCompany } from "@core/state/company/company.actions";
 import { SetSelectedCompanyLink } from "@core/state/layout/layout.actions";
 
 export class CoreCompanyContainer implements OnInit {
@@ -22,7 +22,7 @@ export class CoreCompanyContainer implements OnInit {
         // Ensure that the url is evaluated for company id and updates the selected company if it exists
         this.route$.params.subscribe((params) => {
             if (_.get(params, "id", null)) {
-                this.store$.dispatch(new SetSelectedCompany(params.id));
+                this.store$.dispatch(new CompanyFlowActions.SelectCompany(params.id));
             }
         });
 

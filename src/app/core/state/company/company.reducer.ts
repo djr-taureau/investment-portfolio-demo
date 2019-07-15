@@ -25,7 +25,7 @@ export const initialState: State = adapter.getInitialState({
 export function reducer(state = initialState, action: CompanyActions): State {
     switch (action.type) {
         case CompanyActionTypes.GetAllSuccess:
-            return action.payload.length > 0 ? adapter.addAll(action.payload, state) : state;
+            return action.payload.length > 0 ? adapter.upsertMany(action.payload, state) : state;
 
         case CompanyActionTypes.GetSuccess:
             return action.payload ? adapter.upsertOne(action.payload, state) : state;

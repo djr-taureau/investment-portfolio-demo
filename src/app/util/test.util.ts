@@ -56,7 +56,7 @@ export const getCompanyDefault = (): Company => {
         aka: "",
         amountInvested: 0,
         availablePeriods: [],
-        defaultCurency: { code: "USD", symbol: "$" },
+        defaultCurrency: { currencyCode: "USD", currencySymbol: "$" },
         boardMembers: [],
         companyUpdates: [],
         currentValuation: 0,

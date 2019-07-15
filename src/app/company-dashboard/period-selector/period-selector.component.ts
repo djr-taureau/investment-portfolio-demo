@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import * as _ from "lodash";
 import { AvailablePeriod } from "@core/domain/company.model";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
-import { ChartUnit } from "@util/chart-data.util";
 import { Logger } from "@util/logger";
-import * as _ from "lodash";
 
 /**
  * Interface for the period selector items
@@ -86,23 +85,14 @@ export class PeriodSelectorComponent implements OnInit {
     /**
      * The units that represent the historical Units
      */
-    @Input()
-    public historicalUnits: ChartUnit[] = [
-        // TODO: GMAN: Remove in future integration effort
-        {
-            date: new Date(),
-            quarter: 3,
-            id: String(new Date().getTime()),
-            text: "FQ3 2019",
-            icon: ""
-        }
-    ];
+    // @Input()
+    // public get historicalUnits(): SelectorPeriod[];
 
     /**
      * The units that represent the projected Unit
      */
-    @Input()
-    public projectedUnits: ChartUnit[];
+    // @Input()
+    // public get projectedUnits(): SelectorPeriod[];
 
     // -----------------------------------------------
     // PUBLIC
@@ -137,30 +127,46 @@ export class PeriodSelectorComponent implements OnInit {
     public selectedDatePartChange: EventEmitter<DatePartType> = new EventEmitter<DatePartType>();
 
     // -----------------------------------------------
+    // PRIVATE FUNCTIONS
+    // -----------------------------------------------
+
+    private getHistoricalUnits(): SelectorPeriod[] {
+        return _.filter(_.get(this, "availablePeriods", []), (period) => {
+            return new Date(period.date) <= new Date();
+        });
+    }
+
+    private getProjectedUnits(): SelectorPeriod[] {
+        return _.filter(_.get(this, "availablePeriods", []), (period) => {
+            return new Date(period.date) >= new Date();
+        });
+    }
+    // -----------------------------------------------
     // PUBLIC FUNCTIONS
     // -----------------------------------------------
+
     public getHistoricalUnitCount(): number {
-        return _.get(this, "historicalUnits", []).length;
+        return this.getHistoricalUnits().length;
     }
 
     public getFirstHistoricalUnit(): Date {
-        return _.get(_.head(this.historicalUnits), "date", new Date());
+        return new Date(_.get(_.head(this.getHistoricalUnits()), "date", new Date()));
     }
 
     public getLastHistoricalUnit(): Date {
-        return _.get(_.last(this.historicalUnits), "date", new Date());
+        return new Date(_.get(_.last(this.getHistoricalUnits()), "date", new Date()));
     }
 
     public getProjectedUnitCount() {
-        return _.get(this, "projectedUnits", []).length;
+        return this.getProjectedUnits().length;
     }
 
     public getFirstProjectedUnit(): Date {
-        return _.get(_.head(this.projectedUnits), "date", new Date());
+        return new Date(_.get(_.head(this.getProjectedUnits()), "date", new Date()));
     }
 
     public getLastProjectedUnit(): Date {
-        return _.get(_.last(this.projectedUnits), "date", new Date());
+        return new Date(_.get(_.last(this.getProjectedUnits()), "date", new Date()));
     }
 
     public getAltCurrencyName() {
@@ -168,11 +174,32 @@ export class PeriodSelectorComponent implements OnInit {
     }
 
     public getAltCurrencySymbol() {
-        return _.get(this.alternateCurrency, "symbol", "");
+        return _.get(this.alternateCurrency, "currencySymbol", "");
     }
 
     public getSelectedDatePartName() {
         return _.get(this.selectedDatePartType, "name", "") + "s";
+    }
+
+    /**
+     * Determines if the alternate currency should be selected
+     */
+    public showAlternateCurrency(): boolean {
+        return _.get(this, "alternateCurrency.currencyCode", this.currencies.USD.currencyCode) !== this.currencies.USD.currencyCode;
+    }
+
+    /**
+     * Determines if the alternate currency is selected
+     */
+    public getAlternateCurrencySelected(): boolean {
+        return _.get(this, "selectedCurrency.currencyCode", null) === _.get(this, "alternateCurrency.currencyCode", "none");
+    }
+
+    /**
+     * Determines if the alternate currency is selected
+     */
+    public getDefaultCurrencySelected(): boolean {
+        return _.get(this, "selectedCurrency.currencyCode", null) === _.get(this, "defaultCurrency.currencyCode", "none");
     }
     /**
      * Handles changes to the selected currency
@@ -196,9 +223,9 @@ export class PeriodSelectorComponent implements OnInit {
      * Handles changes to the selected period ("as of")
      * @param $event
      */
-    public onPeriodChange($event: IconizedItem) {
+    public onPeriodChange($event: SelectorPeriod) {
         this.logger.debug(`onPeriodChange(${event})`);
-        // this.selectedPeriodChange.emit($event);
+        this.selectedPeriodChange.emit($event);
     }
 
     // -----------------------------------------------

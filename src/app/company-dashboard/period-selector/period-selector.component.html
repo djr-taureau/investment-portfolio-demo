@@ -7,14 +7,14 @@
         <kendo-buttongroup [selection]="'single'">
             <button kendoButton
                     [toggleable]="true"
-                    [selected]="selectedCurrency?.code === currencies.USD.code"
+                    [selected]="getDefaultCurrencySelected()"
                     [value]="currencies.USD"
                     [disabled]="!alternateCurrency"
-                    (click)="onCurrencyChange(currencies.USD)">{{ currencies.USD.symbol }} {{ currencies.USD.code }}</button>
+                    (click)="onCurrencyChange(currencies.USD)">{{ currencies.USD.currencySymbol }} {{ currencies.USD.currencyCode }}</button>
             <button kendoButton
-                    *ngIf="alternateCurrency"
+                    *ngIf="showAlternateCurrency()"
                     [toggleable]="true"
-                    [selected]="selectedCurrency?.code === alternateCurrency?.code"
+                    [selected]="getAlternateCurrencySelected()"
                     [value]="alternateCurrency"
                     (click)="onCurrencyChange(alternateCurrency)">{{ getAltCurrencySymbol() }} {{ getAltCurrencyName()}}</button>
         </kendo-buttongroup>
@@ -54,6 +54,9 @@
         <img src="assets/image/as-of-dot-line.svg">
         <div>As of:</div>
         <sbp-iconized-searchable-combo class="combo"
+                                       [textField]="'id'"
+                                       [valueField]="'id'"
+                                       [showFilter]="false"
                                        [mainIconSrc]="'assets/image/calendar.svg'"
                                        [selectedItem]="selectedPeriod"
                                        [popupSettings]="popupSettings"

@@ -73,7 +73,7 @@ export const validateGender = (control: FormControl): ValidationErrors | null =>
 };
 
 /**
- * Validates a zip code form field.
+ * Validates a zip currencyCode form field.
  */
 export const validateZipCode = (control: FormControl): ValidationErrors | null => {
     const value = control.value || "";

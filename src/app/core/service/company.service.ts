@@ -59,6 +59,11 @@ export class CompanyService {
         const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY, params);
 
         return this.apiService.get(url).pipe(
+            map((response: GetCompanyResponse) => {
+                const comp = response.data;
+                const updated: Company = this.mapper.mapCompanyFromApiToClient(comp);
+                return { data: updated } as GetCompanyResponse;
+            }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`getCompanyFault( ${fault.error.message} )`);
                 return throwError(fault);

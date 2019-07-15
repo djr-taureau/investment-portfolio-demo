@@ -15,14 +15,14 @@ export class IconizedSearchableComboComponent implements OnInit {
      * used as the data source for the list.
      */
     @Input()
-    set listItems(items: Array<IconizedItem>) {
+    set listItems(items: Array<any>) {
         if (items) {
             this.data = items.slice();
             this.source = items.slice();
         }
     }
-    public data: Array<IconizedItem>;
-    public source: Array<IconizedItem>;
+    public data: Array<any>;
+    public source: Array<any>;
 
     /**
      * Path to the icon to use for the main icon of the control
@@ -33,11 +33,23 @@ export class IconizedSearchableComboComponent implements OnInit {
     @Input()
     public showFilter = true;
 
+    /**
+     * The field in the data item to evaluate for the label
+     */
+    @Input()
+    public textField = "text";
+
+    /**
+     * The field in the data item to evaluate for the value
+     */
+    @Input()
+    public valueField = "id";
+
     @Input()
     public popupSettings = { width: 200 };
 
     @Output()
-    public selectionChange: EventEmitter<IconizedItem> = new EventEmitter();
+    public selectionChange: EventEmitter<any> = new EventEmitter();
 
     /**
      * ngModel must be used since the list items are object based
@@ -59,8 +71,12 @@ export class IconizedSearchableComboComponent implements OnInit {
      * Handles the changing of the selection
      * @param event
      */
-    onSelectionChange(event) {
+    public onSelectionChange(event) {
         this.selectionChange.emit(event);
+    }
+
+    public getDataItemLabel(dataItem): string {
+        return dataItem ? dataItem[this.textField] : "";
     }
 
     constructor() {}
