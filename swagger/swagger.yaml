@@ -331,6 +331,11 @@ definitions:
         description: "Displayed in the company header under the tags."
       type:
         type: "string"
+        enum:
+          - "PRIVATE"
+          - "PUBLIC"
+          - "EXITED"
+          - "JOINT_VENTURE"
       sectors:
         type: "array"
         items:
@@ -345,10 +350,6 @@ definitions:
           $ref: "#/definitions/Fund"
       logo:
         type: "string"
-      revenue:
-        type: "array"
-        items:
-          $ref: '#/definitions/CompanyRevenue'
       tags:
         type: "array"
         items:
@@ -389,9 +390,9 @@ definitions:
       revenueStage:
         type: "string"
         enum:
-          - "PREREV"
-          - "PRIVATE"
-          - "PUBLIC"
+          - "PRE_REVENUE"
+          - "LT_100M"
+          - "GT_100M"
       fiscalYearEnd:
         $ref: '#/definitions/MonthDay'
       investingEntity:
@@ -482,9 +483,7 @@ definitions:
         format: "int64"
       companyName:          #@Andrew what is this? Intentionally denormalized, or employer, or ?
         type: "string"
-      firstName:
-        type: "string"
-      lastName:
+      contactName:
         type: "string"
       avatar:
         type: "string"
