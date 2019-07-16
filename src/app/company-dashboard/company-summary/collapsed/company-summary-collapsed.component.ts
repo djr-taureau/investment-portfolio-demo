@@ -78,6 +78,12 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public seeAllTeamMembers: EventEmitter<string> = new EventEmitter<string>();
 
     /**
+     * Request to see valuations.
+     */
+    @Output()
+    public seeValuations: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
      * Constructor.
      */
     constructor() {
@@ -107,5 +113,14 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public onAllTeamMembersClick(id: string): void {
         CompanySummaryCollapsedComponent.logger.debug(`onAllTeamMembersClick( Company ID: ${id} )`);
         this.seeAllTeamMembers.emit(id);
+    }
+
+    /**
+     * Handles click of the valuation container area
+     * @param id
+     */
+    public onValuationClick(id: string): void {
+        CompanySummaryCollapsedComponent.logger.debug(`onValuationClick( Company ID: ${id} )`);
+        this.seeValuations.emit(id);
     }
 }

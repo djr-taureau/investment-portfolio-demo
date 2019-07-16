@@ -1,6 +1,6 @@
 import { ChartColor } from "@core/domain/chart-data.model";
 import { Component, OnInit } from "@angular/core";
-import { OpenCompanyInfoPanel, OpenTakeawaysPanel, OpenTeamMemberListPanel } from "@core/state/flow/company-flow.actions";
+import { OpenCompanyInfoPanel, OpenTakeawaysPanel, OpenTeamMemberListPanel, OpenValuationPanel } from "@core/state/flow/company-flow.actions";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
 import { Company, Tag, TeamMember, Valuation } from "@core/domain/company.model";
@@ -32,6 +32,7 @@ import * as _ from "lodash";
             [currentApproved]="currentApproved"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
+            (seeValuations)="seeValuations($event)"
         >
         </sbp-company-summary-collapsed>
 
@@ -56,6 +57,7 @@ import * as _ from "lodash";
             (seeAllTakeaways)="seeAllTakeaways($event)"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
+            (seeValuations)="seeValuations($event)"
         >
         </sbp-company-summary-expanded>
     `
@@ -200,5 +202,15 @@ export class CompanySummaryContainer implements OnInit {
         CompanySummaryContainer.logger.debug(`seeAllTeamMembers( Company ID: ${id} )`);
         // this.store$.dispatch(new TeamActions.GetAll(id));
         this.store$.dispatch(new OpenTeamMemberListPanel(id));
+    }
+
+    /**
+     * Fires off action to see all valuations.
+     * @param id
+     */
+    public seeValuations(id: string): void {
+        CompanySummaryContainer.logger.debug(`seeValuations( Company ID: ${id} )`);
+        // this.store$.dispatch(new TeamActions.GetAll(id));
+        this.store$.dispatch(new OpenValuationPanel(id));
     }
 }

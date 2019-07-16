@@ -245,6 +245,15 @@ export interface Valuation {
     valuationDetail: ValuationDetail;
 }
 
+export class ValuationTableModel {
+    label: any;
+    icInitial: any;
+    icFollowOn1: any;
+    actual: any;
+    yearPlus1: any;
+    exit: any;
+}
+
 // This interface supports the Initiative card
 // in the Company Dashboard view
 export interface CompanyInitiativeResponse {

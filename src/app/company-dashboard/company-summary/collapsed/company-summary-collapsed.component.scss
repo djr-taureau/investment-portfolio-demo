@@ -155,6 +155,10 @@
 
         .trend {}
 
+        .valuation-container {
+            @extend .hand-cursor;
+        }
+
         .export-container {
             vertical-align: center;
             text-align: center;

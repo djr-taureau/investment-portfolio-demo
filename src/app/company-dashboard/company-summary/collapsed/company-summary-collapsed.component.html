@@ -103,46 +103,51 @@
     // Valuation
     ////////////////////////////////////////////////////////////////////////////////////
     -->
-    <div fxLayout="column"
-         fxLayoutAlign="space-between stretch">
-        <div fxLayout="row"
+    <div fxLayout="row"
+         fxLayoutGap="20px"
+         class="valuation-container"
+         (click)="onValuationClick(company.id)">
+        <div fxLayout="column"
              fxLayoutAlign="space-between stretch">
-            <div class="valuation">Valuation</div>
-            <div>&nbsp;</div>
-            <div class="valuation-denomination">($M)</div>
+            <div fxLayout="row"
+                 fxLayoutAlign="space-between stretch">
+                <div class="valuation">Valuation</div>
+                <div>&nbsp;</div>
+                <div class="valuation-denomination">($M)</div>
+            </div>
+            <div class="valuation-moic-gross">MOIC / Gross IRR</div>
         </div>
-        <div class="valuation-moic-gross">MOIC / Gross IRR</div>
+
+        <sbp-valuation [header]="'Current'"
+                       [value]="currentTotalValue | number:'1.1-1'"
+                       [moic]="currentMoic | number:'1.1-1'"
+                       [grossIrr]="currentIrr | number:'1.1-1'">
+        </sbp-valuation>
+
+        <div class="trend"
+             fxLayout="column"
+             fxLayoutAlign="center stretch">
+            <img src="assets/image/right-trend.svg">
+        </div>
+
+        <sbp-valuation [header]="'+1 year'"
+                       [value]="plusOneTotalValue | number:'1.1-1'"
+                       [moic]="plusOneMoic | number:'1.1-1'"
+                       [grossIrr]="plusOneIrr | number:'1.1-1'">
+        </sbp-valuation>
+
+        <div class="trend"
+             fxLayout="column"
+             fxLayoutAlign="center stretch">
+            <img src="assets/image/right-trend.svg">
+        </div>
+
+        <sbp-valuation [header]="'Exit'"
+                       [value]="exitTotalValue | number:'1.1-1'"
+                       [moic]="exitMoic | number:'1.1-1'"
+                       [grossIrr]="exitIrr | number:'1.1-1'">
+        </sbp-valuation>
     </div>
-
-    <sbp-valuation [header]="'Current'"
-                   [value]="currentTotalValue | number:'1.1-1'"
-                   [moic]="currentMoic | number:'1.1-1'"
-                   [grossIrr]="currentIrr | number:'1.1-1'">
-    </sbp-valuation>
-
-    <div class="trend"
-         fxLayout="column"
-         fxLayoutAlign="center stretch">
-        <img src="assets/image/right-trend.svg">
-    </div>
-
-    <sbp-valuation [header]="'+1 year'"
-                   [value]="plusOneTotalValue | number:'1.1-1'"
-                   [moic]="plusOneMoic | number:'1.1-1'"
-                   [grossIrr]="plusOneIrr | number:'1.1-1'">
-    </sbp-valuation>
-
-    <div class="trend"
-         fxLayout="column"
-         fxLayoutAlign="center stretch">
-        <img src="assets/image/right-trend.svg">
-    </div>
-
-    <sbp-valuation [header]="'Exit'"
-                   [value]="exitTotalValue | number:'1.1-1'"
-                   [moic]="exitMoic | number:'1.1-1'"
-                   [grossIrr]="exitIrr | number:'1.1-1'">
-    </sbp-valuation>
 
     <!--
     ////////////////////////////////////////////////////////////////////////////////////

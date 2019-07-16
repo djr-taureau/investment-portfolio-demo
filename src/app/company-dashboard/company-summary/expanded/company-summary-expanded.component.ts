@@ -97,6 +97,12 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public seeAllTakeaways: EventEmitter<string> = new EventEmitter<string>();
 
     /**
+     * Request to see valuations.
+     */
+    @Output()
+    public seeValuations: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
      * The percent owned chart data.
      */
     public percentOwnershipChartData: any[] = [];
@@ -140,6 +146,15 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public onAllTeamMembersClick(id: string): void {
         CompanySummaryExpandedComponent.logger.debug(`onAllTeamMembersClick( Company ID: ${id} )`);
         this.seeAllTeamMembers.emit(id);
+    }
+
+    /**
+     * Handles click of the valuation container area
+     * @param id
+     */
+    public onValuationClick(id: string): void {
+        CompanySummaryExpandedComponent.logger.debug(`onValuationClick( Company ID: ${id} )`);
+        this.seeValuations.emit(id);
     }
 
     /**

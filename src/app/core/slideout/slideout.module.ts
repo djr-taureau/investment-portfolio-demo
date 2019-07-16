@@ -8,6 +8,7 @@ import { TakeawaysModule } from "@core/slideout/takeaways/takeaways.module";
 import { MaterialModule } from "@shared/material/material.module";
 import { TeamMemberListModule } from "./team-member-list/team-member-list.module";
 import { TeamMemberDetailModule } from "./team-member-detail/team-member-detail.module";
+import { ValuationModule } from "./valuation/valuation.module";
 
 const IMPORTS = [
     CommonModule,
@@ -17,7 +18,8 @@ const IMPORTS = [
     RouterModule,
     TakeawaysModule,
     TeamMemberListModule,
-    TeamMemberDetailModule
+    TeamMemberDetailModule,
+    ValuationModule
 ];
 
 const EXPORTS = [SlideoutInfrastructureModule];

@@ -1,0 +1,211 @@
+@import "../../../../assets/scss/variables.scss";
+@import "../../../../assets/scss/pointers";
+
+:host {
+
+    table {
+        border-radius: 6px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0) !important;
+        background-color: rgba(255, 255, 255, 0) !important;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+
+        .mat-header-cell {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.3px;
+            color: rgba($grey-blue, .75);
+
+            // .header-label {
+            position: relative;
+            top: -5px;
+            text-align: right;
+
+            .date-label {
+                font-family: PostGrotesk;
+                font-size: 10px;
+                font-weight: bold;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                text-align: center;
+                color: $grey-blue;
+                width: 45px;
+                height: 15px;
+                border-radius: 2px;
+                background-color: rgba($light-periwinkle, .5);
+
+                &-icInitial,
+                &-actual {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+                    color: $grey-blue;
+                    width: 45px;
+                    height: 15px;
+                    border-radius: 2px;
+                    background-color: rgba($light-periwinkle, .5);
+                    margin-right: 10px;
+                }
+
+                &-icFollowOn1 {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+                    color: $grey-blue;
+                    width: 45px;
+                    height: 15px;
+                    border-radius: 2px;
+                    background-color: rgba($light-periwinkle, .5);
+                    margin-right: 20px;
+                }
+            }
+
+            &:nth-child(3) {
+                text-align: right;
+                padding-right: 20px;
+            }
+
+            &:nth-child(4) {
+                text-align: center;
+                padding-right: 10px;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: bold;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                color: $light-navy;
+                border-bottom: 3px $light-navy solid;
+            }
+
+            &:nth-child(2),
+            &:nth-child(5),
+            &:nth-child(6) {
+                text-align: right;
+            }
+        }
+
+        td.mat-cell {
+            &:first-of-type {
+                padding-left: 0px !important;
+            }
+
+            border-bottom: 1px $pale-grey dashed;
+            font-family: PostGrotesk;
+            font-size: 16px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.5px;
+            color: $dark;
+
+            &:nth-child(1) {
+                opacity: 0.75;
+                font-family: PostGrotesk;
+                font-size: 14px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                color: $grey-blue;
+                text-align: left;
+            }
+
+            &:nth-child(3) {
+                text-align: right;
+                padding-right: 20px;
+            }
+
+            &:nth-child(4) {
+                background-color: $pale-grey-75;
+                text-align: right;
+                padding-right: 10px;
+            }
+
+            &:nth-child(2),
+            &:nth-child(5),
+            &:nth-child(6) {
+                text-align: right;
+            }
+        }
+    }
+
+    .main-container {
+        width: 90%;
+        padding: 5px 35px 35px 35px;
+    }
+
+    .mat-list-base {
+        padding-top: 0px !important;
+    }
+
+    .mat-list-base .mat-list-item {
+        height: 84px;
+    }
+
+    .group {
+        padding: 10px 0px 15px 0px;
+        background-color: $white;
+        border-bottom: dashed 1px $light-grey-blue;
+
+        .category {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: $grey-blue;
+            padding-right: 6px;
+            padding-top: 5px;
+        }
+
+        .count {
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $grey-blue;
+            padding-top: 5px;
+        }
+
+        .row__company {
+            font-family: PostGrotesk;
+            font-size: 10px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: grey;
+        }
+
+    }
+}

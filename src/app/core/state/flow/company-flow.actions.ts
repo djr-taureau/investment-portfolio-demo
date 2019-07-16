@@ -18,6 +18,9 @@ export enum CompanyFlowActionTypes {
     OpenTeamMemberDetailPanel = "[Flow] Open Team Member Detail Panel",
     CloseTeamMemberDetailPanel = "[Flow] Close Team Member Detail Panel",
 
+    OpenValuationPanel = "[Company Flow] Open Valuation Panel",
+    CloseValuationPanel = "[Company Flow] Close Valuation Panel",
+
     ExpandCompanyInfoSummaryPanel = "[Company Flow] Expand Company Info Summary Panel",
     CollapseCompanyInfoSummaryPanel = "[Company Flow] Collapse Company Info Summary Panel",
 
@@ -57,6 +60,12 @@ export class CloseTeamMemberDetailPanel implements Action {
 
 export class CloseTeamMemberListPanel implements Action {
     readonly type = CompanyFlowActionTypes.CloseTeamMemberListPanel;
+
+    constructor(public payload?: string) {}
+}
+
+export class CloseValuationPanel implements Action {
+    readonly type = CompanyFlowActionTypes.CloseValuationPanel;
 
     constructor(public payload?: string) {}
 }
@@ -130,6 +139,11 @@ export class OpenTeamMemberListPanel implements Action {
     constructor(public payload?: string) {}
 }
 
+export class OpenValuationPanel implements Action {
+    readonly type = CompanyFlowActionTypes.OpenValuationPanel;
+
+    constructor(public payload?: string) {}
+}
 export class SelectCompany implements Action {
     readonly type = CompanyFlowActionTypes.SelectCompany;
 
@@ -141,6 +155,7 @@ export type CompanyFlowActions =
     | CloseTakeawaysPanel
     | CloseTeamMemberDetailPanel
     | CloseTeamMemberListPanel
+    | CloseValuationPanel
     | CollapseCompanyInfoSummaryPanel
     | DashboardCurrencyChanged
     | DashboardDatePartChanged
@@ -153,4 +168,5 @@ export type CompanyFlowActions =
     | OpenTakeawaysPanel
     | OpenTeamMemberDetailPanel
     | OpenTeamMemberListPanel
+    | OpenValuationPanel
     | SelectCompany;

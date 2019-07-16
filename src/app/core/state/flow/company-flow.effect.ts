@@ -1,3 +1,4 @@
+import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
 import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import { appRoutePaths } from "@app/app.routes";
 import { CompanyInfoContainer } from "@core/slideout/company-info/company-info.container";
@@ -19,6 +20,7 @@ import {
     CloseTakeawaysPanel,
     CloseTeamMemberDetailPanel,
     CloseTeamMemberListPanel,
+    CloseValuationPanel,
     CompanyFlowActionTypes,
     CompanyNavigationItemClicked,
     FindCompanies,
@@ -27,6 +29,7 @@ import {
     OpenTakeawaysPanel,
     OpenTeamMemberDetailPanel,
     OpenTeamMemberListPanel,
+    OpenValuationPanel,
     SelectCompany
 } from "@core/state/flow/company-flow.actions";
 import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
@@ -145,6 +148,27 @@ export class CompanyFlowEffect {
     @Effect()
     closeTeamMemberListPanel$: Observable<Action> = this.actions$.pipe(
         ofType<CloseTeamMemberListPanel>(CompanyFlowActionTypes.CloseTeamMemberListPanel),
+        map((action) => action.payload),
+        concatMap((companyId) => [new ToggleSlideout(false)])
+    );
+
+    // ------------------- VALUATION: LIST PANEL ---------------------------//
+    /**
+     * Handles opening the team member detail panel flow
+     */
+    @Effect()
+    openValuationPanel$: Observable<Action> = this.actions$.pipe(
+        ofType<OpenValuationPanel>(CompanyFlowActionTypes.OpenValuationPanel),
+        map((action) => action.payload),
+        concatMap((companyId) => [new ToggleSlideout(true, ValuationContainer), new GetAll(companyId)])
+    );
+
+    /**
+     * Handles closing the team member detail panel flow
+     */
+    @Effect()
+    closeValuationPanel$: Observable<Action> = this.actions$.pipe(
+        ofType<CloseValuationPanel>(CompanyFlowActionTypes.CloseValuationPanel),
         map((action) => action.payload),
         concatMap((companyId) => [new ToggleSlideout(false)])
     );
