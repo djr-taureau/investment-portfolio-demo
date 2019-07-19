@@ -1,7 +1,7 @@
 import * as CompanyDashboardLayoutActions from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { ActivatedRoute } from "@angular/router";
 import { appRoutePaths } from "../app.routes";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, TemplateRef } from "@angular/core";
 import { CoreCompanyContainer } from "@shared/company/core-company.container";
 import { Logger } from "@util/logger";
 import { Store } from "@ngrx/store";
@@ -23,6 +23,7 @@ export class CompanyDashboardContainer extends CoreCompanyContainer implements O
      * @param store$
      * @param route$
      */
+
     constructor(public store$: Store<any>, public route$: ActivatedRoute) {
         super(store$, route$, appRoutePaths.companyDashboard);
 

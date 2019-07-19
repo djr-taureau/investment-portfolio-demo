@@ -1,12 +1,14 @@
+import { NgModule, ElementRef } from "@angular/core";
+import { PopupModule, POPUP_CONTAINER } from "@progress/kendo-angular-popup";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanySummaryCollapsedComponent } from "./company-summary/collapsed/company-summary-collapsed.component";
 import { CompanySummaryContainer } from "./company-summary/company-summary.container";
 import { CompanyKpiContainer } from "./company-kpi-container/company-kpi.container";
+import { CompanyKpiDetailComponent } from "./company-kpi-detail/company-kpi-detail.component";
 import { CompanySummaryExpandedComponent } from "./company-summary/expanded/company-summary-expanded.component";
 import { IconizedSearchableComboModule } from "@shared/iconized-searchable-combo/iconized-searchable-combo.module";
-import { NgModule } from "@angular/core";
 import { PeriodSelectorComponent } from "./period-selector/period-selector.component";
 import { PeriodSelectorContainer } from "@app/company-dashboard/period-selector/period-selector.container";
 import { RouterModule, Routes } from "@angular/router";
@@ -20,7 +22,8 @@ const COMPONENTS: any = [
     CompanySummaryCollapsedComponent,
     CompanySummaryExpandedComponent,
     PeriodSelectorComponent,
-    PeriodSelectorContainer
+    PeriodSelectorContainer,
+    CompanyKpiDetailComponent
 ];
 
 const MODULE_ROUTES: Routes = [
@@ -31,8 +34,17 @@ const MODULE_ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(MODULE_ROUTES), ButtonsModule, IconizedSearchableComboModule, SharedModule],
+    imports: [RouterModule.forChild(MODULE_ROUTES), PopupModule, ButtonsModule, IconizedSearchableComboModule, SharedModule],
     declarations: COMPONENTS,
-    exports: COMPONENTS
+    exports: COMPONENTS,
+    providers: [
+        {
+            provide: POPUP_CONTAINER,
+            useFactory: () => {
+                return { nativeElement: document.body } as ElementRef;
+            }
+        }
+    ],
+    entryComponents: [CompanyKpiDetailComponent]
 })
 export class CompanyDashboardModule {}

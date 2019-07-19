@@ -1,0 +1,129 @@
+@import "../../../assets/scss/variables.scss";
+
+:host {
+
+    margin-top: 17px;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin: 0 40px;
+    width: 1360px;
+    height: 421px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    border: solid 2px $dark-sky-blue;
+    background-color: $white;
+
+    button.actuals-toggle-on {
+        width: 74px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $pale-grey;
+    }
+
+    .button-bar {
+        margin-left: 46px;
+        margin-right: 1047px;
+        margin-top: 22px;
+    }
+
+    .kendo-button-group {
+        margin-left: 20px;
+    }
+
+    button.actuals-button {
+        width: 38px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $light-navy;
+        padding: 5px;
+    }
+
+    .actual-dot {
+        background-color: $light-navy;
+    }
+
+    .actual-path {
+        width: 16px;
+        height: 1px;
+        border: solid 3px $light-navy;
+    }
+
+    button.budget-toggle-on {
+        width: 96px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $pale-grey;
+    }
+
+    button.budget-button {
+        width: 60px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $light-navy;
+    }
+
+
+    .budget-dot {
+        width: 6px;
+        height: 6px;
+        border: solid 1.5px $dark-sky-blue;
+        background-color: $white;
+    }
+
+    .budget-path {
+        width: 16px;
+        height: 1px;
+        opacity: 0.75;
+        border: solid 1px $dark-sky-blue;
+    }
+
+    button.forecast-toggle-on {
+        width: 97px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $pale-grey;
+    }
+
+    button.forecast-button {
+        width: 61px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+
+        color: $light-navy;
+        padding: 5px 5px 5px 5px
+    }
+
+    .kpi-detail-bar {
+        height: 136px;
+        width: 684px;
+        margin-left: 46px;
+        margin-bottom: 75px;
+    }
+
+    .kpi-detail-line {
+        margin-left: 46px;
+    }
+
+    .kpi-detail-table {
+        margin-top: 43px;
+        margin-right: 39px;
+    }
+}

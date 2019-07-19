@@ -34,6 +34,8 @@ export class LineComponent implements OnChanges, AfterContentInit {
     lineStyle: string;
     line;
 
+    constructor() {}
+
     updateLineString(): void {
         this.interpolation = curveLinear;
         const lineGenerator = d3[this.type]()
@@ -46,21 +48,18 @@ export class LineComponent implements OnChanges, AfterContentInit {
         }
 
         if (this.type === "line") {
-            this.data.map((v) => {
-                if (this.projectedAccessor) {
-                    if (this.projectedAccessor(v)) {
-                        this.projectedValue = this.projectedAccessor(v);
-                    } else {
-                        this.projectedValue = this.projectedAccessor(v);
-                    }
-                }
-            });
+            // if (this.projectedAccessor) {
+            //     if (this.projectedAccessor(v)) {
+            //         this.projectedValue = this.projectedAccessor(v);
+            //     } else {
+            //         this.projectedValue = this.projectedAccessor(v);
+            //     }
+            // }
         }
         this.lineString = lineGenerator(this.data);
     }
 
     ngAfterContentInit() {
-        // TODO:: Still working on this
         // this.historical = this.data.filter((v) => v.projected === false);
         // this.projected = this.data.filter((v) => v.projected === true);
     }

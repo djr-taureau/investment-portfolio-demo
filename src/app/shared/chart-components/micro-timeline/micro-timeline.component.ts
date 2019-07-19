@@ -14,10 +14,10 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     @Input() data: any[];
     @Input() label: string;
-
     @Input() xAccessor: any;
     @Input() yAccessor: any;
     @Input() projectedAccessor: any;
+    @ViewChild("container") container: ElementRef;
 
     keyAccessor: any;
     dimensions: DimensionsType;
@@ -31,7 +31,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     formatDate = d3.timeFormat("%-b %-d");
     gradientId = getUniqueId("Timeline-gradient");
     gradientColors = ["rgb(226, 222, 243)", "#47a2d6"];
-    @ViewChild("container") container: ElementRef;
+
     fillColor;
     display = false;
     historicalData: TimelineDataPointFin[];
@@ -43,7 +43,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
             marginRight: 11,
             marginBottom: 37.5,
             marginLeft: 1,
-            height: 150,
+            height: 110,
             width: 120
         };
         this.dimensions = {

@@ -1,17 +1,28 @@
-<div fxLayout="row"
+<div #anchor
+     class="kpi-container"
+     fxLayout="row"
      fxLayoutAlign="space-between center">
-    <div class="chart">
+    <div class="chart"
+         #anchor
+         class="content"
+         (click)="openDetail($event, anchor)"
+         class="k-button">
         <sbp-kpi-summary [data]="timelineData"
                          [title]="'Revenue'"
                          [denomination]="'USD'"
                          [value]="325.3"
                          [pyLabel]="'vs PY'"
-                         [pyValue]="-44.1"
+                         [pyValue]="+44.1"
                          [icLabel]="'vs Bud'"
                          [icValue]="'-42'">
         </sbp-kpi-summary>
+
     </div>
-    <div class="chart">
+    <div class="chart"
+         #anchor
+         class="content"
+         (click)="openDetail($event, anchor)"
+         class="k-button">
         <sbp-kpi-summary [data]="timelineData2"
                          [title]="'EBITDA'"
                          [denomination]="'USD'"
@@ -22,7 +33,10 @@
                          [icValue]="'-5.0'">
         </sbp-kpi-summary>
     </div>
-    <div class="chart">
+    <div class="chart"
+         class="content"
+         (click)="openDetail($event, anchor)"
+         class="k-button">
         <sbp-kpi-summary [data]="timelineData3"
                          [title]="'Cash Burn'"
                          [denomination]="'USD'"
@@ -32,8 +46,13 @@
                          [icLabel]="'vs Bud'"
                          [icValue]="'-5.0'">
         </sbp-kpi-summary>
+
     </div>
-    <div class="chart">
+    <div class="chart"
+         #anchor
+         class="content"
+         (click)="openDetail($event, anchor)"
+         class="k-button">
         <sbp-kpi-summary [data]="timelineData3"
                          [title]="'Placeholder KPI'"
                          [denomination]="'USD'"

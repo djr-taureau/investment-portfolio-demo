@@ -4,5 +4,45 @@
 
     .chart {
         width: 24.5%;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+        color: #fff;
+        background-color: white;
+
     }
+
+    .content {
+        padding: 30px;
+        width: 1360px;
+        height: 427px;
+        color: #fff;
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, .05);
+    }
+
+    .content-chart {
+        width: 739px;
+    }
+
+    .content-table {
+        width: 605px
+    }
+
+    .content p {
+        margin: 0;
+    }
+
+    .anchor {
+        display: block;
+        width: 120px;
+        margin: 200px auto;
+    }
+
+    .k-chart {
+        display: none;
+        border: none;
+    }
+
+
+
+
 }

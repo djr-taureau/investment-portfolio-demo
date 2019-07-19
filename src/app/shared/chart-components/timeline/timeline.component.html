@@ -1,0 +1,74 @@
+<div #container
+     class="card">
+    <sbp-chart [dimensions]="dimensions">
+        <svg:defs>
+            <svg:g sbpGradient
+                   [id]="gradientId"
+                   [colors]="gradientColors"
+                   x2="0"
+                   y2="100%">
+            </svg:g>
+        </svg:defs>
+        <svg:g sbpAxis
+               dimension="x"
+               [dimensions]="dimensions"
+               [scale]="xScale"
+               [formatTick]="formatDate"
+               [label]="label">
+            </g>
+            <svg:g sbpAxis
+                   dimension="y"
+                   [dimensions]="dimensions"
+                   [scale]="yScale"
+                   [label]="label">
+                </g>
+                <svg:g sbpLine
+                       type="area"
+                       [data]="data"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="yAccessorScaled"
+                       [y0Accessor]="y0AccessorScaled"
+                       fill="url(#{{ gradientId }})">
+                </svg:g>
+                <!-- actuals -->
+                <svg:g sbpLine
+                       [data]="actuals"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="yAccessorScaled">
+                </svg:g>
+                <svg:g sbpCircles
+                       class="dot"
+                       [data]="actuals"
+                       [keyAccessor]="keyAccessor"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="yAccessorScaled">
+                </svg:g>
+                <!-- budgeted -->
+                <svg:g sbpLine
+                       [data]="budget"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="budgetedAccessorScaled">
+                </svg:g>
+                <svg:g sbpCircles
+                       class="dot"
+                       [data]="budget"
+                       [keyAccessor]="keyAccessor"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="budgetedAccessorScaled">
+                </svg:g>
+                <!-- forecast -->
+                <svg:g sbpLine
+                       [data]="forecast"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="forecastAccessorScaled">
+                </svg:g>
+                <svg:g sbpCircles
+                       class="dot"
+                       [data]="forecast"
+                       [keyAccessor]="this.keyAccessor"
+                       [xAccessor]="xAccessorScaled"
+                       [yAccessor]="forecastAccessorScaled">
+                </svg:g>
+
+    </sbp-chart>
+</div>
