@@ -1,0 +1,87 @@
+@import "../../../../assets/scss/variables.scss";
+
+:host {
+
+    .header {
+        border-bottom: solid 1px $light-grey-blue;
+    }
+
+    th.row-header {
+        width: 140px;
+        height: 25px;
+        padding-right: 18px;
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: right;
+        color: #929fb3;
+    }
+
+    th.col-header {
+        width: 45px;
+        padding: 10px;
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.17;
+        letter-spacing: normal;
+        text-align: right;
+        color: $grey-blue;
+    }
+
+    th.current {
+        width: 60px;
+        height: 14px;
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.17;
+        letter-spacing: normal;
+        text-align: center;
+        color: $light-navy;
+        border-bottom-color: solid bold $light-navy;
+    }
+
+    tr {
+        padding: 25px;
+        height: 25px;
+        width: 60px;
+        text-align: right;
+    }
+
+    .td {
+        padding: 25px;
+        height: 25px;
+        width: 60px;
+    }
+
+    tr.row-divider {
+        width: 586px;
+        height: 1px;
+        opacity: 0.5;
+        border: dotted 1px $light-grey-blue;
+    }
+
+    td.py-positive {
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: right;
+        color: $jade;
+    }
+
+}

@@ -2,7 +2,7 @@ import "hammerjs";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { CommonModule } from "@angular/common";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
-import { D3ChartsModule } from "@shared/chart-components/D3Charts.module";
+import { ChartModule } from "@shared/chart-components/chart.module";
 import { DirectivesModule } from "./directives/directives.module";
 import { FilterablePanelModule } from "@shared/filterable-panel/filterable-panel.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -35,7 +35,7 @@ const MODULES = [
     PortfolioNavbarModule,
     TeamMemberAvatarModule,
     ValuationModule,
-    D3ChartsModule
+    ChartModule
 ];
 
 const DECLARATIONS = [];

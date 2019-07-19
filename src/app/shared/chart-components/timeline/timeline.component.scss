@@ -1,0 +1,32 @@
+:host {
+    height: 300px;
+    min-width: 500px;
+    width: calc(100% + 1em);
+    margin-bottom: 2em;
+    background: white;
+    padding: 0.6em 1em;
+    margin: 0.5em;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    border: solid 2px #47a2d6;
+    background-color: white;
+    border-radius: 6px;
+
+}
+
+#container {
+    width: 334px;
+    height: 165px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    border: solid 2px #47a2d6;
+    background-color: white;
+}
+
+div .card {
+    width: 334px;
+    height: 165px;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    border: solid 2px #47a2d6;
+    background-color: white;
+}

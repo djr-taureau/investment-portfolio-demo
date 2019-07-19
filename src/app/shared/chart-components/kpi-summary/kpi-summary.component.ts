@@ -1,5 +1,5 @@
 import { numberToSignedString } from "./string.utli";
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, EventEmitter } from "@angular/core";
 import * as d3 from "d3";
 import { TimelineDataPointFin, TimelineDataPoint } from "../interfaces/types";
 import { Logger } from "@util/logger";

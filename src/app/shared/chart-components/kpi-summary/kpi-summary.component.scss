@@ -3,24 +3,28 @@
 :host {
     .container {
         padding: 0;
-        //width: 450px;
-        width: 100%;
-        height: 280px;
+        position: relative;
+        width: 334px;
+        height: 170px;
         border-radius: 6px;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        border: solid 2px #47a2d6;
+        border: solid 2px $dark-sky-blue;
         background-color: white;
         display: grid;
-        grid-template-columns: repeat(5, [col] auto);
-        grid-template-rows: repeat(5, [row] auto);
-        grid-gap: 2px;
-        margin: 2px, 2px, 2px, 2px;
-        padding: 2px, 2px, 2px, 2px
+        grid-gap: 5px;
+        grid-template-columns: 168px 73px 73px;
+        grid-template-rows: 23px 45px 113px;
+        transition: all 2s ease-out !important;
+    }
+
+    .box {
+        padding: 4px;
+
     }
 
     .title {
-        grid-row: row 1;
-        grid-column: col 1 / span 1;
+        grid-column: 1 / span 4;
+        grid-row: 1;
         font-family: PostGrotesk;
         font-size: 12px;
         font-weight: 500;
@@ -33,37 +37,49 @@
         margin-left: 10px;
         padding-top: 5px;
         margin-top: 10px;
+        margin-bottom: 5px;
+        text-align: left;
         text-transform: uppercase;
+        justify-self: start;
+        align-self: start;
     }
 
     .value {
-        grid-row: row 2 / span 1;
-        grid-column: col 1 / span 1;
+        grid-column: 1;
+        grid-row: 2;
+        // height: 51px;
+        // width: 97px;
+        margin-top: 5px;
         font-family: PostGrotesk;
         font-size: 40px;
         font-weight: normal;
         font-style: normal;
         font-stretch: normal;
         line-height: normal;
-        letter-spacing: -0.3px;
-        text-align: left;
+        letter-spacing: -0.25px;
+        align-self: start;
+        justify-self: center;
         margin-left: 20px;
-        color: $black
+        color: $dark
     }
 
-    .py-label {
-        grid-row: row 2;
-        grid-column: col 3 / span 1;
-        justify-self: right;
-        align-self: right;
+    .py {
+        grid-column: 2;
+        grid-row: 2;
+        text-align: right;
+        justify-self: end;
+        align-self: start;
         color: $grey-blue;
     }
 
-    .py-value {
-        width: 58px;
-        height: 18px;
+    .py-val {
+        grid-column: 2;
+        grid-row: 2;
+        // width: 58px;
+        // height: 18px;
+        margin-top: 5px;
         font-family: PostGrotesk;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         font-style: normal;
         font-stretch: normal;
@@ -71,21 +87,26 @@
         letter-spacing: normal;
         text-align: right;
         color: $jade;
-        align-self: right;
+        justify-self: end;
+        align-self: end;
+
     }
 
-    .ic-label {
-        grid-row: row 2 / span 1;
-        grid-column: col 4 / span 1;
-        justify-content: center;
+    .budget {
+        grid-column: 3;
+        grid-row: 2;
+        justify-self: end;
+        align-self: start;
         color: $grey-blue;
+        text-align: left;
     }
 
-    .ic-value {
-        width: 58px;
-        height: 18px;
+    .budget-val {
+        grid-column: 3;
+        grid-row: 2;
+        margin-top: 5px;
         font-family: PostGrotesk;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         font-style: normal;
         font-stretch: normal;
@@ -93,27 +114,40 @@
         letter-spacing: normal;
         text-align: right;
         color: $pale-red;
+        justify-self: end;
+        align-self: end;
     }
 
-    .micro-timeline {
-        grid-row: row 3 / span 2;
-        grid-column: col 1 / span 1;
-        align-self: left;
-        justify-self: left;
+    .timeline {
+        grid-column: 1 / span 1;
+        grid-row: 3;
+        width: 160px;
+        height: 60px;
+        align-self: start;
+        justify-self: start;
     }
 
-    .micro-py {
-        grid-row: row 3 / span 2;
-        grid-column: col 3 / span 1;
-        margin: 2px, 2px, 2px, 2px;
-        padding: 2px, 2px, 2px, 2px
+    .py-chart {
+        grid-column: 2;
+        grid-row: 3;
+        align-self: center;
+        justify-self: center;
+
     }
 
-    .micro-ic {
-        grid-row: row 3 / span 2;
-        grid-column: col 4 / span 1;
-        margin: 2px, 2px, 2px, 2px;
-        padding: 2px, 2px, 2px, 2px
+    .budget-chart {
+        grid-column: 3;
+        grid-row: 3;
+        align-self: center;
+        justify-self: center;
     }
 
+}
+
+
+.triangle {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 8px;
 }

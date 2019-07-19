@@ -8,14 +8,13 @@ import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types"
 import { cashburn } from "../../../company-dashboard/financials-data";
 
 @Component({
-    selector: "sbp-micro-bar",
+    selector: "sbp-detail-bar-chart",
     template: `
-        <svg id="hist" width="71" height="60"></svg>
+        <svg id="bar-chart" width="684" height="136"></svg>
     `,
-    styleUrls: ["./micro-bar.component.scss"]
+    styleUrls: ["./detail-bar-chart.component.scss"]
 })
-export class MicroBarComponent implements OnInit {
-    xRoundBands = 0.2;
+export class DetailBarChartComponent implements OnInit {
     xAxisScale;
     el: HTMLElement;
 
@@ -24,17 +23,18 @@ export class MicroBarComponent implements OnInit {
     private dimensions: DimensionsType;
 
     @Input() data: TimelineDataPointFin[];
+    @Input() label: string;
 
     constructor(private elementRef: ElementRef) {
         this.dimensions = {
-            marginTop: 7.5,
-            marginRight: 5,
-            marginBottom: 3.96,
-            marginLeft: 2,
-            height: 60,
-            width: 71,
-            boundedHeight: 60,
-            boundedWidth: 71
+            marginTop: 40,
+            marginRight: 30,
+            marginBottom: 75,
+            marginLeft: 46,
+            height: 136,
+            width: 684,
+            boundedHeight: 138,
+            boundedWidth: 685
         };
 
         this.dimensions = {
@@ -47,17 +47,17 @@ export class MicroBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log("test", this.data);
         this.buildChart();
     }
 
     buildChart() {
-        const dataset = [1, 1.1, 1.2, -0.8, 1.1, 1.2];
+        // data values will need to be transformed
+        const dataset = [3, 4, 2, -1, 2, 4];
         const maxHeight = d3.max(dataset, (d) => {
             return d;
         });
         const svg = select(this.el)
-            .select("#hist")
+            .select("#bar-chart")
             .append("svg")
             .attr("width", this.dimensions.width)
             .attr("height", this.dimensions.height);
@@ -81,7 +81,7 @@ export class MicroBarComponent implements OnInit {
                 }
             })
             .style("stroke-linecap", "round")
-            .attr("width", 10)
+            .attr("width", 36)
             .attr("height", (d) => {
                 return Math.abs(10 * d);
             });
@@ -107,5 +107,12 @@ export class MicroBarComponent implements OnInit {
                 return this.dimensions.height / 2 + 10 * Math.abs(d) - 5;
             }
         });
+        // svg.append("text")
+        //     .attr("transform", "rotate(-90)")
+        //     .attr("y", this.dimensions.marginLeft)
+        //     .attr("x", 0 - this.dimensions.height / 2)
+        //     .attr("dy", "1em")
+        //     .style("text-anchor", "middle")
+        //     .text("");
     }
 }

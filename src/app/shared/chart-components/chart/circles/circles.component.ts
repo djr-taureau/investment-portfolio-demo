@@ -6,19 +6,13 @@ import { Logger } from "@util/logger";
 @Component({
     selector: "[sbpCircles]",
     template: `
-        <ng-container>
-            <svg:circle
-                class="dot"
-                *ngFor="let circle of data; trackBy: keyAccessor"
-                [attr.cx]="xAccessor(circle, $index)"
-                [attr.cy]="yAccessor(circle, $index)"
-                [attr.r]="5"
-                [ngClass]="{
-                    projected: presentValue,
-                    dot: !presentValue
-                }"
-            ></svg:circle>
-        </ng-container>
+        <svg:circle
+            class="dot"
+            *ngFor="let circle of data; trackBy: keyAccessor"
+            [attr.cx]="xAccessor(circle, $index)"
+            [attr.cy]="yAccessor(circle, $index)"
+            [attr.r]="5"
+        ></svg:circle>
     `,
     styleUrls: ["./circles.component.scss"]
 })
@@ -36,7 +30,7 @@ export class CirclesComponent implements AfterContentInit, OnInit {
     circleStyles = ["dot"];
     presentValue: boolean;
 
-    constructor(private domSanitizer: DomSanitizer) {}
+    constructor() {}
 
     ngOnInit() {
         CirclesComponent.logger.debug(`OnInit()`);
@@ -48,3 +42,8 @@ export class CirclesComponent implements AfterContentInit, OnInit {
         this.presentValue = true;
     }
 }
+
+// [ngClass] = "{
+// projected: presentValue,
+//     dot: !presentValue
+//             }"

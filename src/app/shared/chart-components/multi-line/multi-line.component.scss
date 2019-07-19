@@ -1,0 +1,17 @@
+@import "../../../../assets/scss/variables.scss";
+
+
+.axis--x path {
+    border-radius: 4px;
+    stroke: #6b291d;
+    fill: $pale-red;
+    stroke-width: 1.5px;
+}
+
+
+.line {
+    border-radius: 4px;
+    stroke: #6b291d;
+    fill: $pale-red;
+    stroke-width: 1.5px;
+}

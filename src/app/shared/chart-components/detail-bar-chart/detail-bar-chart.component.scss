@@ -2,11 +2,12 @@
 
 :host {
     .tick .line .path {
-        display: none;
+        // display: none;
+        font: 10px sans-serif;
     }
 }
 
-#hist {
+#barchart {
     font: 10px sans-serif;
     text-align: right;
     padding: .5px;
@@ -17,7 +18,7 @@
 rect {
     transition: all 0.3s ease-out;
     border-radius: 4px;
-    width: 8px;
+    width: 36px;
     padding: 2px;
 }
 
@@ -31,6 +32,7 @@ rect.projected-positive {
     fill: $jade;
     stroke: #115449;
     stroke-width: 1;
+    width: 36px;
     opacity: 0.25;
 }
 
@@ -38,7 +40,8 @@ rect.historical-positive {
     fill: $jade;
     stroke: #115449;
     border-radius: 4px;
-    stroke-width: 1;
+    width: 36px;
+    stroke-width: 20;
 }
 
 rect.historical-positive:hover {
@@ -46,12 +49,14 @@ rect.historical-positive:hover {
     stroke: #115449;
     border-radius: 4px;
     stroke-width: 4;
+    width: 36px;
     opacity: 0.15;
 }
 
 rect.historical-negative {
     border-radius: 4px;
     stroke: #6b291d;
+    width: 36px;
     fill: $pale-red;
 }
 
@@ -59,6 +64,7 @@ rect.historical-negative:hover {
     border-radius: 4px;
     stroke: #6b291d;
     fill: $pale-red;
+    width: 36px;
     opacity: 0.15;
 }
 
@@ -70,13 +76,6 @@ rect.projected-negative {
     opacity: 0.25;
 }
 
-.bar--positive {
-    fill: steelblue;
-}
-
-.bar--negative {
-    fill: darkorange;
-}
 
 .axis text {
     font: 10px sans-serif;
@@ -92,17 +91,3 @@ rect.projected-negative {
 .axis .x {
     stroke-dasharray: 3, 3
 }
-
-// .d3-chart {
-//     width: 100%;
-//     height: 400px;
-//   }
-
-//   .d3-chart .axis path,
-//   .d3-chart .axis line {
-//     stroke: #999;
-//   }
-
-//   .d3-chart .axis text {
-//     fill: #999;
-//   }
