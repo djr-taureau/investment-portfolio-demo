@@ -142,10 +142,11 @@ export interface BoardMember {
 }
 
 export enum TeamMemberGroupTypes {
-    DEAL = "DEAL",
+    DEAL = "Deal",
     OPS = "OPS",
-    PORTFOLIO = "PORTFOLIO",
-    FINANCE = "FINANCE"
+    PORTFOLIO = "Portfolio",
+    FINANCE = "Finance",
+    LEGAL = "Legal"
 }
 
 export interface Team {

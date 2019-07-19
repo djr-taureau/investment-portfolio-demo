@@ -37,7 +37,7 @@ export class TeamMemberListComponent implements OnInit {
                 this.teamMemberCount += team.members.length;
                 // TODO: REMOVE THIS
                 team.members.forEach((member) => {
-                    member.avatar = "assets/image/slack.png";
+                    member.avatar = member.avatar;
                 });
             });
             this._teams = theTeams;

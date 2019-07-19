@@ -1,4 +1,4 @@
-import { CompanyRelationshipTypes } from "@core/domain/company.model";
+import { CompanyRelationshipTypes, TeamMemberGroupTypes } from "@core/domain/company.model";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromAuth from "./auth/auth.reducer";
@@ -231,6 +231,14 @@ export const getTeams = createSelector(
     getSelectedCompanyId,
     (teams, selectedCompanyId) => {
         return teams.filter((team) => String(team.companyId) === selectedCompanyId);
+    }
+);
+
+export const getDealTeamMembers = createSelector(
+    getTeams,
+    (teams) => {
+        const teamGroup = teams.find((team) => team.category === TeamMemberGroupTypes.DEAL);
+        return _.get(teamGroup, "members", []);
     }
 );
 

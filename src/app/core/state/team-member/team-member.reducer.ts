@@ -25,7 +25,8 @@ export function reducer(state = initialState, action: TeamMemberActions): State 
     switch (action.type) {
         case TeamMemberActionTypes.GetTeamMemberSuccess:
             state.selectedTeamMember = action.payload;
-            return adapter.addOne(prepareName(action.payload), state);
+            const preparedTeamMember = prepareName(action.payload);
+            return adapter.addOne(preparedTeamMember, { ...state, selectedTeamMember: preparedTeamMember });
 
         case TeamMemberActionTypes.SetSelectedTeamMember:
             return { ...state, selectedTeamMember: action.payload };

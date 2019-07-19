@@ -63,7 +63,7 @@ export class CompanySummaryCollapsedComponent implements OnInit {
      * List of team members.
      */
     @Input()
-    public teamMembers: TeamMember[] = null;
+    public teamMembers: TeamMember[] = [];
 
     /**
      * Request to see all takeaways.

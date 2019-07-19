@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { OpenCompanyInfoPanel, OpenTakeawaysPanel, OpenTeamMemberListPanel, OpenValuationPanel } from "@core/state/flow/company-flow.actions";
 import { select, Store } from "@ngrx/store";
 import { Observable, of } from "rxjs";
-import { Company, Tag, TeamMember, Valuation } from "@core/domain/company.model";
+import { Company, Tag, TeamMember, Valuation, TeamMemberGroup } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as fromState from "@core/state";
 import * as FlowActions from "@core/state/flow/portfolio-flow.actions";
@@ -162,12 +162,7 @@ export class CompanySummaryContainer implements OnInit {
             }
         });
 
-        // TODO: Need to get this from API
-        this.teamMembers$ = of([
-            TestUtil.getMock(TestUtil.getTeamMemberDefault, { firstName: "Tom", lastName: "Brady", initials: "TB" }),
-            TestUtil.getMock(TestUtil.getTeamMemberDefault, { firstName: "Julian", lastName: "Edleman", initials: "JE" }),
-            TestUtil.getMock(TestUtil.getTeamMemberDefault, { firstName: "Rob", lastName: "Gronkowski", initials: "RB" })
-        ]);
+        this.teamMembers$ = this.store$.pipe(select(fromState.getDealTeamMembers));
 
         // TODO: Need to get this from API
         this.tags$ = of([

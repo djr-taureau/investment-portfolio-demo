@@ -135,18 +135,20 @@
             <div fxLayout="column"
                  fxLayoutAlign="start start"
                  fxFlex="50">
-                <!-- COMPANIES COVERED LABELS -->
+                <!-- BOARD SEATS LABELS -->
                 <div fxLayout="row"
                      fxLayoutAlign="start start">
                     <div class="team-label">BOARD SEATS</div>
                     <div class="team-count">({{boardSeatsCount}})</div>
                 </div>
-                <!-- COMPANIES COVERED WIDGET ROW -->
-                <div fxLayout="row"
-                     fxLayoutAlign="start start"
-                     fxLayoutGap="8px">
-                    <div *ngFor="let seat of boardSeats">
-
+                <!-- BOARD SEATS WIDGET ROW -->
+                <div *ngFor="let seat of boardSeats">
+                    <div fxLayout="row"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="8px"
+                         class="widget">
+                        <img src="{{seat.logo}}">
+                        <div>{{seat.name}}</div>
                     </div>
                 </div>
             </div>

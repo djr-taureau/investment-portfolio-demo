@@ -61,11 +61,6 @@ export class TeamMemberDetailComponent implements OnInit {
                     this.companiesCovered.push({ name: relationship.companyName, logo: relationship.companyLogo });
                 }
             });
-            // TODO: REMOVE THIS
-            theMember.avatar = "assets/image/slack.png";
-            theMember.bio = `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. `;
             this._member = theMember;
         }
     }
