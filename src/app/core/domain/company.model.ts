@@ -235,7 +235,7 @@ export interface ValuationDetailData {
 export interface ValuationDetail {
     icInitial: ValuationDetailData;
     icFollowOn1: ValuationDetailData;
-    actuals: ValuationDetailData;
+    actual: ValuationDetailData;
     yearPlus1: ValuationDetailData;
     exit: ValuationDetailData;
 }

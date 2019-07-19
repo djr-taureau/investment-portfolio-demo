@@ -153,8 +153,8 @@ export class CompanySummaryContainer implements OnInit {
                 this.exitIrr = _.get(value, "topLineValuations.exit.irr", 0);
                 this.exitMoic = _.get(value, "topLineValuations.exit.moic", 0);
                 this.exitTotalValue = _.get(value, "topLineValuations.exit.totalValue", 0) / 1000000;
-                this.currentInvested = _.get(value, "valuationDetail.actuals.invested", 0) / 1000000;
-                this.currentApproved = _.get(value, "valuationDetail.actuals.approved", 0) / 1000000;
+                this.currentInvested = _.get(value, "valuationDetail.actual.invested", 0) / 1000000;
+                this.currentApproved = _.get(value, "valuationDetail.actual.approved", 0) / 1000000;
                 this.amountDeployedChartData = [
                     { value: this.currentInvested, color: ChartColor.lightNavy },
                     { value: this.currentApproved - this.currentInvested, color: ChartColor.lightPeriwinkle }

@@ -78,7 +78,7 @@ export class ValuationService {
                     totalValue: 5390000000,
                     unrealizedValue: 5000000000
                 },
-                actuals: {
+                actual: {
                     reportingPeriod: "2018-07-02",
                     approved: 500000000,
                     companyEquityValue: 70,
@@ -129,16 +129,16 @@ export class ValuationService {
             }
         };
 
-        // return this.apiService.get(url).pipe(
-        //     map((result) => {
-        //         result.data.companyId = id;
-        //         return result.data;
-        //     }),
-        //     catchError((fault: HttpErrorResponse) => {
-        //         ValuationService.logger.warn(`valuationsFault( ${fault.error.message} )`);
-        //         return throwError(fault);
-        //     })
-        // );
-        return of(mock);
+        return this.apiService.get(url).pipe(
+            map((result) => {
+                result.data.companyId = id;
+                return result.data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                ValuationService.logger.warn(`valuationsFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+        // return of(mock);
     }
 }

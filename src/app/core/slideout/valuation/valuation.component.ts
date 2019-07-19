@@ -38,14 +38,14 @@ export class ValuationComponent implements OnInit {
             // get the column header date values
             this.icInitialDate = value.valuationDetail.icInitial.reportingPeriod;
             this.icFollownOn1Date = value.valuationDetail.icFollowOn1.reportingPeriod;
-            this.actualDate = value.valuationDetail.actuals.reportingPeriod;
+            this.actualDate = value.valuationDetail.actual.reportingPeriod;
             this.yearPlus1Date = value.valuationDetail.yearPlus1.reportingPeriod;
             this.exitDate = value.valuationDetail.exit.reportingPeriod;
             // get the approved values
             const approvedRow: ValuationTableModel = new ValuationTableModel();
             approvedRow.icInitial = (value.valuationDetail.icInitial.approved / 1000000).toFixed(1);
             approvedRow.icFollowOn1 = (value.valuationDetail.icFollowOn1.approved / 1000000).toFixed(1);
-            approvedRow.actual = (value.valuationDetail.actuals.approved / 1000000).toFixed(1);
+            approvedRow.actual = (value.valuationDetail.actual.approved / 1000000).toFixed(1);
             approvedRow.yearPlus1 = (value.valuationDetail.yearPlus1.approved / 1000000).toFixed(1);
             approvedRow.exit = (value.valuationDetail.exit.approved / 1000000).toFixed(1);
             approvedRow.label = "Approved ($M)";
@@ -54,7 +54,7 @@ export class ValuationComponent implements OnInit {
             const investedRow: ValuationTableModel = new ValuationTableModel();
             investedRow.icInitial = (value.valuationDetail.icInitial.invested / 1000000).toFixed(1);
             investedRow.icFollowOn1 = (value.valuationDetail.icFollowOn1.invested / 1000000).toFixed(1);
-            investedRow.actual = (value.valuationDetail.actuals.invested / 1000000).toFixed(1);
+            investedRow.actual = (value.valuationDetail.actual.invested / 1000000).toFixed(1);
             investedRow.yearPlus1 = (value.valuationDetail.yearPlus1.invested / 1000000).toFixed(1);
             investedRow.exit = (value.valuationDetail.exit.invested / 1000000).toFixed(1);
             investedRow.label = "Invested ($M)";
@@ -63,7 +63,7 @@ export class ValuationComponent implements OnInit {
             const realizedValueRow: ValuationTableModel = new ValuationTableModel();
             realizedValueRow.icInitial = (value.valuationDetail.icInitial.realizedValue / 1000000).toFixed(1);
             realizedValueRow.icFollowOn1 = (value.valuationDetail.icFollowOn1.realizedValue / 1000000).toFixed(1);
-            realizedValueRow.actual = (value.valuationDetail.actuals.realizedValue / 1000000).toFixed(1);
+            realizedValueRow.actual = (value.valuationDetail.actual.realizedValue / 1000000).toFixed(1);
             realizedValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.realizedValue / 1000000).toFixed(1);
             realizedValueRow.exit = (value.valuationDetail.exit.realizedValue / 1000000).toFixed(1);
             realizedValueRow.label = "Realized Value ($M)";
@@ -72,7 +72,7 @@ export class ValuationComponent implements OnInit {
             const unrealizedValueRow: ValuationTableModel = new ValuationTableModel();
             unrealizedValueRow.icInitial = (value.valuationDetail.icInitial.unrealizedValue / 1000000).toFixed(1);
             unrealizedValueRow.icFollowOn1 = (value.valuationDetail.icFollowOn1.unrealizedValue / 1000000).toFixed(1);
-            unrealizedValueRow.actual = (value.valuationDetail.actuals.unrealizedValue / 1000000).toFixed(1);
+            unrealizedValueRow.actual = (value.valuationDetail.actual.unrealizedValue / 1000000).toFixed(1);
             unrealizedValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.unrealizedValue / 1000000).toFixed(1);
             unrealizedValueRow.exit = (value.valuationDetail.exit.unrealizedValue / 1000000).toFixed(1);
             unrealizedValueRow.label = "Unrealized Value ($M)";
@@ -81,7 +81,7 @@ export class ValuationComponent implements OnInit {
             const totalValueRow: ValuationTableModel = new ValuationTableModel();
             totalValueRow.icInitial = (value.valuationDetail.icInitial.totalValue / 1000000).toFixed(1);
             totalValueRow.icFollowOn1 = (value.valuationDetail.icFollowOn1.totalValue / 1000000).toFixed(1);
-            totalValueRow.actual = (value.valuationDetail.actuals.totalValue / 1000000).toFixed(1);
+            totalValueRow.actual = (value.valuationDetail.actual.totalValue / 1000000).toFixed(1);
             totalValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.totalValue / 1000000).toFixed(1);
             totalValueRow.exit = (value.valuationDetail.exit.totalValue / 1000000).toFixed(1);
             totalValueRow.label = "Total Value ($M)";
@@ -90,7 +90,7 @@ export class ValuationComponent implements OnInit {
             const moicRow: ValuationTableModel = new ValuationTableModel();
             moicRow.icInitial = value.valuationDetail.icInitial.moic.toString() + "x";
             moicRow.icFollowOn1 = value.valuationDetail.icFollowOn1.moic.toString() + "x";
-            moicRow.actual = value.valuationDetail.actuals.moic.toString() + "x";
+            moicRow.actual = value.valuationDetail.actual.moic.toString() + "x";
             moicRow.yearPlus1 = value.valuationDetail.yearPlus1.moic.toString() + "x";
             moicRow.exit = value.valuationDetail.exit.moic.toString() + "x";
             moicRow.label = "MOIC";
@@ -99,7 +99,7 @@ export class ValuationComponent implements OnInit {
             const irrRow: ValuationTableModel = new ValuationTableModel();
             irrRow.icInitial = value.valuationDetail.icInitial.irr.toString() + "%";
             irrRow.icFollowOn1 = value.valuationDetail.icFollowOn1.irr.toString() + "%";
-            irrRow.actual = value.valuationDetail.actuals.irr.toString() + "%";
+            irrRow.actual = value.valuationDetail.actual.irr.toString() + "%";
             irrRow.yearPlus1 = value.valuationDetail.yearPlus1.irr.toString() + "%";
             irrRow.exit = value.valuationDetail.exit.irr.toString() + "%";
             irrRow.label = "Gross IRR";
@@ -108,7 +108,7 @@ export class ValuationComponent implements OnInit {
             const companyEquityValueRow: ValuationTableModel = new ValuationTableModel();
             companyEquityValueRow.icInitial = (value.valuationDetail.icInitial.companyEquityValue / 1000000).toFixed(1);
             companyEquityValueRow.icFollowOn1 = (value.valuationDetail.icFollowOn1.companyEquityValue / 1000000).toFixed(1);
-            companyEquityValueRow.actual = (value.valuationDetail.actuals.companyEquityValue / 1000000).toFixed(1);
+            companyEquityValueRow.actual = (value.valuationDetail.actual.companyEquityValue / 1000000).toFixed(1);
             companyEquityValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.companyEquityValue / 1000000).toFixed(1);
             companyEquityValueRow.exit = (value.valuationDetail.exit.companyEquityValue / 1000000).toFixed(1);
             companyEquityValueRow.label = "Company Equity Value ($M)";
@@ -117,7 +117,7 @@ export class ValuationComponent implements OnInit {
             const ownershipRow: ValuationTableModel = new ValuationTableModel();
             ownershipRow.icInitial = value.valuationDetail.icInitial.ownership.toString() + "%";
             ownershipRow.icFollowOn1 = value.valuationDetail.icFollowOn1.ownership.toString() + "%";
-            ownershipRow.actual = value.valuationDetail.actuals.ownership.toString() + "%";
+            ownershipRow.actual = value.valuationDetail.actual.ownership.toString() + "%";
             ownershipRow.yearPlus1 = value.valuationDetail.yearPlus1.ownership.toString() + "%";
             ownershipRow.exit = value.valuationDetail.exit.ownership.toString() + "%";
             ownershipRow.label = "Ownership";
