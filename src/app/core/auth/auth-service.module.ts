@@ -6,6 +6,12 @@ import { AdalAuthConfigService } from "./auth-config.service";
 /**
  * ADAL Auth Config.
  */
+// TODO: @Momentum:
+    //  1. Pick up clientId from /app/config.js
+    //  2. I'm not sure about restApiEndpoint here vs. the one in api-endpoint.service.ts but that appears to be the used one?
+    // this file will vary by deployment env. you might want to have a config-dev.js that is the fallback and maintain that
+    // for the local dev scenario, deferring to config.js if it is available (for upper env/deployed context)
+    // As Chris M if any questions!
 const authConfig: AdalAuthConfig = {
     instance: "https://login.microsoftonline.com/",
     tenant: "softbank.com",
