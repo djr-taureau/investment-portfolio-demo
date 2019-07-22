@@ -1,24 +1,17 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit, AfterContentInit, ViewEncapsulation } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
 import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
 
 @Component({
     selector: "[sbpLine]",
     template: `
-        <svg:path
-            [ngClass]="type"
-            [ngClass]="projectedAccessor"
-            [attr.d]="lineString"
-            [ngClass]="{
-                projected: projectedValue,
-                line: !projectedValue
-            }"
-        ></svg:path>
+        <svg:path [ngClass]="pathStyles" [attr.d]="lineString"></svg:path>
     `,
     styleUrls: ["./line.component.scss"]
 })
-export class LineComponent implements OnChanges, AfterContentInit {
+export class LineComponent implements OnChanges {
     @Input() type: "area" | "line" = "line";
+    @Input() valueType: string;
     @Input() fillColor: string;
     @Input() data: any[];
     @Input() xAccessor: any;
@@ -28,11 +21,14 @@ export class LineComponent implements OnChanges, AfterContentInit {
     @Input() y0Accessor?: any;
     @Input() interpolation?: any;
     @Input() fill?: string;
+    @Input() visible: boolean | true;
+
+    visibleToggle: string | "visible";
     lineString: any;
     projectedValue = null;
     stroke = null;
-    lineStyle: string;
     line;
+    pathStyles;
 
     constructor() {}
 
@@ -42,27 +38,20 @@ export class LineComponent implements OnChanges, AfterContentInit {
             .x(this.xAccessor)
             .y(this.yAccessor)
             .curve(this.interpolation);
-
         if (this.type === "area") {
             lineGenerator.y0(this.y0Accessor).y1(this.yAccessor);
+            this.pathStyles = ["area"];
         }
-
         if (this.type === "line") {
-            // if (this.projectedAccessor) {
-            //     if (this.projectedAccessor(v)) {
-            //         this.projectedValue = this.projectedAccessor(v);
-            //     } else {
-            //         this.projectedValue = this.projectedAccessor(v);
-            //     }
-            // }
+            this.pathStyles = [`line ${this.valueType}`];
+        }
+        if (!this.visible && this.type !== "area") {
+            this.visibleToggle = "not-visible";
+            this.pathStyles = [`line ${this.valueType} ${this.visibleToggle}`];
         }
         this.lineString = lineGenerator(this.data);
     }
 
-    ngAfterContentInit() {
-        // this.historical = this.data.filter((v) => v.projected === false);
-        // this.projected = this.data.filter((v) => v.projected === true);
-    }
     ngOnChanges(changes: SimpleChanges): void {
         this.updateLineString();
     }

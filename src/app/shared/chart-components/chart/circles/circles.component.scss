@@ -1,5 +1,8 @@
+@import "../../../../../assets/scss/variables.scss";
+
+
 circle {
-    fill: #ffffff;
+    fill: #124f8c;
     transition: all 0.3s ease-out;
     width: 12px;
     height: 12px;
@@ -12,7 +15,8 @@ circle {
 }
 
 circle.dot {
-    display: none;
+    stroke-width: 2;
+    fill: #124f8c;
 }
 
 circle.projected {
@@ -42,7 +46,7 @@ circle.projected {
             stroke: #124f8c;
 
             &.dot {
-                fill: #ffffff;
+                fill: #124f8c;
                 transition: all 0.3s ease-out;
                 width: 12px;
                 height: 12px;
@@ -53,6 +57,21 @@ circle.projected {
                 stroke: #124f8c;
             }
 
+            &.actuals {
+                fill: #124f8c;
+                stroke: #124f8c;
+            }
+
+            &.budget {
+                fill: $white;
+                stroke: $dark-sky-blue;
+            }
+
+            &.forecast {
+                stroke: $light-navy;
+                fill: $white;
+            }
+
             &.projected {
                 stroke-width: 5;
             }
@@ -60,6 +79,11 @@ circle.projected {
             &.focus {
                 fill: none;
                 stroke: steelblue;
+            }
+
+            &.not-visible {
+                fill: none;
+                display: none;
             }
         }
 

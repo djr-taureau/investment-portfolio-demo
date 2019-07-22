@@ -1,8 +1,6 @@
 import { Component, Input, AfterContentInit, OnInit } from "@angular/core";
 import { useAccessor } from "../utils";
-import { TimelineDataPointFin } from "../../interfaces/types";
 
-// todo:: check adding max and min to height to get full pos and neg values
 @Component({
     selector: "[sbpBars]",
     template: `

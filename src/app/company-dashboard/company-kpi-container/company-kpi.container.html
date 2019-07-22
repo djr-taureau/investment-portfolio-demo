@@ -1,9 +1,9 @@
-<div #anchor
+<div #container
+     #anchor
      class="kpi-container"
      fxLayout="row"
      fxLayoutAlign="space-between center">
     <div class="chart"
-         #anchor
          class="content"
          (click)="openDetail($event, anchor)"
          class="k-button">
@@ -16,10 +16,8 @@
                          [icLabel]="'vs Bud'"
                          [icValue]="'-42'">
         </sbp-kpi-summary>
-
     </div>
     <div class="chart"
-         #anchor
          class="content"
          (click)="openDetail($event, anchor)"
          class="k-button">
@@ -32,6 +30,7 @@
                          [icLabel]="'vs Bud'"
                          [icValue]="'-5.0'">
         </sbp-kpi-summary>
+
     </div>
     <div class="chart"
          class="content"
@@ -46,10 +45,8 @@
                          [icLabel]="'vs Bud'"
                          [icValue]="'-5.0'">
         </sbp-kpi-summary>
-
     </div>
     <div class="chart"
-         #anchor
          class="content"
          (click)="openDetail($event, anchor)"
          class="k-button">
@@ -62,5 +59,13 @@
                          [icLabel]="'vs Bud'"
                          [icValue]="'-5.0'">
         </sbp-kpi-summary>
+        <kendo-popup class="wrapper"
+                     #popup
+                     [anchor]="anchor"
+                     [animate]="animate"
+                     (anchorViewportLeave)="close()"
+                     *ngIf="show">
+            <sbp-company-kpi-detail-component class="inner-wrapper"></sbp-company-kpi-detail-component>
+        </kendo-popup>
     </div>
 </div>

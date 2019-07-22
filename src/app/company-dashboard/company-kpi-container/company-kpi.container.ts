@@ -18,32 +18,73 @@ export class CompanyKpiContainer implements OnInit {
      */
     constructor(private store$: Store<any>, private popupService: PopupService) {
         CompanyKpiContainer.logger.debug(`constructor()`);
-        this.timelineData = [];
-        this.timelineData2 = [];
-        this.timelineData3 = [];
     }
     private static logger: Logger = Logger.getLogger("CompanyKpiContainer");
+    private popupRef: PopupRef;
+    public show = false;
+    public enabled = true;
+    public duration = 200;
+    public type = "slide";
+    public direction = "down";
 
     timelineData: TimelineDataPointFin[];
     timelineData2: TimelineDataPointFin[];
     timelineData3: TimelineDataPointFin[];
     chartData: Array<any>;
-
     /**
      * Internal logger.
      */
 
-    public toggleText = "Show";
-    public show = false;
-    private popupRef: PopupRef;
-
     @ViewChild("anchor") public anchor: ElementRef;
     @ViewChild("popup", { read: ElementRef }) public popup: ElementRef;
-    @ViewChild("popUpContainer", { read: ViewContainerRef }) public popUpContainer: ViewContainerRef;
+    @ViewChild("container", { read: ViewContainerRef }) public container: ViewContainerRef;
 
-    public onToggle(): void {
-        this.show = !this.show;
-        this.toggleText = this.show ? "Show" : "Hide";
+    /**
+     * Initialize the component.
+     */
+    public ngOnInit() {
+        CompanyKpiContainer.logger.debug(`ngOnInit()`);
+        this.timelineData = revenue;
+        this.timelineData2 = ebitda;
+        this.timelineData3 = ebitda;
+    }
+
+    openDetail($event, anchor: ElementRef) {
+        if (this.popupRef) {
+            this.popupRef.close();
+            this.toggle(false);
+            this.popupRef = null;
+        } else {
+            this.popupRef = this.popupService.open({
+                anchor: this.anchor,
+                appendTo: this.container
+            });
+            this.toggle(true);
+        }
+    }
+
+    public get animate(): any {
+        if (this.enabled) {
+            return {
+                type: this.type,
+                direction: this.direction,
+                duration: this.duration
+            };
+        }
+
+        return false;
+    }
+
+    public close(): void {
+        this.show = false;
+    }
+
+    public toggle(show?: boolean): void {
+        this.show = show !== undefined ? show : !this.show;
+    }
+
+    private contains(target: any): boolean {
+        return this.anchor.nativeElement.contains(target) || (this.popup ? this.popup.nativeElement.contains(target) : false);
     }
 
     @HostListener("keydown", ["$event"])
@@ -58,51 +99,5 @@ export class CompanyKpiContainer implements OnInit {
         if (!this.contains(event.target)) {
             this.toggle(false);
         }
-    }
-
-    /**
-     * Initialize the component.
-     */
-    public ngOnInit() {
-        CompanyKpiContainer.logger.debug(`ngOnInit()`);
-        this.timelineData = revenue;
-        this.timelineData2 = ebitda;
-        this.timelineData3 = ebitda;
-        setTimeout(() => {
-            this.generateData();
-
-            // change the data periodically
-            setInterval(() => this.generateData(), 3000);
-        }, 1000);
-    }
-
-    generateData() {
-        this.chartData = [];
-        for (let i = 0; i < 8 + Math.floor(Math.random() * 10); i++) {
-            this.chartData.push([`Index ${i}`, Math.floor(Math.random() * 100)]);
-        }
-    }
-
-    openDetail($event, anchor: ElementRef) {
-        console.log("kpi container", $event);
-        console.log("kpi container", anchor);
-        if (this.popupRef) {
-            this.popupRef.close();
-            this.popupRef = null;
-        } else {
-            this.popupRef = this.popupService.open({
-                anchor: this.anchor,
-                content: CompanyKpiDetailComponent
-            });
-        }
-    }
-
-    public toggle(show?: boolean): void {
-        this.show = show !== undefined ? show : !this.show;
-        this.toggleText = this.show ? "Hide" : "Show";
-    }
-
-    private contains(target: any): boolean {
-        return this.anchor.nativeElement.contains(target) || (this.popup ? this.popup.nativeElement.contains(target) : false);
     }
 }

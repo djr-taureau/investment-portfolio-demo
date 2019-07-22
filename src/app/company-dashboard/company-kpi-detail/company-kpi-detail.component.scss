@@ -13,6 +13,8 @@
     border: solid 2px $dark-sky-blue;
     background-color: $white;
 
+
+
     button.actuals-toggle-on {
         width: 74px;
         height: 24px;
@@ -116,6 +118,7 @@
         width: 684px;
         margin-left: 46px;
         margin-bottom: 75px;
+        padding-bottom: 30px;
     }
 
     .kpi-detail-line {
@@ -126,4 +129,5 @@
         margin-top: 43px;
         margin-right: 39px;
     }
+
 }

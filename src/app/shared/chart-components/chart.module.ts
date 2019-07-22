@@ -3,6 +3,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgModule } from "@angular/core";
 import { MaterialModule } from "../material/material.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { ChartComponent } from "./chart/chart.component";
 import { AxisComponent } from "./chart/axis/axis.component";
 import { AxisBarComponent } from "./chart/axis-bar/axis-bar.component";
@@ -45,7 +46,7 @@ export const COMPONENTS = [
 ];
 @NgModule({
     declarations: COMPONENTS,
-    imports: [CommonModule, FlexLayoutModule, MaterialModule, ChartsModule],
+    imports: [CommonModule, FlexLayoutModule, MaterialModule, ButtonsModule, ChartsModule],
     exports: COMPONENTS
 })
 export class ChartModule {}

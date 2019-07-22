@@ -2,14 +2,14 @@ import "zone.js";
 import * as CompanyDashboardLayoutActions from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import * as d3 from "d3";
 import { ActivatedRoute } from "@angular/router";
-import { Component, OnInit, ElementRef, TemplateRef, ViewContainerRef, ViewChild, ViewEncapsulation, ComponentRef, Input } from "@angular/core";
+import { Component, OnInit, ElementRef, Input } from "@angular/core";
 import { PopupService, PopupRef } from "@progress/kendo-angular-popup";
 import { Logger } from "@util/logger";
 import { Store } from "@ngrx/store";
 import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
 
 @Component({
-    selector: "sbp-company-kpi-detail",
+    selector: "sbp-company-kpi-detail-component",
     templateUrl: "./company-kpi-detail.component.html",
     styleUrls: ["./company-kpi-detail.component.scss"]
 })
@@ -19,17 +19,20 @@ export class CompanyKpiDetailComponent implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("CompanyKpiDetailComponent");
     private popupRef: PopupRef;
+
     public show: boolean;
-    public animate: boolean;
+
+    public enabled = true;
+    public duration = 200;
+    public type = "slide";
+    public direction = "down";
 
     parseDate = d3.timeParse("%m/%d/%Y");
     dateAccessor: any;
-    financialsAccessor: any;
-    timePeriodAccessor: any;
-    valueAccessor: any;
-    projectedAccessor: any;
-    pyAccessor: any;
-    icAccessor: any;
+    yAccessor: any;
+    budgetAccessor: any;
+    forecastAccessor: any;
+
     /**
      * Constructor.
      * @param store$
@@ -38,7 +41,7 @@ export class CompanyKpiDetailComponent implements OnInit {
 
     @Input() data: TimelineDataPointFin[];
 
-    constructor(public store$: Store<any>, public route$: ActivatedRoute, private popupService: PopupService) {
+    constructor(public store$: Store<any>, public route$: ActivatedRoute, private popupService: PopupService, element: ElementRef) {
         CompanyKpiDetailComponent.logger.debug(`constructor()`);
     }
     /**
@@ -46,10 +49,8 @@ export class CompanyKpiDetailComponent implements OnInit {
      */
     public ngOnInit() {
         CompanyKpiDetailComponent.logger.debug(`ngOnInit()`);
+        this.dateAccessor = (v) => this.parseDate(v.date);
+        this.yAccessor = (v) => v.amountInUSD;
         console.log(this.data);
     }
-    /**
-     * Expand or collapse the summary based on its current state.
-     * @param $event
-     */
 }

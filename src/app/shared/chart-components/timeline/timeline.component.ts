@@ -1,5 +1,20 @@
-import { Component, Input, ViewChild, ElementRef, OnInit, AfterContentInit, OnChanges, SimpleChanges, HostListener } from "@angular/core";
+import {
+    Component,
+    Input,
+    Output,
+    ViewChild,
+    ElementRef,
+    OnInit,
+    AfterContentInit,
+    OnChanges,
+    SimpleChanges,
+    HostListener,
+    EventEmitter,
+    ViewChildren,
+    AfterViewInit
+} from "@angular/core";
 import * as d3 from "d3";
+import { combineLatest } from "rxjs";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
 import { Logger } from "@util/logger";
@@ -22,33 +37,42 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     @Input() keyAccessor?: any;
     @Input() projectedAccessor?: any;
     @Input() valueAccessor?: any;
+    @Input() yLabelVisible?: boolean;
+
+    @ViewChild("container") container: ElementRef;
+
     public timePeriods: any[];
-    public actualsArr;
-    public budgetArr;
-    public forecastArr;
+    public actualsObj;
+    public budgetObj;
+    public forecastObj;
     public actuals;
     public budget;
     public forecast;
     public seriesData: SeriesItem[];
+    public actualsVis: boolean;
+    public forecastVis: boolean;
+    public budgetVis: boolean;
 
     historicalData: TimelineDataPointFin[];
     projectedData: TimelineDataPointFin[];
     dimensions: DimensionsType;
     xScale: ScaleType;
     yScale: ScaleType;
+    budgetScale: ScaleType;
+    forecastScale: ScaleType;
 
     timePeriodAccessor;
     xAccessorScaled: any;
     yAccessorScaled: any;
-    budgetedAccessorScaled: any;
+    budgetAccessorScaled: any;
     forecastAccessorScaled: any;
     y0AccessorScaled: any;
-    formatDate = d3.timeFormat("%-y %-b");
+    y0BudgetAccessorScaled: any;
+    y0ForecastAccessorScaled: any;
+
+    formatDate = d3.timeFormat("%m/%d/%Y");
     gradientId: string = getUniqueId("Timeline-gradient");
     gradientColors: string[] = ["rgb(226, 222, 243)", "#f8f9fa"];
-    categories;
-
-    @ViewChild("container") container: ElementRef;
 
     constructor() {
         TimelineComponent.logger.debug(`constructor()`);
@@ -77,21 +101,20 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     ngOnInit() {
         TimelineComponent.logger.debug(`ngOnInit()`);
 
-        const data = revenueMock;
-        const dataSeries = revenueMock;
+        this.actualsVis = true;
+        this.budgetVis = true;
+        this.forecastVis = true;
         this.data = revenueMock;
-        const seriesData = revenueMock2.series;
-        const dataTest = seriesData;
-        const testData = dataSeries;
-        this.categories = _.map(testData, "name");
-        this.actualsArr = _.find(testData, (v) => v.id === "actuals");
-        this.budgetArr = _.find(testData, (v) => v.id === "budget");
-        this.forecastArr = _.find(testData, (v) => v.id === "forecast");
-        this.actuals = _.get(this.actualsArr, ["data"]);
-        this.budget = _.get(this.budgetArr, ["data"]);
-        this.forecast = _.get(this.forecastArr, ["data"]);
-        this.timePeriods = this.actuals.map((v) => v.date);
-
+        this.actualsObj = _.find(this.data, (v) => v.id === "actuals");
+        this.budgetObj = _.find(this.data, (v) => v.id === "budget");
+        this.forecastObj = _.find(this.data, (v) => v.id === "forecast");
+        this.actuals = _.get(this.actualsObj, ["values"]);
+        this.budget = _.get(this.budgetObj, ["values"]);
+        this.forecast = _.get(this.forecastObj, ["values"]);
+        this.actuals.map((v) => {
+            console.log(this.xAccessor(v));
+            console.log(this.yAccessor(v));
+        });
         if (this.projectedAccessor) {
             this.historicalData = this.data.filter((v) => v.projected === false);
             this.projectedData = this.data.filter((v) => v.projected === true);
@@ -109,23 +132,50 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         this.updateScales();
+        console.log(changes);
     }
 
     updateScales() {
         this.xScale = d3
             .scaleTime()
-            .domain(d3.extent(this.timePeriods) as [Date, Date])
+            .domain(d3.extent(this.actuals, this.xAccessor) as [Date, Date])
             .range([0, this.dimensions.boundedWidth]);
+
         this.yScale = d3
             .scaleLinear()
-            .domain(d3.extent(this.data, this.yAccessor) as [number, number])
+            .domain(d3.extent(this.actuals, this.yAccessor) as [number, number])
+            .range([this.dimensions.boundedHeight, 0])
+            .nice();
+        this.budgetScale = d3
+            .scaleLinear()
+            .domain(d3.extent(this.budget, this.yAccessor) as [number, number])
+            .range([this.dimensions.boundedHeight, 0])
+            .nice();
+        this.forecastScale = d3
+            .scaleLinear()
+            .domain(d3.extent(this.forecast, this.yAccessor) as [number, number])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
         this.xAccessorScaled = (d) => this.xScale(this.xAccessor(d));
-        this.yAccessorScaled = (d) => this.yScale(this.valueAccessor(d));
-        this.budgetedAccessorScaled = (d) => this.yScale(this.valueAccessor(d));
-        this.forecastAccessorScaled = (d) => this.yScale(this.valueAccessor(d));
+        this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
+        this.budgetAccessorScaled = (d) => this.budgetScale(this.yAccessor(d));
+        this.forecastAccessorScaled = (d) => this.forecastScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
+        this.y0BudgetAccessorScaled = this.budgetScale(this.budgetScale.domain()[0]);
+        this.y0ForecastAccessorScaled = this.forecastScale(this.budgetScale.domain()[0]);
+    }
+
+    toggleVisibilty(event) {
+        switch (event) {
+            case "actuals":
+                this.actualsVis = !this.actualsVis;
+                break;
+            case "budget":
+                this.budgetVis = !this.budgetVis;
+                break;
+            case "forecast":
+                this.forecastVis = !this.forecastVis;
+        }
     }
 }
 

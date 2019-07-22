@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges, OnChanges, AfterContentInit } from "@angular/core";
+import { Component, Input, SimpleChanges, OnInit, OnChanges, AfterContentInit } from "@angular/core";
 import * as d3 from "d3";
 import { DimensionsType, ScaleType } from "../../interfaces/types";
 import { quarter } from "../utils";
@@ -15,12 +15,22 @@ export class AxisComponent implements OnChanges, AfterContentInit {
     @Input() label: string;
     @Input() projectedAccessor: any;
     @Input() formatTick: any;
+    @Input() yAxisVisible: boolean;
+    @Input() xAxisVisible: boolean;
+
+    axisStyles: any[];
     ticks: any;
     tickColorStyle: string;
 
     constructor() {
         this.dimension = "x";
         this.formatTick = d3.format(",");
+        if (this.xAxisVisible) {
+            console.log(this.xAxisVisible);
+            this.axisStyles = ["label-display tick-display"];
+        } else {
+            this.axisStyles = ["label tick not-visible"];
+        }
     }
 
     updateTicks() {
@@ -31,8 +41,10 @@ export class AxisComponent implements OnChanges, AfterContentInit {
     }
 
     ngAfterContentInit() {
-        if (this.projectedAccessor) {
-            // todo hold for testing
+        if (this.xAxisVisible) {
+            this.axisStyles = ["label-display tick-display"];
+        } else {
+            this.axisStyles = ["label tick not-visible"];
         }
     }
 
