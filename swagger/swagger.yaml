@@ -363,6 +363,9 @@ definitions:
       #        currencyDesc: "Displayed in the company header under the currencyDesc as a list."
       #        items:
       #          $ref: '#/definitions/TeamMember'
+      teamLead:
+        $ref: "#/definitions/Contact"
+        description: "Deal team lead contact. Mainly for listing contents (sort/filter)"
       takeaways:
         type: "array"
         items:
