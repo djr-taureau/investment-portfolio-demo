@@ -134,7 +134,7 @@ export const {
 } = fromCompany.adapter.getSelectors(selectCompanyState);
 
 function sortByValuation(e1: Company, e2: Company) {
-    return e1.currentValuation - e2.currentValuation;
+    return e1.totalValue - e2.totalValue;
 }
 
 export const getSelectedCompanyId = createSelector(

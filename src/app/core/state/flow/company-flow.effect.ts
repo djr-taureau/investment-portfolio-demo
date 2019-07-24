@@ -243,6 +243,17 @@ export class CompanyFlowEffect {
         })
     );
 
+    @Effect()
+    sortCompanies: Observable<Action> = this.actions$.pipe(
+        ofType<GroupCompanies>(CompanyFlowActionTypes.SortCompanies),
+        map((action) => action.value),
+        concatMap((value: string) => {
+            const actions = [];
+            actions.push(new PortfolioListingLayoutActions.SortBy(value));
+            return actions;
+        })
+    );
+
     /**
      * Constructor
      */

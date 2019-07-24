@@ -22,8 +22,9 @@ export interface Company {
     region: string;
     funds: Fund[];
     score: number;
-    amountInvested: number;
-    currentValuation: number;
+    invested: number;
+    totalValue: number;
+    teamLead: string;
     slackName: string;
     slackUrl: string;
     aka: string;
@@ -32,14 +33,14 @@ export interface Company {
     foundedDate: string;
     website: string;
     stage: string;
-    fiscalYearEnd: string;
+    fiscalYearEnd: FiscalYearEnd;
     investingEntity: string;
     initialInvestmentDate: string;
     latestFollowOnDate: string;
     fdOwnership: string;
     boardMembers: BoardMember[];
-    MOIC: number;
-    IRR: number;
+    moic: number;
+    irr: number;
     logo: string;
     revenue?: CompanyRevenue[];
     availablePeriods: AvailablePeriod[];
@@ -81,6 +82,10 @@ export interface Company {
     companyUpdates: CompanyUpdate[];
 }
 
+export interface FiscalYearEnd {
+    day: string;
+    month: string;
+}
 export interface CompanyInitiative {
     id: string;
     name: string;
@@ -92,8 +97,8 @@ export interface CompanyUpdate {
 }
 
 export interface Sector {
-    id: string;
-    name: string;
+    id?: string;
+    name?: string;
     description?: string;
 
     // FK to the parent company.

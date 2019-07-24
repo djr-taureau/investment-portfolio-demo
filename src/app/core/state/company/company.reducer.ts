@@ -3,7 +3,7 @@ import { Company } from "@core/domain/company.model";
 import { CompanyActions, CompanyActionTypes } from "./company.actions";
 
 function sortByValuation(e1: Company, e2: Company) {
-    return e1.currentValuation - e2.currentValuation;
+    return e1.totalValue - e2.totalValue;
 }
 export interface State extends EntityState<Company> {
     selectedCompanyId: string;

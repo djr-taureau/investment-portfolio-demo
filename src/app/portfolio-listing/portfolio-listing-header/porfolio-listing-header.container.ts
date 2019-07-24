@@ -83,6 +83,7 @@ export class PortfolioListingHeaderContainer implements OnInit {
     }
 
     public sort(sortValue: string) {
-        this.sortBy.emit(sortValue);
+        // this.sortBy.emit(sortValue);
+        this.store$.dispatch(new CompanyFlowActions.SortCompanies(sortValue));
     }
 }

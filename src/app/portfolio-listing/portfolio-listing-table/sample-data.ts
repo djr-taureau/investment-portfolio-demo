@@ -42,10 +42,10 @@ export const companies: any[] = [
             countryName: "USA",
             postal: ""
         },
-        amountInvested: 500000,
-        currentValuation: 1000000,
+        invested: 500000,
+        totalValue: 1000000,
         MOIC: 0.3,
-        IRR: 0.1
+        irr: 0.1
     },
     {
         name: "Uber",
@@ -87,9 +87,9 @@ export const companies: any[] = [
             countryName: "USA",
             postal: ""
         },
-        amountInvested: 1000000,
-        currentValuation: 2000000,
+        invested: 1000000,
+        totalValue: 2000000,
         MOIC: 0.6,
-        IRR: 0.2
+        irr: 0.2
     }
 ];

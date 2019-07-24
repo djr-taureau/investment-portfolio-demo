@@ -4,6 +4,7 @@ import { PortfolioListingTableActions, PortfolioListingTableActionTypes } from "
 export interface PortfolioListingLayoutState {
     search: string;
     groupBy: string;
+    sortBy: string;
     groupingOptions: IconizedItem[];
     selectedGroupingOption: IconizedItem;
     sortOptions: IconizedItem[];
@@ -13,79 +14,90 @@ export interface PortfolioListingLayoutState {
 export const initialState: PortfolioListingLayoutState = {
     search: "",
     groupBy: "",
+    sortBy: "",
     groupingOptions: [
         {
-            id: "NONE",
+            id: "",
             icon: "",
             text: "No Grouping"
         },
         {
-            id: "REGION",
+            id: "region",
             icon: "",
-            text: "Group By Region"
+            text: "Region"
         },
         {
-            id: "sectors",
+            id: "teamLeadName",
             icon: "",
-            text: "Group By Sector"
+            text: "Deal Lead"
         },
         {
-            id: "STAGE",
+            id: "sectorsGroup",
             icon: "",
-            text: "Group By State"
+            text: "Sector"
         },
         {
-            id: "MOIC",
+            id: "country",
             icon: "",
-            text: "Group By MOIC"
+            text: "Country"
         },
         {
-            id: "IRR",
+            id: "investedGroup",
             icon: "",
-            text: "Group By IRR"
+            text: "Amount Invested"
         },
         {
-            id: "INVESTED",
+            id: "valueGroup",
             icon: "",
-            text: "Group By Amount Invested"
+            text: "Valuation"
         },
         {
-            id: "VALUATION",
+            id: "moicGroup",
             icon: "",
-            text: "Group By Valuation"
+            text: "MOIC"
+        },
+        {
+            id: "irrGroup",
+            icon: "",
+            text: "IRR"
         }
     ],
     selectedGroupingOption: {
-        id: "NONE",
+        id: "",
         icon: "",
         text: "No Grouping"
     },
     sortOptions: [
         {
-            id: "DEFAULT",
+            id: "totalValue",
             icon: "",
-            text: "Sort By Default"
+            text: "Current Valuation"
         },
         {
-            id: "VALUATION",
+            id: "companyName",
             icon: "",
-            text: "Sort By Valuation"
+            text: "Company Name (A-Z)"
         },
         {
-            id: "INVESTMENT",
+            id: "invested",
             icon: "",
-            text: "Sort By Invesment"
+            text: "Amount Invested"
         },
         {
-            id: "DEFAULT",
+            id: "moic",
             icon: "",
-            text: "Default Sort"
+            text: "MOIC"
+        },
+        {
+            id: "irr",
+            icon: "",
+            text: "IRR"
         }
     ],
     selectedSortOption: {
-        id: "DEFAULT",
+        id: "totalValue",
         icon: "",
-        text: "Sort By Default"
+        text: "Current Valuation"
     }
 };
 
@@ -103,6 +115,13 @@ function groupBy(value: string, state: PortfolioListingLayoutState = initialStat
     };
 }
 
+function sortBy(value: string, state: PortfolioListingLayoutState = initialState): PortfolioListingLayoutState {
+    return {
+        ...state,
+        sortBy: value
+    };
+}
+
 export function reducer(state: PortfolioListingLayoutState = initialState, action: PortfolioListingTableActions): PortfolioListingLayoutState {
     switch (action.type) {
         case PortfolioListingTableActionTypes.Search:
@@ -111,6 +130,9 @@ export function reducer(state: PortfolioListingLayoutState = initialState, actio
         case PortfolioListingTableActionTypes.GroupBy:
             return groupBy(action.payload, state);
 
+        case PortfolioListingTableActionTypes.SortBy:
+            return sortBy(action.payload, state);
+
         default:
             return state;
     }
@@ -118,6 +140,7 @@ export function reducer(state: PortfolioListingLayoutState = initialState, actio
 
 export const getSearch = (state: PortfolioListingLayoutState) => state.search;
 export const getGroupBy = (state: PortfolioListingLayoutState) => state.groupBy;
+export const getSortBy = (state: PortfolioListingLayoutState) => state.sortBy;
 export const getGroupingOptions = (state: PortfolioListingLayoutState) => state.groupingOptions;
 export const getSelectedGroupingOption = (state: PortfolioListingLayoutState) => state.selectedGroupingOption;
 export const getSortOptions = (state: PortfolioListingLayoutState) => state.sortOptions;

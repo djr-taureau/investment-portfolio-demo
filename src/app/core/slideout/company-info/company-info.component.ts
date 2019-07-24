@@ -24,6 +24,7 @@ export class CompanyInfoComponent {
                 .join(", ");
             // Donut chart requires this format
             this.chartData = [{ value: theCompany.percentOwnership }, { value: 1 - theCompany.percentOwnership }];
+            // this.fiscalYearEndString =
         }
     }
     public get company(): Company {
@@ -39,6 +40,8 @@ export class CompanyInfoComponent {
     // Local props
     public chartData: any[] = [];
     public sectorList: string;
+    public fiscalYearEndString: string;
+
     /**
      * Dispatched when the user closes the slider
      */

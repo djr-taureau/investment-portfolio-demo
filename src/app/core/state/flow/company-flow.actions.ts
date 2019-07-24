@@ -37,7 +37,8 @@ export enum CompanyFlowActionTypes {
 
     SelectCompany = "[Flow] Select Company",
     FindCompanies = "[Flow] Find Companies",
-    GroupCompanies = "[Flow] Group Companies"
+    GroupCompanies = "[Flow] Group Companies",
+    SortCompanies = "[Flow] Sort Companies"
 }
 
 export class CloseCompanyInfoPanel implements Action {
@@ -150,6 +151,12 @@ export class SelectCompany implements Action {
     constructor(public payload: string) {}
 }
 
+export class SortCompanies implements Action {
+    readonly type = CompanyFlowActionTypes.SortCompanies;
+
+    constructor(public value: string) {}
+}
+
 export type CompanyFlowActions =
     | CloseCompanyInfoPanel
     | CloseTakeawaysPanel
@@ -169,4 +176,5 @@ export type CompanyFlowActions =
     | OpenTeamMemberDetailPanel
     | OpenTeamMemberListPanel
     | OpenValuationPanel
-    | SelectCompany;
+    | SelectCompany
+    | SortCompanies;

@@ -66,7 +66,7 @@ export class PortfolioListingHeaderComponent {
      */
     public onSortChange(event): void {
         PortfolioListingHeaderComponent.logger.debug(`onSortChange( ${JSON.stringify(event)} )`);
-        this.sort.emit(event);
+        this.sort.emit(event.id);
     }
     /**
      * Event handler to filter the table.

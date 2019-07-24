@@ -54,18 +54,18 @@ export const changeSelectFormElementValue = (select, fixture, index) => {
 export const getCompanyDefault = (): Company => {
     return {
         aka: "",
-        amountInvested: 0,
+        invested: 0,
         availablePeriods: [],
         defaultCurrency: { currencyCode: "USD", currencySymbol: "$" },
         boardMembers: [],
         companyUpdates: [],
-        currentValuation: 0,
+        totalValue: 0,
         data: null,
         deployed: 0,
         deployedTotal: 0,
         description: "",
         fdOwnership: "",
-        fiscalYearEnd: "",
+        fiscalYearEnd: null,
         foundedDate: "",
         founders: [],
         funds: [],
@@ -74,10 +74,10 @@ export const getCompanyDefault = (): Company => {
         initialInvestmentDate: "",
         initiatives: [],
         investingEntity: "",
-        IRR: 0,
+        irr: 0,
         latestFollowOnDate: "",
         logo: "",
-        MOIC: 0,
+        moic: 0,
         name: "",
         percentOwnership: 0,
         region: "",
@@ -89,6 +89,7 @@ export const getCompanyDefault = (): Company => {
         stage: "",
         tags: [],
         takeawayDate: "",
+        teamLead: "",
         takeaways: [],
         type: CompanyTypeEnum.PUBLIC,
         // valuation: null,
@@ -129,10 +130,10 @@ export const getPortfolioTableItemDefault = (): PortfolioTableItem => {
         region: "",
         countryFlag: "",
         country: "",
-        amountInvested: 0,
-        currentValuation: 0,
-        MOIC: 0,
-        IRR: 0
+        invested: 0,
+        totalValue: 0,
+        moic: 0,
+        irr: 0
     };
 };
 
