@@ -342,6 +342,8 @@ definitions:
           $ref: '#/definitions/Sector'
       region:
         type: "string"
+      country:
+        type: "string"
       defaultCurrency:
         $ref: '#/definitions/Currency'
       funds:
@@ -364,8 +366,11 @@ definitions:
       #        items:
       #          $ref: '#/definitions/TeamMember'
       teamLead:
-        $ref: "#/definitions/Contact"
-        description: "Deal team lead contact. Mainly for listing contents (sort/filter)"
+        type: "string"
+        description: "Deal team lead name. Mainly for listing contents (sort/filter)"
+      teamLeadID:
+        type: "number"
+        description: "Deal team lead id. Mainly for listing contents (sort/filter)"
       takeaways:
         type: "array"
         items:
