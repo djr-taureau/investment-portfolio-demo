@@ -336,6 +336,7 @@ definitions:
           - "PUBLIC"
           - "EXITED"
           - "JOINT_VENTURE"
+        description: "Indicator of whether company is PUBLIC or PRIVATE, Exited or Joint Venture."
       sectors:
         type: "array"
         items:
@@ -398,9 +399,9 @@ definitions:
       revenueStage:
         type: "string"
         enum:
-          - "PRE_REVENUE"
-          - "LT_100M"
-          - "GT_100M"
+          - "PREREV"
+          - "LT_100_M"
+          - "GT_100_M"
       fiscalYearEnd:
         $ref: '#/definitions/MonthDay'
       investingEntity:
@@ -408,8 +409,6 @@ definitions:
       initialInvestmentDate:
         type: "string"
       latestFollowOnDate:
-        type: "string"
-      fdOwnership: # @Andrew Would like to know what this is?
         type: "string"
       boardMembers:
         type: "array"
@@ -633,7 +632,7 @@ definitions:
         items:
           $ref: "#/definitions/TeamMember"
   Valuation:
-    type: "object" # @Andrew something about this one feels wrong to me. We can discuss.
+    type: "object"
     properties:
       valuationDetail:
         type: "array"
