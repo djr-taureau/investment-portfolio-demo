@@ -1,4 +1,15 @@
-import { Component, Input, ViewChild, ElementRef, AfterContentInit, OnChanges, OnInit, SimpleChanges, HostListener } from "@angular/core";
+import {
+    Component,
+    Input,
+    ViewChild,
+    ElementRef,
+    AfterContentInit,
+    OnChanges,
+    OnInit,
+    SimpleChanges,
+    HostListener,
+    ViewEncapsulation
+} from "@angular/core";
 import * as d3 from "d3";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
@@ -7,7 +18,8 @@ import { Logger } from "@util/logger";
 @Component({
     selector: "sbp-micro-timeline",
     templateUrl: "./micro-timeline.component.html",
-    styleUrls: ["./micro-timeline.component.scss"]
+    styleUrls: ["./micro-timeline.component.scss"],
+    encapsulation: ViewEncapsulation.None
 })
 export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChanges {
     private static logger: Logger = Logger.getLogger("MicroTimelineComponent");
@@ -34,8 +46,11 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     fillColor;
     display = false;
+    xAxisVisible = false;
+    // TODO:: these will be replaced soon with the real data
     historicalData: TimelineDataPointFin[];
     projectedData: TimelineDataPointFin[];
+
     constructor() {
         MicroTimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
@@ -75,6 +90,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
         this.updateDimensions();
     }
 
+    // TODO:: This is not working on the micro charting components
     @HostListener("window:resize", ["$event"])
     onResize() {
         this.updateDimensions();

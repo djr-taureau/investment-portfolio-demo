@@ -16,8 +16,7 @@
 
         .group-header {
             height: 32px !important;
-            opacity: 0.5;
-            background-color: $light-grey-blue !important;
+            background-color: rgba($light-grey-blue, 0.5) !important;
             font-family: PostGrotesk;
             font-size: 12px;
             font-weight: 500;
@@ -164,8 +163,8 @@
                     color: $slate;
                 }
 
-                .amountInvested,
-                .currentValuation,
+                .invested,
+                .totalValue,
                 .moic,
                 .irr {
                     opacity: 0.75;
@@ -180,11 +179,64 @@
                     color: var(--slate);
                 }
 
+                &:nth-child(1) {
+                    width: 30px;
+                }
+
                 &:nth-child(2) {
                     font-weight: bold;
                 }
+
             }
         }
+    }
+
+    .group-name {
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $slate;
+    }
+
+    .group-count {
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.25px;
+        color: $slate;
+    }
+
+    .group-numbers {
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: right;
+        color: $slate;
+    }
+
+    .group-irr {
+        opacity: 0.5;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 300;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: right;
+        color: $slate;
     }
 
     .row__icon {

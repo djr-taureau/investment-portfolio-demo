@@ -12,6 +12,12 @@ export class ApiEndpointService {
      * Remote: Uses the remote AWS API URL.
      * Build: Uses the compile time provided API URL.
      */
+    // TODO: @Momentum:
+    //  1. Pick up REMOTE: from /app/config.js
+    // this file will vary by deployment env. you might want to have a config-dev.js that is the fallback and maintain that
+    // for the local dev scenario, deferring to config.js if it is available (for upper env/deployed context)
+    // As Chris M if any questions!
+
     public static BASE_URL = {
         LOCAL: "http://localhost:4401/",
         // REMOTE: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v5/",

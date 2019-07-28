@@ -5,9 +5,31 @@
         transition: all 0.3s ease-out;
         cursor: crosshair;
         stroke-width: 2px;
-        stroke: $light-navy;
         stroke-linecap: round;
         fill: none;
+
+        &.line {
+            stroke: $light-navy;
+            stroke-width: 2px;
+            stroke-linecap: round;
+            fill: none;
+        }
+
+        &.budget {
+            stroke: $dark-sky-blue;
+            stroke-width: 1px;
+        }
+
+        &.forecast {
+            stroke: $light-navy;
+            stroke-width: 1px;
+        }
+
+        &.not-visible {
+            display: none;
+        }
+
+
     }
 
     path:hover {
@@ -15,12 +37,7 @@
         stroke-width: 4px;
     }
 
-    path.line {
-        stroke: $light-navy;
-        stroke-width: 2px;
-        stroke-linecap: round;
-        fill: none;
-    }
+
 
     path.projected {
         stroke: $light-grey-blue;

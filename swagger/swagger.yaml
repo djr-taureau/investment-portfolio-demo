@@ -336,11 +336,14 @@ definitions:
           - "PUBLIC"
           - "EXITED"
           - "JOINT_VENTURE"
+        description: "Indicator of whether company is PUBLIC or PRIVATE, Exited or Joint Venture."
       sectors:
         type: "array"
         items:
           $ref: '#/definitions/Sector'
       region:
+        type: "string"
+      country:
         type: "string"
       defaultCurrency:
         $ref: '#/definitions/Currency'
@@ -364,8 +367,11 @@ definitions:
       #        items:
       #          $ref: '#/definitions/TeamMember'
       teamLead:
-        $ref: "#/definitions/Contact"
-        description: "Deal team lead contact. Mainly for listing contents (sort/filter)"
+        type: "string"
+        description: "Deal team lead name. Mainly for listing contents (sort/filter)"
+      teamLeadID:
+        type: "number"
+        description: "Deal team lead id. Mainly for listing contents (sort/filter)"
       takeaways:
         type: "array"
         items:
@@ -393,9 +399,9 @@ definitions:
       revenueStage:
         type: "string"
         enum:
-          - "PRE_REVENUE"
-          - "LT_100M"
-          - "GT_100M"
+          - "PREREV"
+          - "LT_100_M"
+          - "GT_100_M"
       fiscalYearEnd:
         $ref: '#/definitions/MonthDay'
       investingEntity:
@@ -403,8 +409,6 @@ definitions:
       initialInvestmentDate:
         type: "string"
       latestFollowOnDate:
-        type: "string"
-      fdOwnership: # @Andrew Would like to know what this is?
         type: "string"
       boardMembers:
         type: "array"
@@ -628,7 +632,7 @@ definitions:
         items:
           $ref: "#/definitions/TeamMember"
   Valuation:
-    type: "object" # @Andrew something about this one feels wrong to me. We can discuss.
+    type: "object"
     properties:
       valuationDetail:
         type: "array"

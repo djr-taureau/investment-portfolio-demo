@@ -8,11 +8,16 @@ export class PortfolioTableItem {
     teamLeadName: string;
     sectors: string[];
     sectorsAdditional?: { value: string; visible: boolean };
+    sectorsGroup?: string;
     region: string;
     countryFlag: string;
     country: string;
-    amountInvested: number;
-    currentValuation: number;
-    MOIC: number;
-    IRR: number;
+    invested: number;
+    investedGroup?: string;
+    totalValue: number;
+    valueGroup?: string;
+    moic: number;
+    moicGroup?: string;
+    irr: number;
+    irrGroup?: string;
 }

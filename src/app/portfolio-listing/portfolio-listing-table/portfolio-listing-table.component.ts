@@ -3,13 +3,21 @@ import { MatTableDataSource } from "@angular/material";
 import { Logger } from "@util/logger";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 
+// - Region
+// - Deal Lead
+// - Sector
+// - Country
+// - Amount Invested ($0-$500M, $501-$1,000M, $1,000M+)
+// - Valuation ($0-$500M, $501-$1,000M, $1,000M+)
+// - MOIC (0.0x-1.0x, 1.1x-2.0x, >2.0x)
+// - IRR (<0%, 0%-25%, 26%-50%, >50%)
 export class Group {
     level = 0;
     count = 0;
     investedSum = 0;
     valuationSum = 0;
     moicSum = 0;
-    irrSum = "N/A";
+    irrSum = 0;
     parent: Group;
     expanded = true;
     get visible(): boolean {
@@ -38,9 +46,15 @@ export class PortfolioListingTableComponent implements OnInit {
             value.forEach((item) => {
                 item.sectorsAdditional.value = item.sectors.length > 0 ? `+${item.sectors.length - 1}` : "";
                 item.sectorsAdditional.visible = item.sectors.length > 1;
-                item.amountInvested = item.amountInvested / 1000000;
-                item.currentValuation = item.currentValuation / 1000000;
-                item.IRR = item.IRR * 100;
+                item.sectorsGroup = item.sectors.toLocaleString();
+                item.invested = item.invested / 1000000;
+                item.totalValue = item.totalValue / 1000000;
+                item.investedGroup = this.setValueGrouping(item.invested);
+                item.valueGroup = this.setValueGrouping(item.totalValue);
+                item.irr = item.irr * 100;
+                item.irrGroup = this.setIrrGrouping(item.irr);
+                item.moicGroup = this.setMoicGrouping(item.moic);
+                item.teamLeadName = item.teamLeadName || "N/A";
             });
             this._tableData = value.slice();
             this.dataSource.data = this.addGroups(value, this.groupByColumns);
@@ -103,21 +117,12 @@ export class PortfolioListingTableComponent implements OnInit {
     /**
      * List of columns to display in table
      */
-    public displayedColumns: string[] = [
-        "logo",
-        "companyName",
-        "teamLeadName",
-        "sectors",
-        "country",
-        "amountInvested",
-        "currentValuation",
-        "MOIC",
-        "IRR"
-    ];
+    public displayedColumns: string[] = ["logo", "companyName", "teamLeadName", "sectors", "country", "invested", "totalValue", "moic", "irr"];
+    public displayedGroupColumns: string[] = ["a", "b", "c", "d", "e", "f", "g", "h", "i"];
 
     /**
      * Could group by more than one value, but for now is singular and should be one of
-     * "region", "teamLeadName", "sectors", "countries", "amountInvested", "currentValuation", "MOIC","IRR"
+     * "region", "teamLeadName", "sectors", "countries", "invested", "totalValue", "MOIC","IRR"
      * by design
      */
     public groupByColumns: string[] = [];
@@ -254,13 +259,16 @@ export class PortfolioListingTableComponent implements OnInit {
             const rowsInGroup = data.filter((row) => group[currentColumn] === row[currentColumn]);
             // do summations
             group.investedSum = rowsInGroup.reduce((a, b) => {
-                return a + b.amountInvested;
+                return a + b.invested;
             }, 0);
             group.valuationSum = rowsInGroup.reduce((a, b) => {
-                return a + b.currentValuation;
+                return a + b.totalValue;
             }, 0);
             group.moicSum = rowsInGroup.reduce((a, b) => {
-                return a + b.MOIC;
+                return a + b.moic;
+            }, 0);
+            group.irrSumm = rowsInGroup.reduce((a, b) => {
+                return a + b.irr;
             }, 0);
             group.count = rowsInGroup.length;
             const subGroup = this.getSublevel(rowsInGroup, level + 1, groupByColumns, group);
@@ -274,6 +282,7 @@ export class PortfolioListingTableComponent implements OnInit {
         const seen = {};
         return a.filter((item) => {
             const k = key(item);
+            console.log(k);
             return seen.hasOwnProperty(k) ? false : (seen[k] = true);
         });
     }
@@ -292,14 +301,14 @@ export class PortfolioListingTableComponent implements OnInit {
             switch (sortValue) {
                 case "companyName":
                     return compare(a.companyName, b.companyName);
-                case "amountInvested":
-                    return compare(a.amountInvested, b.amountInvested);
-                case "currentValuation":
-                    return compare(a.currentValuation, b.currentValuation);
-                case "MOIC":
-                    return compare(a.MOIC, b.MOIC);
-                case "IRR":
-                    return compare(a.IRR, b.IRR);
+                case "invested":
+                    return compare(a.invested, b.invested);
+                case "totalValue":
+                    return compare(a.totalValue, b.totalValue);
+                case "moic":
+                    return compare(a.moic, b.moic);
+                case "irr":
+                    return compare(a.irr, b.irr);
                 default:
                     return 0;
             }
@@ -313,5 +322,49 @@ export class PortfolioListingTableComponent implements OnInit {
     private filterData(values: string[], dataToFilter: PortfolioTableItem[]): PortfolioTableItem[] {
         const data = dataToFilter.slice();
         return data.filter((item) => values.includes(item.companyName));
+    }
+
+    /**
+     * Provides values to the table item to group by number
+     * @param value
+     */
+    private setValueGrouping(value: number): string {
+        if (value >= 0 && value <= 500) {
+            return "$0-$500M";
+        } else if (value > 500 && value <= 1000) {
+            return "$501-$1,000M";
+        } else {
+            return "$1,000M+";
+        }
+    }
+
+    /**
+     * Provides values to the table item to group by moic
+     * @param value
+     */
+    private setMoicGrouping(value: number): string {
+        if (value >= 0 && value <= 1.0) {
+            return "0.0x-1.0x";
+        } else if (value > 1.0 && value <= 2.0) {
+            return "1.1x-2.0x";
+        } else {
+            return ">2.0x";
+        }
+    }
+
+    /**
+     * Provides values to the table item to group by irr
+     * @param value
+     */
+    private setIrrGrouping(value: number): string {
+        if (value < 0) {
+            return "<0%";
+        } else if (value >= 0 && value <= 25) {
+            return "0%-25%";
+        } else if (value > 25 && value <= 50) {
+            return "26%-50%";
+        } else {
+            return ">50%";
+        }
     }
 }

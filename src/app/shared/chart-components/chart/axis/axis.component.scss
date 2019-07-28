@@ -1,29 +1,61 @@
-line {
-    display: none;
-}
+@import "../../../../../assets/scss/variables.scss";
 
-.label {
-    text-anchor: middle;
-    font-size: 0.8em;
-    letter-spacing: 0.01em;
-    fill: #95a5a6;
-    display: none;
-}
+:host {
 
-.tick {
-    font-size: 0.9em;
-    width: 4px;
-    transition: all 0.3s ease-out;
-    fill: #95a5a6;
-    display: none;
-}
+    line {
+
+        // display: none;
+
+        &.label-display {
+            text-anchor: middle;
+            font-size: 0.8em;
+            letter-spacing: 0.01em;
+            fill: #95a5a6;
+
+        }
+
+        &.label {
+            text-anchor: middle;
+            font-size: 0.8em;
+            letter-spacing: 0.01em;
+            fill: $light-grey-blue;
+            // display: none;
+        }
+    }
+
+    text {
+        &.label {
+            text-anchor: middle;
+            font-size: 0.8em;
+            letter-spacing: 0.01em;
+            fill: $grey-blue;
+        }
+    }
+
+    .tick {
+        font-size: 0.9em;
+        width: 4px;
+        transition: all 0.3s ease-out;
+        fill: #95a5a6;
+    }
+
+    .tick-display {
+        font-size: 0.9em;
+        width: 4px;
+        transition: all 0.3s ease-out;
+        fill: $grey-blue;
+    }
 
 
-.y .tick {
-    text-anchor: end;
-    display: none;
-}
+    .y .tick {
+        text-anchor: end;
+        fill: $grey-blue;
 
-.x .tick line {
-    display: none;
+    }
+
+    .x .tick line {
+        font-size: larger;
+        fill: $grey-blue;
+    }
+
 }

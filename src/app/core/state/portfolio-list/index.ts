@@ -91,6 +91,11 @@ export const getGroupByOptions = createSelector(
     fromPortfolioListingTable.getGroupingOptions
 );
 
+export const getSortBy = createSelector(
+    selectPortfolioListingTableState,
+    fromPortfolioListingTable.getSortBy
+);
+
 export const getSortOptions = createSelector(
     selectPortfolioListingTableState,
     fromPortfolioListingTable.getSortOptions
@@ -112,22 +117,22 @@ export const getTableData = createSelector(
     (companies: Company[], search: string) => {
         // Create the table data from the list of companies.
         const tableData: PortfolioTableItem[] = (companies || []).map((company: Company) => {
-            const secs: string[] = (company.sectors || []).map((sector: Sector, index: number) => sector.name);
+            const secs: string[] = (company.sectors || []).map((sector: Sector, index: number) => sector.name || "N/A");
             const pti: PortfolioTableItem = {
                 logo: company.logo || "assets/image/slack.png",
                 companyId: company.id,
                 companyName: company.name,
                 teamLeadAvatar: "TODO",
-                teamLeadName: "TODO",
+                teamLeadName: company.teamLead,
                 sectors: secs,
                 sectorsAdditional: { value: "", visible: false },
                 region: company.region || "TODO",
                 countryFlag: "assets/image/flag.png",
                 country: "TODO",
-                amountInvested: company.amountInvested,
-                currentValuation: company.currentValuation,
-                MOIC: company.MOIC,
-                IRR: company.IRR
+                invested: company.invested,
+                totalValue: company.totalValue,
+                moic: company.moic,
+                irr: company.irr
             };
             return pti;
         });

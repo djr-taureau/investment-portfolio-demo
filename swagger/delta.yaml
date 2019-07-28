@@ -294,12 +294,12 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Fund"
-      amountInvested:
+      invested:
         type: "number"
       deployed:
         type: "number"
         description: "Displayed in the company header to the right of the takeaways."
-      currentValuation:
+      totalValue:
         type: "number"
       moic:
         type: "number"

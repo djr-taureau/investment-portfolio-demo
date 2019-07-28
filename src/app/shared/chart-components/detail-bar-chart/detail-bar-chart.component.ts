@@ -1,8 +1,8 @@
-import { Component, OnInit, ElementRef, Input } from "@angular/core";
+import { Component, OnInit, ElementRef, Input, ViewEncapsulation } from "@angular/core";
 import { select } from "d3-selection";
-import { scaleLinear, ScaleBand, scaleBand } from "d3-scale";
+
 import * as d3 from "d3";
-import { range, histogram, max, min } from "d3-array";
+
 import { DimensionsType } from "../chart/utils";
 import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
 import { cashburn } from "../../../company-dashboard/financials-data";
@@ -107,6 +107,7 @@ export class DetailBarChartComponent implements OnInit {
                 return this.dimensions.height / 2 + 10 * Math.abs(d) - 5;
             }
         });
+        // TODO:: Leaving this for adding label text to axis
         // svg.append("text")
         //     .attr("transform", "rotate(-90)")
         //     .attr("y", this.dimensions.marginLeft)

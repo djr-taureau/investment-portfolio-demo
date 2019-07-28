@@ -1,47 +1,25 @@
 <div fxLayout="row"
-     fxLayoutAlign="space-around start stretch"
-     fxLayoutGap="20px">
-    <div class="actuals-button">
-        <button kendoButton
-                [imageUrl]="'../../../assets/image/legend-actual.svg'"
-                class="actuals-dot">Actuals</button>
-    </div>
-    <div class="budget-button">
-        <button kendoButton
-                [imageUrl]="'../../assets/image/legend-mgmt-bud.svg'"
-                class="budget-dot">Mgmt Budget</button>
-    </div>
-    <div class="forecast-button">
-        <button kendoButton
-                [imageUrl]="'../../assets/image/legend-mgmt-fcst.svg'"
-                class="forecast-dot">Mgmt Forecast</button>
-    </div>
-</div>
-<div fxLayout="row"
-     fxLayoutAlign="space-around start stretch"
-     fxLayoutGap="20px">
+     fxLayoutAlign="space-between start stretch"
+     fxLayoutGap="10px">
     <div class="kpi-detail-line"
-         fxFill
          fxLayout="row"
          fxFlex="60"
          fxLayoutAlign="space-between start">
-        <sbp-multi-line-kendo></sbp-multi-line-kendo>
+        <sbp-timeline [data]="data"
+                      [xAccessor]="dateAccessor"
+                      [yAccessor]="yAccessor"
+                      [yLabelVisible]="true"></sbp-timeline>
     </div>
-
     <div class="kpi-detail-table"
-         fxFill
          fxLayout="row"
          fxFlex="40"
-         fxLayoutAlign="space-aroound">
+         fxLayoutAlign="space-between start end">
         <sbp-kpi-detail-table></sbp-kpi-detail-table>
     </div>
-
 </div>
-
 <div class="kpi-detail-bar"
-     fxFill
      fxLayout="row"
-     fxLayoutAlign="start start">
+     fxLayoutAlign="center center">
     <sbp-detail-bar-chart [label]="'Revenue'"
                           [data]=""></sbp-detail-bar-chart>
 </div>

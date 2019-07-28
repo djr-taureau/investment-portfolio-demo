@@ -9,7 +9,7 @@
 
         <!--- Note that these columns can be defined in any order.
                 The actual rendered columns are set as a property on the row definition" -->
-
+        <!-- -----------------------------------------MAIN COLUMNS -->
         <ng-container matColumnDef="logo">
             <th mat-header-cell
                 *matHeaderCellDef></th>
@@ -19,6 +19,7 @@
                      src="{{element.logo}}">
             </td>
         </ng-container>
+
         <ng-container matColumnDef="companyName">
             <th mat-header-cell
                 *matHeaderCellDef>
@@ -37,14 +38,15 @@
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div fxLayout="row"
+                <!-- AVATAR IS OOS MVP -->
+                <!-- <div fxLayout="row"
                      fxLayoutAlign="start center"
                      fxLayoutGap="10px"
                      class="teamLeadName">
                     <img matListAvatar
-                         src="{{element.teamLeadAvatar}}">
-                    <div>{{element.teamLeadName}}</div>
-                </div>
+                         src="{{element.teamLeadAvatar}}"> -->
+                <div class="teamLeadName">{{element.teamLeadName}}</div>
+                <!-- </div> -->
             </td>
         </ng-container>
 
@@ -82,147 +84,159 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="amountInvested">
+        <ng-container matColumnDef="invested">
             <th mat-header-cell
                 *matHeaderCellDef>
                 <div class="header-label">INVESTED ($M)</div>
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="amountInvested">{{element.amountInvested.toLocaleString('en', {useGrouping:true})}}</div>
+                <div class="invested">{{element.invested.toLocaleString('en', {useGrouping:true})}}</div>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="currentValuation">
+        <ng-container matColumnDef="totalValue">
             <th mat-header-cell
                 *matHeaderCellDef>
                 <div class="header-label">VALUATION ($M)</div>
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="currentValuation">{{element.currentValuation.toLocaleString('en', {useGrouping:true})}}</div>
+                <div class="totalValue">{{element.totalValue.toLocaleString('en', {useGrouping:true})}}</div>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="MOIC">
+        <ng-container matColumnDef="moic">
             <th mat-header-cell
                 *matHeaderCellDef>
                 <div class="header-label">MOIC</div>
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="moic">{{element.MOIC}}x</div>
+                <div class="moic">{{element.moic}}x</div>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="IRR">
+        <ng-container matColumnDef="irr">
             <th mat-header-cell
                 *matHeaderCellDef>
                 <div class="header-label">GROSS IRR</div>
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="irr">{{element.IRR}}%</div>
+                <div class="irr">{{element.irr}}%</div>
             </td>
         </ng-container>
 
+        <!--    ---------------------------- GROUPING COLUMNS ------------------------------------>
+        <ng-container matColumnDef="a">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+                <img src="assets/image/up.svg"
+                     *ngIf="group.expanded" />
+                <img src="assets/image/down.svg"
+                     *ngIf="!group.expanded" />
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="b">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group"
+                class="group-name">
+                <div fxLayout="row"
+                     fxLayoutAlign="start start"
+                     fxLayoutGap=5px>
+                    <div class="group-name">{{group[groupByColumns[group.level-1]]}}</div>
+                    <div class="group-count">({{group.count}})</div>
+                </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="c">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="d">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="e">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+            </td>
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+        </ng-container>
+        <ng-container matColumnDef="f">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+                <div class="group-numbers">{{group.investedSum}}</div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="g">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+                <div class="group-numbers">{{group.valuationSum}}</div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="h">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+                <div class="group-numbers">{{group.moicSum}}x</div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="i">
+            <th mat-header-cell
+                *matHeaderCellDef>
+            </th>
+            <td mat-cell
+                *matCellDef="let group">
+                <div class="group-irr">N/A</div>
+            </td>
+        </ng-container>
+
+        <!-- --------------------------------MAIN HEADER AND ROW DEFINITIONS -->
         <tr mat-header-row
             *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row
             (click)="onRowClick(row)"
             *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        <!-- Group header -->
-        <ng-container matColumnDef="groupHeader">
-            <td colspan="999"
-                mat-cell
-                *matCellDef="let group">
-                <div fxLayout="row"
-                     fxLayoutAlign="start center"
-                     fxLayoutGap="10px"
-                     class="group-header-label">
-                    <img src="assets/image/up.svg"
-                         *ngIf="group.expanded" />
-                    <img src="assets/image/down.svg"
-                         *ngIf="!group.expanded" />
-                    <div>{{group[groupByColumns[group.level-1]]}}</div>
-                    <div class="group-header-count">({{group.count}}) {{group.investedSum}} {{group.valuationSum}} {{group.moicSum}} {{group.irrSum}}</div>
-                </div>
-            </td>
-        </ng-container>
 
         <!-- if we wanted to click on header for sort (click)="groupHeaderClick(row)"> </tr> -->
+
+        <!-- --------------------------------GROUPING ROW DEFINITION -->
         <tr mat-row
             class="group-header"
-            *matRowDef="let row; columns: ['groupHeader']; when: isGroup"
-            (click)="groupHeaderClick(row)"></tr>
+            *matRowDef="let group; columns: displayedGroupColumns when: isGroup"
+            (click)="groupHeaderClick(group)">
+        </tr>
 
     </table>
 </div>
-
-
-<!-- <div fxLayout="column"
-     fxLayoutAlign="start center"
-     fxFlex>
-    <mat-table [dataSource]="dataProvider"
-               class="mat-elevation-z0"
-               matSort>
-
-        <ng-container *ngFor="let column of columns; let i = index"
-                      matColumnDef="{{ column.field }}">
-            <mat-header-cell mat-sort-header
-                             *matHeaderCellDef>{{ column.field }} -->
-
-<!-- <button class="grid-view-header-menu"
-                        mat-icon-button
-                        [matMenuTriggerFor]="menu">
-                    <mat-icon>menu</mat-icon>
-                </button> -->
-
-<!-- <mat-menu #menu>
-                    <button mat-menu-item
-                            (click)="groupBy($event, column);">Group By This Field</button>
-                    <button mat-menu-item
-                            (click)="unGroupBy($event, column);">Ungroup</button>
-                </mat-menu> -->
-
-<!-- </mat-header-cell> -->
-<!--            <mat-cell *matCellDef="let row">-->
-<!--                <mat-icon *ngIf="row[column.field] === 'logo'">{{ row[column.field] }}</mat-icon>-->
-<!--            </mat-cell>-->
-<!-- <mat-cell *matCellDef="let row"
-                      [ngClass]="[row[column.field] == 'name' ? 'company-name-text' : 'data-grid-text']">
-                <ng-container *ngIf="column.field === 'logo'">
-                    <img class="row__icon"
-                         [src]="row[column.field]" />
-                </ng-container>
-                <ng-container *ngIf="column.field !== 'logo'">
-                    {{ row[column.field] }}
-                </ng-container>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row mat-header-row
-                        class="group_bkg"
-                        *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row class="BOUNDING"
-                 *matRowDef="let row; columns: displayedColumns"></mat-row> -->
-
-<!-- Group header -->
-<!-- <ng-container matColumnDef="groupHeader">
-            <mat-cell colspan="999"
-                      *matCellDef="let group">
-                <mat-icon *ngIf="group.expanded">expand_less</mat-icon>
-                <mat-icon *ngIf="!group.expanded">expand_more</mat-icon>
-                <strong class="column-name">{{group[groupByColumns[group.level-1]]}} ({{group.totalCounts}})</strong> -->
-<!-- <p>{{ group.aggregatedValuation }}</p>
-                <p>{{ group.aggregatedInvestment }}</p> -->
-<!-- </mat-cell>
-        </ng-container>
-
-        <mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"
-                 (click)="groupHeaderClick(row)">>
-        </mat-row>
-
-    </mat-table>
-</div> -->
