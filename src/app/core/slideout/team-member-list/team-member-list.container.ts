@@ -4,9 +4,9 @@ import { CloseCompanyInfoPanel } from "@core/state/flow/company-flow.actions";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
 import { Logger } from "@util/logger";
-import { getSelectedCompany, getTeams } from "@app/core/state";
-import * as fromTeamActions from "@app/core/state/team/team.actions";
-import * as fromTeamMemberActions from "@app/core/state/team-member/team-member.actions";
+import { getSelectedCompany, getTeams } from "@core/state";
+import * as fromTeamActions from "@core/state/team/team.actions";
+import * as fromTeamMemberActions from "@core/state/team-member/team-member.actions";
 
 @Component({
     selector: "sbp-team-member-list-container",
@@ -38,13 +38,15 @@ export class TeamMemberListContainer implements OnInit {
         this.store$.dispatch(new CloseCompanyInfoPanel("1"));
     }
 
+    /**
+     * Launches the team member detail slide out panel.
+     * @param event
+     */
     public goToMemberDetail(event: any): void {
         const { member, group, companyId } = event;
-
-        TeamMemberListContainer.logger.debug(`goToMemberDetail() for member ${member.id} ${group.category}`);
+        TeamMemberListContainer.logger.debug(`goToMemberDetail( ID ${member.id}, category ${group.category} )`);
         this.store$.dispatch(new fromTeamActions.SetSelectedTeamMemberGroup(group));
         this.store$.dispatch(new fromTeamMemberActions.GetTeamMember({ memberId: member.id, companyId }));
-        // this.store$.dispatch(new OpenTeamMemberDetailPanel(member));
     }
 
     /**

@@ -6,6 +6,7 @@ import { CompanyDashboardLayoutActions } from "./company-dashboard-layout.action
 import * as fromRoot from "../../";
 import * as fromCompanyDashboardLayout from "./company-dashboard-layout.reducer";
 import * as _ from "lodash";
+import * as ObjectUtil from "@util/object.util";
 
 export interface CompanyDashboard {
     layout: fromCompanyDashboardLayout.CompanyDashboardLayoutState;
@@ -57,7 +58,7 @@ export const getExpanded = createSelector(
 export const getSelectedCompanyFYE = createSelector(
     getSelectedCompany,
     (selectedCompany: Company) =>
-        _.get(selectedCompany, "fiscalYearEnd.month", "---")
+        ObjectUtil.getNestedPropIfExists(selectedCompany, ["fiscalYearEnd", "month"], "---")
             .substring(0, 3)
             .toUpperCase()
 );
@@ -68,7 +69,7 @@ export const getSelectedCompanyFYE = createSelector(
 export const getSelectedCompanyAvailablePeriods = createSelector(
     getSelectedCompany,
     (selectedCompany: Company) => {
-        const periods = _.get(selectedCompany, "availablePeriods", []);
+        const periods = ObjectUtil.getNestedPropIfExists(selectedCompany, ["availablePeriods"], []);
         return _.each(periods, (item) => {
             return _.extend(item, { id: "Q" + item.financialQuarter + " " + new Date(item.date).getFullYear() });
         });
@@ -80,7 +81,7 @@ export const getSelectedCompanyAvailablePeriods = createSelector(
  */
 export const getShowCurrencySelector = createSelector(
     getSelectedCompany,
-    (selectedCompany: Company) => _.get(selectedCompany, "defaultCurrency.name", "") !== "USD"
+    (selectedCompany: Company) => ObjectUtil.getNestedPropIfExists(selectedCompany, ["defaultCurrency", "name"], "") !== "USD"
 );
 
 /**
@@ -89,7 +90,7 @@ export const getShowCurrencySelector = createSelector(
 export const getSelectedCompanyAlternateCurrency = createSelector(
     getSelectedCompany,
     (selectedCompany: Company) => {
-        const defaultCurrency = _.get(selectedCompany, "defaultCurrency", "") as CurrencyType;
+        const defaultCurrency = ObjectUtil.getNestedPropIfExists(selectedCompany, ["defaultCurrency"], "") as CurrencyType;
         return defaultCurrency.currencyCode !== "USD" ? defaultCurrency : null;
     }
 );

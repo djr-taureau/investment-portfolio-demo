@@ -6,8 +6,8 @@ import { Observable, of } from "rxjs";
 import { Company, Tag, TeamMember, Valuation, TeamMemberGroup } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as fromState from "@core/state";
-import * as FlowActions from "@core/state/flow/portfolio-flow.actions";
-import * as TeamActions from "@core/state/team/team.actions";
+import * as fromTeamActions from "@core/state/team/team.actions";
+import * as fromTeamMemberActions from "@core/state/team-member/team-member.actions";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as TestUtil from "@util/test.util";
 import * as _ from "lodash";
@@ -19,6 +19,7 @@ import * as _ from "lodash";
             *ngIf="collapsed$ | async"
             [company]="company$ | async"
             [teamMembers]="teamMembers$ | async"
+            [teamGroup]="teamGroup$ | async"
             [currentIrr]="currentIrr"
             [currentMoic]="currentMoic"
             [currentTotalValue]="currentTotalValue"
@@ -31,6 +32,7 @@ import * as _ from "lodash";
             [currentInvested]="currentInvested"
             [currentApproved]="currentApproved"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
+            (seeTeamMember)="seeTeamMember($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
             (seeValuations)="seeValuations($event)"
         >
@@ -40,6 +42,7 @@ import * as _ from "lodash";
             *ngIf="expanded$ | async"
             [company]="company$ | async"
             [teamMembers]="teamMembers$ | async"
+            [teamGroup]="teamGroup$ | async"
             [tags]="tags$ | async"
             [takeaways]="takeaways$ | async"
             [currentIrr]="currentIrr"
@@ -56,6 +59,7 @@ import * as _ from "lodash";
             [amountDeployedChartData]="amountDeployedChartData"
             (seeAllTakeaways)="seeAllTakeaways($event)"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
+            (seeTeamMember)="seeTeamMember($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
             (seeValuations)="seeValuations($event)"
         >
@@ -87,6 +91,11 @@ export class CompanySummaryContainer implements OnInit {
      * The team members observable.
      */
     public teamMembers$: Observable<TeamMember[]>;
+
+    /**
+     * The team group observable.
+     */
+    public teamGroup$: Observable<TeamMemberGroup>;
 
     /**
      * The tags observable.
@@ -162,6 +171,7 @@ export class CompanySummaryContainer implements OnInit {
             }
         });
 
+        this.teamGroup$ = this.store$.pipe(select(fromState.getDealTeamGroup));
         this.teamMembers$ = this.store$.pipe(select(fromState.getDealTeamMembers));
 
         // TODO: Need to get this from API
@@ -187,6 +197,17 @@ export class CompanySummaryContainer implements OnInit {
     public seeMoreCompanyInfo(id: string): void {
         CompanySummaryContainer.logger.debug(`seeMoreCompanyInfo( Company ID: ${id} )`);
         this.store$.dispatch(new OpenCompanyInfoPanel(id));
+    }
+
+    /**
+     * Launches the team member detail slide out panel.
+     * @param event
+     */
+    public seeTeamMember(event: any): void {
+        const { id, group, companyId } = event;
+        CompanySummaryContainer.logger.debug(`goToMemberDetail( ID ${id}, category ${group.category} )`);
+        this.store$.dispatch(new fromTeamActions.SetSelectedTeamMemberGroup(group));
+        this.store$.dispatch(new fromTeamMemberActions.GetTeamMember({ memberId: id, companyId }));
     }
 
     /**
