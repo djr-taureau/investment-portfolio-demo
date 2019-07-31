@@ -52,6 +52,21 @@ export const getExpanded = createSelector(
     (collapsed: boolean) => !collapsed
 );
 
+export const getShowCashburnDetail = createSelector(
+    selectCompanyDashboardLayoutState,
+    fromCompanyDashboardLayout.getShowCashburnDetail
+);
+
+export const getShowEBITDADetail = createSelector(
+    selectCompanyDashboardLayoutState,
+    fromCompanyDashboardLayout.getShowEBITDADetail
+);
+
+export const getShowRevenueDetail = createSelector(
+    selectCompanyDashboardLayoutState,
+    fromCompanyDashboardLayout.getShowRevenueDetail
+);
+
 /**
  * Returns the selected company's financial year end month
  */

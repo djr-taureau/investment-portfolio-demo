@@ -1,21 +1,54 @@
-import { CompanyDashboardLayoutActions, CompanyDashboardLayoutActionTypes } from "./company-dashboard-layout.actions";
+import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
-import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
+import { CompanyDashboardLayoutActions, CompanyDashboardLayoutActionTypes } from "./company-dashboard-layout.actions";
 
 export interface CompanyDashboardLayoutState {
     collapsed: boolean;
     selectedCurrency: CurrencyType;
     selectedDatePart: DatePartType;
     selectedPeriod: SelectorPeriod;
+    showRevenueDetail: boolean;
+    showCashburnDetail: boolean;
+    showEBITDADetail: boolean;
 }
 
 export const initialState: CompanyDashboardLayoutState = {
     collapsed: true,
     selectedCurrency: CurrencyTypeEnum.USD,
     selectedDatePart: DatePartTypeEnum.QTR,
-    selectedPeriod: null
+    selectedPeriod: null,
+    showRevenueDetail: false,
+    showCashburnDetail: false,
+    showEBITDADetail: false
 };
+
+function toggleRevenueDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+    return {
+        ...state,
+        showRevenueDetail: !state.showRevenueDetail,
+        showCashburnDetail: false,
+        showEBITDADetail: false
+    };
+}
+
+function toggleEBITDADetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+    return {
+        ...state,
+        showRevenueDetail: false,
+        showCashburnDetail: false,
+        showEBITDADetail: !state.showEBITDADetail
+    };
+}
+
+function toggleCashburnDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+    return {
+        ...state,
+        showRevenueDetail: false,
+        showCashburnDetail: !state.showCashburnDetail,
+        showEBITDADetail: false
+    };
+}
 
 function expandOrCollapse(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
     return {
@@ -43,6 +76,12 @@ export function reducer(state: CompanyDashboardLayoutState = initialState, actio
                 ...state,
                 selectedDatePart: action.payload
             };
+        case CompanyDashboardLayoutActionTypes.ToggleCashBurnDetailExpanded:
+            return toggleCashburnDetail(state);
+        case CompanyDashboardLayoutActionTypes.ToggleEBITDADetailExpanded:
+            return toggleEBITDADetail(state);
+        case CompanyDashboardLayoutActionTypes.ToggleRevenueDetailExpanded:
+            return toggleRevenueDetail(state);
         default:
             return state;
     }
@@ -52,3 +91,6 @@ export const getCollapsed = (state: CompanyDashboardLayoutState) => state.collap
 export const getSelectedCurrency = (state: CompanyDashboardLayoutState) => state.selectedCurrency;
 export const getSelectedDatePart = (state: CompanyDashboardLayoutState) => state.selectedDatePart;
 export const getSelectedPeriod = (state: CompanyDashboardLayoutState) => state.selectedPeriod;
+export const getShowCashburnDetail = (state: CompanyDashboardLayoutState) => state.showCashburnDetail;
+export const getShowEBITDADetail = (state: CompanyDashboardLayoutState) => state.showEBITDADetail;
+export const getShowRevenueDetail = (state: CompanyDashboardLayoutState) => state.showRevenueDetail;

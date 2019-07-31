@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Input } from "@angular/core";
 import { select } from "d3-selection";
-import { scaleLinear, ScaleBand, scaleBand } from "d3-scale";
+import { scaleLinear, ScaleBand, scaleBand } from "d3";
 import * as d3 from "d3";
 import { range, histogram, max, min } from "d3-array";
 import { DimensionsType } from "../chart/utils";

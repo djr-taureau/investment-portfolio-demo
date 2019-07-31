@@ -46,7 +46,6 @@ export class CloseCompanyInfoPanel implements Action {
 
     constructor(public payload?: string) {}
 }
-
 export class CloseTakeawaysPanel implements Action {
     readonly type = CompanyFlowActionTypes.CloseTakeawaysPanel;
 
@@ -150,6 +149,23 @@ export class SelectCompany implements Action {
 
     constructor(public payload: string) {}
 }
+export class ToggleCashBurnDetail implements Action {
+    readonly type = CompanyFlowActionTypes.ToggleCashBurnDetail;
+
+    constructor(public payload?: string) {}
+}
+
+export class ToggleEBITDADetail implements Action {
+    readonly type = CompanyFlowActionTypes.ToggleEBITDADetail;
+
+    constructor(public payload?: string) {}
+}
+
+export class ToggleRevenueDetail implements Action {
+    readonly type = CompanyFlowActionTypes.ToggleRevenueDetail;
+
+    constructor(public payload?: string) {}
+}
 
 export class SortCompanies implements Action {
     readonly type = CompanyFlowActionTypes.SortCompanies;
@@ -177,4 +193,7 @@ export type CompanyFlowActions =
     | OpenTeamMemberListPanel
     | OpenValuationPanel
     | SelectCompany
-    | SortCompanies;
+    | SortCompanies
+    | ToggleCashBurnDetail
+    | ToggleEBITDADetail
+    | ToggleRevenueDetail;

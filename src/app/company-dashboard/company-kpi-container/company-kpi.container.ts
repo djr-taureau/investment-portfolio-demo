@@ -1,11 +1,12 @@
 import "zone.js";
-import { Component, OnInit, ElementRef, TemplateRef, ViewContainerRef, ViewChild, HostListener, EventEmitter } from "@angular/core";
-import { Store } from "@ngrx/store";
-import { PopupService, PopupRef, Align } from "@progress/kendo-angular-popup";
-import { ebitda, revenue } from "../financials-data";
-import { Logger } from "@util/logger";
-import { TimelineDataPointFin, TimelineDataPoint } from "@shared/chart-components/interfaces/types";
+import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
+import { ToggleCashBurnDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { CompanyKpiDetailComponent } from "./../company-kpi-detail/company-kpi-detail.component";
+import { ebitda, revenue, cashburn } from "../financials-data";
+import { Logger } from "@util/logger";
+import { PopupService, PopupRef, Align } from "@progress/kendo-angular-popup";
+import { Store } from "@ngrx/store";
+import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
 
 @Component({
     selector: "sbp-company-kpi-container",
@@ -38,6 +39,17 @@ export class CompanyKpiContainer implements OnInit {
     @ViewChild("anchor") public anchor: ElementRef;
     @ViewChild("popup", { read: ElementRef }) public popup: ElementRef;
     @ViewChild("container", { read: ViewContainerRef }) public container: ViewContainerRef;
+
+    public onRevenueClick() {
+        this.store$.dispatch(new ToggleRevenueDetail());
+    }
+
+    public onEBITDAClick() {
+        this.store$.dispatch(new ToggleEBITDADetail());
+    }
+    public onCashburnClick() {
+        this.store$.dispatch(new ToggleCashBurnDetail());
+    }
 
     /**
      * Initialize the component.

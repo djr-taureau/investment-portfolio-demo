@@ -1,13 +1,17 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
+import { ToggleEBITDADetail } from "@core/state/flow/company-flow.actions";
 import { Action } from "@ngrx/store";
 
 export enum CompanyDashboardLayoutActionTypes {
     ExpandOrCollapse = "[DashboardLayout] ExpandOrCollapse",
     SelectCurrency = "[DashboardLayout] Select Currency",
     SelectDatePart = "[DashboardLayout] Select Date Part",
-    SelectAsOfDate = "[DashboardLayout] Select As Of Date"
+    SelectAsOfDate = "[DashboardLayout] Select As Of Date",
+    ToggleEBITDADetailExpanded = "[DashboardLayout] Toggle EBITDA Detail Expanded",
+    ToggleCashBurnDetailExpanded = "[DashboardLayout] Toggle Cashburn Detail Expanded",
+    ToggleRevenueDetailExpanded = "[DashboardLayout] Toggle Revenue Detail Expanded"
 }
 
 export class ExpandOrCollapse implements Action {
@@ -15,7 +19,11 @@ export class ExpandOrCollapse implements Action {
 
     constructor() {}
 }
+export class SelectAsOfDate implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.SelectAsOfDate;
 
+    constructor(public payload: SelectorPeriod) {}
+}
 export class SelectCurrency implements Action {
     readonly type = CompanyDashboardLayoutActionTypes.SelectCurrency;
 
@@ -28,10 +36,27 @@ export class SelectDatePart implements Action {
     constructor(public payload: DatePartType) {}
 }
 
-export class SelectAsOfDate implements Action {
-    readonly type = CompanyDashboardLayoutActionTypes.SelectAsOfDate;
+export class ToggleCashBurnDetailExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleCashBurnDetailExpanded;
 
-    constructor(public payload: SelectorPeriod) {}
+    constructor() {}
+}
+export class ToggleEBITDADetailExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleEBITDADetailExpanded;
+
+    constructor() {}
+}
+export class ToggleRevenueDetailExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleRevenueDetailExpanded;
+
+    constructor() {}
 }
 
-export type CompanyDashboardLayoutActions = ExpandOrCollapse | SelectCurrency | SelectDatePart | SelectAsOfDate;
+export type CompanyDashboardLayoutActions =
+    | ExpandOrCollapse
+    | SelectCurrency
+    | SelectDatePart
+    | SelectAsOfDate
+    | ToggleCashBurnDetailExpanded
+    | ToggleEBITDADetailExpanded
+    | ToggleRevenueDetailExpanded;
