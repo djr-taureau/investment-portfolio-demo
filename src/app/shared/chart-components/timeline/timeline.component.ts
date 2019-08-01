@@ -1,26 +1,13 @@
-import {
-    Component,
-    Input,
-    Output,
-    ViewChild,
-    ElementRef,
-    OnInit,
-    AfterContentInit,
-    OnChanges,
-    SimpleChanges,
-    HostListener,
-    EventEmitter,
-    ViewChildren,
-    AfterViewInit
-} from "@angular/core";
+import { AfterContentInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
+import { Logger } from "@util/logger";
 import * as d3 from "d3";
-import { combineLatest } from "rxjs";
+import { axisLeft as d3_axisLeft, select as d3_select } from "d3";
+import * as _ from "lodash";
+import { revenueMock2 } from "../../../company-dashboard/financials-data";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
-import { Logger } from "@util/logger";
-import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
-import { revenue, ebitda, cashburn, revenueArr, revenueMock, revenueMock2 } from "../../../company-dashboard/financials-data";
-import * as _ from "lodash";
+
 @Component({
     selector: "sbp-timeline",
     templateUrl: "./timeline.component.html",
@@ -35,6 +22,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     @Input() xAccessor?: any;
     @Input() yAccessor?: any;
     @Input() keyAccessor?: any;
+    @Input() categoryAccessor?: any;
     @Input() projectedAccessor?: any;
     @Input() valueAccessor?: any;
     @Input() yLabelVisible?: boolean;
@@ -56,12 +44,14 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     historicalData: TimelineDataPointFin[];
     projectedData: TimelineDataPointFin[];
     dimensions: DimensionsType;
-    xScale: ScaleType;
+    xScale: any;
     yScale: ScaleType;
     budgetScale: ScaleType;
     forecastScale: ScaleType;
-
+    xAxisTickValues: any[];
+    yAxisTickValues: any[];
     timePeriodAccessor;
+    yTickValues: any[];
     xAccessorScaled: any;
     yAccessorScaled: any;
     budgetAccessorScaled: any;
@@ -69,10 +59,15 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     y0AccessorScaled: any;
     y0BudgetAccessorScaled: any;
     y0ForecastAccessorScaled: any;
-
+    formatCategory = d3.tickFormat(d3.format(","));
     formatDate = d3.timeFormat("%m/%d/%Y");
     gradientId: string = getUniqueId("Timeline-gradient");
     gradientColors: string[] = ["rgb(226, 222, 243)", "#f8f9fa"];
+    xAxisBottom;
+    yAxisGrid;
+    actualsPresentValue;
+    dateSelected;
+    selectedValue: boolean;
 
     constructor() {
         TimelineComponent.logger.debug(`constructor()`);
@@ -82,7 +77,8 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             marginBottom: 75,
             marginLeft: 75,
             height: 300,
-            width: 600
+            width: 679,
+            boundedWidth: 630
         };
         this.dimensions = {
             ...this.dimensions,
@@ -100,25 +96,29 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
     ngOnInit() {
         TimelineComponent.logger.debug(`ngOnInit()`);
-
         this.actualsVis = true;
         this.budgetVis = true;
         this.forecastVis = true;
-        this.data = revenueMock;
+        this.yAxisTickValues = [0, 300, 450, 600, 750];
+        this.data = revenueMock2.series;
         this.actualsObj = _.find(this.data, (v) => v.id === "actuals");
         this.budgetObj = _.find(this.data, (v) => v.id === "budget");
         this.forecastObj = _.find(this.data, (v) => v.id === "forecast");
         this.actuals = _.get(this.actualsObj, ["values"]);
         this.budget = _.get(this.budgetObj, ["values"]);
         this.forecast = _.get(this.forecastObj, ["values"]);
+        this.timePeriods = [];
+        this.dateSelected = "4Q2018";
         this.actuals.map((v) => {
-            console.log(this.xAccessor(v));
-            console.log(this.yAccessor(v));
+            const timePart = `${v.quarter}Q${v.year}`;
+            if (this.categoryAccessor && this.categoryAccessor(v) === this.dateSelected) {
+                this.selectedValue = true;
+            }
+            this.timePeriods = this.timePeriods.concat(timePart);
         });
-        if (this.projectedAccessor) {
-            this.historicalData = this.data.filter((v) => v.projected === false);
-            this.projectedData = this.data.filter((v) => v.projected === true);
-        }
+        this.historicalData = this.actuals.filter((v) => v.projected === false);
+        this.projectedData = this.actuals.filter((v) => v.projected === true);
+        this.actualsPresentValue = this.actuals.filter((p) => this.categoryAccessor(p) === this.dateSelected);
     }
 
     ngAfterContentInit() {
@@ -137,9 +137,10 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
     updateScales() {
         this.xScale = d3
-            .scaleTime()
-            .domain(d3.extent(this.actuals, this.xAccessor) as [Date, Date])
-            .range([0, this.dimensions.boundedWidth]);
+            .scaleBand<string, number>()
+            .domain(this.timePeriods)
+            .rangeRound([0, this.dimensions.boundedWidth])
+            .padding(0.5);
 
         this.yScale = d3
             .scaleLinear()
@@ -156,13 +157,36 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .domain(d3.extent(this.forecast, this.yAccessor) as [number, number])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
-        this.xAccessorScaled = (d) => this.xScale(this.xAccessor(d));
+
+        this.xAxisBottom = d3.axisBottom(this.xScale);
+
+        this.xAccessorScaled = (d) => this.xScale(this.categoryAccessor(d));
         this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
         this.budgetAccessorScaled = (d) => this.budgetScale(this.yAccessor(d));
         this.forecastAccessorScaled = (d) => this.forecastScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
         this.y0BudgetAccessorScaled = this.budgetScale(this.budgetScale.domain()[0]);
         this.y0ForecastAccessorScaled = this.forecastScale(this.budgetScale.domain()[0]);
+        // this.yAxisGrid = d3_axisLeft(this.yAccessorScaled)
+        //     .tickSize(-this.dimensions.boundedWidth)
+        //     .tickFormat("")
+        //     .tickValues(this.yAxisTickValues)
+        //     .ticks(5);
+        // const xAxis = d3_axisBottom(this.xScale).ticks(6);
+        // const yAxis = d3_axisLeft(this.yScale).ticks(5);
+        const svg = d3_select("#multi-timeline").select("svg");
+        svg.append("g")
+            .attr("class", "axis-grid")
+            .call(
+                this.make_y_gridlines()
+                    .tickSize(-this.dimensions.width, 0, 0)
+                    // .tickValues(this.yAxisTickValues)
+                    .tickFormat("")
+            );
+    }
+
+    make_y_gridlines() {
+        return d3_axisLeft(this.yScale).tickValues(this.yAxisTickValues);
     }
 
     toggleVisibilty(event) {

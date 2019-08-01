@@ -8,7 +8,9 @@ import { Observable } from "rxjs";
 @Component({
     selector: "sbp-company-revenue-detail-container",
     template: `
-        <sbp-expandable-panel (close)="onClose()" [visible]="isExpanded$ | async"><h1>Hello!</h1></sbp-expandable-panel>
+        <sbp-expandable-panel (close)="onClose()" [visible]="isExpanded$ | async">
+            <sbp-company-kpi-detail-component [data]=""></sbp-company-kpi-detail-component>
+        </sbp-expandable-panel>
     `,
     styleUrls: ["./company-revenue-detail.container.scss"],
     animations: [expandOutFromTop]

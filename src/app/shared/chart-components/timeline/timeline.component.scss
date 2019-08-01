@@ -1,14 +1,82 @@
-:host {
-    height: 300px;
-    min-width: 500px;
-    width: calc(100% + 1em);
-    margin-bottom: 2em;
-    background: white;
-    padding: 0.6em 1em;
-    margin: 0.5em;
-    background-color: white;
-    border-radius: 6px;
+@import "../../../../assets/scss/variables.scss";
 
+:host {
+    ::ng-deep {
+        height: 300px;
+        min-width: 500px;
+        width: calc(100% + 1em);
+        margin-bottom: 2em;
+        background: white;
+        padding: 0.6em 1em;
+        margin: 0.5em;
+        background-color: white;
+        border-radius: 6px;
+
+
+        .axis-grid {
+            opacity: 0.75;
+            shape-rendering: crispEdges;
+            stroke: $light-navy;
+            stroke-dasharray: 3, 3;
+        }
+
+
+        .y .tick {
+            fill: $light-grey-blue;
+            stroke: $light-grey-blue;
+            height: 10px;
+        }
+
+        .x .tick {
+            opacity: 0.75;
+            fill: $grey-blue;
+            stroke: $grey-blue;
+            height: 10px;
+        }
+
+        text.y text.tick {
+            height: 10px;
+        }
+
+        .x .tick-selected-value {
+            fill: $light-navy;
+            stroke: $light-navy;
+        }
+
+        .y-axis-label {
+            fill: #34495e;
+            font-size: 1.4em;
+            text-anchor: middle;
+            transform: rotate(-90deg);
+            margin-left: 10px;
+
+            .display {
+                //display: none;
+                stroke-width: 2;
+                display: none;
+
+                &-none {
+                    display: none;
+                }
+            }
+
+            .y-axis-label {
+                fill: #34495e;
+                font-size: 1.4em;
+                text-anchor: middle;
+                transform: rotate(-90deg);
+            }
+
+
+            .x-axis-label {
+                display: none;
+            }
+
+
+
+        }
+
+    }
 }
 
 #container {
@@ -23,4 +91,199 @@ div .card {
     height: 165px;
     border-radius: 6px;
     background-color: white;
+
+    .button-bar {
+        margin-top: 10px;
+        padding-bottom: 15px;
+    }
+
+    .y-axis-label-line {
+        fill: #34495e;
+        font-size: 1.4em;
+        width: 57px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $grey-blue;
+        text-anchor: middle;
+        transform: rotate(-90deg);
+        padding: 8px;
+        margin-top: 10px;
+        margin-left: 5px;
+        margin-bottom: 60px;
+
+        .M {
+            width: 26px;
+            height: 16px;
+            transform: rotate(-90deg);
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $grey-blue;
+        }
+    }
+
+
+    .YOY-Growth {
+        width: 55px;
+        height: 26px;
+        transform: rotate(-90deg);
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.08;
+        letter-spacing: 0.5px;
+        text-align: center;
+        color: $grey-blue;
+        padding: 8px;
+        margin-top: 60px;
+        margin-left: 50px;
+        margin-bottom: 30px;
+    }
+
+
+
+
+
+    button.actuals-toggle-on {
+        width: 74px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $pale-grey;
+    }
+
+    .button-bar {
+        margin-left: 46px;
+        margin-right: 1047px;
+        margin-top: 22px;
+    }
+
+    .kendo-button-group {
+        margin-left: 20px;
+    }
+
+    button.actuals-button {
+        width: 38px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $light-navy;
+        padding: 5px;
+    }
+
+    .actual-dot {
+        background-color: $light-navy;
+    }
+
+    .actual-path {
+        width: 16px;
+        height: 1px;
+        border: solid 3px $light-navy;
+    }
+
+    button.budget-toggle-on {
+        width: 96px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $pale-grey;
+    }
+
+    button.budget-button {
+        width: 60px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $light-navy;
+    }
+
+
+    .budget-dot {
+        width: 6px;
+        height: 6px;
+        border: solid 1.5px $dark-sky-blue;
+        background-color: $white;
+    }
+
+    .budget-path {
+        width: 16px;
+        height: 1px;
+        opacity: 0.75;
+        border: solid 1px $dark-sky-blue;
+    }
+
+    button.forecast-toggle-on {
+        width: 97px;
+        height: 24px;
+        border-radius: 4px;
+        background-color: $pale-grey;
+    }
+
+    button.forecast-button {
+        width: 61px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+
+        color: $light-navy;
+        padding: 5px 5px 5px 5px
+    }
+
+    .kpi-detail-bar {
+        height: 136px;
+        width: 684px;
+        margin-left: 46px;
+        margin-bottom: 75px;
+        padding-bottom: 30px;
+    }
+
+    .kpi-detail-line {
+        margin-left: 46px;
+    }
+
+    .kpi-detail-table {
+        margin-top: 43px;
+        margin-right: 39px;
+    }
 }
+
+
+// .axis-grid .x .axis .x-line line {
+
+
+// .axis-grid {
+//     opacity: 0.75;
+//     shape-rendering: crispEdges;
+//     stroke: $light-navy;
+//     stroke-dasharray: 3, 3;
+// }
+
+// .tick {
+//     stroke: $light-navy;
+// }

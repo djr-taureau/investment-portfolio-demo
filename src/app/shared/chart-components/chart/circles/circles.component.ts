@@ -5,13 +5,15 @@ import { Logger } from "@util/logger";
 @Component({
     selector: "[sbpCircles]",
     template: `
-        <svg:circle
-            *ngFor="let circle of data; trackBy: keyAccessor"
-            [attr.cx]="xAccessor(circle, $index)"
-            [attr.cy]="yAccessor(circle, $index)"
-            [attr.r]="radius"
-            [ngClass]="circleStyles"
-        ></svg:circle>
+        <ng-container *ngFor="let circle of data; trackBy: keyAccessor">
+            <svg:circle
+                *ngIf="circle || visible"
+                [attr.cx]="xAccessor(circle, $index)"
+                [attr.cy]="yAccessor(circle, $index)"
+                [attr.r]="radius"
+                [ngClass]="circleStyles"
+            ></svg:circle>
+        </ng-container>
     `,
     styleUrls: ["./circles.component.scss"]
 })
@@ -22,12 +24,14 @@ export class CirclesComponent implements AfterContentInit, OnInit {
     @Input() keyAccessor: any;
     @Input() xAccessor: any;
     @Input() yAccessor: any;
+    @Input() categoryAccessor: any;
     @Input() projectedAccessor?: any;
     @Input() radius?: 5 | null;
     @Input() circleStyles: any[];
     @Input() visible: boolean | true;
     accessorFunction = useAccessor;
     visibleToggle: string;
+    dateSelected: string;
 
     constructor() {}
 

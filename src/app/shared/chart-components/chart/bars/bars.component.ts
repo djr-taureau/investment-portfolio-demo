@@ -7,7 +7,7 @@ import { useAccessor } from "../utils";
         <ng-container *ngFor="let bar of data; trackBy: keyAccessor">
             <svg:rect
                 [attr.x]="accessorFunction(xAccessor, bar)"
-                [attr.y]="accessorFunction(newYAccessor, bar)"
+                [attr.y]="accessorFunction(yAccessor, bar)"
                 [attr.width]="max(accessorFunction(widthAccessor, bar), 0)"
                 [attr.height]="max(accessorFunction(heightAccessor, bar), 0)"
                 [attr.stroke-width]="'3'"
@@ -44,8 +44,8 @@ export class BarsComponent implements AfterContentInit, OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.heightAccessor = (d) => Math.abs(this.yAccessor(d));
-        this.newYAccessor = (d) => this.heightAccessor(d) - Math.max(this.yAccessor(d));
+        this.heightAccessor = (d) => Math.abs(this.yAccessor(d) - this.yAccessor(0));
+        this.newYAccessor = (d) => (d > 0 ? this.yAccessor(d) : this.yAccessor(0));
     }
 
     ngAfterContentInit() {
@@ -63,3 +63,14 @@ export class BarsComponent implements AfterContentInit, OnInit {
         });
     }
 }
+
+// svg.selectAll(".bar")
+//     .data(data)
+//     .enter()
+//     .append("rect")
+//     .attr("class", "bar")
+//     .attr("x", (d, i) => x(i))
+//     .attr("y", (d) => (d > 0 ? y(d) : y(0)))
+//     .attr("width", BAR_WIDTH)
+//     .attr("height", (d) => Math.abs(y(d) - y(0)))
+//     .attr("fill", (d) => (d > 0 ? "steelblue" : "tomato"));

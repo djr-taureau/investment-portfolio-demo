@@ -5,7 +5,7 @@
     </svg:line>
     <svg:text *ngFor="let tick of ticks"
               attr.transform="translate({{scale(tick)}}, 25)">
-        {{ formatTick(tick) }}
+        {{ tick }}
     </svg:text>
     <svg:text *ngIf="label"
               class="label"
@@ -20,7 +20,7 @@
     <svg:text *ngFor="let tick of ticks"
               class="tick"
               attr.transform="translate(-16, {{scale(tick)}})">
-        {{ formatTick(tick) }}
+        {{ tick }}
     </svg:text>
     <svg:text *ngIf="label"
               class="label"

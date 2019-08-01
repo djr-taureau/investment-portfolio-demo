@@ -1,7 +1,7 @@
-import { Component, Input, SimpleChanges, OnInit, OnChanges, AfterContentInit } from "@angular/core";
+import { Component, Input, SimpleChanges, OnInit, OnChanges, AfterContentInit, ElementRef, ViewChild } from "@angular/core";
 import * as d3 from "d3";
 import { DimensionsType, ScaleType } from "../../interfaces/types";
-import { quarter } from "../utils";
+import { select } from "d3-selection";
 
 @Component({
     selector: "[sbpAxis]",
@@ -17,35 +17,50 @@ export class AxisComponent implements OnChanges, AfterContentInit {
     @Input() formatTick: any;
     @Input() yAxisVisible: boolean;
     @Input() xAxisVisible: boolean;
+    @Input() xAxisTickValues?: any[];
+    @Input() yAxisTickValues?: any[];
+    @Input() numberOfTicks?: any;
+    @Input() yAxisGrid?: any;
+    @Input() xAxisBottom?: any;
 
-    axisStyles: any[];
+    @ViewChild("axisBottom") axisBottom: ElementRef;
+    el: HTMLElement;
+    yAxisStyles: any[];
+    xAxisStyles: any[];
     ticks: any;
     tickColorStyle: string;
+    textAnchor: string;
 
-    constructor() {
+    constructor(private elementRef: ElementRef) {
         this.dimension = "x";
         this.formatTick = d3.format(",");
+        this.textAnchor = "start";
+        const dateSelected = "4Q2018";
+
         if (this.xAxisVisible) {
-            console.log(this.xAxisVisible);
-            this.axisStyles = ["label-display tick-display"];
+            this.xAxisStyles = ["label label-display tick-display"];
         } else {
-            this.axisStyles = ["label tick not-visible"];
+            this.xAxisStyles = ["label tick not-visible"];
+        }
+        if (this.yAxisVisible) {
+            this.yAxisStyles = ["label label-display tick-display"];
+        } else {
+            this.yAxisStyles = ["label tick not-visible"];
         }
     }
 
     updateTicks() {
+        const dateSelected = "4Q2018";
         if (!this.dimensions || !this.scale) {
             return;
         }
-        this.ticks = this.scale.ticks(6);
+        if (this.numberOfTicks) {
+            this.ticks = this.scale.ticks(this.numberOfTicks);
+        }
     }
 
     ngAfterContentInit() {
-        if (this.xAxisVisible) {
-            this.axisStyles = ["label-display tick-display"];
-        } else {
-            this.axisStyles = ["label tick not-visible"];
-        }
+        this.updateTicks();
     }
 
     ngOnChanges(changes: SimpleChanges): void {

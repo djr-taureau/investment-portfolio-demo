@@ -3,7 +3,6 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanyKpiContainer } from "./company-kpi-container/company-kpi.container";
-import { CompanyKpiDetailContainer } from "./company-kpi-detail/company-kpi-detail.container";
 import { CompanyKpiDetailComponent } from "./company-kpi-detail/company-kpi-detail.component";
 import { CompanyRevenueDetailContainer } from "@app/company-dashboard/company-revenue-detail/company-revenue-detail.container";
 import { CompanySummaryCollapsedComponent } from "./company-summary/collapsed/company-summary-collapsed.component";
@@ -26,7 +25,6 @@ const COMPONENTS: any = [
     CompanySummaryExpandedComponent,
     PeriodSelectorComponent,
     PeriodSelectorContainer,
-    CompanyKpiDetailContainer,
     CompanyKpiDetailComponent
 ];
 
@@ -49,6 +47,6 @@ const MODULE_ROUTES: Routes = [
             }
         }
     ],
-    entryComponents: [CompanyKpiDetailComponent, CompanyKpiDetailContainer]
+    entryComponents: [CompanyKpiDetailComponent]
 })
 export class CompanyDashboardModule {}

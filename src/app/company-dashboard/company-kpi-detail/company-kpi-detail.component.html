@@ -1,25 +1,19 @@
 <div fxLayout="row"
-     fxLayoutAlign="space-between start stretch"
-     fxLayoutGap="10px">
-    <div class="kpi-detail-line"
-         fxLayout="row"
-         fxFlex="60"
-         fxLayoutAlign="space-between start">
-        <sbp-timeline [data]="data"
-                      [xAccessor]="dateAccessor"
-                      [yAccessor]="yAccessor"
-                      [yLabelVisible]="true"></sbp-timeline>
-    </div>
-    <div class="kpi-detail-table"
-         fxLayout="row"
-         fxFlex="40"
-         fxLayoutAlign="space-between start end">
-        <sbp-kpi-detail-table></sbp-kpi-detail-table>
-    </div>
+     fxFlex="5"
+     fxLayoutAlign="start center"
+     class="y-axis-label">
+    <div class="y-axis-label-line">REVENUE <span class="M">($M)</span></div>
 </div>
-<div class="kpi-detail-bar"
-     fxLayout="row"
-     fxLayoutAlign="center center">
-    <sbp-detail-bar-chart [label]="'Revenue'"
-                          [data]=""></sbp-detail-bar-chart>
+<div fxFlex="45"
+     fxFlexAlign="space-between stretch">
+    <sbp-timeline [data]="data"
+                  [xAccessor]="dateAccessor"
+                  [yAccessor]="yAccessor"
+                  [categoryAccessor]="categoryAccessor"
+                  [yLabelVisible]="true"></sbp-timeline>
+    <sbp-bar-chart></sbp-bar-chart>
+</div>
+<div fxFlex="50"
+     fxFlexAlign="end end">
+    <sbp-kpi-detail-table></sbp-kpi-detail-table>
 </div>

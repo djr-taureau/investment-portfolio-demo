@@ -19,12 +19,12 @@ rect {
     transition: all 0.3s ease-out;
     border-radius: 4px;
     width: 36px;
-    padding: 2px;
+    padding: 1px;
 }
 
 rect:hover {
     fill: $jade;
-    stroke-width: 4;
+    stroke-width: 1;
 }
 
 rect.projected-positive {
@@ -41,14 +41,14 @@ rect.historical-positive {
     stroke: #115449;
     border-radius: 4px;
     width: 36px;
-    stroke-width: 20;
+    stroke-width: 1;
 }
 
 rect.historical-positive:hover {
     fill: $jade;
     stroke: #115449;
     border-radius: 4px;
-    stroke-width: 4;
+    stroke-width: 1;
     width: 36px;
     opacity: 0.15;
 }
@@ -90,4 +90,10 @@ rect.projected-negative {
 
 .axis .x {
     stroke-dasharray: 3, 3
+}
+
+
+.y-axis-grid line {
+    stroke-dasharray: 3, 3;
+    stroke: $light-grey-blue;
 }

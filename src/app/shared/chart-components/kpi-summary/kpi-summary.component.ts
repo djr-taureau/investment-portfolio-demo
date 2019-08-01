@@ -14,6 +14,8 @@ export class KpiSummaryComponent implements OnInit {
     parseDate = d3.timeParse("%m/%d/%Y");
     dateAccessor: any;
     financialsAccessor: any;
+    yAccessor: any;
+    categoryAccessor: any;
     projectedAccessor: any;
     pyAccessor: any;
     icAccessor: any;
@@ -71,9 +73,11 @@ export class KpiSummaryComponent implements OnInit {
     ngOnInit() {
         KpiSummaryComponent.logger.debug(`ngOnInit()`);
         this.dateAccessor = (v) => this.parseDate(v.date);
+        this.categoryAccessor = (v) => `${v.quarter}Q${v.year}`;
         this.financialsAccessor = (v) => v.value;
         this.projectedAccessor = (v) => v.projected;
         this.pyAccessor = (v) => v.PY;
         this.icAccessor = (v) => v.IC;
+        this.yAccessor = (v) => v.amountInUSD;
     }
 }

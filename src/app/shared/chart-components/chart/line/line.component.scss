@@ -3,7 +3,7 @@
 :host {
     path {
         transition: all 0.3s ease-out;
-        cursor: crosshair;
+        // cursor: crosshair;
         stroke-width: 2px;
         stroke-linecap: round;
         fill: none;
@@ -13,11 +13,13 @@
             stroke-width: 2px;
             stroke-linecap: round;
             fill: none;
+
         }
 
         &.budget {
             stroke: $dark-sky-blue;
             stroke-width: 1px;
+
         }
 
         &.forecast {
@@ -29,38 +31,39 @@
             display: none;
         }
 
+        &.projected {
+            stroke-dasharray: 3, 3;
+        }
+
 
     }
 
-    path:hover {
-        fill: none;
-        stroke-width: 4px;
-    }
+    // path:hover {
+    //     fill: none;
+    //     stroke-width: 4px;
+    // }
 
 
 
     path.projected {
-        stroke: $light-grey-blue;
-        stroke-width: 2;
-        stroke-linecap: round;
         stroke-dasharray: 3, 3;
         fill: none;
     }
 
-    path.line:hover {
-        stroke: $light-navy;
-        stroke-linecap: round;
-        fill: none;
-        stroke-width: 10;
-    }
+    // path.line:hover {
+    //     stroke: $light-navy;
+    //     stroke-linecap: round;
+    //     fill: none;
+    //     stroke-width: 10;
+    // }
 
-    path.projected:hover {
-        stroke: $light-grey-blue;
-        stroke-width: 10;
-        stroke-linecap: round;
-        stroke-dasharray: 3, 3;
-        fill: none;
-    }
+    // path.projected:hover {
+    //     stroke: $light-grey-blue;
+    //     stroke-width: 10;
+    //     stroke-linecap: round;
+    //     stroke-dasharray: 3, 3;
+    //     fill: none;
+    // }
 
     .area {
         fill: #47a2d6;

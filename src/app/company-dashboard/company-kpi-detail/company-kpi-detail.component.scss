@@ -2,16 +2,54 @@
 
 :host {
 
-    margin-top: 17px;
-    padding-top: 10px;
-    padding-left: 10px;
-    margin: 0 40px;
-    width: 1360px;
-    height: 421px;
-    border-radius: 6px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-    border: solid 2px $dark-sky-blue;
-    background-color: $white;
+    .y-axis-label-line {
+        fill: #34495e;
+        font-size: 1.4em;
+        width: 57px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $grey-blue;
+        text-anchor: middle;
+        transform: rotate(-90deg);
+        padding: 8px;
+        margin-top: 10px;
+        margin-left: 5px;
+        margin-bottom: 60px;
+
+        .M {
+
+            opacity: 0.75;
+
+        }
+    }
+
+
+    .YOY-Growth {
+        width: 55px;
+        height: 26px;
+        transform: rotate(-90deg);
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.08;
+        letter-spacing: 0.5px;
+        text-align: center;
+        color: $grey-blue;
+        padding: 8px;
+        margin-top: 60px;
+        margin-left: 50px;
+        margin-bottom: 30px;
+    }
+
+
 
 
 
@@ -98,20 +136,6 @@
         background-color: $pale-grey;
     }
 
-    button.forecast-button {
-        width: 61px;
-        height: 16px;
-        font-family: PostGrotesk;
-        font-size: 12px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: 0.5px;
-
-        color: $light-navy;
-        padding: 5px 5px 5px 5px
-    }
 
     .kpi-detail-bar {
         height: 136px;
