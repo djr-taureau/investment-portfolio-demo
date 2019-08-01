@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
-import { Company, TeamMember } from "@core/domain/company.model";
+import { Company, TeamMember, TeamMemberGroup } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -66,10 +66,26 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public teamMembers: TeamMember[] = [];
 
     /**
+     * The team group the team members belong to.
+     */
+    @Input()
+    public teamGroup: TeamMemberGroup;
+
+    /**
      * Request to see all takeaways.
      */
     @Output()
     public seeMoreCompanyInfo: EventEmitter<string> = new EventEmitter<string>();
+
+    /**
+     * Request to see individual team member.
+     */
+    @Output()
+    public seeTeamMember: EventEmitter<{ id: string; companyId: string; group: TeamMemberGroup }> = new EventEmitter<{
+        id: string;
+        companyId: string;
+        group: TeamMemberGroup;
+    }>();
 
     /**
      * Request to see all team members.
@@ -104,6 +120,21 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public onSeeMoreCompanyInfo(id: string): void {
         CompanySummaryCollapsedComponent.logger.debug(`onSeeMoreCompanyInfo( Company ID: ${id} )`);
         this.seeMoreCompanyInfo.emit(id);
+    }
+
+    /**
+     * Handles click of individual Team Member.
+     * @param id
+     * @param companyId
+     */
+    public onTeamMemberClick(id: string, companyId: string): void {
+        CompanySummaryCollapsedComponent.logger.debug(`onTeamMemberClick( Team member ID: ${id} )`);
+        const payload = {
+            id,
+            companyId,
+            group: this.teamGroup
+        };
+        this.seeTeamMember.emit(payload);
     }
 
     /**

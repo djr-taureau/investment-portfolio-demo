@@ -3,6 +3,7 @@ import { InitializationService } from "@core/service/initialization.service";
 import * as fromState from "@core/state/";
 import { Component, OnInit } from "@angular/core";
 import { select, Store } from "@ngrx/store";
+import { simpleFade } from "@shared/animations/fade.animations";
 import { Observable } from "rxjs";
 import { slideFromRight } from "@shared/animations/slide.animations";
 import { Logger } from "@util/logger";
@@ -11,7 +12,7 @@ import { Logger } from "@util/logger";
     selector: "sbp-root",
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.scss"],
-    animations: [slideFromRight]
+    animations: [slideFromRight, simpleFade]
 })
 export class AppComponent implements OnInit {
     /**

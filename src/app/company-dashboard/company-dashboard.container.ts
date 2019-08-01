@@ -1,15 +1,21 @@
+import { getShowRevenueDetail } from "@core/state/company/dashboard";
 import * as CompanyDashboardLayoutActions from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs";
 import { appRoutePaths } from "../app.routes";
 import { Component, OnInit, ElementRef, TemplateRef } from "@angular/core";
 import { CoreCompanyContainer } from "@shared/company/core-company.container";
 import { Logger } from "@util/logger";
-import { Store } from "@ngrx/store";
+import { select, Store } from "@ngrx/store";
 
 @Component({
     selector: "sbp-company-dashboard-container",
     template: `
-        <sbp-company-dashboard (expandOrCollapse)="expandOrCollapse($event)"></sbp-company-dashboard>
+        <sbp-company-dashboard
+            (expandOrCollapse)="expandOrCollapse($event)"
+            [showRevenueDetail]="showRevenueDetail$ | async"
+            (closeDetailWidget)="expandOrCollapse()"
+        ></sbp-company-dashboard>
     `
 })
 export class CompanyDashboardContainer extends CoreCompanyContainer implements OnInit {
@@ -17,6 +23,20 @@ export class CompanyDashboardContainer extends CoreCompanyContainer implements O
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("CompanyDashboardContainer");
+
+    /**
+     * Controls visibility of the revenue details panel
+     */
+    public showRevenueDetail$: Observable<boolean>;
+
+    /**
+     * Expand or collapse the summary based on its current state.
+     * @param $event
+     */
+    public expandOrCollapse($event?: any): void {
+        CompanyDashboardContainer.logger.debug(`expandOrCollapse()`);
+        this.store$.dispatch(new CompanyDashboardLayoutActions.ExpandOrCollapse());
+    }
 
     /**
      * Constructor.
@@ -35,15 +55,7 @@ export class CompanyDashboardContainer extends CoreCompanyContainer implements O
      */
     public ngOnInit() {
         super.ngOnInit();
+        this.showRevenueDetail$ = this.store$.pipe(select(getShowRevenueDetail));
         CompanyDashboardContainer.logger.debug(`ngOnInit()`);
-    }
-
-    /**
-     * Expand or collapse the summary based on its current state.
-     * @param $event
-     */
-    public expandOrCollapse($event: any): void {
-        CompanyDashboardContainer.logger.debug(`expandOrCollapse()`);
-        this.store$.dispatch(new CompanyDashboardLayoutActions.ExpandOrCollapse());
     }
 }

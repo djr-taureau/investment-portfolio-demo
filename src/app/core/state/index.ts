@@ -234,10 +234,16 @@ export const getTeams = createSelector(
     }
 );
 
-export const getDealTeamMembers = createSelector(
+export const getDealTeamGroup = createSelector(
     getTeams,
     (teams) => {
-        const teamGroup = teams.find((team) => team.category === TeamMemberGroupTypes.DEAL);
+        return teams.find((team) => team.category === TeamMemberGroupTypes.DEAL);
+    }
+);
+
+export const getDealTeamMembers = createSelector(
+    getDealTeamGroup,
+    (teamGroup) => {
         return _.get(teamGroup, "members", []);
     }
 );

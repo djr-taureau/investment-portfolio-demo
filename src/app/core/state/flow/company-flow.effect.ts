@@ -1,3 +1,4 @@
+import { ToggleCashBurnDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
 import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import { appRoutePaths } from "@app/app.routes";
@@ -7,7 +8,14 @@ import { TeamMemberDetailContainer } from "@core/slideout/team-member-detail/tea
 import { TeamMemberListContainer } from "@core/slideout/team-member-list/team-member-list.container";
 import { getSelectedCompanyId } from "@core/state";
 import { Get, SetSelectedCompany } from "@core/state/company/company.actions";
-import { SelectAsOfDate, SelectCurrency, SelectDatePart } from "@core/state/company/dashboard/company-dashboard-layout.actions";
+import {
+    SelectAsOfDate,
+    SelectCurrency,
+    SelectDatePart,
+    ToggleCashBurnDetailExpanded,
+    ToggleEBITDADetailExpanded,
+    ToggleRevenueDetailExpanded
+} from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { SetSelectedCompanyLink, ToggleSlideout } from "@core/state/layout/layout.actions";
 import { SearchCompany } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
@@ -38,6 +46,7 @@ import { Observable } from "rxjs";
 
 @Injectable()
 export class CompanyFlowEffect {
+    // ------------------- COMPANY: DASHBOARD ---------------------------//
     @Effect()
     dashboardCurrencyChanged$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyFlowActions.DashboardCurrencyChanged>(CompanyFlowActionTypes.DashboardCurrencyChanged),
@@ -57,6 +66,24 @@ export class CompanyFlowEffect {
         ofType<CompanyFlowActions.DashboardAsOfDateChanged>(CompanyFlowActionTypes.DashboardAsOfDateChanged),
         map((action) => action.payload),
         concatMap((selectedPeriod) => [new SelectAsOfDate(selectedPeriod)])
+    );
+
+    @Effect()
+    toggleCashBurnDetail$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyFlowActions.ToggleCashBurnDetail>(CompanyFlowActionTypes.ToggleCashBurnDetail),
+        concatMap(() => [new ToggleCashBurnDetailExpanded()])
+    );
+
+    @Effect()
+    toggleEBITDADetail$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyFlowActions.ToggleEBITDADetail>(CompanyFlowActionTypes.ToggleEBITDADetail),
+        concatMap(() => [new ToggleEBITDADetailExpanded()])
+    );
+
+    @Effect()
+    toggleRevenueDetail$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyFlowActions.ToggleRevenueDetail>(CompanyFlowActionTypes.ToggleRevenueDetail),
+        concatMap(() => [new ToggleRevenueDetailExpanded()])
     );
 
     // TODO: GMAN - Commenting the rest of these out for now until we have two separate flows (portfolio and company) so as not to execute effects 2x

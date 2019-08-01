@@ -258,6 +258,30 @@ paths:
               $ref: "#/definitions/PortfolioSummary"
         400:
           description: "Invalid status value"
+  /portfolio/{id}/sectors:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve a list of sectors used for the portfolio"
+      description: ""
+      operationId: "getPortfolioSectors"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio sectors being requested"
+          required: true
+          type: "number"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/KeyValuePair"
+        400:
+          description: "Invalid status value"
 definitions:
   ApiResponse:
     type: "object"
@@ -353,14 +377,6 @@ definitions:
           $ref: "#/definitions/Fund"
       logo:
         type: "string"
-      publicTicker:
-        type: "string"
-      internalTicker:
-        type: "string"
-      tags:
-        type: "array"
-        items:
-          $ref: '#/definitions/Tag'
       percentOwnership:
         type: "number"
         description: "Displayed in the company header to the right of the tags."
@@ -592,7 +608,7 @@ definitions:
       day:
         type: "integer"
         format: "int64"
-  Tag:
+  KeyValuePair:
     type: "object"
     properties:
       id:

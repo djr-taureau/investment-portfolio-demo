@@ -5,6 +5,7 @@
 
 trigger:
 - develop
+- release
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -22,9 +23,14 @@ steps:
   displayName: 'npm install and build'
 
 # THis may go away perhaps overkill if the "publish" bit below works, just different than I'm used to
-- script: |
-    ./zip-deploy.sh
-  displayName: 'release to azure artifacts'
+# - script: |
+#     ./zip-deploy.sh
+#   displayName: 'release to azure artifacts'
 
 - publish: $(System.DefaultWorkingDirectory)/dist
   artifact: Spa
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+
+- publish: $(System.DefaultWorkingDirectory)/dist
+  artifact: Spa
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))

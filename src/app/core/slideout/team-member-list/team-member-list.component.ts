@@ -48,6 +48,7 @@ export class TeamMemberListComponent implements OnInit {
         return this._teams;
     }
     private _teams: TeamMemberGroup[];
+
     /**
      * The Company in context
      */

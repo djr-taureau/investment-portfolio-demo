@@ -1,0 +1,13 @@
+<div class="container"
+     fxLayout="column"
+     fxLayoutAlign="center center"
+     [@simpleFade]="visible">
+    <div class="header-row"
+         fxLayout="row"
+         fxLayoutAlign="end flex-start"
+         fxFlex>
+        <img src="/assets/image/close.svg"
+             (click)="onClose()">
+    </div>
+    <ng-content></ng-content>
+</div>

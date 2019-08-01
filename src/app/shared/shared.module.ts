@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { ChartModule } from "@shared/chart-components/chart.module";
 import { DirectivesModule } from "./directives/directives.module";
+import { ExpandablePanelModule } from "@shared/expandable-panel/expandable-panel.module";
 import { FilterablePanelModule } from "@shared/filterable-panel/filterable-panel.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -28,6 +29,7 @@ const MODULES = [
     // Application Shared Feature Modules
     CompanyNavbarModule,
     DirectivesModule,
+    ExpandablePanelModule,
     IconizedSearchableComboModule,
     FilterablePanelModule,
     MaterialModule,

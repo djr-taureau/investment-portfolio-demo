@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ChartColor } from "@core/domain/chart-data.model";
-import { Company, Tag, Takeaway, TeamMember, Valuation } from "@core/domain/company.model";
+import { Company, Tag, Takeaway, TeamMember, TeamMemberGroup, Valuation } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 
 @Component({
@@ -37,6 +37,12 @@ export class CompanySummaryExpandedComponent implements OnInit {
      */
     @Input()
     public teamMembers: TeamMember[] = [];
+
+    /**
+     * The team group the team members belong to.
+     */
+    @Input()
+    public teamGroup: TeamMemberGroup;
 
     /**
      * List of tags.
@@ -91,6 +97,12 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public seeAllTeamMembers: EventEmitter<string> = new EventEmitter<string>();
 
     /**
+     * Request to see individual team member.
+     */
+    @Output()
+    public seeTeamMember: EventEmitter<{ id: string; companyId: string }> = new EventEmitter<{ id: string; companyId: string }>();
+
+    /**
      * Request to see all takeaways.
      */
     @Output()
@@ -137,6 +149,21 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public onSeeMoreCompanyInfo(id: string): void {
         CompanySummaryExpandedComponent.logger.debug(`onSeeMoreCompanyInfo( Company ID: ${id} )`);
         this.seeMoreCompanyInfo.emit(id);
+    }
+
+    /**
+     * Handles click of individual Team Member.
+     * @param id
+     * @param companyId
+     */
+    public onTeamMemberClick(id: string, companyId: string): void {
+        CompanySummaryExpandedComponent.logger.debug(`onTeamMemberClick( Team member ID: ${id} )`);
+        const payload = {
+            id,
+            companyId,
+            group: this.teamGroup
+        };
+        this.seeTeamMember.emit(payload);
     }
 
     /**
