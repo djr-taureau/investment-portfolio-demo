@@ -353,6 +353,10 @@ definitions:
           $ref: "#/definitions/Fund"
       logo:
         type: "string"
+      publicTicker:
+        type: "string"
+      internalTicker:
+        type: "string"
       tags:
         type: "array"
         items:
@@ -387,12 +391,8 @@ definitions:
       aka:
         type: "string"
       headquarters:
-        $ref: '#/definitions/Address'
-      founders:
-        type: "array"
-        items:
-          type: "string"
-      foundedDate:
+        type: "string"
+      ceo:
         type: "string"
       website:
         type: "string"
@@ -404,11 +404,15 @@ definitions:
           - "GT_100_M"
       fiscalYearEnd:
         $ref: '#/definitions/MonthDay'
+      fund:
+        type: "string"
       investingEntity:
         type: "string"
-      initialInvestmentDate:
+      initialInvestment:
         type: "string"
-      latestFollowOnDate:
+      fdOwnership:
+        type: "string"
+      lastFollowOn:
         type: "string"
       boardMembers:
         type: "array"
@@ -418,6 +422,8 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/AvailablePeriod"
+      yearOfIncorporation:
+        type: "string"
   CompanyListGroup:
     type: "object"
     description: "The Company in this listing will be a backend defined subset of #Company appropriate to the listing only"
