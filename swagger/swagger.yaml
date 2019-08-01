@@ -35,8 +35,8 @@ paths:
           default: "NONE"
           enum:
             - "NONE"
-            - "REGION"
             - "SECTOR"
+            - "TYPE"
             - "STAGE"
             - "MOIC"
             - "IRR"
