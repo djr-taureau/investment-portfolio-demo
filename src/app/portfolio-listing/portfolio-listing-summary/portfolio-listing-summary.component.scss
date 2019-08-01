@@ -20,7 +20,7 @@
         border-right: 1px dashed $light-grey-blue;
 
         &:first-child {
-            padding: 8px 22px; // Hack for the extra size created by the donut chart
+            padding: 8px 22px; // Hack for the extra size created by the donut chart;
         }
 
         &:last-child {
@@ -62,6 +62,10 @@
             letter-spacing: 0.5px;
             color: $black;
 
+            &.chart {
+                width: 100%;
+            }
+
             &--muted {
                 color: rgba($black, .5);
             }
@@ -70,5 +74,68 @@
                 padding: 0;
             }
         }
+    }
+
+    .legend {
+        ont-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        color: $dark;
+
+        .legend_value {
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .legend_text {
+            .marker {
+                width: 10px;
+                height: 4px;
+                border-radius: 1px;
+                margin-right: 8px;
+            }
+
+            &.private .marker {
+                background-color: $dark-sky-blue;
+            }
+
+            &.public .marker {
+                background-color: $light-navy;
+            }
+
+            &.jv .marker {
+                background-color: $dark-slate-blue;
+            }
+
+            &.exited .marker {
+                background-color: $light-periwinkle;
+            }
+        }
+
+        //.legend_marker {
+        //    span {
+        //        display: block;
+        //        width: 10px;
+        //        height: 4px;
+        //        border-radius: 1px;
+        //    }
+        //
+        //    &.private span{
+        //        background-color: $dark-sky-blue;
+        //    }
+        //    &.public span {
+        //        background-color: $light-navy;
+        //    }
+        //    &.jv span {
+        //        background-color: $dark-slate-blue;
+        //    }
+        //    &.exited  span{
+        //        background-color: $light-periwinkle;
+        //    }
+        //}
     }
 }

@@ -1,6 +1,8 @@
+import * as _ from "lodash";
+import { Company } from "@core/domain/company.model";
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { LegendComponent, LegendLabels, LegendMarkers, MarkersVisualArgs } from "@progress/kendo-angular-charts";
 import { Group, Text } from "@progress/kendo-drawing";
+import { LegendComponent, LegendLabels, LegendMarkers, MarkersVisualArgs } from "@progress/kendo-angular-charts";
 import { Point } from "@progress/kendo-drawing/dist/es/geometry";
 
 @Component({
@@ -10,6 +12,13 @@ import { Point } from "@progress/kendo-drawing/dist/es/geometry";
 })
 export class PortfolioListingSummaryComponent implements OnInit {
     constructor() {}
+
+    @Input()
+    public chartData: any[];
+
+    @Input()
+    public companies: Company[];
+
     @Input()
     public companyCount: number;
 
@@ -28,14 +37,6 @@ export class PortfolioListingSummaryComponent implements OnInit {
     @Input()
     public irr: number;
 
-    @Input()
-    public chartData: any[] = [
-        { value: 8, name: "Public", color: "#124f8c" },
-        { value: 3, name: "Private", color: "#47a2d6" },
-        { value: 2, name: "JV", color: "#1d2759" },
-        { value: 12, name: "Exited", color: "#dbe3f1" }
-    ];
-
     /**
      * Used to set the configuration of the legend labels
      */
@@ -43,7 +44,7 @@ export class PortfolioListingSummaryComponent implements OnInit {
         font: "normal 11px PostGrotesk"
     };
 
-    public labels: any[] = ["Public", "Private", "JV", "Exited"];
+    // public labels: any[] = ["Public", "Private", "JV", "Exited"];
 
     @ViewChild("legend")
     public legend: LegendComponent;
@@ -61,7 +62,7 @@ export class PortfolioListingSummaryComponent implements OnInit {
          */
         visual: (e: MarkersVisualArgs) => {
             const defaultLabel = e.createVisual();
-            // NOTE: TODO: passing hard coded value here of 10. According to the docs, the MVA shoud
+            // NOTE: TODO: passing hard coded value here of 10. According to the docs, the MVA should
             // be returning the series as well as the dataItem for the marker which it isn't
             // currently doing. We need support from Kendo on how to proceed, otherwise, maybe
             // we just roll out own legend, although, that will cause us to lose the inter-activity
@@ -73,15 +74,16 @@ export class PortfolioListingSummaryComponent implements OnInit {
         }
     };
 
+    public showCompanyTypeChart() {
+        return _.get(this, "companies", []).length > 0;
+    }
+
     public labelContent(e: any): string {
         return `${e.name}: \n ${e.value}%`;
     }
+
     /**
      * Initialize the component.
      */
-    public ngOnInit(): void {
-        // These cannot pass prod build if applied to the kendo grid directly (bug)
-        this.legend.orientation = "vertical";
-        this.legend.position = "custom";
-    }
+    public ngOnInit(): void {}
 }

@@ -1,4 +1,6 @@
-import { Company, Sector } from "@core/domain/company.model";
+import { companies } from "@app/portfolio-listing/portfolio-listing-table/sample-data";
+import * as _ from "lodash";
+import { Company, CompanyTypeEnum, Sector } from "@core/domain/company.model";
 import { PortfolioTableItem } from "@core/domain/portfolio-table-item.model";
 import { PortfolioListingTableActions } from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import { PortfolioListingSummaryActions } from "@core/state/portfolio-list/summary/portfolio-listing-summary.actions";
@@ -43,9 +45,12 @@ export const selectPortfolioListingSummaryState = createSelector(
 );
 
 export const getCompanyCount = createSelector(
-    selectPortfolioListingSummaryState,
-    fromPortfolioListingSummary.getCompanyCount
+    fromCompanyState.getAllCompanies,
+    (allCompanies) => {
+        return allCompanies.length || 0;
+    }
 );
+
 export const getInvested = createSelector(
     selectPortfolioListingSummaryState,
     fromPortfolioListingSummary.getInvested
@@ -114,9 +119,9 @@ export const getSelectedSortOption = createSelector(
 export const getTableData = createSelector(
     fromCompanyState.getAllCompanies,
     getSearch,
-    (companies: Company[], search: string) => {
+    (allComps: Company[], search: string) => {
         // Create the table data from the list of companies.
-        const tableData: PortfolioTableItem[] = (companies || []).map((company: Company) => {
+        const tableData: PortfolioTableItem[] = (allComps || []).map((company: Company) => {
             const secs: string[] = (company.sectors || []).map((sector: Sector, index: number) => sector.name || "N/A");
             const pti: PortfolioTableItem = {
                 logo: company.logo || "assets/image/slack.png",
@@ -132,11 +137,26 @@ export const getTableData = createSelector(
                 invested: company.invested,
                 totalValue: company.totalValue,
                 moic: company.moic,
-                irr: company.irr
+                irr: company.irr,
+                type: company.type
             };
             return pti;
         });
 
         return !search ? tableData : tableData.filter((item: PortfolioTableItem) => StringUtil.contains(item.companyName, search, "*", true));
+    }
+);
+
+export const getCompanyCountsByType = createSelector(
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        const companiesByType = _.groupBy(allComps, "type");
+        const result = [
+            { value: _.get(companiesByType, "PUBLIC", []).length, name: CompanyTypeEnum.PUBLIC.toLowerCase(), color: "#124f8c" },
+            { value: _.get(companiesByType, "PRIVATE", []).length, name: CompanyTypeEnum.PRIVATE.toLowerCase(), color: "#47a2d6" },
+            { value: _.get(companiesByType, "JOINT_VENTURE", []).length, name: CompanyTypeEnum.JOINT_VENTURE.toLowerCase(), color: "#1d2759" },
+            { value: _.get(companiesByType, "EXITED", []).length, name: CompanyTypeEnum.EXITED.toLowerCase(), color: "#dbe3f1" }
+        ];
+        return result;
     }
 );

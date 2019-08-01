@@ -10,7 +10,9 @@ export interface AvailablePeriod {
 }
 export enum CompanyTypeEnum {
     PUBLIC = "PUBLIC",
-    PRIVATE = "PRIVATE"
+    PRIVATE = "PRIVATE",
+    JOINT_VENTURE = "JV",
+    EXITED = "EXITED"
 }
 
 export interface Company {

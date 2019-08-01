@@ -1,9 +1,8 @@
 import { DebugElement } from "@angular/core";
 import { ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { Company, Tag, Takeaway, TeamMember, Team, CompanyTypeEnum } from "@core/domain/company.model";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
-import { strict } from "assert";
+import { Company, CompanyTypeEnum, Tag, Takeaway, Team, TeamMember } from "@core/domain/company.model";
 
 /**
  * Provides unit tests access to DOM elements by element ID or CSS selector in a component's fixture.
@@ -133,7 +132,8 @@ export const getPortfolioTableItemDefault = (): PortfolioTableItem => {
         invested: 0,
         totalValue: 0,
         moic: 0,
-        irr: 0
+        irr: 0,
+        type: CompanyTypeEnum.PRIVATE
     };
 };
 
