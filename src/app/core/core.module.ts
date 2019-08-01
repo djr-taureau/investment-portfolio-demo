@@ -2,6 +2,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { NgModule, Optional, SkipSelf } from "@angular/core";
 import { FooterModule } from "@core/footer/footer.module";
 import { HeaderModule } from "@core/header/header.module";
+import { AppInitializerModule } from "@core/init/app-initializer.module";
 import { SlideoutModule } from "@core/slideout/slideout.module";
 import { AuthServiceModule } from "@core/auth/auth-service.module";
 import { ErrorInterceptorModule } from "@core/error-interceptor/error-interceptor.module";
@@ -11,6 +12,7 @@ import { ServiceModule } from "@core/service/service.module";
 import { StateModule } from "@core/state/state.module";
 
 const MODULES = [
+    AppInitializerModule,
     AuthServiceModule,
     HttpClientModule,
     ErrorInterceptorModule,

@@ -1,9 +1,10 @@
+import { Config } from "@core/domain/config.model";
 import { of } from "rxjs";
 import { Auth } from "@core/domain/auth.model";
-import * as AuthActions from "@core/state/auth/auth.action";
 import { AdalAuthContextService } from "./adal-auth-context.service";
 import { AdalAuthConfig } from "./adal-auth.config";
 import { AdalAuthService } from "./adal-auth.service";
+import * as AuthActions from "@core/state/auth/auth.action";
 
 class AdalAuthContextMock {
     constructor() {}
@@ -20,6 +21,7 @@ class AdalAuthContextMock {
 describe("AdalAuthService", () => {
     let testSubject: AdalAuthService;
     let config: AdalAuthConfig;
+    let configService;
     let store$;
     const context = new AdalAuthContextMock();
 
@@ -34,6 +36,17 @@ describe("AdalAuthService", () => {
         store$ = jasmine.createSpyObj("Store", ["pipe", "dispatch"]);
         store$.pipe.and.returnValue(of(null));
 
+        const defaultConfig: Config = {
+            apiEndpoint: "",
+            adClientId: "",
+            adInstance: "",
+            adTenant: "",
+            initialized: true
+        };
+
+        configService = jasmine.createSpyObj("ConfigService", ["load", "getConfig"]);
+        configService.getConfig.and.returnValue(of(defaultConfig));
+
         // Create the ADAL config object.
         config = {
             instance: "https://login.microsoftonline.com/",
@@ -46,7 +59,7 @@ describe("AdalAuthService", () => {
         };
 
         // Create our test subject with mocks.
-        testSubject = new AdalAuthService(config, adalAuthContextService, store$);
+        testSubject = new AdalAuthService(config, adalAuthContextService, configService, store$);
     });
 
     afterEach(() => {

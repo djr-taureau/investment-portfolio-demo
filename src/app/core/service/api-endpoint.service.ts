@@ -60,6 +60,7 @@ export class ApiEndpointService {
      * Map of API endpoints.
      */
     public static ENDPOINT = {
+        CONFIG: `assets/data/config.json`,
         LOGIN: `auth/login/`,
         REGISTER: `auth/register/`,
         EXAMPLE_DETAILS: "example/{id}/details/{id}",
@@ -93,7 +94,8 @@ export class ApiEndpointService {
      * keep this dumb simple.
      */
     public static getEndpoint(endpoint: string, params?: {}): string {
-        const url = `${ApiEndpointService.getBaseUrl()}${endpoint}`;
+        const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
+        const url = isConfig ? `${endpoint}` : `${ApiEndpointService.getBaseUrl()}${endpoint}`;
         return StringUtil.replaceTokens(url, params);
     }
 
