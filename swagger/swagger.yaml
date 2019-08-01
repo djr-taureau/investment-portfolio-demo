@@ -564,6 +564,27 @@ definitions:
         type: "number"
       amountInUSD:
         type: "number"
+  Initiative:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      companyId:
+        type: "string"
+      status:
+        type: "string"
+          enum:
+            - "GOOD"
+            - "WARNING"
+            - "BAD"
+            - "NEUTRAL"
+      title:
+        type: "string"
+      initiativeOwner:
+        type:
+          $ref: '#/definitions/TeamMember';
+      description:
+        type: "string"
   Fund:
     type: "object"
     properties:
