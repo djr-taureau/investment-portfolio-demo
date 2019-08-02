@@ -53,6 +53,7 @@ export const changeSelectFormElementValue = (select, fixture, index) => {
 export const getCompanyDefault = (): Company => {
     return {
         aka: "",
+        approved: 10,
         ceo: "",
         revenueStage: "",
         invested: 0,

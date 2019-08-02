@@ -1,0 +1,40 @@
+@import "../../../assets/scss/variables";
+
+:host {
+    height: px;
+    width: 100%;
+
+    .progress-bar-container {
+        height: 100%;
+        width: 100%;
+
+        span {
+            display: block;
+            float: left;
+            clear: left;
+            height: 3px;
+            border-radius: 2px;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+
+        .value-one {
+            top: 12px;
+            background-color: $dark-slate-blue;
+        }
+
+        .value-two {
+            top: 6px;
+            height: 9px;
+            opacity: 0.4;
+            background-color: $dark-sky-blue;
+        }
+
+        .value-three {
+            opacity: 0.6;
+            mix-blend-mode: multiply;
+            background-color: $light-grey-blue;
+        }
+    }
+}

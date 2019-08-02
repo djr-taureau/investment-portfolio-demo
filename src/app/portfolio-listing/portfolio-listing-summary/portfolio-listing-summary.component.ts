@@ -17,9 +17,6 @@ export class PortfolioListingSummaryComponent implements OnInit {
     public chartData: any[];
 
     @Input()
-    public companies: Company[];
-
-    @Input()
     public companyCount: number;
 
     @Input()
@@ -27,6 +24,9 @@ export class PortfolioListingSummaryComponent implements OnInit {
 
     @Input()
     public totalFund: number;
+
+    @Input()
+    public totalApproved: number;
 
     @Input()
     public valuation: number;
@@ -75,13 +75,24 @@ export class PortfolioListingSummaryComponent implements OnInit {
     };
 
     public showCompanyTypeChart() {
-        return _.get(this, "companies", []).length > 0;
+        return this.companyCount > 0;
     }
 
     public labelContent(e: any): string {
         return `${e.name}: \n ${e.value}%`;
     }
 
+    public getInvestedPerc(): number {
+        return (this.invested / this.totalFund) * 100;
+    }
+
+    public getApprovedPerc(): number {
+        return (this.totalApproved / this.totalFund) * 100;
+    }
+
+    public getTotalPerc(): number {
+        return 100;
+    }
     /**
      * Initialize the component.
      */

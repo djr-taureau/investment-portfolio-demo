@@ -20,6 +20,7 @@ export interface Company {
     type: CompanyTypeEnum; // enum
     defaultCurrency: CurrencyType;
     data: any;
+    approved: number;
     sectors: Sector[];
     region: string;
     funds: Fund[];
