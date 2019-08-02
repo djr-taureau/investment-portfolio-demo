@@ -1,7 +1,8 @@
 import { Inject, Injectable } from "@angular/core";
+import { ConfigService } from "@core/service/config.service";
 import { Store } from "@ngrx/store";
 import { Observable, of, Subscriber } from "rxjs";
-import { retry } from "rxjs/operators";
+import { filter, first, retry } from "rxjs/operators";
 import { Logger } from "@util/logger";
 import { Auth } from "@core/domain/auth.model";
 import { adal } from "adal-angular";
@@ -30,11 +31,13 @@ export class AdalAuthService implements IAuthService {
      * Constructor.
      * @param config
      * @param adalAuthContextService
+     * @param configService
      * @param store$
      */
     constructor(
         @Inject(AdalAuthConfigService) private config: AdalAuthConfig,
         private adalAuthContextService: AdalAuthContextService,
+        private configService: ConfigService,
         private store$: Store<any>
     ) {
         AdalAuthService.logger.debug(`constructor()`);
@@ -47,8 +50,17 @@ export class AdalAuthService implements IAuthService {
     private init() {
         AdalAuthService.logger.debug(`init()`);
 
-        // Create an instance of the ADAL auth context.
-        this.context = this.adalAuthContextService.build(this.config);
+        this.configService
+            .getConfig()
+            .pipe(
+                filter((config) => config.initialized),
+                first()
+            )
+            .subscribe(() => {
+                AdalAuthService.logger.debug(`init( Build ADAL Context. )`);
+                // Create an instance of the ADAL auth context.
+                this.context = this.adalAuthContextService.build(this.config);
+            });
     }
 
     /**

@@ -1,6 +1,7 @@
 <div #container
      class="card">
-    <sbp-chart [dimensions]="dimensions">
+    <sbp-chart id="micro-timeline"
+               [dimensions]="dimensions">
         <svg:defs>
             <svg:g sbpGradient
                    [id]="gradientId"
@@ -15,63 +16,61 @@
                dimension="x"
                [dimensions]="dimensions"
                [scale]="xScale"
-               [xAxisVisible]="false"
-               [formatTick]="formatDate"
-               [label]="label">
+               [formatTick]=""
+               [label]="label"
+               [xAxisTickValues]="timePeriods"
+               [xAxisVisible]="false">
         </svg:g>
-        <svg:g class="dislay"
-               sbpAxis
+        <svg:g sbpAxis
                dimension="y"
                [dimensions]="dimensions"
                [scale]="yScale"
-               [yAxisVisible]="false"
-               [label]="label">
+               [label]=""
+               [numberOfTicks]=""
+               [yAxisVisible]="false">
         </svg:g>
         <svg:g sbpLine
-               class="area"
-               type="area"
-               [data]="data"
-               [xAccessor]="xAccessorScaled"
-               [yAccessor]="yAccessorScaled"
-               [y0Accessor]="y0AccessorScaled">
-        </svg:g>
-
-        <svg:g sbpLine
+               [type]="'area'"
                [data]="historicalData"
-               [visible]="true"
-               [xAccessor]="xAccessorScaled"
-               [projectedAccessor]="projectedAccessor"
-               [yAccessor]="yAccessorScaled"
-               [colorAccessor]="colorAccessorScaled">
-        </svg:g>
-        <svg:g sbpLine
-               [data]="projectedData"
-               [visible]="true"
-               [xAccessor]="xAccessorScaled"
-               [projectedAccessor]="projectedAccessor"
-               [yAccessor]="yAccessorScaled"
-               [colorAccessor]="colorAccessorScaled">
-        </svg:g>
-        <svg:g sbpCircles
-               [data]="data"
-               [projectedAccessor]="projectedAccessor"
-               [keyAccessor]="keyAccessor"
-               [xAccessor]="xAccessorScaled"
-               [yAccessor]="yAccessorScaled">
-        </svg:g>
-        <svg:g sbpCircles
-               class="dot"
-               [data]="data"
-               [keyAccessor]="keyAccessor"
-               [xAccessor]="xAccessorScaled"
-               [yAccessor]="yAccessorScaled">
-        </svg:g>
-        <svg:g sbpLine
-               [data]="data"
-               [visible]="true"
                [xAccessor]="xAccessorScaled"
                [yAccessor]="yAccessorScaled"
-               [colorAccessor]="colorAccessorScaled">
+               [y0Accessor]="y0AccessorScaled"
+               fill="url(#{{ gradientId }})">
         </svg:g>
+        <!-- actuals -->
+        <ng-container *ngIf="actualsVis">
+            <svg:g sbpLine
+                   class="line"
+                   [type]="'line'"
+                   [valueType]="'actuals'"
+                   [data]="historicalData"
+                   [visible]="actualsVis"
+                   [projectedAccessor]="projectedAccessor"
+                   [xAccessor]="xAccessorScaled"
+                   [yAccessor]="yAccessorScaled">
+            </svg:g>
+            <svg:g sbpLine
+                   class="line"
+                   [type]="'line'"
+                   [valueType]="'projected'"
+                   [data]="projectedData"
+                   [visible]="actualsVis"
+                   [projectedAccessor]="projectedAccessor"
+                   [xAccessor]="xAccessorScaled"
+                   [yAccessor]="yAccessorScaled">
+            </svg:g>
+            <svg:g sbpCircles
+                   *ngIf="display || selectedValue"
+                   class="dot"
+                   [data]="actualsPresentValue"
+                   [valueType]="'selected-value'"
+                   [radius]="4"
+                   [visible]="true"
+                   [categoryAccessor]="categoryAccessor"
+                   [keyAccessor]="keyAccessor"
+                   [xAccessor]="xAccessorScaled"
+                   [yAccessor]="yAccessorScaled">
+            </svg:g>
+        </ng-container>
     </sbp-chart>
 </div>

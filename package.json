@@ -1,6 +1,6 @@
 {
   "name": "sbproot-ui",
-  "version": "0.0.233",
+  "version": "0.0.248",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -21,7 +21,6 @@
     "lint-staged-tslint": "tslint --config ./src/tslint.json --project ./src/tsconfig.pre-commit-hook.json --fix",
     "lint-staged-prettier": "prettier --write \"src/app/**/*.ts\"",
     "lint-staged": "npm run lint-staged-prettier && npm run lint-staged-tslint",
-    "format-html": "glob-run js-beautify --type html -r \"src/app/**/*.html\"",
     "format-css-components": "glob-run js-beautify --type css -r \"src/app/**/*.scss\"",
     "format-css": "npm run format-css-components",
     "format": "npm run prettier && npm run format-html && npm run format-css-components && npm run format-css",

@@ -2,7 +2,7 @@ import "zone.js";
 import { Component, ElementRef, HostListener, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
 import { ToggleCashBurnDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { CompanyKpiDetailComponent } from "./../company-kpi-detail/company-kpi-detail.component";
-import { ebitda, revenue, cashburn } from "../financials-data";
+import { ebitda, revenue, cashburn, revenueMock2 } from "../financials-data";
 import { Logger } from "@util/logger";
 import { PopupService, PopupRef, Align } from "@progress/kendo-angular-popup";
 import { Store } from "@ngrx/store";
@@ -28,10 +28,10 @@ export class CompanyKpiContainer implements OnInit {
     public type = "slide";
     public direction = "down";
 
-    timelineData: TimelineDataPointFin[];
+    timelineData: any[];
     timelineData2: TimelineDataPointFin[];
     timelineData3: TimelineDataPointFin[];
-    chartData: Array<any>;
+
     /**
      * Internal logger.
      */
@@ -56,7 +56,7 @@ export class CompanyKpiContainer implements OnInit {
      */
     public ngOnInit() {
         CompanyKpiContainer.logger.debug(`ngOnInit()`);
-        this.timelineData = revenue;
+        this.timelineData = revenueMock2.series;
         this.timelineData2 = ebitda;
         this.timelineData3 = ebitda;
     }
@@ -64,7 +64,6 @@ export class CompanyKpiContainer implements OnInit {
     openDetail($event, anchor: ElementRef) {
         if (this.popupRef) {
             this.popupRef.close();
-            this.toggle(false);
             this.popupRef = null;
         } else {
             this.popupRef = this.popupService.open({

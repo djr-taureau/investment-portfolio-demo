@@ -3,10 +3,7 @@
      class="kpi-container"
      fxLayout="row"
      fxLayoutAlign="space-between center">
-    <div class="chart"
-         class="content"
-         (click)="openDetail($event, anchor)"
-         class="k-button">
+    <div class="chart">
         <sbp-kpi-summary [data]="timelineData"
                          [title]="'Revenue'"
                          [denomination]="'USD'"
@@ -18,10 +15,7 @@
                          (click)="onRevenueClick()">
         </sbp-kpi-summary>
     </div>
-    <div class="chart"
-         class="content"
-         (click)="openDetail($event, anchor)"
-         class="k-button">
+    <div class="chart">
         <sbp-kpi-summary [data]="timelineData2"
                          [title]="'EBITDA'"
                          [denomination]="'USD'"
@@ -34,10 +28,7 @@
         </sbp-kpi-summary>
 
     </div>
-    <div class="chart"
-         class="content"
-         (click)="openDetail($event, anchor)"
-         class="k-button">
+    <div class="chart">
         <sbp-kpi-summary [data]="timelineData3"
                          [title]="'Cash Burn'"
                          [denomination]="'USD'"
@@ -49,10 +40,7 @@
                          (click)="onCashburnClick()">
         </sbp-kpi-summary>
     </div>
-    <div class="chart"
-         class="content"
-         (click)="openDetail($event, anchor)"
-         class="k-button">
+    <div class="chart">
         <sbp-kpi-summary [data]="timelineData3"
                          [title]="'Placeholder KPI'"
                          [denomination]="'USD'"
@@ -62,13 +50,5 @@
                          [icLabel]="'vs Bud'"
                          [icValue]="'-5.0'">
         </sbp-kpi-summary>
-        <kendo-popup class="wrapper"
-                     #popup
-                     [anchor]="anchor"
-                     [animate]="animate"
-                     (anchorViewportLeave)="close()"
-                     *ngIf="show">
-            <sbp-company-kpi-detail-component class="inner-wrapper"></sbp-company-kpi-detail-component>
-        </kendo-popup>
     </div>
 </div>

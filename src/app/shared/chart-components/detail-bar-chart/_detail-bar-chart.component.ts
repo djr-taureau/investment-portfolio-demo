@@ -30,11 +30,11 @@ export class DetailBarChartComponent implements OnInit {
             marginTop: 40,
             marginRight: 30,
             marginBottom: 75,
-            marginLeft: 46,
+            marginLeft: 1,
             height: 136,
             width: 684,
             boundedHeight: 138,
-            boundedWidth: 685
+            boundedWidth: 630
         };
 
         this.dimensions = {
@@ -52,6 +52,7 @@ export class DetailBarChartComponent implements OnInit {
 
     buildChart() {
         // data values will need to be transformed
+        // This will be the data input
         const dataset = [3, 4, 2, -1, 2, 4];
         const maxHeight = d3.max(dataset, (d) => {
             return d;
@@ -61,7 +62,14 @@ export class DetailBarChartComponent implements OnInit {
             .append("svg")
             .attr("width", this.dimensions.width)
             .attr("height", this.dimensions.height);
-
+        const yScale = d3
+            .scaleLinear()
+            .domain([0, d3.max(dataset)])
+            .range([0, this.dimensions.height]);
+        const yAxisScale = d3
+            .scaleLinear()
+            .domain([d3.min(dataset), d3.max(dataset)])
+            .range([this.dimensions.height - yScale(d3.min(dataset)), 0]);
         const barpadding = 2;
         const bars = svg
             .selectAll("rect")
@@ -70,7 +78,7 @@ export class DetailBarChartComponent implements OnInit {
             .append("rect");
 
         bars.attr("x", (d, i) => {
-            return i * (this.dimensions.width / dataset.length);
+            return i * (450 / dataset.length);
         })
 
             .attr("y", (d) => {
@@ -84,7 +92,8 @@ export class DetailBarChartComponent implements OnInit {
             .attr("width", 36)
             .attr("height", (d) => {
                 return Math.abs(10 * d);
-            });
+            })
+            .attr("clip-path", "url(#rounded-corner)");
         bars.attr("fill", (d) => {
             if (d < 0) {
                 return "#eb643f";
@@ -107,13 +116,16 @@ export class DetailBarChartComponent implements OnInit {
                 return this.dimensions.height / 2 + 10 * Math.abs(d) - 5;
             }
         });
-        // TODO:: Leaving this for adding label text to axis
-        // svg.append("text")
-        //     .attr("transform", "rotate(-90)")
-        //     .attr("y", this.dimensions.marginLeft)
-        //     .attr("x", 0 - this.dimensions.height / 2)
-        //     .attr("dy", "1em")
-        //     .style("text-anchor", "middle")
-        //     .text("");
+        // const xgridlines = d3
+        //       .axisLeft()
+        //       .tickFormat("")
+        //       .tickSize(-this.dimensions.boundedWidth)
+        //       .ticks(3)
+        //       .tickValues([-2, 0, 80])
+        //       .scale(yScale);
+        // svg.append("g")
+        //     .attr("class", "y axis-grid")
+        //     .call(xgridlines);
+        // const yAxis = d3.axisLeft(yAxisScale).tickValues(2);
     }
 }

@@ -1,3 +1,4 @@
+import { Company } from "@core/domain/company.model";
 import * as fromPortfolioListingState from "@core/state/portfolio-list";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
@@ -14,6 +15,7 @@ import { select, Store } from "@ngrx/store";
             [moic]="moic$ | async"
             [totalFund]="totalFund$ | async"
             [valuation]="valuation$ | async"
+            [chartData]="companyCountByType$ | async"
         ></sbp-portfolio-listing-summary>
     `
 })
@@ -22,6 +24,11 @@ export class PortfolioListingSummaryContainer implements OnInit {
      * The total number of companies in the portfolio
      */
     public companyCount$: Observable<number>;
+
+    /**
+     * The companies displayed by the table (filtered
+     */
+    public companyCountByType$: Observable<any>;
 
     /**
      * The total amount invested in the portfolio
@@ -53,6 +60,7 @@ export class PortfolioListingSummaryContainer implements OnInit {
      */
     public ngOnInit(): void {
         this.companyCount$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCount));
+        this.companyCountByType$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCountsByType));
         this.invested$ = this.store$.pipe(select(fromPortfolioListingState.getInvested));
         this.totalFund$ = this.store$.pipe(select(fromPortfolioListingState.getTotalFund));
         this.valuation$ = this.store$.pipe(select(fromPortfolioListingState.getValuation));

@@ -9,11 +9,15 @@
          fxLayoutAlign="start center"
          fxLayoutGap="0px">
         <div class="item-cell__label">Companies</div>
-        <div class="item-cell__value"
+        <div class="item-cell__value chart"
              fxLayout="row"
-             fxLayoutAlign="space-around center">
+             fxLayoutAlign="center center"
+             fxLayoutGap="20px">
+
             <kendo-chart class="chart"
-                         [chartArea]="{ height: 68, width: 240, margin: 0, padding: 0}">
+                         *ngIf="showCompanyTypeChart()"
+                         [chartArea]="{ height: 68, width: 100, margin: 0, padding: 0}"
+                         [legend]="false">
                 <ng-template kendoChartDonutCenterTemplate>
                     <div>{{companyCount}}</div>
                 </ng-template>
@@ -29,15 +33,71 @@
                                              colorField="color">
                     </kendo-chart-series-item>
                 </kendo-chart-series>
-                <kendo-chart-legend #legend
-                                    [height]="60"
-                                    [width]="0"
-                                    [visible]="true"
-                                    [labels]="legendLabels"
-                                    [markers]="legendMarkers"
-                                    [offsetX]="0"
-                                    [offsetY]="0"></kendo-chart-legend>
             </kendo-chart>
+
+            <div class="legend"
+                 fxFlex="300px"
+                 fxLayout="row"
+                 fxLayoutAlign="start center">
+                <div class="left-side"
+                     fxLayout="column"
+                     fxLayoutAlign="start stretch"
+                     fxFlex="50%">
+                    <div fxLayout="row"
+                         fxLayoutAlign="start center"
+                         fxFlex>
+                        <div class="legend_text private"
+                             fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="8px"
+                             fxFlex="75%">
+                            <div class="marker"></div>Private
+                        </div>
+                        <div class="legend_value">{{ chartData[0].value}}</div>
+                    </div>
+                    <div fxLayout="row"
+                         fxLayoutAlign="start center"
+                         fxFlex>
+                        <div class="legend_text public"
+                             fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="8px"
+                             fxFlex="75%">
+                            <div class="marker"></div>Public
+                        </div>
+                        <div class="legend_value">{{ chartData[1].value}}</div>
+                    </div>
+                </div>
+                <div class="right-side"
+                     fxLayout="column"
+                     fxLayoutAlign="end stretch"
+                     fxFlex="50%">
+                    <div fxLayout="row"
+                         fxLayoutAlign="start center"
+                         fxFlex>
+                        <div class="legend_text jv"
+                             fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="8px"
+                             fxFlex="75%">
+                            <div class="marker"></div>JV
+                        </div>
+                        <div class="legend_value">{{ chartData[2].value}}</div>
+                    </div>
+                    <div fxLayout="row"
+                         fxLayoutAlign="start center"
+                         fxFlex>
+                        <div class="legend_text exited"
+                             fxLayout="row"
+                             fxLayoutAlign="start center"
+                             fxLayoutGap="8px"
+                             fxFlex="75%">
+                            <div class="marker"></div>Exited
+                        </div>
+                        <div class="legend_value">{{ chartData[3].value}}</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

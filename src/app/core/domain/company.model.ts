@@ -10,7 +10,9 @@ export interface AvailablePeriod {
 }
 export enum CompanyTypeEnum {
     PUBLIC = "PUBLIC",
-    PRIVATE = "PRIVATE"
+    PRIVATE = "PRIVATE",
+    JOINT_VENTURE = "JV",
+    EXITED = "EXITED"
 }
 
 export interface Company {
@@ -211,6 +213,39 @@ export interface CompanyRevenue {
     forecast: number;
 }
 
+export interface RevenueSeriesGraphData {
+    date: Date;
+    value: number;
+}
+
+export interface RevenueSeriesData {
+    date: string;
+    financialQuarter: number;
+    amountInNative: number;
+    amountInUSD: number;
+    projection: boolean;
+}
+export interface RevenueSeries {
+    name: string;
+    displayOrder: number;
+    isScenario: boolean;
+    scenarioName: string;
+    data: RevenueSeriesData[];
+    vsPYTotalUSD?: number; // vsPY total value on summary chart USD
+    vsPYTotalNative?: number; // vsPY total value on summary chart Native
+    vsBudTotalUSD?: number; // vsBud total value on summary chart USD
+    vsBudTotalNative?: number; // vsBud total value on summary chart Native
+    vsICTotalUSD?: number; // vsIC total value on summary chart USD
+    vsICTotalNative?: number; // vsIC total value on summary chart Native
+    totalRevenue?: number; // total value on summary chart
+    actualSeriesData?: RevenueSeriesGraphData[];
+    yearPlus1GraphData?: RevenueSeriesGraphData[];
+    icInitialGraphData?: RevenueSeriesGraphData[];
+    icFollowOn1GraphData?: RevenueSeriesGraphData[];
+    icFollowOn2GraphData?: RevenueSeriesGraphData[];
+    projectedYearGraphData?: RevenueSeriesGraphData[];
+    budgetGraphData?: RevenueSeriesGraphData[];
+}
 export interface TopLineValuationData {
     totalValue: number;
     moic: number;

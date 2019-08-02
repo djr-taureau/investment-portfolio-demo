@@ -18,8 +18,10 @@ import { MicroBarComponent } from "./micro-bar/micro-bar.component";
 import { TimelineComponent } from "./timeline/timeline.component";
 import { MultiLineKendoComponent } from "./multi-line-kendo/multi-line-kendo.component";
 import { MultiLineComponent } from "./multi-line/multi-line.component";
-import { DetailBarChartComponent } from "./detail-bar-chart/detail-bar-chart.component";
+import { HistogramComponent } from "./histogram/histogram.component";
+import { DetailBarChartComponent } from "./detail-bar-chart/_detail-bar-chart.component";
 import { KpiDetailTableComponent } from "./kpi-detail-table/kpi-detail-table.component";
+import { BarChartComponent } from "./detail-bar-chart/bar-chart.component";
 
 export const COMPONENTS = [
     AxisComponent,
@@ -41,8 +43,10 @@ export const COMPONENTS = [
     TimelineComponent,
     MultiLineKendoComponent,
     MultiLineComponent,
+    HistogramComponent,
     DetailBarChartComponent,
-    KpiDetailTableComponent
+    KpiDetailTableComponent,
+    BarChartComponent
 ];
 @NgModule({
     declarations: COMPONENTS,

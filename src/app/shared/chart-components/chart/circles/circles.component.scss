@@ -16,7 +16,7 @@ circle {
 
 circle.dot {
     stroke-width: 2;
-    fill: #124f8c;
+    fill: #ffffff;
 }
 
 circle.projected {
@@ -45,8 +45,8 @@ circle.projected {
             stroke-width: 1;
             stroke: #124f8c;
 
-            &.dot {
-                fill: #124f8c;
+            &.dot .visible {
+                fill: #ffffff;
                 transition: all 0.3s ease-out;
                 width: 12px;
                 height: 12px;
@@ -57,8 +57,25 @@ circle.projected {
                 stroke: #124f8c;
             }
 
+            // &.dot .selected-value {
+            //     fill: #fdffff;
+            //     transition: all 0.3s ease-out;
+            //     width: 12px;
+            //     height: 12px;
+            //     border-width: 3px;
+            //     box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+            //     border-style: solid;
+            //     stroke-width: 2;
+            //     stroke: #124f8c;
+            // }
+
             &.actuals {
                 fill: #124f8c;
+                stroke: #124f8c;
+            }
+
+            &.selected-value {
+                fill: $white;
                 stroke: #124f8c;
             }
 

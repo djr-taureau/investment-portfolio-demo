@@ -230,62 +230,68 @@ export const cashburn2 = [
 export const revenueMock2 = {
     series: [
         {
-            name: "actuals",
-            displayOrder: 0,
-            data: [
+            id: "actuals",
+            values: [
                 {
                     quarter: 4,
                     year: 2017,
                     amountInNative: 0,
-                    amountInUSD: 141.5
+                    amountInUSD: 141.5,
+                    projected: false
                 },
                 {
                     quarter: 1,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 176.2
+                    amountInUSD: 176.2,
+                    projected: false
                 },
                 {
                     quarter: 2,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 211.5
+                    amountInUSD: 211.5,
+                    projected: false
                 },
                 {
                     quarter: 3,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 212.6
+                    amountInUSD: 212.6,
+                    projected: false
                 },
                 {
                     quarter: 4,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 325.2
+                    amountInUSD: 325.2,
+                    projected: false
                 },
                 {
                     quarter: 1,
                     year: 2019,
                     amountInNative: 0,
-                    amountInUSD: 470.1
+                    amountInUSD: 470.1,
+                    projected: true
                 }
             ]
         },
         {
-            name: "budget",
-            displayOrder: 0,
-            data: [
+            id: "budget",
+            values: [
                 {
                     quarter: 4,
                     year: 2017,
                     amountInNative: 0,
-                    amountInUSD: 141.5
+                    amountInUSD: 141.5,
+                    projected: false
                 },
                 {
                     quarter: 1,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 176.2
+                    amountInUSD: 176.2,
+                    projected: false
                 },
                 {
                     quarter: 2,
@@ -297,61 +303,69 @@ export const revenueMock2 = {
                     quarter: 3,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 170.6
+                    amountInUSD: 170.6,
+                    projected: false
                 },
                 {
                     quarter: 4,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 400.2
+                    amountInUSD: 400.2,
+                    projected: false
                 },
                 {
                     quarter: 1,
                     year: 2019,
                     amountInNative: 0,
-                    amountInUSD: 470.1
+                    amountInUSD: 470.1,
+                    projected: true
                 }
             ]
         },
         {
-            name: "forecast",
-            displayOrder: 0,
-            data: [
+            id: "forecast",
+            values: [
                 {
                     quarter: 4,
                     year: 2017,
                     amountInNative: 0,
-                    amountInUSD: 141.5
+                    amountInUSD: 141.5,
+                    projected: false
                 },
                 {
                     quarter: 1,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 176.2
+                    amountInUSD: 176.2,
+                    projected: false
                 },
                 {
                     quarter: 2,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 290.5
+                    amountInUSD: 290.5,
+                    projected: false
                 },
                 {
                     quarter: 3,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 212.6
+                    amountInUSD: 212.6,
+                    projected: false
                 },
                 {
                     quarter: 4,
                     year: 2018,
                     amountInNative: 0,
-                    amountInUSD: 200.2
+                    amountInUSD: 200.2,
+                    projected: false
                 },
                 {
                     quarter: 1,
                     year: 2019,
                     amountInNative: 0,
-                    amountInUSD: 490.1
+                    amountInUSD: 790.1,
+                    projected: true
                 }
             ]
         }

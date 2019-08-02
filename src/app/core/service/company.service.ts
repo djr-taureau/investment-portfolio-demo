@@ -1,3 +1,4 @@
+import { RevenueSeries } from "@app/core/domain/company.model";
 import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
@@ -9,6 +10,7 @@ import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { throwError } from "rxjs";
+import * as uuid from "uuid";
 
 @Injectable()
 export class CompanyService {
@@ -66,6 +68,37 @@ export class CompanyService {
             }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`getCompanyFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Gets the revenue for a given company
+     */
+    public getCompanyRevenue(id: string): Observable<RevenueSeries[]> {
+        const params = {
+            id
+        };
+
+        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params);
+        CompanyService.logger.debug(`getCompanyRevenue() url - ${url}`);
+
+        return this.apiService.get(url).pipe(
+            map((result) => {
+                result.data.series.forEach((element) => {
+                    // set an id since there isn't one returned
+                    element.id = uuid.v4();
+                    // calculate the vsPY total for usd
+                    // sum(amountInUSDrevenue) - sum(amountInUSDvsPY) / abs(sum(amountInUSDvsPY)) * 100
+                    // e.g 100 * ((325.2 - 301.4) / ABS(301.4)) = 7.9%
+                    // calculate the vsPY total for native
+                    // sum(amountInNativerevenue) - sum(amountInNativevsPY) / abs(sum(amountInNativevsPY)) * 100
+                });
+                return result.data.series;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`companyRevenueFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

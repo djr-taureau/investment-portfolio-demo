@@ -12,10 +12,9 @@
     <div class="box timeline">
         <sbp-micro-timeline [data]="data"
                             [xAccessor]="dateAccessor"
-                            [yAccessor]="financialsAccessor"
-                            [projectedAccessor]="projectedAccessor"
-                            [label]="title">
-        </sbp-micro-timeline>
+                            [yAccessor]="yAccessor"
+                            [categoryAccessor]="categoryAccessor"
+                            [yLabelVisible]="false"></sbp-micro-timeline>
     </div>
     <div class="box py-chart">
         <sbp-micro-bar [data]="data"></sbp-micro-bar>

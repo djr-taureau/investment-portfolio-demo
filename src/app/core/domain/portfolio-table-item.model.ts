@@ -1,4 +1,4 @@
-import { Sector } from "./company.model";
+import { CompanyTypeEnum, Sector } from "./company.model";
 
 export class PortfolioTableItem {
     logo: string;
@@ -20,4 +20,5 @@ export class PortfolioTableItem {
     moicGroup?: string;
     irr: number;
     irrGroup?: string;
+    type: CompanyTypeEnum;
 }

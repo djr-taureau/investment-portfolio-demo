@@ -6,6 +6,7 @@ import * as d3ScaleChromatic from "d3-scale-chromatic";
 import * as d3Shape from "d3-shape";
 import * as d3Array from "d3-array";
 import * as d3Axis from "d3-axis";
+import { axisBottom as d3_axisBottom, axisLeft as d3_axisLeft, scaleLinear as d3_scaleLinear, select as d3_select } from "d3";
 import { DimensionsType } from "../chart/utils";
 
 import { revenueMock, revenueMock2 } from "../../../company-dashboard/financials-data";
@@ -59,94 +60,47 @@ export class MultiLineComponent implements OnInit {
         console.log(this.data);
         console.log(revenueMock);
         const seriesData = revenueMock;
-        this.initChart();
-        this.drawAxis();
-        this.drawPath();
-    }
-
-    private initChart(): void {
-        const multiLine = select(this.el).select("#multiLine");
-
-        this.width = +multiLine.attr("width") - this.margin.left - this.margin.right;
-        this.height = +multiLine.attr("height") - this.margin.top - this.margin.bottom;
-
-        this.g = multiLine.append("g").attr("transform", `translate(${this.margin.left}, ${this.margin.top})`);
-        this.x = d3Scale.scaleTime().range([0, this.width]);
-        this.y = d3Scale.scaleLinear().range([this.height, 0]);
-        this.z = d3Scale.scaleOrdinal(d3ScaleChromatic.schemeCategory10);
-
-        this.line = d3Shape
-            .line()
-            .curve(d3Shape.curveBasis)
-            .x((d: any) => this.x(d.date))
-            .y((d: any) => this.y(d.temperature));
-
-        this.x.domain(d3Array.extent(this.data, (d: Date) => d));
-
-        this.y.domain([
-            d3Array.min(revenueMock, (c) => {
-                return d3Array.min(c.values, (d) => {
-                    return d.amountInUSD;
-                });
-            }),
-            d3Array.max(revenueMock, (c) => {
-                return d3Array.max(c.values, (d) => {
-                    return d.amountInUSD;
-                });
-            })
-        ]);
-
-        this.z.domain(
-            revenueMock.map((c) => {
-                return c.id;
-            })
-        );
-    }
-
-    private drawAxis(): void {
-        this.g
+        const WIDTH = 400;
+        const HEIGHT = 300;
+        const MARGIN = { top: 10, right: 10, bottom: 20, left: 30 };
+        const INNER_WIDTH = WIDTH - MARGIN.left - MARGIN.right;
+        const INNER_HEIGHT = HEIGHT - MARGIN.top - MARGIN.bottom;
+        const svg = d3_select("#multiLine")
+            .append("svg")
+            .attr("width", WIDTH)
+            .attr("height", HEIGHT)
             .append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", `translate(0, ${this.height})`)
-            .call(d3Axis.axisBottom(this.x));
-
-        this.g
-            .append("g")
-            .attr("class", "axis axis--y")
-            .call(d3Axis.axisLeft(this.y))
-            .append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("y", 6)
-            .attr("dy", "0.71em")
-            .attr("fill", "#000")
-            .text("Values");
-    }
-
-    private drawPath(): void {
-        const valueLine = this.g
-            .selectAll(".valueLine")
-            .data(revenueMock)
-            .enter()
-            .append("g")
-            .attr("class", "valueLine");
-
-        valueLine
-            .append("path")
-            .attr("class", "line")
-            .attr("d", (d) => this.line(d.values.length))
-            .style("stroke", (d) => this.z(d.id));
-
-        valueLine
-            .append("text")
-            .datum((d) => {
-                return { id: d.id, value: d.values[d.values.length - 1] };
-            })
-            .attr("transform", (d) => `translate(${this.x(d.value.date)}, ${this.y(d.value.amountInUSD)})`)
-            .attr("x", 3)
-            .attr("dy", "0.35em")
-            .style("font", "10px sans-serif")
-            .text((d) => {
-                return d.id;
-            });
+            .attr("transform", "translate(" + MARGIN.left + "," + MARGIN.top + ")");
+        const x = d3_scaleLinear()
+            .domain([0, 1])
+            .range([0, INNER_WIDTH]);
+        const y = d3_scaleLinear()
+            .domain([0, 1])
+            .range([INNER_HEIGHT, 0]);
+        const xAxis = d3_axisBottom(x).ticks(6);
+        const yAxis = d3_axisLeft(y).ticks(10);
+        const xAxisGrid = d3_axisBottom(x)
+            .tickSize(-INNER_HEIGHT)
+            .tickFormat("")
+            .ticks(10);
+        const yAxisGrid = d3_axisLeft(y)
+            .tickSize(-INNER_WIDTH)
+            .tickFormat("")
+            .ticks(10);
+        // svg.append("g")
+        //     .attr("class", "x axis-grid")
+        //     .attr("transform", "translate(0," + INNER_HEIGHT + ")")
+        //     .call(xAxisGrid);
+        svg.append("g")
+            .attr("class", "y axis-grid")
+            .call(yAxisGrid);
+        // Create axes.
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + INNER_HEIGHT + ")")
+            .call(xAxis);
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis);
     }
 }
