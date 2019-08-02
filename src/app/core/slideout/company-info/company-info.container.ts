@@ -1,10 +1,10 @@
 import { ActivatedRoute } from "@angular/router";
 import { appRoutePaths } from "@app/app.routes";
-import { Company } from "@core/domain/company.model";
+import { Company, TeamMember } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
 import { CloseCompanyInfoPanel } from "@core/state/flow/company-flow.actions";
 import { CoreCompanyContainer } from "@shared/company/core-company.container";
-import { getSelectedCompany } from "@core/state";
+import { getSelectedCompany, getSelectedCompanyBoardMembers } from "@core/state";
 import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
@@ -12,7 +12,7 @@ import { Store, select } from "@ngrx/store";
 @Component({
     selector: "sbp-company-info-container",
     template: `
-        <sbp-company-info [company]="company$ | async" (closePanel)="onClose()"> </sbp-company-info>
+        <sbp-company-info [company]="company$ | async" [boardMembers]="boardMembers$ | async" (closePanel)="onClose()"> </sbp-company-info>
     `
 })
 export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit {
@@ -27,6 +27,11 @@ export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit
     public company$: Observable<Company>;
 
     /**
+     * Board members for theh company
+     */
+    public boardMembers$: Observable<TeamMember[]>;
+
+    /**
      * Handles the close of the panel
      */
     public onClose(): void {
@@ -38,6 +43,7 @@ export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit
      */
     public ngOnInit(): void {
         this.company$ = this.store$.pipe(select(getSelectedCompany));
+        this.boardMembers$ = this.store$.pipe(select(getSelectedCompanyBoardMembers));
         super.ngOnInit();
     }
 

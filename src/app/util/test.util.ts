@@ -53,6 +53,8 @@ export const changeSelectFormElementValue = (select, fixture, index) => {
 export const getCompanyDefault = (): Company => {
     return {
         aka: "",
+        ceo: "",
+        revenueStage: "",
         invested: 0,
         availablePeriods: [],
         defaultCurrency: { currencyCode: "USD", currencySymbol: "$" },
@@ -68,9 +70,12 @@ export const getCompanyDefault = (): Company => {
         foundedDate: "",
         founders: [],
         funds: [],
+        fund: "",
+        lastFollowOn: "",
+        internalTicker: "",
         headquarters: null,
         id: "1",
-        initialInvestmentDate: "",
+        initialInvestment: "",
         initiatives: [],
         investingEntity: "",
         irr: 0,
@@ -114,7 +119,8 @@ export const getTeamMemberDefault = (): TeamMember => {
         bio: "",
         position: "",
         companyRelationships: [],
-        teamLead: false
+        teamLead: false,
+        boardMember: false
     };
 };
 
@@ -160,7 +166,8 @@ export const getTeamDefault = (): Team => {
                         bio: "",
                         position: "",
                         companyRelationships: [],
-                        teamLead: false
+                        teamLead: false,
+                        boardMember: false
                     }
                 ]
             }
