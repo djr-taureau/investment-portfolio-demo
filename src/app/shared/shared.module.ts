@@ -1,6 +1,7 @@
 import "hammerjs";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { CommonModule } from "@angular/common";
+import { ComparisonBarModule } from "@shared/comparison-bar/comparison-bar.module";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { ChartModule } from "@shared/chart-components/chart.module";
 import { DirectivesModule } from "./directives/directives.module";
@@ -28,6 +29,7 @@ const MODULES = [
 
     // Application Shared Feature Modules
     CompanyNavbarModule,
+    ComparisonBarModule,
     DirectivesModule,
     ExpandablePanelModule,
     IconizedSearchableComboModule,

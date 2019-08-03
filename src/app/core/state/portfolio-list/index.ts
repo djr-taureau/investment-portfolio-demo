@@ -1,15 +1,13 @@
-import { companies } from "@app/portfolio-listing/portfolio-listing-table/sample-data";
 import * as _ from "lodash";
-import { Company, CompanyTypeEnum, Sector } from "@core/domain/company.model";
-import { PortfolioTableItem } from "@core/domain/portfolio-table-item.model";
-import { PortfolioListingTableActions } from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
-import { PortfolioListingSummaryActions } from "@core/state/portfolio-list/summary/portfolio-listing-summary.actions";
-import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
-import * as fromRoot from "@core/state";
 import * as fromCompanyState from "@core/state/";
 import * as fromPortfolioListingTable from "@core/state/portfolio-list/table/portfolio-listing-table.reducer";
-import * as fromPortfolioListingSummary from "@core/state/portfolio-list/summary/portfolio-listing-summary.reducer";
+import * as fromRoot from "@core/state";
 import * as StringUtil from "@util/string.util";
+import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
+import { Company, CompanyTypeEnum, Sector } from "@core/domain/company.model";
+import { PortfolioListingSummaryActions } from "@core/state/portfolio-list/summary/portfolio-listing-summary.actions";
+import { PortfolioListingTableActions } from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
+import { PortfolioTableItem } from "@core/domain/portfolio-table-item.model";
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // State Definition
@@ -17,7 +15,6 @@ import * as StringUtil from "@util/string.util";
 
 // Define the combined state.
 export interface PortfolioListing {
-    summary: fromPortfolioListingSummary.PortfolioListingSummaryState;
     table: fromPortfolioListingTable.PortfolioListingLayoutState;
 }
 
@@ -28,7 +25,6 @@ export interface State extends fromRoot.AppState {
 
 // Define the combined reducers.
 export const reducers: ActionReducerMap<PortfolioListing, PortfolioListingTableActions | PortfolioListingSummaryActions> = {
-    summary: fromPortfolioListingSummary.reducer,
     table: fromPortfolioListingTable.reducer
 };
 
@@ -39,11 +35,6 @@ export const selectPortfolioListing = createFeatureSelector<State, PortfolioList
 // Summary Selectors
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-export const selectPortfolioListingSummaryState = createSelector(
-    selectPortfolioListing,
-    (state: PortfolioListing) => state.summary
-);
-
 export const getCompanyCount = createSelector(
     fromCompanyState.getAllCompanies,
     (allCompanies) => {
@@ -51,25 +42,47 @@ export const getCompanyCount = createSelector(
     }
 );
 
-export const getInvested = createSelector(
-    selectPortfolioListingSummaryState,
-    fromPortfolioListingSummary.getInvested
+export const getTotalInvested = createSelector(
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        return _.sumBy(allComps, "invested") / 10000000000;
+    }
 );
+
 export const getTotalFund = createSelector(
-    selectPortfolioListingSummaryState,
-    fromPortfolioListingSummary.getTotalFund
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        return _.sumBy(allComps, "totalValue") / 10000000000;
+    }
 );
+
+export const getTotalApproved = createSelector(
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        // return _.sumBy(allComps, "approved") / 10000000000;
+        return 500000000 / 10000000000;
+    }
+);
+
 export const getValuation = createSelector(
-    selectPortfolioListingSummaryState,
-    fromPortfolioListingSummary.getValuation
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        return _.sumBy(allComps, "totalValue") / 10000000000;
+    }
 );
+
 export const getMoic = createSelector(
-    selectPortfolioListingSummaryState,
-    fromPortfolioListingSummary.getMOIC
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        return _.sumBy(allComps, "moic");
+    }
 );
+
 export const getIrr = createSelector(
-    selectPortfolioListingSummaryState,
-    fromPortfolioListingSummary.getIRR
+    fromCompanyState.getAllCompanies,
+    (allComps) => {
+        return _.sumBy(allComps, "irr");
+    }
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////

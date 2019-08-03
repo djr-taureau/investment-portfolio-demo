@@ -20,9 +20,13 @@ export interface Company {
     type: CompanyTypeEnum; // enum
     defaultCurrency: CurrencyType;
     data: any;
+    approved: number;
     sectors: Sector[];
     region: string;
     funds: Fund[];
+    fund: string;
+    lastFollowOn: string;
+    internalTicker: string;
     score: number;
     invested: number;
     totalValue: number;
@@ -30,6 +34,8 @@ export interface Company {
     slackName: string;
     slackUrl: string;
     aka: string;
+    ceo: string;
+    revenueStage: string;
     headquarters: Address;
     founders: string[];
     foundedDate: string;
@@ -37,7 +43,7 @@ export interface Company {
     stage: string;
     fiscalYearEnd: FiscalYearEnd;
     investingEntity: string;
-    initialInvestmentDate: string;
+    initialInvestment: string;
     latestFollowOnDate: string;
     fdOwnership: string;
     boardMembers: BoardMember[];
@@ -140,12 +146,18 @@ export interface Contact {
 
 export interface BoardMember {
     id?: string;
+    CompanyLegalName: string;
+    CompanyName: string;
+    PortCoID: string;
+    TeamName: string;
     name: string;
     sinceDate: string;
     company: string;
     phone: string;
+    mobile: string;
     email: string;
     avatar: string;
+    bio: string;
 }
 
 export enum TeamMemberGroupTypes {
@@ -180,6 +192,7 @@ export interface TeamMember {
     position: string;
     companyRelationships: CompanyRelationship[];
     teamLead: boolean;
+    boardMember: boolean;
 }
 
 export enum CompanyRelationshipTypes {

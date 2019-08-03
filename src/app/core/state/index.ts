@@ -234,6 +234,14 @@ export const getTeams = createSelector(
     }
 );
 
+export const getSelectedCompanyBoardMembers = createSelector(
+    getTeams,
+    (teams) => {
+        const teamsWithBoardMembers = teams.map((team) => team.members.filter((member) => member.boardMember));
+        return [].concat(...teamsWithBoardMembers);
+    }
+);
+
 export const getDealTeamGroup = createSelector(
     getTeams,
     (teams) => {

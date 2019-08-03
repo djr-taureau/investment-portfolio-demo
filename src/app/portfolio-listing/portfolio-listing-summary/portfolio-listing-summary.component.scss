@@ -14,9 +14,6 @@
         padding: 11px 22px;
         min-width: 25%;
         min-height: 100px;
-        //border-radius: 6px;
-        //box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        //background-color: $white;
         border-right: 1px dashed $light-grey-blue;
 
         &:first-child {
@@ -28,6 +25,7 @@
         }
 
         &__label {
+            width: 75%;
             font-family: PostGrotesk;
             font-size: 12px;
             font-weight: 500;
@@ -37,6 +35,7 @@
             letter-spacing: 0.5px;
             color: $grey-blue;
             text-transform: uppercase;
+            text-align: center;
         }
 
         &__label {
@@ -52,27 +51,57 @@
         }
 
         &__value {
+            width: 90%;
             padding: 0;
+            text-align: center;
             font-family: PostGrotesk;
             font-size: 30px;
             font-weight: 500;
             font-style: normal;
             font-stretch: normal;
             line-height: normal;
-            letter-spacing: 0.5px;
             color: $black;
 
             &.chart {
                 width: 100%;
             }
 
-            &--muted {
-                color: rgba($black, .5);
+            .slash {
+                font-size: 24px;
+                font-weight: 300;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: -0.5px;
+                color: $light-grey-blue;
+            }
+
+            &--invested {
+                letter-spacing: -0.15px;
+                color: rgba($dark-slate-blue, 1);
+            }
+
+            &--approved {
+                letter-spacing: -0.5px;
+                color: rgba($dark-sky-blue, 1);
+            }
+
+            &--total {
+                font-weight: 300;
+                letter-spacing: -0.5px;
+                color: rgba($light-grey-blue, 1);
             }
 
             .chart {
                 padding: 0;
             }
+
+
+        }
+
+        &__progress-bar {
+            width: 90%;
+            display: block;
         }
     }
 
@@ -115,27 +144,5 @@
                 background-color: $light-periwinkle;
             }
         }
-
-        //.legend_marker {
-        //    span {
-        //        display: block;
-        //        width: 10px;
-        //        height: 4px;
-        //        border-radius: 1px;
-        //    }
-        //
-        //    &.private span{
-        //        background-color: $dark-sky-blue;
-        //    }
-        //    &.public span {
-        //        background-color: $light-navy;
-        //    }
-        //    &.jv span {
-        //        background-color: $dark-slate-blue;
-        //    }
-        //    &.exited  span{
-        //        background-color: $light-periwinkle;
-        //    }
-        //}
     }
 }

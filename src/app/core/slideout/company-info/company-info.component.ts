@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { Company } from "@core/domain/company.model";
+import { Company, TeamMember } from "@core/domain/company.model";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Logger } from "@util/logger";
 
@@ -30,10 +30,14 @@ export class CompanyInfoComponent {
     public get company(): Company {
         return this._company;
     }
+
     /**
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("CompanyInfoComponent");
+
+    @Input()
+    public boardMembers: TeamMember[];
 
     private _company: Company;
 

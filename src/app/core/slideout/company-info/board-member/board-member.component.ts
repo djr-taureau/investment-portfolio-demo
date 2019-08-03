@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { BoardMember } from "@core/domain/company.model";
+import { BoardMember, TeamMember } from "@core/domain/company.model";
 import { Component, OnInit, Input, ChangeDetectionStrategy } from "@angular/core";
 import { Logger } from "@util/logger";
 
@@ -19,7 +19,7 @@ export class BoardMemberComponent implements OnInit {
      * Array of BoardMembers passed in from container
      */
     @Input()
-    public boardMembers: BoardMember[];
+    public boardMembers: TeamMember[];
 
     @Input()
     public getBoardMemberCount() {
