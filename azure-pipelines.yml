@@ -28,9 +28,9 @@ steps:
 #   displayName: 'release to azure artifacts'
 
 - publish: $(System.DefaultWorkingDirectory)/dist
-  artifact: Spa
+  artifact: Spa-develop
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
 
 - publish: $(System.DefaultWorkingDirectory)/dist
-  artifact: Spa
+  artifact: Spa-release
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/release'))

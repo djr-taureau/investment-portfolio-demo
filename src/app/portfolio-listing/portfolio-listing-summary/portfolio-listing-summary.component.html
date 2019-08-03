@@ -51,7 +51,8 @@
                              fxLayoutAlign="start center"
                              fxLayoutGap="8px"
                              fxFlex="75%">
-                            <div class="marker"></div>Private
+                            <div class="marker"></div>
+                            Private
                         </div>
                         <div class="legend_value">{{ chartData[0].value}}</div>
                     </div>
@@ -63,7 +64,8 @@
                              fxLayoutAlign="start center"
                              fxLayoutGap="8px"
                              fxFlex="75%">
-                            <div class="marker"></div>Public
+                            <div class="marker"></div>
+                            Public
                         </div>
                         <div class="legend_value">{{ chartData[1].value}}</div>
                     </div>
@@ -80,7 +82,8 @@
                              fxLayoutAlign="start center"
                              fxLayoutGap="8px"
                              fxFlex="75%">
-                            <div class="marker"></div>JV
+                            <div class="marker"></div>
+                            JV
                         </div>
                         <div class="legend_value">{{ chartData[2].value}}</div>
                     </div>
@@ -92,7 +95,8 @@
                              fxLayoutAlign="start center"
                              fxLayoutGap="8px"
                              fxFlex="75%">
-                            <div class="marker"></div>Exited
+                            <div class="marker"></div>
+                            Exited
                         </div>
                         <div class="legend_value">{{ chartData[3].value}}</div>
                     </div>
@@ -105,9 +109,22 @@
          fxLayout="column"
          fxFlex="0 0 20"
          fxLayoutAlign="start center"
-         fxLayoutGap="12px">
-        <div class="item-cell__label">Invested / Total Fund ($B)</div>
-        <div class="item-cell__value">{{invested}} / <span class="item-cell__value--muted">{{totalFund}}</span></div>
+         fxLayoutGap="8px">
+        <div class="item-cell__label">Invested / Approved / Total Fund ($B)</div>
+        <div class="item-cell__value"
+             fxLayout="row"
+             fxLayoutAlign="space-around center"
+             fxLayoutGap="12px">
+            <div class="item-cell__value--invested">{{invested | number: '1.2'}}</div>
+            <div class="slash">/</div>
+            <div class="item-cell__value--approved">{{totalApproved}}</div>
+            <div class="slash">/</div>
+            <div class="item-cell__value--total">{{totalFund}}</div>
+        </div>
+        <sbp-comparison-bar class="item-cell__progress-bar"
+                            [value1]="getInvestedPerc()"
+                            [value2]="getApprovedPerc()"
+                            [value3]="getTotalPerc()"></sbp-comparison-bar>
     </div>
 
     <div class="item-cell"
@@ -115,8 +132,8 @@
          fxFlex="0 0 20"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
-        <div class="item-cell__label">Valuation ($B)</div>
-        <div class="item-cell__value">{{valuation}}</div>
+        <div class="item-cell__label">Total Value ($B)</div>
+        <div class="item-cell__value">{{valuation| number: '1.2'}}</div>
     </div>
 
     <div class="item-cell"
@@ -125,7 +142,7 @@
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">MOIC</div>
-        <div class="item-cell__value">{{moic}}</div>
+        <div class="item-cell__value">{{moic| number: '1.0'}}x</div>
     </div>
 
     <div class="item-cell"

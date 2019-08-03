@@ -10,10 +10,11 @@ import { select, Store } from "@ngrx/store";
         <sbp-portfolio-listing-summary
             fxFlex
             [companyCount]="companyCount$ | async"
-            [invested]="invested$ | async"
+            [invested]="totalInvested$ | async"
             [irr]="irr$ | async"
             [moic]="moic$ | async"
             [totalFund]="totalFund$ | async"
+            [totalApproved]="totalApproved$ | async"
             [valuation]="valuation$ | async"
             [chartData]="companyCountByType$ | async"
         ></sbp-portfolio-listing-summary>
@@ -33,12 +34,17 @@ export class PortfolioListingSummaryContainer implements OnInit {
     /**
      * The total amount invested in the portfolio
      */
-    public invested$: Observable<number>;
+    public totalInvested$: Observable<number>;
 
     /**
      * The total amount of the funding for the portfolio
      */
     public totalFund$: Observable<number>;
+
+    /**
+     * The total amount of the approved funding for the portfolio
+     */
+    public totalApproved$: Observable<number>;
 
     /**
      * The total current valuation for the portfolio
@@ -61,8 +67,9 @@ export class PortfolioListingSummaryContainer implements OnInit {
     public ngOnInit(): void {
         this.companyCount$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCount));
         this.companyCountByType$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCountsByType));
-        this.invested$ = this.store$.pipe(select(fromPortfolioListingState.getInvested));
+        this.totalInvested$ = this.store$.pipe(select(fromPortfolioListingState.getTotalInvested));
         this.totalFund$ = this.store$.pipe(select(fromPortfolioListingState.getTotalFund));
+        this.totalApproved$ = this.store$.pipe(select(fromPortfolioListingState.getTotalApproved));
         this.valuation$ = this.store$.pipe(select(fromPortfolioListingState.getValuation));
         this.moic$ = this.store$.pipe(select(fromPortfolioListingState.getMoic));
         this.irr$ = this.store$.pipe(select(fromPortfolioListingState.getIrr));
