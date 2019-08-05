@@ -1,3 +1,4 @@
+import { getSelectedDatePart } from "@core/state/company/dashboard";
 import { ToggleCashBurnDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
 import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
@@ -58,7 +59,7 @@ export class CompanyFlowEffect {
     dashboardDatePartChanged$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyFlowActions.DashboardDatePartChanged>(CompanyFlowActionTypes.DashboardDatePartChanged),
         map((action) => action.payload),
-        concatMap((selectedDatePart) => [new SelectDatePart(selectedDatePart)])
+        concatMap((payload) => [new SelectDatePart(payload)])
     );
 
     @Effect()

@@ -136,6 +136,9 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     }
 
     updateScales() {
+        if (!this.data) {
+            return;
+        }
         this.xScale = d3
             .scaleBand<string, number>()
             .domain(this.timePeriods)

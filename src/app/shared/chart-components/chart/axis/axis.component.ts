@@ -50,6 +50,9 @@ export class AxisComponent implements OnChanges, AfterContentInit {
     }
 
     updateTicks() {
+        if (!this.ticks) {
+            return;
+        }
         const dateSelected = "4Q2018";
         if (!this.dimensions || !this.scale) {
             return;

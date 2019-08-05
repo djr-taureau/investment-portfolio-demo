@@ -3,7 +3,12 @@
 @import "../../../assets/scss/fonts/post-grotesk";
 
 :host {
-    //height: 100%;
+    height: 43px;
+    display: block;
+
+    .container {
+        height: 100%;
+    }
 
     .tab {
         height: 100%;

@@ -1,5 +1,7 @@
-import { Company } from "@core/domain/company.model";
+import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
+import { AvailablePeriod, Company } from "@core/domain/company.model";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
+import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
 import { getSelectedCompany } from "../../";
 import { CompanyDashboardLayoutActions } from "./company-dashboard-layout.actions";
@@ -83,11 +85,17 @@ export const getSelectedCompanyFYE = createSelector(
  */
 export const getSelectedCompanyAvailablePeriods = createSelector(
     getSelectedCompany,
-    (selectedCompany: Company) => {
-        const periods = ObjectUtil.getNestedPropIfExists(selectedCompany, ["availablePeriods"], []);
-        return _.each(periods, (item) => {
-            return _.extend(item, { id: "Q" + item.financialQuarter + " " + new Date(item.date).getFullYear() });
+    getSelectedDatePart,
+    (selectedCompany: Company, selectedDatePart: DatePartType) => {
+        let periods = ObjectUtil.getNestedPropIfExists(selectedCompany, ["availablePeriods"], []);
+        periods = periods.map((p: SelectorPeriod) => {
+            return {
+                ...p,
+                quarterLabel: "FQ" + p.financialQuarter + " " + new Date(p.date).getFullYear(),
+                yearLabel: "FY " + new Date(p.date).getFullYear()
+            };
         });
+        return periods;
     }
 );
 
