@@ -1,4 +1,4 @@
-import { getShowRevenueDetail } from "@core/state/company/dashboard";
+import { getShowRevenueDetail, getShowEBITDADetail, getShowCashDetail } from "@core/state/company/dashboard";
 import * as CompanyDashboardLayoutActions from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { ActivatedRoute } from "@angular/router";
 import { Observable } from "rxjs";
@@ -14,6 +14,8 @@ import { select, Store } from "@ngrx/store";
         <sbp-company-dashboard
             (expandOrCollapse)="expandOrCollapse($event)"
             [showRevenueDetail]="showRevenueDetail$ | async"
+            [showEBITDADetail]="showEBITDADetail$ | async"
+            [showCashDetail]="showCashDetail$ | async"
             (closeDetailWidget)="expandOrCollapse()"
         ></sbp-company-dashboard>
     `
@@ -28,6 +30,8 @@ export class CompanyDashboardContainer extends CoreCompanyContainer implements O
      * Controls visibility of the revenue details panel
      */
     public showRevenueDetail$: Observable<boolean>;
+    public showEBITDADetail$: Observable<boolean>;
+    public showCashDetail$: Observable<boolean>;
 
     /**
      * Expand or collapse the summary based on its current state.
@@ -56,6 +60,8 @@ export class CompanyDashboardContainer extends CoreCompanyContainer implements O
     public ngOnInit() {
         super.ngOnInit();
         this.showRevenueDetail$ = this.store$.pipe(select(getShowRevenueDetail));
+        this.showEBITDADetail$ = this.store$.pipe(select(getShowEBITDADetail));
+        this.showCashDetail$ = this.store$.pipe(select(getShowCashDetail));
         CompanyDashboardContainer.logger.debug(`ngOnInit()`);
     }
 }

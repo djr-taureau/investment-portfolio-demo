@@ -54,9 +54,9 @@ export const getExpanded = createSelector(
     (collapsed: boolean) => !collapsed
 );
 
-export const getShowCashburnDetail = createSelector(
+export const getShowCashDetail = createSelector(
     selectCompanyDashboardLayoutState,
-    fromCompanyDashboardLayout.getShowCashburnDetail
+    fromCompanyDashboardLayout.getShowCashDetail
 );
 
 export const getShowEBITDADetail = createSelector(

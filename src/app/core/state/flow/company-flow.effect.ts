@@ -1,5 +1,5 @@
+import { ToggleCashDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { getSelectedDatePart } from "@core/state/company/dashboard";
-import { ToggleCashBurnDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
 import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import { appRoutePaths } from "@app/app.routes";
@@ -13,7 +13,7 @@ import {
     SelectAsOfDate,
     SelectCurrency,
     SelectDatePart,
-    ToggleCashBurnDetailExpanded,
+    ToggleCashDetailExpanded,
     ToggleEBITDADetailExpanded,
     ToggleRevenueDetailExpanded
 } from "@core/state/company/dashboard/company-dashboard-layout.actions";
@@ -70,9 +70,9 @@ export class CompanyFlowEffect {
     );
 
     @Effect()
-    toggleCashBurnDetail$: Observable<Action> = this.actions$.pipe(
-        ofType<CompanyFlowActions.ToggleCashBurnDetail>(CompanyFlowActionTypes.ToggleCashBurnDetail),
-        concatMap(() => [new ToggleCashBurnDetailExpanded()])
+    toggleCashDetail$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyFlowActions.ToggleCashDetail>(CompanyFlowActionTypes.ToggleCashDetail),
+        concatMap(() => [new ToggleCashDetailExpanded()])
     );
 
     @Effect()

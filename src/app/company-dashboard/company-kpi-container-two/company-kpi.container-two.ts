@@ -7,18 +7,18 @@ import "zone.js";
 import { ebitda, revenueMock2 } from "../financials-data";
 
 @Component({
-    selector: "sbp-company-kpi-container",
-    styleUrls: ["./company-kpi.container.scss"],
-    templateUrl: "./company-kpi.container.html"
+    selector: "sbp-company-kpi-container-two",
+    styleUrls: ["./company-kpi.container-two.scss"],
+    templateUrl: "./company-kpi.container-two.html"
 })
-export class CompanyKpiContainer implements OnInit {
+export class CompanyKpiContainerTwo implements OnInit {
     /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
-        CompanyKpiContainer.logger.debug(`constructor()`);
+        CompanyKpiContainerTwo.logger.debug(`constructor()`);
     }
-    private static logger: Logger = Logger.getLogger("CompanyKpiContainer");
+    private static logger: Logger = Logger.getLogger("CompanyKpiContainerTwo");
 
     timelineData: any[];
     timelineData2: TimelineDataPointFin[];
@@ -43,7 +43,7 @@ export class CompanyKpiContainer implements OnInit {
      * Initialize the component.
      */
     public ngOnInit() {
-        CompanyKpiContainer.logger.debug(`ngOnInit()`);
+        CompanyKpiContainerTwo.logger.debug(`ngOnInit()`);
         this.timelineData = revenueMock2.series;
         this.timelineData2 = ebitda;
         this.timelineData3 = ebitda;

@@ -3,8 +3,11 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanyKpiContainer } from "./company-kpi-container/company-kpi.container";
+import { CompanyKpiContainerTwo } from "./company-kpi-container-two/company-kpi.container-two";
 import { CompanyKpiDetailComponent } from "./company-kpi-detail/company-kpi-detail.component";
 import { CompanyRevenueDetailContainer } from "@app/company-dashboard/company-revenue-detail/company-revenue-detail.container";
+import { CompanyEBITDADetailContainer } from "@app/company-dashboard/company-EBITDA-detail/company-EBITDA-detail.container";
+import { CompanyCashDetailContainer } from "@app/company-dashboard/company-cash-detail/company-cash-detail.container";
 import { CompanySummaryCollapsedComponent } from "./company-summary/collapsed/company-summary-collapsed.component";
 import { CompanySummaryContainer } from "./company-summary/company-summary.container";
 import { CompanySummaryExpandedComponent } from "./company-summary/expanded/company-summary-expanded.component";
@@ -19,13 +22,16 @@ const COMPONENTS: any = [
     CompanyDashboardComponent,
     CompanyDashboardContainer,
     CompanyKpiContainer,
+    CompanyKpiContainerTwo,
     CompanyRevenueDetailContainer,
     CompanySummaryCollapsedComponent,
     CompanySummaryContainer,
     CompanySummaryExpandedComponent,
     PeriodSelectorComponent,
     PeriodSelectorContainer,
-    CompanyKpiDetailComponent
+    CompanyKpiDetailComponent,
+    CompanyEBITDADetailContainer,
+    CompanyCashDetailContainer
 ];
 
 const MODULE_ROUTES: Routes = [

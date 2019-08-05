@@ -5,7 +5,7 @@
      fxLayoutAlign="space-between center">
     <div class="chart">
         <sbp-kpi-summary [data]="timelineData"
-                         [title]="'Revenue'"
+                         [title]="'Placholder'"
                          [denomination]="'USD'"
                          [value]="325.3"
                          [pyLabel]="'vs PY'"
@@ -17,7 +17,7 @@
     </div>
     <div class="chart">
         <sbp-kpi-summary [data]="timelineData2"
-                         [title]="'EBITDA'"
+                         [title]="'Placeholder'"
                          [denomination]="'USD'"
                          [value]="-81.2"
                          [pyLabel]="'vs PY'"
@@ -30,7 +30,7 @@
     </div>
     <div class="chart">
         <sbp-kpi-summary [data]="timelineData3"
-                         [title]="'Cash'"
+                         [title]="'Placeholder'"
                          [denomination]="'USD'"
                          [value]="-34.6"
                          [pyLabel]="'vs PY'"
@@ -41,10 +41,15 @@
         </sbp-kpi-summary>
     </div>
     <div class="chart">
-        <sbp-kpi-summary [data]=""
-                         [title]="'Cash Runway'"
+        <sbp-kpi-summary [data]="timelineData3"
+                         [title]="'Placeholder'"
                          [denomination]="'USD'"
-                         [value]="'27 Months'">
+                         [value]="-34.6"
+                         [pyLabel]="'vs PY'"
+                         [pyValue]="+10.0"
+                         [icLabel]="'vs Bud'"
+                         [icValue]="'-5.0'"
+                         (click)="onCashClick()">
         </sbp-kpi-summary>
     </div>
 </div>

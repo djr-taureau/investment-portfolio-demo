@@ -9,7 +9,7 @@ export interface CompanyDashboardLayoutState {
     selectedDatePart: DatePartType;
     selectedPeriod: SelectorPeriod;
     showRevenueDetail: boolean;
-    showCashburnDetail: boolean;
+    showCashDetail: boolean;
     showEBITDADetail: boolean;
 }
 
@@ -19,7 +19,7 @@ export const initialState: CompanyDashboardLayoutState = {
     selectedDatePart: DatePartTypeEnum.QTR,
     selectedPeriod: null,
     showRevenueDetail: false,
-    showCashburnDetail: false,
+    showCashDetail: false,
     showEBITDADetail: false
 };
 
@@ -27,7 +27,7 @@ function toggleRevenueDetail(state: CompanyDashboardLayoutState = initialState):
     return {
         ...state,
         showRevenueDetail: !state.showRevenueDetail,
-        showCashburnDetail: false,
+        showCashDetail: false,
         showEBITDADetail: false
     };
 }
@@ -36,16 +36,16 @@ function toggleEBITDADetail(state: CompanyDashboardLayoutState = initialState): 
     return {
         ...state,
         showRevenueDetail: false,
-        showCashburnDetail: false,
+        showCashDetail: false,
         showEBITDADetail: !state.showEBITDADetail
     };
 }
 
-function toggleCashburnDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+function toggleCashDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
     return {
         ...state,
         showRevenueDetail: false,
-        showCashburnDetail: !state.showCashburnDetail,
+        showCashDetail: !state.showCashDetail,
         showEBITDADetail: false
     };
 }
@@ -76,8 +76,8 @@ export function reducer(state: CompanyDashboardLayoutState = initialState, actio
                 ...state,
                 selectedDatePart: action.payload
             };
-        case CompanyDashboardLayoutActionTypes.ToggleCashBurnDetailExpanded:
-            return toggleCashburnDetail(state);
+        case CompanyDashboardLayoutActionTypes.ToggleCashDetailExpanded:
+            return toggleCashDetail(state);
         case CompanyDashboardLayoutActionTypes.ToggleEBITDADetailExpanded:
             return toggleEBITDADetail(state);
         case CompanyDashboardLayoutActionTypes.ToggleRevenueDetailExpanded:
@@ -91,6 +91,6 @@ export const getCollapsed = (state: CompanyDashboardLayoutState) => state.collap
 export const getSelectedCurrency = (state: CompanyDashboardLayoutState) => state.selectedCurrency;
 export const getSelectedDatePart = (state: CompanyDashboardLayoutState) => state.selectedDatePart;
 export const getSelectedPeriod = (state: CompanyDashboardLayoutState) => state.selectedPeriod;
-export const getShowCashburnDetail = (state: CompanyDashboardLayoutState) => state.showCashburnDetail;
+export const getShowCashDetail = (state: CompanyDashboardLayoutState) => state.showCashDetail;
 export const getShowEBITDADetail = (state: CompanyDashboardLayoutState) => state.showEBITDADetail;
 export const getShowRevenueDetail = (state: CompanyDashboardLayoutState) => state.showRevenueDetail;

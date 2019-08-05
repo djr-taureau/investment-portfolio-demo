@@ -32,7 +32,7 @@ export enum CompanyFlowActionTypes {
 
     ToggleRevenueDetail = "[Company Flow] Dashboard - Toggle Revenue Detail",
     ToggleEBITDADetail = "[Company Flow] Dashboard - Toggle EBITDA Detail",
-    ToggleCashBurnDetail = "[Company Flow] Dashboard - Toggle CashBurn Detail",
+    ToggleCashDetail = "[Company Flow] Dashboard - Toggle Cash Detail",
     ToggleKPIDetail = "[Company Flow] Dashboard - Toggle KPI Detail",
 
     SelectCompany = "[Flow] Select Company",
@@ -149,8 +149,8 @@ export class SelectCompany implements Action {
 
     constructor(public payload: string) {}
 }
-export class ToggleCashBurnDetail implements Action {
-    readonly type = CompanyFlowActionTypes.ToggleCashBurnDetail;
+export class ToggleCashDetail implements Action {
+    readonly type = CompanyFlowActionTypes.ToggleCashDetail;
 
     constructor(public payload?: string) {}
 }
@@ -194,6 +194,6 @@ export type CompanyFlowActions =
     | OpenValuationPanel
     | SelectCompany
     | SortCompanies
-    | ToggleCashBurnDetail
+    | ToggleCashDetail
     | ToggleEBITDADetail
     | ToggleRevenueDetail;
