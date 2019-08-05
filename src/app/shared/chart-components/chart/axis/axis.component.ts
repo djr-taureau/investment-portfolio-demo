@@ -2,6 +2,7 @@ import { Component, Input, SimpleChanges, OnInit, OnChanges, AfterContentInit, E
 import * as d3 from "d3";
 import { DimensionsType, ScaleType } from "../../interfaces/types";
 import { select } from "d3-selection";
+import { trackByFn } from "@util/angular.util";
 
 @Component({
     selector: "[sbpAxis]",
@@ -30,12 +31,13 @@ export class AxisComponent implements OnChanges, AfterContentInit {
     ticks: any;
     tickColorStyle: string;
     textAnchor: string;
+    selectedValue: string;
 
     constructor(private elementRef: ElementRef) {
         this.dimension = "x";
         this.formatTick = d3.format(",");
         this.textAnchor = "start";
-        const dateSelected = "4Q2018";
+        this.selectedValue = "4Q2018";
 
         if (this.xAxisVisible) {
             this.xAxisStyles = ["label label-display tick-display"];
@@ -68,5 +70,9 @@ export class AxisComponent implements OnChanges, AfterContentInit {
 
     ngOnChanges(changes: SimpleChanges): void {
         this.updateTicks();
+    }
+
+    trackByFn = (index: number, item: any): number | string => {
+        return item && item.id ? item.id : index;
     }
 }

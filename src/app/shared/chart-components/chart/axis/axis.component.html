@@ -1,12 +1,12 @@
 <svg:g *ngIf="dimension === 'x'"
        class="x"
        attr.transform="translate(0, {{dimensions.boundedHeight}})">
-    <svg:line class="x axis"
+    <svg:line class="x-axis"
               *ngIf="xAxisVisible"
               [attr.x2]="dimensions.boundedWidth">
     </svg:line>
-    <svg:text *ngFor="let tick of xAxisTickValues"
-              [ngClass]="{'tick-selected-value': tick === selectedValue, 'tick': tick !== selectedValue}"
+    <svg:text *ngFor="let tick of xAxisTickValues; let idx=index; trackBy: trackByFn"
+              [ngClass]="{'tick-selected-value': tick === selectedValue, 'x-tick': tick !== selectedValue}"
               attr.transform="translate({{scale(tick)}}, 25)">
         {{ tick }}
     </svg:text>
@@ -23,8 +23,8 @@
     <svg:line *ngIf="yAxisVisible"
               [attr.y2]="dimensions.boundedHeight">
     </svg:line>
-    <svg:text *ngFor="let tick of yAxisTickValues"
-              class="tick"
+    <svg:text *ngFor="let tick of yAxisTickValues; let idx=index; trackBy: trackByFn"
+              class="y-tick"
               attr.transform="translate(-1, {{scale(tick)}})">
         {{ tick }}
     </svg:text>

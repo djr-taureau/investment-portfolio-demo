@@ -25,11 +25,33 @@
         }
     }
 
-    .tick {
+    // .tick {
+    //     font-size: 0.9em;
+    //     width: 4px;
+    //     transition: all 0.3s ease-out;
+    //     fill: #95a5a6;
+    // }
+
+    .x-tick {
         font-size: 0.9em;
         width: 4px;
+        opacity: 0.75;
         transition: all 0.3s ease-out;
-        fill: #95a5a6;
+        fill: $grey-blue;
+    }
+
+    .y-tick {
+        width: 24px;
+        height: 14px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: right;
+        color: $light-grey-blue;
     }
 
     .tick-display {
