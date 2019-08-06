@@ -1,3 +1,4 @@
+import * as _ from "lodash";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Company, TeamMember, TeamMemberGroup } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
@@ -153,5 +154,9 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public onValuationClick(id: string): void {
         CompanySummaryCollapsedComponent.logger.debug(`onValuationClick( Company ID: ${id} )`);
         this.seeValuations.emit(id);
+    }
+
+    public showDonut(): boolean {
+        return _.get(this, "company.percentOwnership", -1) > 0;
     }
 }

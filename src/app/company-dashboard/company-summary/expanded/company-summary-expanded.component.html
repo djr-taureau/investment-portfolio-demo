@@ -11,7 +11,7 @@
          fxLayout="column"
          fxLayoutAlign="center stretch">
         <img class="logo"
-             [src]="company.logo"
+             [src]="company.logo || 'https://via.placeholder.com/60/f0f4fa/3b4659?text=' + company.name + ''"
              [alt]="company.name">
     </div>
 
@@ -81,24 +81,15 @@
 
         <!--
         ////////////////////////////////////////////////////////////////////////////////////
-        // Border
-        ////////////////////////////////////////////////////////////////////////////////////
-        -->
-        <div class="bottom-border"></div>
-
-        <!--
-        ////////////////////////////////////////////////////////////////////////////////////
         // Team Members
         ////////////////////////////////////////////////////////////////////////////////////
         -->
         <div fxLayout="row"
-             fxLayoutAlign="start center"
+             fxLayoutAlign="start start"
+             fxLayoutGap="24px"
              class="team-member-avatar-container">
 
-            <div *ngFor="let teamMember of teamMembers"
-                 fxLayout="row"
-                 fxLayoutAlign="start center"
-                 class="team-member-avatar-container">
+            <ng-container *ngFor="let teamMember of teamMembers">
                 <sbp-team-member-avatar [teamMember]="teamMember"
                                         (click)="onTeamMemberClick(teamMember.id, company.id)">
                 </sbp-team-member-avatar>
@@ -109,18 +100,11 @@
                     <div>{{ teamMember.lastName }}</div>
                 </div>
 
-            </div>
+            </ng-container>
 
             <div class="all-team-members hand-cursor"
                  (click)="onAllTeamMembersClick(company.id)">All Team Members</div>
         </div>
-
-        <!--
-        ////////////////////////////////////////////////////////////////////////////////////
-        // Border
-        ////////////////////////////////////////////////////////////////////////////////////
-        -->
-        <div class="bottom-border"></div>
 
         <div fxLayout="row"
              fxLayoutAlign="space-between stretch">
