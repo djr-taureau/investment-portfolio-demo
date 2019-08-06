@@ -54,14 +54,14 @@
         <img src="assets/image/as-of-dot-line.svg">
         <div>As of:</div>
         <sbp-iconized-searchable-combo class="combo"
-                                       [textField]="'id'"
+                                       [textField]="getPeriodIdField()"
                                        [valueField]="'id'"
                                        [showFilter]="false"
                                        [mainIconSrc]="'assets/image/calendar.svg'"
                                        [selectedItem]="selectedPeriod"
                                        [popupSettings]="popupSettings"
                                        (selectionChange)="onPeriodChange($event)"
-                                       [listItems]="availablePeriods">
+                                       [listItems]="getPeriods()">
         </sbp-iconized-searchable-combo>
     </div>
 

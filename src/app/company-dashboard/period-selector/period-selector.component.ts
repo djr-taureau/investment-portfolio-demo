@@ -10,6 +10,8 @@ import { Logger } from "@util/logger";
  * Interface for the period selector items
  */
 export interface SelectorPeriod extends AvailablePeriod {
+    quarterLabel?: string;
+    yearLabel?: string;
     id: number;
 }
 
@@ -23,6 +25,10 @@ export class PeriodSelectorComponent implements OnInit {
     // PRIVATE
     // -----------------------------------------------
     private logger: Logger = Logger.getLogger("PeriodSelectorComponent");
+
+    private _availablePeriods: SelectorPeriod[];
+
+    private _availablePeriodsByYear: SelectorPeriod[];
 
     // -----------------------------------------------
     // INPUTS
@@ -50,7 +56,20 @@ export class PeriodSelectorComponent implements OnInit {
      * The periods available for the selector
      */
     @Input()
-    public availablePeriods: SelectorPeriod[];
+    public set availablePeriods(value: SelectorPeriod[]) {
+        this._availablePeriods = value;
+        this._availablePeriodsByYear = [];
+        const groupedByYear = _.groupBy(value, (p) => {
+            return new Date(p.date).getFullYear();
+        });
+        _.each(groupedByYear, (yearItems) => {
+            const lastItem = _.last(yearItems);
+            const updatedLastItem = _.extend(lastItem, {
+                id: "FY " + new Date(lastItem.date).getFullYear()
+            });
+            this._availablePeriodsByYear.push(updatedLastItem);
+        });
+    }
 
     /**
      * The 'as of' period (the selected period in the available periods)
@@ -125,25 +144,33 @@ export class PeriodSelectorComponent implements OnInit {
      */
     @Output()
     public selectedDatePartChange: EventEmitter<DatePartType> = new EventEmitter<DatePartType>();
-
     // -----------------------------------------------
     // PRIVATE FUNCTIONS
     // -----------------------------------------------
 
     private getHistoricalUnits(): SelectorPeriod[] {
         return _.filter(_.get(this, "availablePeriods", []), (period) => {
-            return new Date(period.date) <= new Date();
+            // return new Date(period.date) <= new Date();
+            return !period.isProjection;
         });
     }
 
     private getProjectedUnits(): SelectorPeriod[] {
         return _.filter(_.get(this, "availablePeriods", []), (period) => {
-            return new Date(period.date) >= new Date();
+            // return new Date(period.date) >= new Date();
+            return period.isProjection;
         });
     }
     // -----------------------------------------------
     // PUBLIC FUNCTIONS
     // -----------------------------------------------
+    public getPeriods() {
+        return this.selectedDatePartType === DatePartTypeEnum.QTR ? this._availablePeriods : this._availablePeriodsByYear;
+    }
+
+    public getPeriodIdField() {
+        return this.selectedDatePartType === DatePartTypeEnum.QTR ? "quarterLabel" : "yearLabel";
+    }
 
     public getHistoricalUnitCount(): number {
         return this.getHistoricalUnits().length;
@@ -170,7 +197,7 @@ export class PeriodSelectorComponent implements OnInit {
     }
 
     public getAltCurrencyName() {
-        return _.get(this.alternateCurrency, "name", "");
+        return _.get(this.alternateCurrency, "currencyCode", "");
     }
 
     public getAltCurrencySymbol() {
@@ -216,6 +243,23 @@ export class PeriodSelectorComponent implements OnInit {
      */
     public onDatePartChange($event: DatePartType) {
         this.logger.debug(`onDatePartChange(${event})`);
+
+        // GMAN: It seems that if this is going to QTR -> YEAR, that the quarter of the selected period should always be changed the LAST one in the
+        // matching year so that when the chart data changes to year, it contains ALL the year data (since the selectedPeriod should be the "from" in
+        // filtering API responses, et al. Without this, the user could see a label that indicates they are looking at FY 200X but be seeing only a
+        // portion of that data.
+        // Example: The user chooses to view by QTR and choose "FQ2 2016", then changes to "FY 2016"... we can't just change the display, we also need
+        // to set the selectedPeriod (which are always quarters) to "FQ$ 2016", otherwise the charts would only have FQ2 2016 and FQ1 2016
+
+        if ($event === DatePartTypeEnum.YEAR) {
+            const selectedYear = new Date(this.selectedPeriod.date).getFullYear();
+            const selectedYearQuarters = _.orderBy(
+                _.filter(this._availablePeriods, (period) => new Date(period.date).getFullYear() === selectedYear),
+                "financialQuarter"
+            );
+
+            this.selectedPeriodChange.emit(_.last(selectedYearQuarters));
+        }
         this.selectedDatePartChange.emit($event);
     }
 

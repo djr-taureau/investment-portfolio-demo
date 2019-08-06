@@ -45,26 +45,26 @@ export class KpiSummaryComponent implements OnInit {
      * Label for the py chart value
      */
     @Input()
-    public pyLabel: string;
+    public pyLabel?: string;
 
     @Input()
     set pyValue(value: number) {
         this.pyString = numberToSignedString(value);
         this.py = value;
     }
-    public py: number;
-    public pyString: string;
+    public py?: number;
+    public pyString?: string;
 
     @Input()
-    public icLabel: string;
+    public icLabel?: string;
 
     @Input()
     set icValue(value: number) {
         this.icString = numberToSignedString(value);
         this.ic = value;
     }
-    public ic: number;
-    public icString: string;
+    public ic?: number;
+    public icString?: string;
 
     constructor() {
         KpiSummaryComponent.logger.debug(`constructor()`);

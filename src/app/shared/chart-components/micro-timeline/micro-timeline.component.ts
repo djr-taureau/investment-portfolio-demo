@@ -147,6 +147,10 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     }
 
     updateScales() {
+        if (!this.timePeriods) {
+            return;
+        }
+
         this.xScale = d3
             .scaleBand<string, number>()
             .domain(this.timePeriods)

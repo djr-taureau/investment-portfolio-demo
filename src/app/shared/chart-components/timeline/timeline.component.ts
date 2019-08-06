@@ -41,6 +41,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     public forecastVis: boolean;
     public budgetVis: boolean;
 
+    el: HTMLElement;
     historicalData: TimelineDataPointFin[];
     projectedData: TimelineDataPointFin[];
     dimensions: DimensionsType;
@@ -69,7 +70,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     dateSelected;
     selectedValue: boolean;
 
-    constructor() {
+    constructor(elementRef: ElementRef) {
         TimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
             marginTop: 40,
@@ -77,14 +78,14 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             marginBottom: 75,
             marginLeft: 75,
             height: 300,
-            width: 679,
-            boundedWidth: 630
+            width: 679
         };
         this.dimensions = {
             ...this.dimensions,
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
+        this.el = elementRef.nativeElement;
     }
 
     updateDimensions() {
@@ -136,15 +137,18 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     }
 
     updateScales() {
+        if (!this.data) {
+            return;
+        }
         this.xScale = d3
-            .scaleBand<string, number>()
+            .scaleBand()
             .domain(this.timePeriods)
-            .rangeRound([0, this.dimensions.boundedWidth])
-            .padding(0.5);
+            .range([0, this.dimensions.boundedWidth])
+            .padding(0.3);
 
         this.yScale = d3
             .scaleLinear()
-            .domain(d3.extent(this.actuals, this.yAccessor) as [number, number])
+            .domain([d3.min(this.actuals, this.yAccessor), 750])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
         this.budgetScale = d3
@@ -157,36 +161,35 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .domain(d3.extent(this.forecast, this.yAccessor) as [number, number])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
-
-        this.xAxisBottom = d3.axisBottom(this.xScale);
-
-        this.xAccessorScaled = (d) => this.xScale(this.categoryAccessor(d));
+        this.xAccessorScaled = (d) => this.xScale(this.categoryAccessor(d)) + this.xScale.bandwidth() / 2;
         this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
         this.budgetAccessorScaled = (d) => this.budgetScale(this.yAccessor(d));
         this.forecastAccessorScaled = (d) => this.forecastScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
         this.y0BudgetAccessorScaled = this.budgetScale(this.budgetScale.domain()[0]);
         this.y0ForecastAccessorScaled = this.forecastScale(this.budgetScale.domain()[0]);
-        // this.yAxisGrid = d3_axisLeft(this.yAccessorScaled)
-        //     .tickSize(-this.dimensions.boundedWidth)
-        //     .tickFormat("")
-        //     .tickValues(this.yAxisTickValues)
-        //     .ticks(5);
-        // const xAxis = d3_axisBottom(this.xScale).ticks(6);
-        // const yAxis = d3_axisLeft(this.yScale).ticks(5);
+        this.yAxisGrid = d3_axisLeft(this.yScale)
+            .tickSize(-this.dimensions.boundedWidth, 10, 40)
+            .tickFormat("")
+            .ticks(5);
+        const yAxis = d3_axisLeft(this.yScale).ticks(5);
         const svg = d3_select("#multi-timeline").select("svg");
+
         svg.append("g")
             .attr("class", "axis-grid")
             .call(
                 this.make_y_gridlines()
-                    .tickSize(-this.dimensions.width, 0, 0)
-                    // .tickValues(this.yAxisTickValues)
+                    .tickSize(-this.dimensions.boundedWidth, 40)
+                    .tickValues(null)
                     .tickFormat("")
             );
+        svg.append("g")
+            .attr("class", "axis y-axis")
+            .call(yAxis);
     }
 
     make_y_gridlines() {
-        return d3_axisLeft(this.yScale).tickValues(this.yAxisTickValues);
+        return d3_axisLeft(this.yScale).ticks(6);
     }
 
     toggleVisibilty(event) {

@@ -10,7 +10,7 @@ export enum CompanyDashboardLayoutActionTypes {
     SelectDatePart = "[DashboardLayout] Select Date Part",
     SelectAsOfDate = "[DashboardLayout] Select As Of Date",
     ToggleEBITDADetailExpanded = "[DashboardLayout] Toggle EBITDA Detail Expanded",
-    ToggleCashBurnDetailExpanded = "[DashboardLayout] Toggle Cashburn Detail Expanded",
+    ToggleCashDetailExpanded = "[DashboardLayout] Toggle Cash Detail Expanded",
     ToggleRevenueDetailExpanded = "[DashboardLayout] Toggle Revenue Detail Expanded"
 }
 
@@ -36,8 +36,8 @@ export class SelectDatePart implements Action {
     constructor(public payload: DatePartType) {}
 }
 
-export class ToggleCashBurnDetailExpanded implements Action {
-    readonly type = CompanyDashboardLayoutActionTypes.ToggleCashBurnDetailExpanded;
+export class ToggleCashDetailExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleCashDetailExpanded;
 
     constructor() {}
 }
@@ -57,6 +57,6 @@ export type CompanyDashboardLayoutActions =
     | SelectCurrency
     | SelectDatePart
     | SelectAsOfDate
-    | ToggleCashBurnDetailExpanded
+    | ToggleCashDetailExpanded
     | ToggleEBITDADetailExpanded
     | ToggleRevenueDetailExpanded;

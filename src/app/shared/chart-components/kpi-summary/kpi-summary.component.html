@@ -5,21 +5,28 @@
     <!-- CHARTS ROW -->
     <!-- VALUE COLUMN -->
     <div class="box value">{{value}}</div>
-    <div class="box py">{{pyLabel}}</div>
-    <div class="box py-val">{{pyString}}</div>
-    <div class="box budget">{{icLabel}}</div>
-    <div class="box budget-val">{{icString}} %</div>
-    <div class="box timeline">
+    <div *ngIf="pyLabel"
+         class="box py">{{pyLabel}}</div>
+    <div *ngIf="pyString"
+         class="box py-val">{{pyString}}</div>
+    <div *ngIf="icLabel"
+         class="box budget">{{icLabel}}</div>
+    <div *ngIf="icString"
+         class="box budget-val">{{icString}} %</div>
+    <div *ngIf="data"
+         class="box timeline">
         <sbp-micro-timeline [data]="data"
                             [xAccessor]="dateAccessor"
                             [yAccessor]="yAccessor"
                             [categoryAccessor]="categoryAccessor"
                             [yLabelVisible]="false"></sbp-micro-timeline>
     </div>
-    <div class="box py-chart">
+    <div *ngIf="data"
+         class="box py-chart">
         <sbp-micro-bar [data]="data"></sbp-micro-bar>
     </div>
-    <div class="box budget-chart">
+    <div *ngIf="data"
+         class="box budget-chart">
         <sbp-micro-bar [data]="data"></sbp-micro-bar>
     </div>
     <img src="assets/image/triangle.svg"

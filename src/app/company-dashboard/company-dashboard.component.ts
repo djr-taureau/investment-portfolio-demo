@@ -28,7 +28,7 @@ export class CompanyDashboardComponent implements OnInit {
     }
 
     @Input()
-    public showCashburnDetail = false;
+    public showCashDetail = false;
 
     @Input()
     public showEBITDADetail = false;
