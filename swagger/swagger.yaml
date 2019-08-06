@@ -49,8 +49,6 @@ paths:
             $ref: "#/definitions/CompanyListResponse"
         400:
           description: "Invalid request"
-        404:
-          description: "Companies not found"
   /companies/{companyId}:
     get:
       tags:
@@ -73,8 +71,6 @@ paths:
             $ref: "#/definitions/Company"
         400:
           description: "Invalid request"
-        404:
-          description: "Companies not found"
   /companies/{companyId}/revenue:
     get:
       tags:
@@ -103,8 +99,29 @@ paths:
             $ref: "#/definitions/DataSeriesResponse"
         400:
           description: "Invalid ID supplied"
-        404:
-          description: "Company revenue data not found"
+  /companies/{companyId}/ebitda:
+    get:
+      tags:
+        - "ebitda data"
+      summary: "Gets ebitda data for specific companyId"
+      description: "Returns an array of DataSeriesResponse"
+      operationId: "getEbitdaByCompanyId"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "ID of the Company for which to return ebitda"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DataSeriesResponse"
+        400:
+          description: "Invalid ID supplied"
   /companies/{companyId}/valuation:
     get:
       tags:
@@ -128,68 +145,52 @@ paths:
             $ref: "#/definitions/Valuation"
         400:
           description: "Invalid ID supplied"
-        404:
-          description: "Company valuation data not found"
-  /companies/{companyId}/cashburn:
+  /companies/{companyId}/cash:
     get:
       tags:
-        - "cashburn data"
-      summary: "Gets cashburn data for specific companyId"
-      description: "Returns an array of DataSeriesResponse"
-      operationId: "getCashburnByCompanyId"
+        - "cash data"
+      summary: "Gets cash data for specific companyId"
+      description: "Returns an CashResponse"
+      operationId: "getCashByCompanyId"
       produces:
         - "application/json"
       parameters:
         - name: "companyId"
           in: "path"
-          description: "ID of the Company for which to return revenue"
+          description: "ID of the Company for which to return cash details"
           required: true
           type: "integer"
           format: "int64"
-        - in: query
-          name: "currency"
-          type: "string"
-          required: true
-          description: "Value representing currency, either usd or jpy"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/DataSeriesResponse"
+            $ref: "#/definitions/CashData"
         400:
           description: "Invalid ID supplied"
-        404:
-          description: "Company cashburn data not found"
-  /companies/{companyId}/ebitda:
+  /companies/{companyId}/kpis:
     get:
       tags:
-        - "ebitda data"
-      summary: "Gets ebitda data for specific companyId"
-      description: "Returns an array of DataSeriesResponse"
-      operationId: "getEbitdaByCompanyId"
+        - "KPI data"
+      summary: "Gets up to 4 KPIs data for specific companyId"
+      description: "Returns an array of KpiResponse"
+      operationId: "getKpisByCompanyId"
       produces:
         - "application/json"
       parameters:
         - name: "companyId"
           in: "path"
-          description: "ID of the Company for which to return ebitda"
+          description: "ID of the Company for which to return kpis"
           required: true
           type: "integer"
           format: "int64"
-        - in: query
-          name: "currency"
-          type: "string"
-          required: true
-          description: "Value representing currency, either usd or jpy"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/DataSeriesResponse"
+            $ref: "#/definitions/KpisData"
         400:
           description: "Invalid ID supplied"
-        404:
-          description: "Company ebitda data not found"
   /companies/{companyId}/team-members:
     get:
       tags:
@@ -202,7 +203,7 @@ paths:
       parameters:
         - name: "companyId"
           in: "path"
-          description: "Id for the portfolio summary being requested"
+          description: "Id for the portfolio company being requested"
           required: true
           type: "number"
       responses:
@@ -212,6 +213,38 @@ paths:
             $ref: "#/definitions/Team"
         400:
           description: "Invalid status value"
+  /companies/{companyId}/documents:
+    get:
+      tags:
+        - "team"
+      summary: "Retrieve list of documents for this company"
+      description: ""
+      operationId: "getDocumentsForCompany"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "Id for the portfolio company being requested"
+          required: true
+          type: "number"
+        - name: "from"
+          in: "query"
+          description: "Starting date for range (default 'all time') in format YYYY-MM-dd"
+          required: false
+          type: "string"
+        - name: "to"
+          in: "query"
+          description: "Ending date for range (default 'all time') in format YYYY-MM-dd"
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DocumentsListResponse"
+        400:
+          description: "Invalid company id"
   /companies/{companyId}/team-members/{teamMemberId}:
     get:
       tags:
@@ -287,6 +320,42 @@ paths:
               $ref: "#/definitions/KeyValuePair"
         400:
           description: "Invalid status value"
+  /portfolio/{id}/exposure:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve a list of groupings for the portfolio of Total Value by some aggregation point"
+      description: ""
+      operationId: "getPortfolioExposureBy"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio sectors being requested"
+          required: true
+          type: "number"
+        - name: "by"
+          in: "query"
+          description: "Aggregate of exposure point for the portfolio being requested"
+          required: false
+          type: "string"
+          enum:
+            - "SECTOR"
+            - "FX"
+            - "COUNTRY"
+            - "REGION"
+            - "TYPE"
+            - "STAGE"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ExposureListResponse"
+        400:
+          description: "Invalid status value"
 definitions:
   ApiResponse:
     type: "object"
@@ -347,6 +416,60 @@ definitions:
         type: "string"
       avatar:
         type: "string"
+  CashData:
+    type: "object"
+    properties:
+      cashRunwayInMonths:
+        type: number
+      cashData:
+        $ref: '#/definitions/DataSeriesResponse'
+  DocumentsListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/Document'
+  Document:
+    type: object
+    properties:
+      type:
+        type: "string"
+        enum:
+              - "BOARD"
+              - "FINANCIALS"
+              - "INVESTMENTCOMMITTEE"
+              - "VALUATION"
+      format:
+        type: "string"
+        enum:
+              - "SLIDES"
+              - "SPREADSHEET"
+              - "DOCUMENT"
+              - "PDF"
+      name:
+        type: "string"
+      createdBy:
+        type: "string"
+      createdByContactId:
+        type: "number"
+      createdOn:
+        type: "string"
+  ExposureListResponse:
+    type: "array"
+    items:
+      $ref: '#/definitions/Exposure'
+  Exposure:
+    type: "object"
+    properties:
+      currency:
+        $ref: '#/definitions/Currency'
+      portfolioValue:
+        type: "number"
+      portfolioPercentage:
+        type: "number"
+  KpisData:
+    type: "object"
+    properties:
+      kpisData:
+        $ref: '#/definitions/DataSeriesResponse'
   Company:
     type: "object"
     properties:
@@ -573,16 +696,15 @@ definitions:
         type: "string"
       status:
         type: "string"
-          enum:
-            - "GOOD"
-            - "WARNING"
-            - "BAD"
-            - "NEUTRAL"
+        enum:
+        - "GOOD"
+        - "WARNING"
+        - "BAD"
+        - "NEUTRAL"
       title:
         type: "string"
       initiativeOwner:
-        type:
-          $ref: '#/definitions/TeamMember';
+        $ref: '#/definitions/TeamMember'
       description:
         type: "string"
   Fund:
@@ -594,26 +716,28 @@ definitions:
       name:
         type: "string"
         description: "name of the fund"
-      description:
+      totalFund:
+        type: "number"
+      fundInception:
         type: "string"
-        description: "currencyDesc of the fund"
+      invested:
+        type: "number"
   PortfolioSummary:
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
-      invested:
-        type: "number"
+      name:
+        type: "string"
       valuation:
         type: "number"
-      totalFund:
-        type: "number"
-      companies:
+      headquarters:
+        type: "string"
+      funds:
         type: "array"
         items:
-          type: "integer"
-          description: "array of ids representing the companies within the portfolio"
+          $ref: '#/definitions/Fund'
   Sector:
     type: "object"
     properties:
