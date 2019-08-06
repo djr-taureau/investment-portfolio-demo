@@ -16,6 +16,7 @@ export const expandOutFromTop = trigger("expandOutFromTop", [
     state(
         "false",
         style({
+            marginTop: "0px",
             display: "",
             overflow: "hidden",
             height: "0px"
@@ -24,6 +25,7 @@ export const expandOutFromTop = trigger("expandOutFromTop", [
     state(
         "true",
         style({
+            marginTop: "10px",
             display: "*",
             // overflow: "hidden",
             height: "*"

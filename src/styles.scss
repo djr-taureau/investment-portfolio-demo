@@ -10,9 +10,15 @@
 html,
 body {
     padding: 0 0 51px 0;
-    margin: 0;
-    background: #ebeff5;
+    background: $light-grey-blue; //#ebeff5;
     font-family: PostGrotesk, sans-serif;
+    max-width: 1440px;
+    margin: 0 auto;
+    overflow: scroll;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 .disabled {

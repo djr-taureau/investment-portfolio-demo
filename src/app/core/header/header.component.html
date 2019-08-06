@@ -1,21 +1,19 @@
-<mat-toolbar color="primary">
-
-    <div class="logo-container">
-        <button mat-button
-                routerLink="/">
-            <mat-icon>
-                <img src="/assets/image/header-logo.png"
-                     alt="SoftBank">
-            </mat-icon>
-        </button>
+<div fxLayout="row"
+     fxLayoutAlign="start center"
+     class="header-container">
+    <div class="logo-container"
+         routerLink="">
+        <img src="/assets/image/header-logo.png"
+             alt="SoftBank">
     </div>
 
     <div fxLayout="row"
          fxLayoutGap="16px"
-         fxLayoutAlign="space-between end"
+         fxLayoutAlign="space-between center"
          class="menu">
         <div class="portfolio"
-             (click)="onPortfolioClick()">Portfolio</div>
+             (click)="onPortfolioClick()">Portfolio
+        </div>
         <div *ngIf="showCompanyCombo">&#47;</div>
         <sbp-iconized-searchable-combo *ngIf="showCompanyCombo"
                                        class="combo"
@@ -25,7 +23,7 @@
                                        [listItems]="listItems">
         </sbp-iconized-searchable-combo>
     </div>
-
+    <div fxFlex></div>
     <div class="user">
 
         <button mat-button
@@ -45,5 +43,5 @@
             </button>
         </mat-menu>
     </div>
-
-</mat-toolbar>
+    <!--</mat-toolbar>-->
+</div>
