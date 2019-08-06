@@ -423,19 +423,6 @@ definitions:
         type: number
       cashData:
         $ref: '#/definitions/DataSeriesResponse'
-  ExposureListResponse:
-    type: "array"
-    items:
-      $ref: '#/definitions/Exposure'
-  Exposure:
-    type: "object"
-    properties:
-      currency:
-        $ref: '#/definitions/Currency'
-      portfolioValue:
-        type: "number"
-      portfolioPercentage:
-        type: "number"
   DocumentsListResponse:
     type: array
     items:
@@ -461,8 +448,23 @@ definitions:
         type: "string"
       createdBy:
         type: "string"
+      createdByContactId:
+        type: "number"
       createdOn:
         type: "string"
+  ExposureListResponse:
+    type: "array"
+    items:
+      $ref: '#/definitions/Exposure'
+  Exposure:
+    type: "object"
+    properties:
+      currency:
+        $ref: '#/definitions/Currency'
+      portfolioValue:
+        type: "number"
+      portfolioPercentage:
+        type: "number"
   KpisData:
     type: "object"
     properties:
