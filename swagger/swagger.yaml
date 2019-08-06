@@ -203,7 +203,7 @@ paths:
       parameters:
         - name: "companyId"
           in: "path"
-          description: "Id for the portfolio summary being requested"
+          description: "Id for the portfolio company being requested"
           required: true
           type: "number"
       responses:
@@ -213,6 +213,38 @@ paths:
             $ref: "#/definitions/Team"
         400:
           description: "Invalid status value"
+  /companies/{companyId}/documents:
+    get:
+      tags:
+        - "team"
+      summary: "Retrieve list of documents for this company"
+      description: ""
+      operationId: "getDocumentsForCompany"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "companyId"
+          in: "path"
+          description: "Id for the portfolio company being requested"
+          required: true
+          type: "number"
+        - name: "from"
+          in: "query"
+          description: "Starting date for range (default 'all time') in format YYYY-MM-dd"
+          required: false
+          type: "string"
+        - name: "to"
+          in: "query"
+          description: "Ending date for range (default 'all time') in format YYYY-MM-dd"
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/DocumentsListResponse"
+        400:
+          description: "Invalid company id"
   /companies/{companyId}/team-members/{teamMemberId}:
     get:
       tags:
@@ -355,6 +387,33 @@ definitions:
         type: number
       cashData:
         $ref: '#/definitions/DataSeriesResponse'
+  DocumentsListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/Document'
+  Document:
+    type: object
+    properties:
+      type:
+        type: "string"
+        enum:
+              - "BOARD"
+              - "FINANCIALS"
+              - "INVESTMENTCOMMITTEE"
+              - "VALUATION"
+      format:
+        type: "string"
+        enum:
+              - "SLIDES"
+              - "SPREADSHEET"
+              - "DOCUMENT"
+              - "PDF"
+      name:
+        type: "string"
+      createdBy:
+        type: "string"
+      createdOn:
+        type: "string"
   KpisData:
     type: "object"
     properties:
