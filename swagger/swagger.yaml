@@ -320,6 +320,42 @@ paths:
               $ref: "#/definitions/KeyValuePair"
         400:
           description: "Invalid status value"
+  /portfolio/{id}/exposure:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve a list of groupings for the portfolio of Total Value by some aggregation point"
+      description: ""
+      operationId: "getPortfolioExposureBy"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio sectors being requested"
+          required: true
+          type: "number"
+        - name: "by"
+          in: "query"
+          description: "Aggregate of exposure point for the portfolio being requested"
+          required: false
+          type: "string"
+          enum:
+            - "SECTOR"
+            - "FX"
+            - "COUNTRY"
+            - "REGION"
+            - "TYPE"
+            - "STAGE"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ExposureListResponse"
+        400:
+          description: "Invalid status value"
 definitions:
   ApiResponse:
     type: "object"
@@ -387,6 +423,19 @@ definitions:
         type: number
       cashData:
         $ref: '#/definitions/DataSeriesResponse'
+  ExposureListResponse:
+    type: "array"
+    items:
+      $ref: '#/definitions/Exposure'
+  Exposure:
+    type: "object"
+    properties:
+      currency:
+        $ref: '#/definitions/Currency'
+      portfolioValue:
+        type: "number"
+      portfolioPercentage:
+        type: "number"
   DocumentsListResponse:
     type: array
     items:
