@@ -22,9 +22,14 @@ export class CompanyService {
     /**
      * Constructor.
      * @param apiService
+     * @param apiEndpointService
      * @param mapper
      */
-    constructor(private apiService: ApiService, private mapper: ApiResponseDataTransformationService) {
+    constructor(
+        private apiService: ApiService,
+        private apiEndpointService: ApiEndpointService,
+        private mapper: ApiResponseDataTransformationService
+    ) {
         CompanyService.logger.debug(`constructor()`);
     }
 
@@ -32,7 +37,7 @@ export class CompanyService {
      * Retrieves all the companies.
      */
     public getCompanies(): Observable<Company[]> {
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
         CompanyService.logger.debug(`getCompanies( ${url} )`);
 
         return this.apiService.get(url).pipe(
@@ -58,7 +63,7 @@ export class CompanyService {
         const params = {
             id
         };
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY, params);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY, params);
 
         return this.apiService.get(url).pipe(
             map((response: GetCompanyResponse) => {
@@ -81,7 +86,7 @@ export class CompanyService {
             id
         };
 
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params);
         CompanyService.logger.debug(`getCompanyRevenue() url - ${url}`);
 
         return this.apiService.get(url).pipe(

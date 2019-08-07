@@ -1,4 +1,4 @@
-import { GetTeamMemberResponse } from "./../domain/company.model";
+import { GetTeamMemberResponse } from "@core/domain/company.model";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
 import { GetAllTeamsResponse, TeamMember } from "@core/domain/company.model";
@@ -20,9 +20,11 @@ export class TeamService {
 
     /**
      * Constructor.
-     * @param http
+     * @param apiService
+     * @param store$
+     * @param apiEndpointService
      */
-    constructor(private store$: Store<any>, private apiService: ApiService) {
+    constructor(private apiService: ApiService, private apiEndpointService: ApiEndpointService, private store$: Store<any>) {
         TeamService.logger.debug(`constructor()`);
     }
 
@@ -35,7 +37,7 @@ export class TeamService {
         const params = {
             id
         };
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.TEAMS, params);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.TEAMS, params);
 
         return this.apiService.get(url).pipe(
             map((result) => {
@@ -62,7 +64,7 @@ export class TeamService {
             member_id: memberId,
             id: companyId
         };
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.TEAM_MEMBER, params);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.TEAM_MEMBER, params);
 
         return this.apiService.get(url).pipe(
             catchError((fault: HttpErrorResponse) => {

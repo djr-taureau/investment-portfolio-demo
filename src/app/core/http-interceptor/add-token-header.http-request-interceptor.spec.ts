@@ -10,6 +10,7 @@ xdescribe("HTTP Interceptor: AddTokenHeaderHttpRequestInterceptor >>", () => {
 
     // Spy on the NGRX Store so we can mock the `pipe()` and `dispatch()` methods.
     const store$ = jasmine.createSpyObj("Store", ["pipe", "dispatch"]);
+    const apiEndpointService = jasmine.createSpyObj("ApiEndpointService", ["isApiEndpoint", "isAuthEndpoint", "isSecureEndpoint", "isMockRoute"]);
 
     // Create some expected test data.
     const testToken = "testToken";
@@ -18,7 +19,7 @@ xdescribe("HTTP Interceptor: AddTokenHeaderHttpRequestInterceptor >>", () => {
     beforeEach(() => {
         // NOTE: This is important to note as we're testing the HTTP interceptor outside the scope of
         // Angular as if it was a normal JS class.
-        testSubject = new AddTokenHeaderHttpRequestInterceptor(store$);
+        testSubject = new AddTokenHeaderHttpRequestInterceptor(store$, apiEndpointService);
 
         // Unnecessary but here for posterity. See NOTE above for explanation.
         // TestBed.configureTestingModule({
