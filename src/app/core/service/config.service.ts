@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
 import { AdalAuthConfig } from "@core/auth/adal-auth.config";
 import { AdalAuthConfigService } from "@core/auth/auth-config.service";
-import { ApiResponse } from "@core/domain/api.model";
 import { Config, defaultConfig } from "@core/domain/config.model";
 import { catchError, map } from "rxjs/operators";
 import { ApiEndpointService } from "./api-endpoint.service";
@@ -26,7 +25,11 @@ export class ConfigService {
     /**
      * Constructor.
      */
-    constructor(protected http: HttpClient, @Inject(AdalAuthConfigService) private adalAuthConfig: AdalAuthConfig) {
+    constructor(
+        protected http: HttpClient,
+        private apiEndpointService: ApiEndpointService,
+        @Inject(AdalAuthConfigService) private adalAuthConfig: AdalAuthConfig
+    ) {
         ConfigService.logger.debug(`constructor()`);
     }
 
@@ -34,7 +37,7 @@ export class ConfigService {
      * Requests the application's config data.
      */
     public load(): Promise<Config> {
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.CONFIG);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.CONFIG);
         ConfigService.logger.debug(`load()`);
         return (
             this.http
@@ -50,8 +53,10 @@ export class ConfigService {
                         // Order matters here...
                         // 1) Update the ADAL auth config with data from loaded config.
                         // 2) Set a flag that ADAL auth is good to go.
-                        // 3) Set the latest config on the service's observable config.
+                        // 3) Update the API Endpoint service with the value from config.
+                        // 4) Set the latest config on the service's observable config.
                         this.updateAdalAuthConfig(config);
+                        this.updateApiEndpoint(config);
                         this.config$.next(config);
                         return config;
                     }),
@@ -80,10 +85,32 @@ export class ConfigService {
     }
 
     /**
-     * Accessor for the private member config.
+     * Accessor for the private member config as an observable stream.
      */
     public getConfig(): BehaviorSubject<Config> {
         return this.config$;
+    }
+
+    /**
+     * Accessor for the private member config value.
+     */
+    public getConfigValue(): Config {
+        return this.getConfig().value;
+    }
+
+    /**
+     * Accessor for the config's API endpoint.
+     */
+    public getConfigApiEndpoint(): string {
+        return this.getConfigValue().apiEndpoint;
+    }
+
+    /**
+     * Update the API endpoint with data from the loaded config.
+     * @param config
+     */
+    private updateApiEndpoint(config: Config): void {
+        ApiEndpointService.BASE_URL.FROM_CONFIG = config.apiEndpoint;
     }
 
     /**

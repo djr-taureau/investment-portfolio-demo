@@ -12,7 +12,7 @@
          fxLayout="column"
          fxLayoutAlign="center stretch">
         <img class="logo"
-             [src]="company.logo || ''"
+             [src]="company.logo || 'https://via.placeholder.com/60/f0f4fa/3b4659?text=' + company.name + ''"
              [alt]="company.name">
     </div>
 
@@ -27,7 +27,7 @@
         <div class="company-name">{{ company.name }}</div>
         <div fxLayout="row"
              fxLayoutAlign="start center">
-            <div>
+            <div *ngIf="showDonut()">
                 <kendo-chart style="height: 35px; width: 35px;">
                     <kendo-chart-series>
                         <kendo-chart-series-item type="donut"
@@ -39,7 +39,8 @@
                     <kendo-chart-legend [visible]="false"></kendo-chart-legend>
                 </kendo-chart>
             </div>
-            <div class="percent-owned">{{ company.percentOwnership * 100 }}% OWN</div>
+            <div class="percent-owned"
+                 *ngIf="showDonut()">{{ company.percentOwnership * 100 }}% OWN</div>
             <div class="more-company-info hand-cursor"
                  (click)="onSeeMoreCompanyInfo(company.id)">
                 More company info

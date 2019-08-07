@@ -4,11 +4,9 @@ import * as AuthActions from "@core/state/auth/auth.action";
 import { select, Store } from "@ngrx/store";
 import { EMPTY, Observable, of } from "rxjs";
 import { first, mergeMap } from "rxjs/operators";
-import { appRoutePaths } from "@app/app.routes";
 import { Logger } from "@util/logger";
 import { ApiEndpointService } from "@core/service/api-endpoint.service";
 import * as fromState from "@core/state";
-import * as RouterActions from "@core/state/router/router.action";
 
 @Injectable()
 export class AddTokenHeaderHttpRequestInterceptor implements HttpInterceptor {
@@ -20,17 +18,17 @@ export class AddTokenHeaderHttpRequestInterceptor implements HttpInterceptor {
     /**
      * Constructor.
      */
-    constructor(private store$: Store<any>) {}
+    constructor(private store$: Store<any>, private apiEndpointService: ApiEndpointService) {}
 
     /**
      * Intercepts all HTTP requests and adds the JWT token to the request's header if the URL
      * is a REST endpoint and not login or logout.
      */
     public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const isApiEndpoint: boolean = ApiEndpointService.isApiEndpoint(request.url);
-        const isAuthEndpoint: boolean = ApiEndpointService.isAuthEndpoint(request.url);
-        const isSecureEndpoint: boolean = ApiEndpointService.isSecureEndpoint(request.url);
-        const isMockRoute: boolean = ApiEndpointService.isMockRoute(window.location.href);
+        const isApiEndpoint: boolean = this.apiEndpointService.isApiEndpoint(request.url);
+        const isAuthEndpoint: boolean = this.apiEndpointService.isAuthEndpoint(request.url);
+        const isSecureEndpoint: boolean = this.apiEndpointService.isSecureEndpoint(request.url);
+        const isMockRoute: boolean = this.apiEndpointService.isMockRoute(window.location.href);
         const isTokenizeableEndpoint: boolean = isApiEndpoint && isSecureEndpoint && !isAuthEndpoint && !isMockRoute;
 
         // NOTE: We do not want to add the token to anything but REST endpoints that aren't

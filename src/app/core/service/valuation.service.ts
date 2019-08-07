@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { ApiEndpointService } from "./api-endpoint.service";
-import { Valuation } from "./../domain/company.model";
+import { Valuation } from "@core/domain/company.model";
 import { Observable, throwError, of } from "rxjs";
-import { Logger } from "./../../util/logger";
+import { Logger } from "@util/logger";
 import { ApiService } from "./api.service";
 import { Injectable } from "@angular/core";
 
@@ -11,7 +11,7 @@ import { Injectable } from "@angular/core";
 export class ValuationService {
     private static logger: Logger = Logger.getLogger("ValuationService");
 
-    constructor(private apiService: ApiService) {
+    constructor(private apiService: ApiService, private apiEndpointService: ApiEndpointService) {
         ValuationService.logger.debug("constructor()");
     }
 
@@ -24,7 +24,7 @@ export class ValuationService {
         const params = {
             id
         };
-        const url = ApiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.VALUATION, params);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.VALUATION, params);
 
         return this.apiService.get(url).pipe(
             map((result) => {

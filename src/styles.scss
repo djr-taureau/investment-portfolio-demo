@@ -10,14 +10,34 @@
 html,
 body {
     padding: 0 0 51px 0;
-    margin: 0;
-    background: #ebeff5;
+    background: $light-grey-blue; //#ebeff5;
     font-family: PostGrotesk, sans-serif;
+    max-width: 1440px;
+    margin: 0 auto;
+    overflow: scroll;
+}
+
+html {
+    overflow-x: hidden;
 }
 
 .disabled {
     @extend .not-allowed-cursor;
     opacity: .25 !important;
+}
+
+h1.coming-soon {
+    margin: 20px 0;
+    text-align: center;
+    opacity: 0.75;
+    font-family: PostGrotesk;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.25px;
+    color: $grey-blue;
 }
 
 .my-select-panel-class {}

@@ -12,17 +12,11 @@ export class ApiEndpointService {
      * Remote: Uses the remote AWS API URL.
      * Build: Uses the compile time provided API URL.
      */
-    // TODO: @Momentum:
-    //  1. Pick up REMOTE: from /app/config.js
-    // this file will vary by deployment env. you might want to have a config-dev.js that is the fallback and maintain that
-    // for the local dev scenario, deferring to config.js if it is available (for upper env/deployed context)
-    // As Chris M if any questions!
-
     public static BASE_URL = {
         LOCAL: "http://localhost:4401/",
-        // REMOTE: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v5/",
+        V5: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v5/",
         REMOTE: "https://prism-dev-api-management.azure-api.net/latest/",
-        BUILD: "https://DOMAIN_URL"
+        FROM_CONFIG: "POPULATED_BY_CONFIG.JSON"
     };
 
     /**
@@ -93,17 +87,18 @@ export class ApiEndpointService {
      * at build time or at runtime via (for example) query string params...but for now we'll
      * keep this dumb simple.
      */
-    public static getEndpoint(endpoint: string, params?: {}): string {
+    public getEndpoint(endpoint: string, params?: {}): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
-        const url = isConfig ? `${endpoint}` : `${ApiEndpointService.getBaseUrl()}${endpoint}`;
+        const url = isConfig ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
         return StringUtil.replaceTokens(url, params);
     }
 
     /**
      * Getter for the base URL for the API.
      */
-    public static getBaseUrl(): string {
-        return ApiEndpointService.BASE_URL.REMOTE;
+    public getBaseUrl(): string {
+        // TODO: BMR: 08/07/2019: Once Jon adds a trailing "/" to the config.json's API endpioint value we can remove the trailing "/" here.
+        return `${ApiEndpointService.BASE_URL.FROM_CONFIG}/`;
     }
 
     /**
@@ -111,7 +106,7 @@ export class ApiEndpointService {
      * @param {string} url
      * @returns {boolean}
      */
-    public static isAuthEndpoint(url: string = ""): boolean {
+    public isAuthEndpoint(url: string = ""): boolean {
         return url.toLowerCase().indexOf(ApiEndpointService.AUTH_CONTEXT) > -1;
     }
 
@@ -120,7 +115,7 @@ export class ApiEndpointService {
      * @param {string} url
      * @returns {boolean}
      */
-    public static isApiEndpoint(url: string = ""): boolean {
+    public isApiEndpoint(url: string = ""): boolean {
         return url.toLowerCase().indexOf(ApiEndpointService.CONTEXT) > -1;
     }
 
@@ -129,8 +124,8 @@ export class ApiEndpointService {
      * @param {string} requestedUrl
      * @returns {boolean}
      */
-    public static isSecureEndpoint(requestedUrl: string = ""): boolean {
-        return this.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
+    public isSecureEndpoint(requestedUrl: string = ""): boolean {
+        return ApiEndpointService.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
     }
 
     /**
@@ -138,7 +133,7 @@ export class ApiEndpointService {
      * @param {string} url
      * @returns {boolean}
      */
-    public static isMockRoute(url: string = ""): boolean {
+    public isMockRoute(url: string = ""): boolean {
         return url.toLowerCase().indexOf("mock") > -1;
     }
 }
