@@ -18,7 +18,7 @@ export interface AppState {
     auth: fromAuth.AuthState;
     company: fromCompany.State;
     layout: fromLayout.LayoutState;
-    portfolioDashboard: fromPortfolioDashboard.State;
+    // portfolioDashboard: fromPortfolioDashboard.State;
     router: fromRouter.RouterReducerState<RouterStateUrl>;
     team: fromTeam.State;
     teamMember: fromTeamMember.State;
@@ -28,7 +28,7 @@ export interface AppState {
 export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.authReducer,
     company: fromCompany.reducer,
-    portfolioDashboard: fromPortfolioDashboard.reducer,
+    // portfolioDashboard: fromPortfolioDashboard.reducer,
     layout: fromLayout.layoutReducer,
     router: fromRouter.routerReducer,
     team: fromTeam.reducer,
@@ -259,71 +259,6 @@ export const getDealTeamMembers = createSelector(
 export const getSelectedTeamGroup = createSelector(
     selectTeamState,
     fromTeam.getSelectedTeamMemberGroup
-);
-
-// --------------------------------------------------
-// PORTFOLIO DASHBOARD: SEARCH SELECTORS
-// --------------------------------------------------
-export const getPortfolioDashboardState = createFeatureSelector<fromPortfolioDashboard.State>("portfolioDashboard");
-
-export const getSearchCompanyIds = createSelector(
-    getPortfolioDashboardState,
-    fromPortfolioDashboard.getSearchResultIds
-);
-
-export const getSearchQuery = createSelector(
-    getPortfolioDashboardState,
-    fromPortfolioDashboard.getSearchQuery
-);
-
-export const getSearchLoading = createSelector(
-    getPortfolioDashboardState,
-    fromPortfolioDashboard.getSearching
-);
-
-export const getSearchError = createSelector(
-    getPortfolioDashboardState,
-    fromPortfolioDashboard.getSearchError
-);
-
-export const getSearchResults = createSelector(
-    getAllCompanies,
-    getSearchCompanyIds,
-    (companies, searchIds) => {
-        return searchIds.map((id) => companies[id]);
-    }
-);
-// --------------------------------------------------
-// PORTFOLIO DASHBOARD: VIEW SELECTORS
-// --------------------------------------------------
-
-export const getPortfolioLoaded = createSelector(
-    getPortfolioDashboardState,
-    fromPortfolioDashboard.getLoaded
-);
-
-export const getPortfolioLoading = createSelector(
-    getPortfolioDashboardState,
-    fromPortfolioDashboard.getLoading
-);
-
-export const getFilteredCompanies = createSelector(
-    getAllCompanies,
-    getSearchQuery,
-    (allCompanies, searchQuery) => {
-        // const allCompanies = Object.values(companiesState.entities);
-        return allCompanies.filter((co) => co.name.toLowerCase().includes(searchQuery.toString().toLowerCase()));
-    }
-);
-
-export const sortCompaniesValuation = createSelector(
-    getAllCompanies,
-    getCompanySort,
-    (allCompanies) => {
-        // const allCompanies = Object.values(companiesState.entities);
-        allCompanies.sort(sortByValuation);
-        return allCompanies;
-    }
 );
 
 // -------------------------------------------------------------------

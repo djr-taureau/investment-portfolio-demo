@@ -1,0 +1,25 @@
+<div fxLayout="row"
+     fxLayoutAlign="start center"
+     fxFill
+     class="container">
+    <div fxLayout="row"
+         fxLayoutAlign="start center">
+        <ng-content></ng-content>
+    </div>
+    <ng-container *ngFor="let link of links; let idx=index; trackBy: trackByFn">
+        <div class="tab"
+             fxLayout="row"
+             fxLayoutAlign="center center"
+             fxLayoutGap="8px"
+             [ngClass]="link | sbpCalculatePortfolioDashboardNavBarClasses: selectedLink: hovered"
+             (click)="onLinkClick(link)"
+             (mouseover)="onMouseOver(link)"
+             (mouseout)="onMouseOut(link)">
+            <!--            <img src="{{link.icon}}"-->
+            <!--                 class="overview">-->
+            <div class="name">{{link.label}}</div>
+            <!--            <div class="count"-->
+            <!--                 *ngIf="link.showItemCount">(42)</div>-->
+        </div>
+    </ng-container>
+</div>

@@ -16,6 +16,7 @@ import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } fro
 import { TeamEffects } from "./team/team.effects";
 import * as CompanyDashboard from "@core/state/company/dashboard";
 import * as PortfolioListingLayout from "@core/state/portfolio-list";
+import * as PortfolioDashboard from "@core/state/portfolio-dashboard";
 import { ValuationEffects } from "./valuation/valuation.effects";
 
 const EFFECTS = [
@@ -43,6 +44,7 @@ const MODULES = [
 
     StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
     StoreModule.forFeature("portfolioListing", PortfolioListingLayout.reducers),
+    StoreModule.forFeature("portfolioDashboard", PortfolioDashboard.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and

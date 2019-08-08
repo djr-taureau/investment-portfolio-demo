@@ -10,6 +10,8 @@ export const appRoutePaths = {
     login: "login",
     portfolioCalendarView: "portfolio-calendar-view",
     portfolioDashboard: "portfolio-dashboard",
+    portfolioDashboardInvestment: "portfolio-dashboard/investment",
+    portfolioDashboardFinancials: "portfolio-dashboard/financials",
     portfolioDocuments: "portfolio-documents",
     portfolioFinancials: "portfolio-financials",
     portfolioInitiatives: "portfolio-initiatives",
