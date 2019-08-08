@@ -55,6 +55,20 @@ export class GoToPortfolioDashboard implements Action {
     constructor() {}
 }
 
+export class GoToPortfolioDashboardInvestment implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.portfolioDashboardInvestment };
+
+    constructor() {}
+}
+
+export class GoToPortfolioDashboardFinancials implements Action {
+    readonly type = RouterActionTypes.Go;
+    readonly payload = { path: appRoutePaths.portfolioDashboardFinancials };
+
+    constructor() {}
+}
+
 export class GoToCompanyInfo implements Action {
     readonly type = RouterActionTypes.Go;
     readonly payload = { path: appRoutePaths.companyInfo, extras: { queryParamsHandling: "preserve", skipLocationChange: true } };
@@ -118,6 +132,8 @@ export type RouterActions =
     | GoToCompanyInfo
     | GotoRegister
     | GoToPortfolioDashboard
+    | GoToPortfolioDashboardInvestment
+    | GoToPortfolioDashboardFinancials
     | GoToPortfolioListing
     | GoToTeamMemberDetail
     | GoToTeamMemberList

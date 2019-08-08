@@ -1,3 +1,4 @@
+import { PortfolioDashboardOverviewRouteMonitorService } from "@core/service/portfolio-dashboard-overview.route-monitor.service";
 import { appRoutePaths } from "../app.routes";
 import { Component, OnInit } from "@angular/core";
 import { CorePortfolioContainer } from "@shared/portfolio/core-portfolio.container";
@@ -12,16 +13,23 @@ export class PortfolioDashboardContainer extends CorePortfolioContainer implemen
     /**
      * Internal logger.
      */
-    private static logger: Logger = Logger.getLogger("PortfolioDashboardContainerComponent");
+    private static logger: Logger = Logger.getLogger("PortfolioDashboardContainer");
+
+    /**
+     * Constructor.
+     * @param store$
+     * @param portfolioDashboardOverviewRouteMonitorService
+     */
+    constructor(protected store$: Store<any>, private portfolioDashboardOverviewRouteMonitorService: PortfolioDashboardOverviewRouteMonitorService) {
+        super(store$, appRoutePaths.portfolioDashboard);
+        PortfolioDashboardContainer.logger.debug(`constructor()`);
+    }
 
     /**
      * Initialize the component.
      */
     public ngOnInit(): void {
         super.ngOnInit();
-    }
-
-    constructor(protected store$: Store<any>) {
-        super(store$, appRoutePaths.portfolioDashboard);
+        PortfolioDashboardContainer.logger.debug(`ngOnInit()`);
     }
 }

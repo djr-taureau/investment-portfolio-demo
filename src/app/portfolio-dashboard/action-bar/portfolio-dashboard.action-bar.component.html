@@ -1,0 +1,82 @@
+<div fxLayout="row"
+     fxLayoutAlign="center center"
+     fxLayoutGap="20px">
+    <!-- Currency Selector -->
+    <div class="currency-selector"
+         *ngIf="showCurrencySelector">
+        <kendo-buttongroup [selection]="'single'">
+            <button kendoButton
+                    [toggleable]="true"
+                    [selected]="getDefaultCurrencySelected()"
+                    [value]="currencies.USD"
+                    [disabled]="!alternateCurrency"
+                    (click)="onCurrencyChange(currencies.USD)">{{ currencies.USD.currencySymbol }} {{ currencies.USD.currencyCode }}</button>
+            <button kendoButton
+                    *ngIf="showAlternateCurrency()"
+                    [toggleable]="true"
+                    [selected]="getAlternateCurrencySelected()"
+                    [value]="alternateCurrency"
+                    (click)="onCurrencyChange(alternateCurrency)">{{ getAltCurrencySymbol() }} {{ getAltCurrencyName()}}</button>
+        </kendo-buttongroup>
+    </div>
+
+    <!-- Date Unit Selector -->
+    <div class="date-unit-selector">
+        <kendo-buttongroup [selection]="'single'"
+                           *ngIf="showDateUnitSelector">
+            <button kendoButton
+                    [toggleable]="true"
+                    [selected]="selectedDatePartType === dateunits.QTR"
+                    [value]="dateunits.QTR"
+                    (click)="onDatePartChange(dateunits.QTR)">{{ dateunits.QTR.name }} </button>
+            <button kendoButton
+                    [toggleable]="true"
+                    [selected]="selectedDatePartType === dateunits.YEAR"
+                    [value]="dateunits.YEAR"
+                    (click)="onDatePartChange(dateunits.YEAR)">{{ dateunits.YEAR.name }} </button>
+        </kendo-buttongroup>
+    </div>
+
+    <!-- Period Selector -->
+    <div class="period-selector"
+         fxLayout="row"
+         fxLayoutAlign="start center"
+         fxLayoutGap="10px">
+        <div>As of:</div>
+        <sbp-iconized-searchable-combo class="combo"
+                                       [textField]="getPeriodIdField()"
+                                       [valueField]="'id'"
+                                       [showFilter]="false"
+                                       [mainIconSrc]="'assets/image/calendar.svg'"
+                                       [selectedItem]="selectedPeriod"
+                                       [popupSettings]="popupSettings"
+                                       (selectionChange)="onPeriodChange($event)"
+                                       [listItems]="getPeriods()">
+        </sbp-iconized-searchable-combo>
+    </div>
+
+    <!-- Historical Results -->
+    <div class="historical-results"
+         fxLayout="row"
+         fxLayoutAlign="start center"
+         fxLayoutGap="10px"
+         *ngIf="showHistoricalResults">
+        <span class="legend"></span>
+        <div>Historical Results:</div>
+        <div>{{ getHistoricalUnitCount()}} {{ getSelectedDatePartName() }}</div>
+        <div>({{ getFirstHistoricalUnit() | date: 'MMM yyyy'}} - {{ getLastHistoricalUnit() | date: 'MMM yyyy' }})</div>
+    </div>
+
+    <!-- Projected Results -->
+    <div class="projected-results"
+         fxLayout="row"
+         fxLayoutAlign="start center"
+         fxLayoutGap="10px"
+         *ngIf="showProjectedResults">
+        <span class="legend"></span>
+        <div>Projected Results:</div>
+        <div>{{ getProjectedUnitCount()}} {{ getSelectedDatePartName()  }}</div>
+        <div>({{ getFirstProjectedUnit() | date: 'MMM yyyy'}}<span *ngIf="getProjectedUnitCount() > 0"> - {{ getLastProjectedUnit() | date: 'MMM yyyy' }}</span>)</div>
+    </div>
+
+</div>

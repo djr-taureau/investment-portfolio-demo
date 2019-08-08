@@ -1,14 +1,17 @@
+import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
+import * as PortfolioDashboardOverviewLayoutActions from "@core/state/portfolio-dashboard/portfolio-dashboard-overview-layout.actions";
 import * as CompanyActions from "../company/company.actions";
+import { PortfolioDashboardOverviewNavigationItemClicked } from "./portfolio-flow.actions";
 import * as FlowActions from "./portfolio-flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
 import { Action, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { ActivatedRoute, Router } from "@angular/router";
-import { appRoutePaths } from "../../../app.routes";
+import { appRoutePaths } from "@app/app.routes";
 import { catchError, concatMap, map } from "rxjs/operators";
 import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
 import { LoadPortfolioFailure, LoadPortfolioSuccess, PortfolioActionTypes, SearchCompany } from "../portfolio-dashboard/portfolio-dashboard.actions";
-import { NavigationBarLink } from "../../../shared/navigation-bar/navigation-bar-link";
+import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { Observable, of } from "rxjs";
 import { PortfolioFlowActionTypes } from "./portfolio-flow.actions";
 import { SetSelectedPortfolioLink } from "../layout/layout.actions";
@@ -59,7 +62,7 @@ export class PortfolioFlowEffect {
     );
 
     /**
-     * Handles clicks to go to the portolio navigation bar
+     * Handles clicks to go to the portfolio navigation bar
      */
     @Effect()
     portfolioNavigationLinkClicked: Observable<Action> = this.actions$.pipe(
@@ -75,6 +78,31 @@ export class PortfolioFlowEffect {
                     break;
                 case appRoutePaths.portfolioDashboard:
                     actions.push(new RouterActions.GoToPortfolioDashboard());
+                    break;
+                default:
+                    break;
+            }
+            return actions;
+        })
+    );
+
+    /**
+     * Handles clicks to go to the portfolio dashboard navigation bar.
+     */
+    @Effect()
+    portfolioDashboardOverviewNavigationLinkClicked: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.PortfolioDashboardOverviewNavigationItemClicked>(PortfolioFlowActionTypes.PortfolioDashboardOverviewNavigationItemClicked),
+        map((action) => action.payload),
+        concatMap((link: PortfolioDashboardNavBarLink) => {
+            const actions = [];
+            actions.push(new PortfolioDashboardOverviewLayoutActions.SelectNavLink(link));
+
+            switch (link.route) {
+                case appRoutePaths.portfolioDashboardInvestment:
+                    actions.push(new RouterActions.GoToPortfolioDashboardInvestment());
+                    break;
+                case appRoutePaths.portfolioDashboardFinancials:
+                    actions.push(new RouterActions.GoToPortfolioDashboardFinancials());
                     break;
                 default:
                     break;

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
-import { getFilteredCompanies, getSearchQuery } from "@core/state";
+import { getSearchQuery } from "@core/state/portfolio-dashboard";
 import { getGroupByOptions, getSelectedGroupByOption, getSelectedSortOption, getSortOptions } from "@core/state/portfolio-list";
 import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
 import { Logger } from "@util/logger";

@@ -1,0 +1,72 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/pointers";
+@import "../../../assets/scss/fonts/post-grotesk";
+
+:host {
+    height: 48px;
+    display: block;
+
+    .container {
+        height: 100%;
+    }
+
+    .tab {
+        height: 100%;
+        padding: 0 24px;
+        color: $grey-blue;
+        border-bottom: 4px solid $background;
+        @extend .hand-cursor;
+
+        &.selected {
+            opacity: 1;
+            border-bottom: 4px solid $light-navy;
+            color: $light-navy;
+        }
+
+        &.disabled {
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $grey-blue;
+            @extend .not-allowed-cursor
+        }
+
+        .name {
+            opacity: 1;
+            font-family: PostGrotesk;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .count {
+            color: $grey-blue;
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+        }
+
+    }
+
+    .hovered {
+        color: $light-navy !important;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        opacity: 1 !important;
+        //@extend .hand-cursor;
+        background-color: rgba($light-navy, .07) !important; //#124F8C26;
+    }
+}
