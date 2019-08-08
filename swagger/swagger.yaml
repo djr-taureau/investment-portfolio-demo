@@ -96,7 +96,7 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/DataSeriesResponse"
+            $ref: "#/definitions/RevenueResponse"
         400:
           description: "Invalid ID supplied"
   /companies/{companyId}/ebitda:
@@ -493,6 +493,8 @@ definitions:
               - "PDF"
       name:
         type: "string"
+      srcUrl:
+        type: "string"
       createdBy:
         type: "string"
       createdByContactId:
@@ -835,6 +837,161 @@ definitions:
         type: "string"
       name:
         type: "string"
+  RevenueResponse:
+    allOf:
+      - $ref: "#/definitions/revenueGraph"
+      - $ref: "#/definitions/comparisonGraph"
+      - $ref: "#/definitions/tableData"
+  revenueGraph:
+    type: object
+    properties:
+      series_quarters:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            displayOrder:
+              type: number
+            scenarioName:
+              type: string
+            isCalculation:
+              type: boolean
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  financialQuarter:
+                    type: number
+                  amountInNative:
+                    type: number
+                  amountInUSD:
+                    type: number
+                  projection:
+                    type: boolean
+                  comment:
+                    type: string
+      series_years:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            displayOrder:
+              type: number
+            scenarioName:
+              type: string
+            isCalculation:
+              type: boolean
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  financialQuarter:
+                    type: number
+                  amountInNative:
+                    type: number
+                  amountInUSD:
+                    type: number
+                  projection:
+                    type: boolean
+                  comment:
+                    type: string
+  comparisonGraph:
+    type: object
+    properties:
+      series_quarters:
+        type: array
+        items:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date
+            value:
+              type: number
+      series_years:
+        type: array
+        items:
+          type: object
+          properties:
+            date:
+              type: string
+              format: date
+            value:
+              type: number
+  tableData:
+    type: object
+    properties:
+      series_quarters:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            scenarioName:
+              type: string
+            displayOrder:
+              type: number
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  financialQuarter:
+                    type: number
+                  valueInNative:
+                    type: number
+                  valueInUSD:
+                    type: number
+                  comment:
+                    type: string
+                  sourceType:
+                    type: string
+      series_years:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            scenarioName:
+              type: string
+            displayOrder:
+              type: number
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  financialQuarter:
+                    type: number
+                  valueInNative:
+                    type: number
+                  valueInUSD:
+                    type: number
+                  comment:
+                    type: string
+                  sourceType:
+                    type: string
+
   Takeaway:
     type: "object"
     properties:
