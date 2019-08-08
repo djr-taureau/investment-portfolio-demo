@@ -506,8 +506,8 @@ definitions:
   Exposure:
     type: "object"
     properties:
-      currency:
-        $ref: '#/definitions/Currency'
+      label:
+        type: "string" # In the backend we need to create label for FX as concat of symbol/string
       portfolioValue:
         type: "number"
       portfolioPercentage:
