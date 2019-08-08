@@ -367,6 +367,41 @@ paths:
             $ref: "#/definitions/InvestmentSummary"
         400:
           description: "Invalid status value"
+  /portfolio/{id}/portcometrics:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve an aggregation of portco revenue or ebitda dollars"
+      description: ""
+      operationId: "getPortfolioCompaniesMetricsSummary"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio being requested"
+          required: true
+          type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
+        - name: "metric_type"
+          in: "query"
+          description: "Metric Typefor which to return data"
+          required: true
+          type: "string"
+          enum:
+              - REVENUE
+              - EBITDA
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PortfolioCompaniesMetricsSummary"
+        400:
+          description: "Invalid status value"
   /portfolio/{id}/exposure:
     get:
       tags:
@@ -794,6 +829,62 @@ definitions:
         type: "string"
       invested:
         type: "number"
+  PortfolioCompaniesMetricsSummary:
+    type: object
+    properties:
+      series_quarters:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            scenarioName:
+              type: string
+            netChangeFromPY:
+              type: string
+              format: nullable
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  calendarQuarter:
+                    type: number
+                  amountInUSD:
+                    type: number
+                  projection:
+                    type: boolean
+      series_years:
+        type: array
+        items:
+          type: object
+          properties:
+            name:
+              type: string
+            scenarioName:
+              type: string
+            netChangeFromPY:
+              type: string
+              format: nullable
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  date:
+                    type: string
+                    format: date
+                  calendarQuarter:
+                    type: number
+                  amountInUSD:
+                    type: number
+                  projection:
+                    type: boolean
+
   PortfolioSummary:
     type: "object"
     properties:
