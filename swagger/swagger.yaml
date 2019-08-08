@@ -89,7 +89,7 @@ paths:
             format: "int64"
           - name: "as_of_date"
             in: "query"
-            description: "As-Of Date for which to return revenue in the format YYYY-MM-dd"
+            description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
             required: false
             type: "string"
       responses:
@@ -115,6 +115,11 @@ paths:
           required: true
           type: "integer"
           format: "int64"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
       responses:
         200:
           description: "successful operation"
@@ -161,6 +166,11 @@ paths:
           required: true
           type: "integer"
           format: "int64"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
       responses:
         200:
           description: "successful operation"
@@ -184,6 +194,11 @@ paths:
           required: true
           type: "integer"
           format: "int64"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
       responses:
         200:
           description: "successful operation"
@@ -285,6 +300,11 @@ paths:
           description: "Id for the portfolio summary being requested"
           required: true
           type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
       produces:
         - "application/json"
       responses:
@@ -318,6 +338,33 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/KeyValuePair"
+        400:
+          description: "Invalid status value"
+  /portfolio/{id}/investmentsummary:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve a list of top-line numbers used for the portfolio details summary"
+      description: ""
+      operationId: "getPortfolioInvestmentSummary"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio being requested"
+          required: true
+          type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/InvestmentSummary"
         400:
           description: "Invalid status value"
   /portfolio/{id}/exposure:
@@ -459,8 +506,8 @@ definitions:
   Exposure:
     type: "object"
     properties:
-      currency:
-        $ref: '#/definitions/Currency'
+      label:
+        type: "string" # In the backend we need to create label for FX as concat of symbol/string
       portfolioValue:
         type: "number"
       portfolioPercentage:
@@ -707,6 +754,29 @@ definitions:
         $ref: '#/definitions/TeamMember'
       description:
         type: "string"
+  InvestmentSummary:
+    type: "object"
+    properties:
+      private:
+        type: "number"
+      public:
+        type: "number"
+      jv:
+        type: "number"
+      exited:
+        type: "number"
+      invested:
+        type: "number"
+      approved:
+        type: "number"
+      totalFund:
+        type: "number"
+      totalValue:
+        type: "number"
+      moic:
+        type: "number"
+      grossIrr:
+        type: "number"
   Fund:
     type: "object"
     properties:
