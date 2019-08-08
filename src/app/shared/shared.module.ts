@@ -36,6 +36,7 @@ const MODULES = [
     FilterablePanelModule,
     MaterialModule,
     PipeModule,
+    DirectivesModule,
     PortfolioNavbarModule,
     TeamMemberAvatarModule,
     ValuationModule,

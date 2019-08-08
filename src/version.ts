@@ -23,7 +23,7 @@ export interface AppVersion {
 }
 
 export const VERSION: AppVersion = {
-    dirty: true,
+    dirty: true
     raw: "4a1f1c7-dirty",
     hash: "4a1f1c7",
     distance: null,

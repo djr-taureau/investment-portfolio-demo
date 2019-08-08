@@ -26,6 +26,11 @@ html {
     opacity: .25 !important;
 }
 
+
+.disabled-preview {
+    @extend .not-allowed-cursor;
+    opacity: .50 !important;
+
 h1.coming-soon {
     margin: 20px 0;
     text-align: center;
