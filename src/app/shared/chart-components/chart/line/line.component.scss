@@ -8,11 +8,25 @@
         stroke-linecap: round;
         fill: none;
 
+        .projected {
+            stroke-dasharray: 3, 3;
+        }
+
+        path.projected [stroke] {
+            stroke: #dd6435;
+            stroke-width: 5px;
+            stroke-dasharray: 3, 3;
+        }
+
         &.line {
             stroke: $light-navy;
             stroke-width: 2px;
             stroke-linecap: round;
             fill: none;
+
+            &.projected {
+                stroke-dasharray: 3, 3;
+            }
 
         }
 
@@ -35,7 +49,6 @@
             stroke-dasharray: 3, 3;
         }
 
-
     }
 
     // path:hover {
@@ -46,7 +59,8 @@
 
 
     path.projected {
-        stroke-dasharray: 3, 3;
+        stroke-dasharray: 3, 3 !important;
+        ;
         fill: none;
     }
 
@@ -74,4 +88,9 @@
         background-color: $white;
 
     }
+}
+
+
+:host(.projected) {
+    stroke-dasharray: 3, 3 !important;
 }

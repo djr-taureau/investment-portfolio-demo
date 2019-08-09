@@ -35,7 +35,10 @@
             stroke-dasharray: 3, 3;
         }
 
-
+        .select-line {
+            width: 1px;
+            border: solid 1px $light-periwinkle;
+        }
 
         .y-axis-label {
             fill: #34495e;
