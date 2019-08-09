@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
 @Component({
     selector: "sbp-filterable-panel",
@@ -42,4 +42,10 @@ export class FilterablePanelComponent {
     @Input()
     public filterIconTwo = "assets/image/filter.svg";
     constructor() {}
+
+    @Output()
+    public filterChangeOne: EventEmitter<any> = new EventEmitter<any>();
+
+    @Output()
+    public filterChangeTwo: EventEmitter<any> = new EventEmitter<any>();
 }

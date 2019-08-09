@@ -12,8 +12,8 @@
          fxLayout="column"
          fxLayoutAlign="center stretch">
         <img class="logo"
-             [src]="company.logo || 'https://via.placeholder.com/60/f0f4fa/3b4659?text=' + company.name + ''"
-             [alt]="company.name">
+             [src]="getCompanyLogo()"
+             [alt]="getCompanyName()">
     </div>
 
     <!--
@@ -24,7 +24,7 @@
     <div fxLayout="column"
          fxLayoutAlign="space-between stretch"
          class="name-container">
-        <div class="company-name">{{ company.name }}</div>
+        <div class="company-name">{{ getCompanyName()}}</div>
         <div fxLayout="row"
              fxLayoutAlign="start center">
             <div *ngIf="showDonut()">

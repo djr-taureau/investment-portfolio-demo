@@ -10,16 +10,21 @@
 
     <!-- This is where a control bar will go - one that controls the date ranges and other values used for the widget data -->
     <div fxLayout="row"
-         fxLayoutAlign="start"
+         fxLayoutAlign="start center"
+         class="nav-container"
+         fxLayoutGap="12px"
          fxFlex>
 
         <sbp-portfolio-dashboard-nav-bar-container></sbp-portfolio-dashboard-nav-bar-container>
+        <div class="vr"></div>
         <sbp-portfolio-dashboard-action-bar-container></sbp-portfolio-dashboard-action-bar-container>
 
     </div>
 
     <!-- This is where a container will go that holds widgets such as valuation, cashburn, market value, et al -->
-    <router-outlet></router-outlet>
+    <div class="content-container">
+        <router-outlet></router-outlet>
+    </div>
 
     <!-- This is where an initiatives list and an updates list will go: -->
 </div>

@@ -131,17 +131,19 @@ export interface Tag {
     name: string;
 }
 
-export interface Contact {
+export interface Person {
     id: string;
-    companyName: string;
     firstName: string;
     lastName: string;
+}
+export interface Contact extends Person {
+    companyName: string;
     avatar: string;
     slack: string;
-    mobile: string;
+    mobil: string;
     email: string;
     bio: string;
-    postion: string;
+    position: string;
 }
 
 export interface BoardMember {

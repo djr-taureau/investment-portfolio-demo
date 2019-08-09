@@ -683,7 +683,9 @@ definitions:
           - "BOARD_SEAT"
           - "LEAD"
   Contact:
-    type: "object"
+    allOf:
+      - $ref: "#/definitions/Person"
+      - type: "object"
     properties:
       id:
         type: "integer"
@@ -781,14 +783,14 @@ definitions:
       status:
         type: "string"
         enum:
-        - "GOOD"
-        - "WARNING"
-        - "BAD"
-        - "NEUTRAL"
+        - "QUEUED_TO_START"
+        - "IN_PROGRESS_ON_TRACK"
+        - "IN_PROGRESS_NEEDS_ATTN"
+        - "COMPLETE"
       title:
         type: "string"
       initiativeOwner:
-        $ref: '#/definitions/TeamMember'
+        $ref: '#/definitions/Person'
       description:
         type: "string"
   InvestmentSummary:
@@ -829,6 +831,15 @@ definitions:
         type: "string"
       invested:
         type: "number"
+  Person:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      firstName:
+        type: "string"
+      lastNameName:
+        type: "string"
   PortfolioCompaniesMetricsSummary:
     type: object
     properties:

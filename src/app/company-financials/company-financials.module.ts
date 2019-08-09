@@ -1,3 +1,4 @@
+import { CompanySummaryModule } from "@app/company-dashboard/company-summary/company-summary.module";
 import { CompanyFinancialsComponent } from "./company-financials.component";
 import { CompanyFinancialsContainer } from "./company-financials.container";
 import { NgModule } from "@angular/core";
@@ -12,7 +13,7 @@ const MODULE_ROUTES: Routes = [
     }
 ];
 @NgModule({
-    imports: [RouterModule.forChild(MODULE_ROUTES), SharedModule],
+    imports: [RouterModule.forChild(MODULE_ROUTES), CompanySummaryModule, SharedModule],
     declarations: COMPONENTS,
     exports: COMPONENTS
 })

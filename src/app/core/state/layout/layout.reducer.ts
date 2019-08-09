@@ -68,7 +68,7 @@ export const initialState: LayoutState = {
             icon: "assets/image/finance.svg",
             label: "Financials",
             route: appRoutePaths.companyFinancials,
-            enabled: true,
+            enabled: false,
             showItemCount: false
         },
         {
@@ -83,14 +83,14 @@ export const initialState: LayoutState = {
             label: "Initiatives",
             route: appRoutePaths.companyInitiatives,
             enabled: false,
-            showItemCount: true
+            showItemCount: false
         },
         {
             icon: "assets/image/notes.svg",
             label: "Notes",
             route: appRoutePaths.companyNotes,
             enabled: false,
-            showItemCount: true
+            showItemCount: false
         },
         {
             icon: "assets/image/documents.svg",

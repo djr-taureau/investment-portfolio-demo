@@ -89,7 +89,10 @@
              fxLayoutGap="24px"
              class="team-member-avatar-container">
 
-            <ng-container *ngFor="let teamMember of teamMembers">
+            <div fxLayout="row"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="8px"
+                 *ngFor="let teamMember of teamMembers">
                 <sbp-team-member-avatar [teamMember]="teamMember"
                                         (click)="onTeamMemberClick(teamMember.id, company.id)">
                 </sbp-team-member-avatar>
@@ -100,7 +103,7 @@
                     <div>{{ teamMember.lastName }}</div>
                 </div>
 
-            </ng-container>
+            </div>
 
             <div class="all-team-members hand-cursor"
                  (click)="onAllTeamMembersClick(company.id)">All Team Members</div>

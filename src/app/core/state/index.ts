@@ -252,7 +252,7 @@ export const getDealTeamGroup = createSelector(
 export const getDealTeamMembers = createSelector(
     getDealTeamGroup,
     (teamGroup) => {
-        return _.get(teamGroup, "members", []);
+        return _.take(_.get(teamGroup, "members", []), 5);
     }
 );
 

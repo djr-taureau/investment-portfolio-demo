@@ -1,0 +1,29 @@
+
+{
+  "data": [
+    {
+      "id": "0",
+      "companyId": "",
+      "status": "",
+      "title": "",
+      "description": "",
+      "initiativeOwner": {
+        "id": "",
+        "firstName": "",
+        "lastName": ""
+      }
+    },
+    {
+      "id": 2,
+      "companyId": 8,
+      "status": "",
+      "title": "",
+      "description": "Focus on deal terms and setting of JV between Grab and ST by August",
+      "initiativeOwner": {
+        "id": "",
+        "firstName": "",
+        "lastName": ""
+      }
+    }
+  ]
+}
