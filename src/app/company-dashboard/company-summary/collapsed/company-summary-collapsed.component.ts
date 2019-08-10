@@ -159,4 +159,13 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public showDonut(): boolean {
         return _.get(this, "company.percentOwnership", -1) > 0;
     }
+
+    public getCompanyLogo(): string {
+        const defaultLogo = "https://via.placeholder.com/60/f0f4fa/3b4659?text=" + _.get(this, "company.name", "");
+        return _.get(this, "company.logo", defaultLogo);
+    }
+
+    public getCompanyName(): string {
+        return _.get(this, "company.name", "...");
+    }
 }

@@ -114,6 +114,6 @@ export const getSelectedCompanyAlternateCurrency = createSelector(
     getSelectedCompany,
     (selectedCompany: Company) => {
         const defaultCurrency = ObjectUtil.getNestedPropIfExists(selectedCompany, ["defaultCurrency"], "") as CurrencyType;
-        return defaultCurrency.currencyCode !== "USD" ? defaultCurrency : null;
+        return _.get(defaultCurrency, "currencyCode", "") !== "USD" ? defaultCurrency : null;
     }
 );

@@ -1,6 +1,28 @@
+@import "../../../src/assets/scss/variables";
+
 :host {
     h2 {
         width: 100%;
         text-align: center;
+    }
+
+    .nav-container,
+    .content-container {
+        margin: 0 40px;
+    }
+
+    .nav-container {
+        margin-top: 23px;
+    }
+
+    .content-container {
+        margin-top: 40px;
+    }
+
+    .vr {
+        width: 1px;
+        height: 43px;
+        opacity: 0.2;
+        background-color: $grey-blue;
     }
 }

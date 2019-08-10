@@ -13,7 +13,7 @@
          class="box budget">{{icLabel}}</div>
     <div *ngIf="icString"
          class="box budget-val">{{icString}} %</div>
-    <div *ngIf="data"
+    <div *ngIf="data && title !== 'Cash Runway'"
          class="box timeline">
         <sbp-micro-timeline [data]="data"
                             [xAccessor]="dateAccessor"
@@ -21,14 +21,21 @@
                             [categoryAccessor]="categoryAccessor"
                             [yLabelVisible]="false"></sbp-micro-timeline>
     </div>
-    <div *ngIf="data"
+    <div *ngIf="data && title !== 'Cash Runway'"
          class="box py-chart">
-        <sbp-micro-bar [data]="data"></sbp-micro-bar>
+        <sbp-micro-bar [data]="data"
+                       [xAccessor]="dateAccessor"
+                       [categoryAccessor]="categoryAccessor"
+                       [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
     </div>
-    <div *ngIf="data"
+    <div *ngIf="data && title !== 'Cash Runway'"
          class="box budget-chart">
-        <sbp-micro-bar [data]="data"></sbp-micro-bar>
+        <sbp-micro-bar [data]="data"
+                       [xAccessor]="dateAccessor"
+                       [categoryAccessor]="categoryAccessor"
+                       [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
     </div>
-    <img src="assets/image/triangle.svg"
-         class="triangle">
+    <!-- <img src="assets/image/triangle.svg"
+             class="triangle"> -->
+
 </div>

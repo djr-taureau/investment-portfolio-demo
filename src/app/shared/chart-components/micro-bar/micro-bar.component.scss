@@ -1,108 +1,119 @@
 @import "../../../../assets/scss/variables.scss";
 
 :host {
-    .tick .line .path {
-        display: none;
+
+    ::ng-deep {
+        .container {
+            margin-bottom: 2em;
+            background: white;
+            padding: 0.6em 1em;
+            margin: 0.5em;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 6px;
+            align-self: flex-start;
+        }
+
+        .select-line {
+            width: 1px;
+            border: solid 1px $light-periwinkle;
+        }
+
+        .dot {
+            fill: #ffffff;
+            width: 12px;
+            height: 12px;
+            border-width: 3px;
+            box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+            border-style: solid;
+            stroke-width: 1;
+            stroke: #124f8c;
+        }
+
+        .dot-display {
+            display: none;
+        }
+
+        .present-line {
+            stroke: #6F257F;
+            stroke-width: 2px;
+            stroke-dasharray: 3, 3;
+        }
+
+        .projected {
+            stroke: #6F257F;
+            stroke-width: 2px;
+            stroke-dasharray: 3, 1;
+        }
+
+        .y-axis-label {
+            fill: #34495e;
+            font-size: 1.4em;
+            text-anchor: middle;
+            transform: rotate(-90deg);
+
+            .display {
+                //display: none;
+                stroke-width: 2;
+                display: none;
+
+                &-none {
+                    display: none;
+                }
+            }
+
+            .y-axis-label {
+                fill: #34495e;
+                font-size: 1.4em;
+                text-anchor: middle;
+                transform: rotate(-90deg);
+            }
+
+
+
+            .x-axis-label {
+                display: none;
+            }
+
+
+
+        }
+
     }
+
+    #container {
+        width: 334px;
+        height: 165px;
+        border-radius: 6px;
+        background-color: white;
+    }
+
+    div .card {
+        width: 334px;
+        height: 165px;
+        border-radius: 6px;
+        background-color: white;
+    }
+
 }
 
-#hist {
-    font: 10px sans-serif;
-    text-align: right;
-    padding: .5px;
-    margin: .5px;
-    padding: 2px;
-}
-
-rect {
-    transition: all 0.3s ease-out;
-    border-radius: 4px;
-    width: 8px;
-    padding: 2px;
-}
-
-rect:hover {
-    fill: $jade;
-    stroke-width: 4;
-}
-
-rect.projected-positive {
-    border-radius: 2px;
-    fill: $jade;
-    stroke: #115449;
-    stroke-width: 1;
-    opacity: 0.25;
-}
-
-rect.historical-positive {
-    fill: $jade;
-    stroke: #115449;
-    border-radius: 4px;
-    stroke-width: 1;
-}
-
-rect.historical-positive:hover {
-    fill: $jade;
-    stroke: #115449;
-    border-radius: 4px;
-    stroke-width: 4;
-    opacity: 0.15;
-}
-
-rect.historical-negative {
-    border-radius: 4px;
-    stroke: #6b291d;
-    fill: $pale-red;
-}
-
-rect.historical-negative:hover {
-    border-radius: 4px;
-    stroke: #6b291d;
-    fill: $pale-red;
-    opacity: 0.15;
-}
+// .axis-grid .x .axis .x-line line {
 
 
-rect.projected-negative {
-    border-radius: 2px;
-    stroke: solid 2px #6b291d;
-    fill: $pale-red;
-    opacity: 0.25;
-}
-
-.bar--positive {
-    fill: steelblue;
-}
-
-.bar--negative {
-    fill: darkorange;
-}
-
-.axis text {
-    font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-    fill: none;
-    stroke: #000;
+.axis-grid line {
+    opacity: 0.75;
     shape-rendering: crispEdges;
+    stroke: $light-navy;
+    stroke-dasharray: 3, 3;
 }
 
-.axis .x {
-    stroke-dasharray: 3, 3
+.tick {
+    display: none;
 }
 
-// .d3-chart {
-//     width: 100%;
-//     height: 400px;
-//   }
-
-//   .d3-chart .axis path,
-//   .d3-chart .axis line {
-//     stroke: #999;
-//   }
-
-//   .d3-chart .axis text {
-//     fill: #999;
-//   }
+.startline {
+    stroke: $light-navy;
+    stroke-width: 3px;
+    stroke-opacity: 0.5;
+    stroke-dasharray: 2, 2;
+}

@@ -13,14 +13,30 @@
         border-radius: 6px;
 
 
+
         .axis-grid {
-            opacity: 0.75;
+            opacity: 0.10;
             shape-rendering: crispEdges;
-            stroke: $light-navy;
             stroke-dasharray: 3, 3;
         }
 
         .y-tick {
+            width: 24px;
+            height: 16px;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            opacity: .5;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: right;
+            color: $light-grey-blue;
+        }
+
+        .y .tick {
+
             width: 24px;
             height: 16px;
             font-family: PostGrotesk;
@@ -34,32 +50,30 @@
             color: $light-grey-blue;
         }
 
-        .y .tick {
-            fill: $light-grey-blue;
-            stroke: $light-grey-blue;
-            height: 10px;
-        }
-
         .x .tick {
             opacity: 0.75;
             fill: $grey-blue;
             stroke: $grey-blue;
             height: 10px;
+            padding: 30px;
         }
 
         text.y text.tick {
-            height: 10px;
+            height: 16px;
         }
 
         line.x-axis {
             fill: $light-navy;
             stroke: $light-navy;
+            opacity: .3;
         }
 
-        .x .x-axis .tick-selected-value {
+        .tick-selected-value {
             fill: $light-navy;
             stroke: $light-navy;
         }
+
+
 
         .y-axis-label {
             fill: #34495e;
@@ -71,7 +85,7 @@
             .display {
                 //display: none;
                 stroke-width: 2;
-                display: none;
+                // display: none;
 
                 &-none {
                     display: none;
@@ -107,8 +121,29 @@
 div .card {
 
     .button-bar {
-        margin-top: 10px;
+        margin-top: 5px;
         padding-bottom: 15px;
+
+        .button-bar {
+            button {
+                width: 38px;
+                height: 16px;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                color: $light-navy;
+                padding: 5px;
+
+                &.k-state-active {
+                    color: $white;
+                    background-color: $light-navy;
+                }
+            }
+        }
     }
 
     .y-axis-label-line {
@@ -188,28 +223,15 @@ div .card {
         margin-left: 20px;
     }
 
-    button.actuals-button {
-        width: 38px;
-        height: 16px;
-        font-family: PostGrotesk;
-        font-size: 12px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: 0.5px;
-        color: $light-navy;
-        padding: 5px;
-    }
 
-    .actual-dot {
-        background-color: $light-navy;
-    }
+
+
 
     .actual-path {
         width: 16px;
         height: 1px;
         border: solid 3px $light-navy;
+        stroke-width: 4px;
     }
 
     button.budget-toggle-on {
@@ -219,18 +241,6 @@ div .card {
         background-color: $pale-grey;
     }
 
-    button.budget-button {
-        width: 60px;
-        height: 16px;
-        font-family: PostGrotesk;
-        font-size: 12px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: 0.5px;
-        color: $light-navy;
-    }
 
 
     .budget-dot {
@@ -254,20 +264,6 @@ div .card {
         background-color: $pale-grey;
     }
 
-    button.forecast-button {
-        width: 61px;
-        height: 16px;
-        font-family: PostGrotesk;
-        font-size: 12px;
-        font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: 0.5px;
-
-        color: $light-navy;
-        padding: 5px 5px 5px 5px
-    }
 
     .kpi-detail-bar {
         height: 136px;

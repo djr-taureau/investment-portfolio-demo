@@ -1,0 +1,84 @@
+<sbp-filterable-panel [title]="'Initiatives'"
+                      [itemCount]="(initiatives || []).length">
+
+    <div fxLayout="column"
+         fxLayoutAlign="start stretch"
+         class="items-list">
+        <ng-container>
+            <!-- BEGIN TEMPLATE FOR LOOP -->
+            <div class="item"
+                 fxLayout="row"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="16px">
+                <div class="status-container">
+                    <img src="assets/image/need-help.svg"
+                         class="status-icon">
+                </div>
+                <div class="content"
+                     fxLayout="column"
+                     fxLayoutAlign="start stretch"
+                     fxLayoutGap="3px">
+                    <div class="title-container"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="8px">
+                        <div class="title">Product Offering Expansion</div>
+                        <div class="author">(Andrew Alexanderson)</div>
+                    </div>
+                    <div class="description">
+                        Meeting scheduled between CEOs of Company A and Company B on 4/30 to discuss next steps on partnership.
+                    </div>
+                </div>
+            </div>
+            <!-- END TEMPLATE FOR LOOP -->
+            <div class="item"
+                 fxLayout="row"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="16px">
+                <div class="status-container">
+                    <img src="assets/image/on-hold.svg"
+                         class="status-icon">
+                </div>
+                <div class="content"
+                     fxLayout="column"
+                     fxLayoutAlign="start stretch"
+                     fxLayoutGap="3px">
+                    <div class="title-container"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="8px">
+                        <div class="title">Product Offering Expansion</div>
+                        <div class="author">(Andrew Alexanderson)</div>
+                    </div>
+                    <div class="description">
+                        Meeting scheduled between CEOs of Company A and Company B on 4/30 to discuss next steps on partnership.
+                    </div>
+                </div>
+            </div>
+
+            <div class="item"
+                 fxLayout="row"
+                 fxLayoutAlign="start start"
+                 fxLayoutGap="16px">
+                <div class="status-container">
+                    <img src="assets/image/on-track.svg"
+                         class="status-icon">
+                </div>
+                <div class="content"
+                     fxLayout="column"
+                     fxLayoutAlign="start stretch"
+                     fxLayoutGap="3px">
+                    <div class="title-container"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="8px">
+                        <div class="title">Product Offering Expansion</div>
+                        <div class="author">(Andrew Alexanderson)</div>
+                    </div>
+                    <div class="description">
+                        Meeting scheduled between CEOs of Company A and Company B on 4/30 to discuss next steps on partnership.
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    <div class="more-items"
+         (click)="onSeeMore()">see all {{ (initiatives || []).length }} initiatives</div>
+</sbp-filterable-panel>

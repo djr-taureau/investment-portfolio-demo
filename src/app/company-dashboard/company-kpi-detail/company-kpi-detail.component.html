@@ -1,17 +1,11 @@
-<div fxLayout="row"
-     fxFlex="5"
-     fxLayoutAlign="start center"
-     class="y-axis-label">
-    <div class="y-axis-label-line">REVENUE <span class="M">($M)</span></div>
-</div>
-<div fxFlex="45"
-     fxFlexAlign="space-between stretch">
+<div fxFlex="50"
+     fxLayout="row"
+     fxFlexAlign="center stretch">
     <sbp-timeline [data]="data"
                   [xAccessor]="dateAccessor"
                   [yAccessor]="yAccessor"
                   [categoryAccessor]="categoryAccessor"
                   [yLabelVisible]="true"></sbp-timeline>
-    <sbp-bar-chart class="bar-chart"></sbp-bar-chart>
 </div>
 <div fxFlex="50"
      fxFlexAlign="end end">

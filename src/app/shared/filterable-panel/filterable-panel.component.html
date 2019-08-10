@@ -19,10 +19,12 @@
                 <sbp-iconized-searchable-combo [listItems]="filterListOne"
                                                [selectedItem]=""
                                                [popupSettings]="popupSettingsOne"
+                                               (selectionChange)="filterChangeTwo.emit($event)"
                                                [mainIconSrc]="filterIconOne"></sbp-iconized-searchable-combo>
                 <sbp-iconized-searchable-combo [listItems]="filterListTwo"
                                                [selectedItem]=""
                                                [popupSettings]="popupSettingsTwo"
+                                               (selectionChange)="filterChangeOne.emit($event)"
                                                [mainIconSrc]="filterIconTwo"></sbp-iconized-searchable-combo>
             </div>
         </div>

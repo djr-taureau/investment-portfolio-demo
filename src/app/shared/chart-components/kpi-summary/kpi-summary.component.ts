@@ -1,7 +1,6 @@
 import { numberToSignedString } from "./string.utli";
 import { Component, OnInit, Input } from "@angular/core";
 import * as d3 from "d3";
-import { TimelineDataPointFin } from "../interfaces/types";
 import { Logger } from "@util/logger";
 @Component({
     selector: "sbp-kpi-summary",
@@ -21,11 +20,15 @@ export class KpiSummaryComponent implements OnInit {
     icAccessor: any;
     fillColor;
     display;
+    timelineId: string;
+    barId: string;
+    bar2Id: string;
 
     /**
      * The title for the widget
      */
-    @Input() data: TimelineDataPointFin[];
+    @Input() data: any[];
+
     @Input()
     public title: string;
 
@@ -35,6 +38,8 @@ export class KpiSummaryComponent implements OnInit {
     @Input()
     public denomination: string;
 
+    @Input()
+    public currencySymbol: string;
     /**
      * Value for the line graphs to display
      */

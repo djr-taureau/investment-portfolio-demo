@@ -7,6 +7,7 @@
         <sbp-kpi-summary [data]="timelineData"
                          [title]="'Revenue'"
                          [denomination]="'USD'"
+                         [currencySymbol]="'$'"
                          [value]="325.3"
                          [pyLabel]="'vs PY'"
                          [pyValue]="+44.1"
@@ -19,6 +20,7 @@
         <sbp-kpi-summary [data]="timelineData2"
                          [title]="'EBITDA'"
                          [denomination]="'USD'"
+                         [currencySymbol]="'$'"
                          [value]="-81.2"
                          [pyLabel]="'vs PY'"
                          [pyValue]="+10.0"
@@ -29,9 +31,11 @@
 
     </div>
     <div class="chart">
-        <sbp-kpi-summary [data]="timelineData3"
+        <sbp-kpi-summary sbpTooltip="Coming Soon!"
+                         [data]="timelineData3"
                          [title]="'Cash'"
                          [denomination]="'USD'"
+                         [currencySymbol]="'$'"
                          [value]="-34.6"
                          [pyLabel]="'vs PY'"
                          [pyValue]="+10.0"
@@ -41,7 +45,8 @@
         </sbp-kpi-summary>
     </div>
     <div class="chart">
-        <sbp-kpi-summary [data]=""
+        <sbp-kpi-summary sbpTooltip="Coming Soon!"
+                         [data]="timelineData3"
                          [title]="'Cash Runway'"
                          [denomination]="'USD'"
                          [value]="'27 Months'">

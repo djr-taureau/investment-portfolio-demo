@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, OnInit, HostBinding } from "@angular/core";
 import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
 
@@ -10,7 +10,7 @@ import { curveLinear } from "d3-shape";
     styleUrls: ["./line.component.scss"]
 })
 export class LineComponent implements OnChanges, OnInit {
-    @Input() type: "area" | "line" = "line";
+    @Input() type: "area" | "line" | "projected-line";
     @Input() valueType: string;
     @Input() fillColor: string;
     @Input() data: any[];
@@ -22,6 +22,8 @@ export class LineComponent implements OnChanges, OnInit {
     @Input() interpolation?: any;
     @Input() fill?: string;
     @Input() visible: boolean | true;
+
+    @HostBinding("class.projected") projected = false;
 
     visibleToggle: string | "visible";
     lineString: any;
@@ -36,12 +38,10 @@ export class LineComponent implements OnChanges, OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.historicalData = this.data.filter((v) => v.projected === false);
-        this.projectedData = this.data.filter((v) => v.projected === true);
+        console.log("micro", this.data);
     }
 
     updateLineString(): void {
-        console.log("micro", this.data);
         this.interpolation = curveLinear;
         const lineGenerator = d3[this.type]()
             .x(this.xAccessor)

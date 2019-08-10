@@ -1,0 +1,68 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/pointers";
+
+:host {
+
+    font-family: PostGrotesk;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+
+    .item {
+        .status-container {
+            padding: 16px 0;
+        }
+
+        .content {
+            border-bottom: dashed 1px rgba($light-grey-blue, .5);
+            padding: 16px 0;
+
+            .title {
+                font-size: 16px;
+                font-weight: 500;
+                letter-spacing: 0.25px;
+                color: $dark;
+            }
+
+            .author {
+                font-size: 14px;
+                font-weight: normal;
+                letter-spacing: normal;
+                color: $slate;
+            }
+
+            .description {
+                font-size: 14px;
+                font-weight: normal;
+                letter-spacing: normal;
+                color: rgba($grey-blue, .75);
+            }
+        }
+
+
+        &:last-of-type {
+            .content {
+                border-bottom: none;
+            }
+        }
+    }
+
+    .items-list {
+        border-bottom: dashed 1px rgba($light-grey-blue, .5);
+    }
+
+    .more-items {
+        @extend .hand-cursor;
+        padding-top: 12px;
+        text-transform: uppercase;
+        text-align: center;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $dark-sky-blue;
+    }
+}

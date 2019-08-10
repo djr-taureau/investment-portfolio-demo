@@ -1,8 +1,7 @@
 import { AfterContentInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
-import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
-import { axisLeft as d3_axisLeft, select as d3_select } from "d3";
+import { axisLeft as d3_axisLeft, selectAll as d3_selectAll } from "d3";
 import * as _ from "lodash";
 import { revenueMock2 } from "../../../company-dashboard/financials-data";
 import { getUniqueId } from "../chart/utils";
@@ -15,6 +14,7 @@ import { DimensionsType, ScaleType } from "../interfaces/types";
 export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChanges {
     private static logger: Logger = Logger.getLogger("MicroTimelineComponent");
 
+    @Input() id: string;
     @Input() data: any[];
     @Input() label: string;
     @Input() newData: any;
@@ -35,7 +35,6 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     public actuals;
     public budget;
     public forecast;
-    public seriesData: SeriesItem[];
     public actualsVis: boolean;
     public forecastVis: boolean;
     public budgetVis: boolean;
@@ -70,11 +69,12 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     yAxisGrid;
     dateSelected;
     actualsPresentValue;
+    el: HTMLElement;
 
-    constructor() {
+    constructor(elementRef: ElementRef) {
         MicroTimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
-            marginTop: 20,
+            marginTop: 15,
             marginRight: 11,
             marginBottom: 37.5,
             marginLeft: 1,
@@ -86,6 +86,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
+        this.el = elementRef.nativeElement;
     }
 
     updateDimensions() {
@@ -120,20 +121,12 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
             this.timePeriods = this.timePeriods.concat(timePart);
         });
         this.actualsPresentValue = this.actuals.filter((p) => this.categoryAccessor(p) === this.dateSelected);
-        console.log("micro actuals", this.actuals);
-        console.log("micro timePeriods", this.timePeriods);
-        console.log("micro actualsPresentValue", this.actualsPresentValue);
-
         this.historicalData = this.actuals.filter((v) => v.projected === false);
         this.projectedData = this.actuals.filter((v) => v.projected === true);
-
-        console.log("micro actualsPresentValue", this.historicalData);
-        console.log("micro actualsPresentValue", this.projectedData);
     }
 
     ngAfterContentInit() {
         this.updateDimensions();
-        // const svg = d3_select("#multi-timeline").select("svg");
     }
 
     @HostListener("window:resize", ["$event"])
@@ -186,10 +179,22 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
             .tickSize(-this.dimensions.boundedWidth)
             .tickFormat("")
             .ticks(6);
-    }
-}
 
-export interface SeriesItem {
-    name: string;
-    data: number[];
+        const svg = d3_selectAll("#micro-timeline")
+            .select("svg")
+            .append("g");
+        const line = d3
+            .line()
+            .x((d) => this.xAccessor)
+            .y((d) => this.yAccessor);
+
+        svg.append("line")
+            .attr("x1", this.xScale(this.dateSelected))
+            .attr("y1", this.dimensions.boundedHeight + 2)
+            .attr("x2", this.xScale(this.dateSelected))
+            .attr("y2", this.dimensions.marginTop - 10)
+            .attr("class", "select-line")
+            .style("stroke-width", 1)
+            .style("stroke", "#99a8bf");
+    }
 }

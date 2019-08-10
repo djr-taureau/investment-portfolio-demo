@@ -2,7 +2,7 @@ import { AfterContentInit, Component, ElementRef, HostListener, Input, OnChanges
 import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
-import { axisLeft as d3_axisLeft, select as d3_select } from "d3";
+import { axisLeft as d3_axisLeft, select as d3_select, selectAll as d3_selectAll } from "d3";
 import * as _ from "lodash";
 import { revenueMock2 } from "../../../company-dashboard/financials-data";
 import { getUniqueId } from "../chart/utils";
@@ -77,8 +77,8 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             marginRight: 30,
             marginBottom: 75,
             marginLeft: 75,
-            height: 300,
-            width: 679
+            height: 350,
+            width: 690
         };
         this.dimensions = {
             ...this.dimensions,
@@ -172,20 +172,19 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .tickSize(-this.dimensions.boundedWidth, 10, 40)
             .tickFormat("")
             .ticks(5);
-        const yAxis = d3_axisLeft(this.yScale).ticks(5);
-        const svg = d3_select("#multi-timeline").select("svg");
+        // const yAxis = d3_axisLeft(this.yScale).ticks(5);
+        const svg = d3_selectAll("#multi-timeline").select("svg");
 
         svg.append("g")
             .attr("class", "axis-grid")
             .call(
                 this.make_y_gridlines()
-                    .tickSize(-this.dimensions.boundedWidth, 40)
-                    .tickValues(null)
+                    .tickSize(-this.dimensions.boundedWidth, 0, 0)
                     .tickFormat("")
             );
-        svg.append("g")
-            .attr("class", "axis y-axis")
-            .call(yAxis);
+        // svg.append("g")
+        //     .attr("class", "axis y-axis")
+        //     .call(yAxis);
     }
 
     make_y_gridlines() {
