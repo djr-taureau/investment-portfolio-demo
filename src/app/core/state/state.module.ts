@@ -1,3 +1,4 @@
+import { CompanyInitiativeEffects } from "@core/state/company/dashboard/company-initiative.effects";
 import { TeamMemberEffects } from "./team-member/team-member.effects";
 import { AuthEffect } from "./auth/auth.effect";
 import { CompanyEffects } from "./company/company.effects";
@@ -23,6 +24,7 @@ const EFFECTS = [
     RouterEffect,
     AuthEffect,
     CompanyFlowEffect,
+    CompanyInitiativeEffects,
     PortfolioFlowEffect,
     CompanyEffects,
     SnackbarEffect,

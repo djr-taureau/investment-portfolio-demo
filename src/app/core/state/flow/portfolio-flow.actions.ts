@@ -3,8 +3,8 @@ import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
 export enum PortfolioFlowActionTypes {
-    ChangeCompanyListGroup = "[Flow] Change Company List Group",
-    ChangeCompanyListSort = "[Flow] Change Company List Sort",
+    // ChangeCompanyListGroup = "[Flow] Change Company List Group",
+    // ChangeCompanyListSort = "[Flow] Change Company List Sort",
 
     LoadPortfolio = "[Flow] Load Portfolio",
     GoToPortfolio = "[Flow] Go To Portfolio",

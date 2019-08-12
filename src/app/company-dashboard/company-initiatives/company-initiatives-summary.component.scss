@@ -9,6 +9,8 @@
     line-height: normal;
 
     .item {
+        width: 100%;
+
         .status-container {
             padding: 16px 0;
         }
@@ -48,11 +50,18 @@
     }
 
     .items-list {
-        border-bottom: dashed 1px rgba($light-grey-blue, .5);
+        width: 100%;
+        height: calc(100% - 40px);
+        //border-bottom: dashed 1px rgba($light-grey-blue, .5);
     }
 
     .more-items {
         @extend .hand-cursor;
+        height: 40px;
+        left: 0px;
+        right: 0px;
+        margin: 0 20px;
+        border-top: dashed 1px rgba($light-grey-blue, .5);
         padding-top: 12px;
         text-transform: uppercase;
         text-align: center;
@@ -64,5 +73,7 @@
         line-height: normal;
         letter-spacing: 0.5px;
         color: $dark-sky-blue;
+        position: absolute;
+        bottom: 12px;
     }
 }

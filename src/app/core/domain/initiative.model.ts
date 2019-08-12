@@ -7,8 +7,8 @@ export enum InitiativeStatusEnum {
     COMPLETE = "COMPLETE" // GREY
 }
 export interface Initiative {
-    id: string;
-    companyId: string;
+    id: number;
+    companyId: number;
     status: InitiativeStatusEnum;
     title: string;
     initiativeOwner: Person;

@@ -2,81 +2,38 @@
                       [itemCount]="(initiatives || []).length">
 
     <div fxLayout="column"
+         fxFlex
          fxLayoutAlign="start stretch"
          class="items-list">
-        <ng-container>
+        <ng-container *ngFor="let item of initiatives; trackBy: trackByFn">
             <!-- BEGIN TEMPLATE FOR LOOP -->
             <div class="item"
                  fxLayout="row"
                  fxLayoutAlign="start start"
                  fxLayoutGap="16px">
+                <!-- LEFT SIDE -->
                 <div class="status-container">
-                    <img src="assets/image/need-help.svg"
+                    <img [src]="getStatusImage(item)"
                          class="status-icon">
                 </div>
+
+                <!-- RIGHT SIDE -->
                 <div class="content"
                      fxLayout="column"
                      fxLayoutAlign="start stretch"
+                     fxFlex
                      fxLayoutGap="3px">
                     <div class="title-container"
                          fxLayoutAlign="start center"
                          fxLayoutGap="8px">
-                        <div class="title">Product Offering Expansion</div>
-                        <div class="author">(Andrew Alexanderson)</div>
+                        <div class="title">{{ item.title }} ({{ item.initiativeOwner.firstName }} {{ item.initiativeOwner.lastName }})</div>
                     </div>
                     <div class="description">
-                        Meeting scheduled between CEOs of Company A and Company B on 4/30 to discuss next steps on partnership.
+                        {{ item.description }}
                     </div>
                 </div>
             </div>
             <!-- END TEMPLATE FOR LOOP -->
-            <div class="item"
-                 fxLayout="row"
-                 fxLayoutAlign="start start"
-                 fxLayoutGap="16px">
-                <div class="status-container">
-                    <img src="assets/image/on-hold.svg"
-                         class="status-icon">
-                </div>
-                <div class="content"
-                     fxLayout="column"
-                     fxLayoutAlign="start stretch"
-                     fxLayoutGap="3px">
-                    <div class="title-container"
-                         fxLayoutAlign="start center"
-                         fxLayoutGap="8px">
-                        <div class="title">Product Offering Expansion</div>
-                        <div class="author">(Andrew Alexanderson)</div>
-                    </div>
-                    <div class="description">
-                        Meeting scheduled between CEOs of Company A and Company B on 4/30 to discuss next steps on partnership.
-                    </div>
-                </div>
-            </div>
-
-            <div class="item"
-                 fxLayout="row"
-                 fxLayoutAlign="start start"
-                 fxLayoutGap="16px">
-                <div class="status-container">
-                    <img src="assets/image/on-track.svg"
-                         class="status-icon">
-                </div>
-                <div class="content"
-                     fxLayout="column"
-                     fxLayoutAlign="start stretch"
-                     fxLayoutGap="3px">
-                    <div class="title-container"
-                         fxLayoutAlign="start center"
-                         fxLayoutGap="8px">
-                        <div class="title">Product Offering Expansion</div>
-                        <div class="author">(Andrew Alexanderson)</div>
-                    </div>
-                    <div class="description">
-                        Meeting scheduled between CEOs of Company A and Company B on 4/30 to discuss next steps on partnership.
-                    </div>
-                </div>
-            </div>
         </ng-container>
     </div>
     <div class="more-items"

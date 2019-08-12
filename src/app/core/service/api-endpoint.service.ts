@@ -60,6 +60,7 @@ export class ApiEndpointService {
         EXAMPLE_DETAILS: "example/{id}/details/{id}",
         COMPANIES: "companies",
         COMPANY: "companies/{id}",
+        COMPANY_INITIATIVES: `assets/data/mock-initiatives.json`, // "companies/{id}/initiatives",
         TEAMS: "companies/{id}/team-members",
         TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
         VALUATION: "companies/{id}/valuation",
@@ -89,7 +90,8 @@ export class ApiEndpointService {
      */
     public getEndpoint(endpoint: string, params?: {}): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
-        const url = isConfig ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
+        const isInitiatives = ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES === endpoint;
+        const url = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
         return StringUtil.replaceTokens(url, params);
     }
 

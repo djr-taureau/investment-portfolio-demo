@@ -1,3 +1,4 @@
+import { GetAllInitiatives } from "@core/state/company/dashboard/company-initiative.actions";
 import { ToggleCashDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
 import { getSelectedDatePart } from "@core/state/company/dashboard";
 import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
@@ -243,6 +244,7 @@ export class CompanyFlowEffect {
             actions.push(new Get(companyId)); // get company details
             actions.push(new GetAll(companyId)); // get company team members
             actions.push(new RouterActions.UpdateUrlParams({ id: companyId }));
+            actions.push(new GetAllInitiatives(companyId));
             // go to the current url but with the new id
             // actions.push(new CompanyNavigationItemClicked())
             return actions;

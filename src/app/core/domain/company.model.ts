@@ -1,4 +1,5 @@
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
+import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponse } from "./api.model";
 
 export interface AvailablePeriod {
@@ -351,6 +352,10 @@ export interface CompanyRevenueResponse {
 
 export interface GetAllCompaniesResponse extends ApiResponse {
     data: Company[];
+}
+
+export interface GetAllCompanyInitiativesResponse extends ApiResponse {
+    data: Initiative[];
 }
 
 export interface GetCompanyResponse extends ApiResponse {

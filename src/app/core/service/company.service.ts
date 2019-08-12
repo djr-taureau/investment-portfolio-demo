@@ -1,4 +1,5 @@
-import { RevenueSeries } from "@app/core/domain/company.model";
+import { GetAllCompanyInitiativesResponse, RevenueSeries } from "@app/core/domain/company.model";
+import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
@@ -49,6 +50,25 @@ export class CompanyService {
             }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`companiesFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Retrieves all initiatives for a company.
+     */
+    public getCompanyInitiatives(): Observable<Initiative[]> {
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES);
+        CompanyService.logger.debug(`getCompanyInitiatives( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((response: GetAllCompanyInitiativesResponse) => {
+                const data = response.data || [];
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getCompanyInitiativesFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

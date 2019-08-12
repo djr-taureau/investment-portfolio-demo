@@ -2,6 +2,7 @@ import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-se
 import { TeamMember } from "@core/domain/company.model";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
+import { Initiative, InitiativeStatusEnum } from "@core/domain/initiative.model";
 import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
@@ -38,7 +39,12 @@ export enum CompanyFlowActionTypes {
     SelectCompany = "[Flow] Select Company",
     FindCompanies = "[Flow] Find Companies",
     GroupCompanies = "[Flow] Group Companies",
-    SortCompanies = "[Flow] Sort Companies"
+    SortCompanies = "[Flow] Sort Companies",
+
+    FilterInitiativesByStatus = "[Flow] Company - Filter Initiatives By Status",
+    FilterInitiativesByOwner = "[Flow] Company - Filter Initiatives By Status",
+    ViewAllInitiatives = "[Flow] Company - View All Initiatives",
+    ViewInitiativeDetails = "[Flow] Company - View Initiative Details"
 }
 
 export class CloseCompanyInfoPanel implements Action {
@@ -144,11 +150,13 @@ export class OpenValuationPanel implements Action {
 
     constructor(public payload?: string) {}
 }
+
 export class SelectCompany implements Action {
     readonly type = CompanyFlowActionTypes.SelectCompany;
 
     constructor(public payload: string) {}
 }
+
 export class ToggleCashDetail implements Action {
     readonly type = CompanyFlowActionTypes.ToggleCashDetail;
 
@@ -171,6 +179,26 @@ export class SortCompanies implements Action {
     readonly type = CompanyFlowActionTypes.SortCompanies;
 
     constructor(public value: string) {}
+}
+
+export class FilterInitiativesByStatus implements Action {
+    readonly type = CompanyFlowActionTypes.FilterInitiativesByStatus;
+    constructor(public payload: InitiativeStatusEnum) {}
+}
+
+export class FilterInitiativesByOwner implements Action {
+    readonly type = CompanyFlowActionTypes.FilterInitiativesByOwner;
+    constructor(public payload: TeamMember) {}
+}
+
+export class ViewAllInitiatives implements Action {
+    readonly type = CompanyFlowActionTypes.ViewAllInitiatives;
+    constructor(public payload: any) {}
+}
+
+export class ViewInitiativeDetails implements Action {
+    readonly type = CompanyFlowActionTypes.ViewInitiativeDetails;
+    constructor(public payload: Initiative) {}
 }
 
 export type CompanyFlowActions =
@@ -196,4 +224,8 @@ export type CompanyFlowActions =
     | SortCompanies
     | ToggleCashDetail
     | ToggleEBITDADetail
-    | ToggleRevenueDetail;
+    | ToggleRevenueDetail
+    | FilterInitiativesByOwner
+    | FilterInitiativesByStatus
+    | ViewAllInitiatives
+    | ViewInitiativeDetails;

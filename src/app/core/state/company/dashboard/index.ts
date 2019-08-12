@@ -1,25 +1,29 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
-import { AvailablePeriod, Company } from "@core/domain/company.model";
+import { Company } from "@core/domain/company.model";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
+import { CompanyInitiativeActions } from "@core/state/company/dashboard/company-initiative.actions";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
 import { getSelectedCompany } from "../../";
 import { CompanyDashboardLayoutActions } from "./company-dashboard-layout.actions";
 import * as fromRoot from "../../";
 import * as fromCompanyDashboardLayout from "./company-dashboard-layout.reducer";
+import * as fromCompanyInitiatives from "./company-initiative.reducer";
 import * as _ from "lodash";
 import * as ObjectUtil from "@util/object.util";
 
 export interface CompanyDashboard {
     layout: fromCompanyDashboardLayout.CompanyDashboardLayoutState;
+    initiatives: fromCompanyInitiatives.State;
 }
 
 export interface State extends fromRoot.AppState {
     companyDashboard: CompanyDashboard;
 }
 
-export const reducers: ActionReducerMap<CompanyDashboard, CompanyDashboardLayoutActions> = {
-    layout: fromCompanyDashboardLayout.reducer
+export const reducers: ActionReducerMap<CompanyDashboard, CompanyDashboardLayoutActions | CompanyInitiativeActions> = {
+    layout: fromCompanyDashboardLayout.reducer,
+    initiatives: fromCompanyInitiatives.reducer
 };
 
 export const selectCompanyDashboard = createFeatureSelector<State, CompanyDashboard>("companyDashboard");
@@ -115,5 +119,35 @@ export const getSelectedCompanyAlternateCurrency = createSelector(
     (selectedCompany: Company) => {
         const defaultCurrency = ObjectUtil.getNestedPropIfExists(selectedCompany, ["defaultCurrency"], "") as CurrencyType;
         return _.get(defaultCurrency, "currencyCode", "") !== "USD" ? defaultCurrency : null;
+    }
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// Initiatives Selectors
+///////////////////////////////////////////////////////////////////////////////////////////
+export const selectCompanyDashboardInitiativesState = createSelector(
+    selectCompanyDashboard,
+    (state: CompanyDashboard) => state.initiatives
+);
+
+export const {
+    selectIds: getInitiativeIds,
+    selectEntities: getInitiativeEntities,
+    selectAll: getAllInitiatives,
+    selectTotal: getTotalInitiatives
+} = fromCompanyInitiatives.adapter.getSelectors(selectCompanyDashboardInitiativesState);
+
+export const getInitiativeCount = createSelector(
+    getAllInitiatives,
+    (allInitiatives) => {
+        return allInitiatives.length || 0;
+    }
+);
+
+export const getTopInitiativesByCompanyId = createSelector(
+    getAllInitiatives,
+    getSelectedCompany,
+    (allInitiatives, selectedCompany) => {
+        return _.take(allInitiatives.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
     }
 );
