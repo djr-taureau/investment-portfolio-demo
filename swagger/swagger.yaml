@@ -402,6 +402,41 @@ paths:
             $ref: "#/definitions/PortfolioCompaniesMetricsSummary"
         400:
           description: "Invalid status value"
+  /portfolio/{id}/portcorange:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve an list of best/worst performing companies in portfolio by metric slice"
+      description: ""
+      operationId: "getPortfolioCompaniesMetricsRange"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio being requested"
+          required: true
+          type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: false
+          type: "string"
+        - name: "metric_type"
+          in: "query"
+          description: "Metric Typefor which to return data"
+          required: true
+          type: "string"
+          enum:
+              - REVENUE
+              - EBITDA
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PortfolioCompaniesMetricsRange"
+        400:
+          description: "Invalid status value"
   /portfolio/{id}/exposure:
     get:
       tags:
@@ -895,7 +930,34 @@ definitions:
                     type: number
                   projection:
                     type: boolean
-
+  PortfolioCompaniesMetricsRange:
+    type: object
+    properties:
+      highestValue:
+        type: array
+        items:
+          $ref: '#/definitions/RangeElement'
+      highestGrowth:
+        type: array
+        items:
+          $ref: '#/definitions/RangeElement'
+      lowestGrowth:
+        type: array
+        items:
+          $ref: '#/definitions/RangeElement'
+  RangeElement:
+    type: object
+    properties:
+      id:
+          type: number
+      label:
+          type: string
+      logoSrc:
+          type: string
+      value:
+          type: number
+      delta:
+          type: number
   PortfolioSummary:
     type: "object"
     properties:
@@ -962,7 +1024,7 @@ definitions:
               type: boolean
             data:
               type: array
-              items:
+              items: # These can be optimized later....
                 type: object
                 properties:
                   date:
@@ -980,7 +1042,7 @@ definitions:
                     type: string
       series_years:
         type: array
-        items:
+        items: # These can be optimized later....
           type: object
           properties:
             name:
@@ -1014,7 +1076,7 @@ definitions:
     properties:
       series_quarters:
         type: array
-        items:
+        items: # These can be optimized later....
           type: object
           properties:
             date:
@@ -1024,7 +1086,7 @@ definitions:
               type: number
       series_years:
         type: array
-        items:
+        items: # These can be optimized later....
           type: object
           properties:
             date:
@@ -1048,7 +1110,7 @@ definitions:
               type: number
             data:
               type: array
-              items:
+              items: # These can be optimized later....
                 type: object
                 properties:
                   date:
@@ -1077,7 +1139,7 @@ definitions:
               type: number
             data:
               type: array
-              items:
+              items: # These can be optimized later....
                 type: object
                 properties:
                   date:
