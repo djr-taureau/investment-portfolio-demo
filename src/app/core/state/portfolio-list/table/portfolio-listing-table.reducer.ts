@@ -21,11 +21,11 @@ export const initialState: PortfolioListingLayoutState = {
             icon: "",
             text: "No Grouping"
         },
-        {
-            id: "region",
-            icon: "",
-            text: "Region"
-        },
+        // {
+        //     id: "region",
+        //     icon: "",
+        //     text: "Region"
+        // },
         {
             id: "teamLeadName",
             icon: "",

@@ -31,7 +31,9 @@
       "@util/*": [
         "app/util/*"
       ]
-    }
+    },
+    "resolveJsonModule": true,
+    "esModuleInterop": true
   },
   "exclude": [
     "**/**/app.po.ts"

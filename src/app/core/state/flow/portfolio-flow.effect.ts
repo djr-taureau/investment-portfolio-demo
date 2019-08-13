@@ -131,7 +131,6 @@ export class PortfolioFlowEffect {
 
         if (content instanceof TemplateRef) {
             const viewRef = content.createEmbeddedView(null);
-            console.log(viewRef);
             // In earlier versions, you may need to add this line
             // this.appRef.attachView(viewRef);
             return [viewRef.rootNodes];

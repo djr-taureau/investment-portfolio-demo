@@ -57,8 +57,6 @@ export class MultiLineComponent implements OnInit {
 
     ngOnInit() {
         this.data = revenueMock.map((v) => v.values.map((d) => d.date))[0];
-        console.log(this.data);
-        console.log(revenueMock);
         const seriesData = revenueMock;
         const WIDTH = 400;
         const HEIGHT = 300;

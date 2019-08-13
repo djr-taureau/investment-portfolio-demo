@@ -36,7 +36,6 @@ export class PortfolioListingTableComponent implements OnInit {
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("PortfolioListingTableComponent");
-
     @Output()
     public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
 
@@ -282,7 +281,6 @@ export class PortfolioListingTableComponent implements OnInit {
         const seen = {};
         return a.filter((item) => {
             const k = key(item);
-            console.log(k);
             return seen.hasOwnProperty(k) ? false : (seen[k] = true);
         });
     }

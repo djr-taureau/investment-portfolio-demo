@@ -19,6 +19,7 @@ import * as CompanyDashboard from "@core/state/company/dashboard";
 import * as PortfolioListingLayout from "@core/state/portfolio-list";
 import * as PortfolioDashboard from "@core/state/portfolio-dashboard";
 import { ValuationEffects } from "./valuation/valuation.effects";
+import { RevenueEffects } from "./revenue/revenue.effects";
 
 const EFFECTS = [
     RouterEffect,
@@ -27,6 +28,7 @@ const EFFECTS = [
     CompanyInitiativeEffects,
     PortfolioFlowEffect,
     CompanyEffects,
+    RevenueEffects,
     SnackbarEffect,
     TeamEffects,
     TeamMemberEffects,

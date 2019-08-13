@@ -1,3 +1,4 @@
+import { ScenarioNameEnum } from "./../domain/company.model";
 import { CompanyRelationshipTypes, TeamMemberGroupTypes } from "@core/domain/company.model";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
@@ -13,7 +14,7 @@ import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import { Company } from "@core/domain/company.model";
 import { RouterStateUrl } from "./router/custom-router-state.serializer";
-
+import * as fromRevenue from "./revenue/revenue.reducer";
 export interface AppState {
     auth: fromAuth.AuthState;
     company: fromCompany.State;
@@ -23,6 +24,7 @@ export interface AppState {
     team: fromTeam.State;
     teamMember: fromTeamMember.State;
     valuation: fromValuation.State;
+    revenue: fromRevenue.State;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -30,6 +32,7 @@ export const reducers: ActionReducerMap<AppState> = {
     company: fromCompany.reducer,
     // portfolioDashboard: fromPortfolioDashboard.reducer,
     layout: fromLayout.layoutReducer,
+    revenue: fromRevenue.reducer,
     router: fromRouter.routerReducer,
     team: fromTeam.reducer,
     teamMember: fromTeamMember.reducer,
@@ -119,6 +122,48 @@ export const getSelectedCompanyNavLink = createSelector(
 export const getShowCompanyCombo = createSelector(
     selectLayoutState,
     fromLayout.getShowCompanyCombo
+);
+
+// -------------------------------------------------------------------
+// COMPANY SELECTORS
+// -------------------------------------------------------------------
+export const selectRevenueState = createFeatureSelector<fromRevenue.State>("revenue");
+
+export const {
+    selectIds: getRevenueIds,
+    selectEntities: getRevenueEntities,
+    selectAll: getAllRevenues,
+    selectTotal: getTotalRevenues
+} = fromRevenue.adapter.getSelectors(selectRevenueState);
+
+export const getAllRevenueSeries = createSelector(
+    selectRevenueState,
+    getAllRevenues
+);
+
+export const getRevenueActualSeries = createSelector(
+    getAllRevenueSeries,
+    (allRevenueSeries) => allRevenueSeries.find((series) => series.scenarioName === ScenarioNameEnum.ACTUAL)
+);
+
+export const getRevenueIcFollowOn1Series = createSelector(
+    getAllRevenueSeries,
+    (allRevenueSeries) => allRevenueSeries.find((series) => series.scenarioName === ScenarioNameEnum.ICFOLLOWON1)
+);
+
+export const getRevenueIcFollowOn2Series = createSelector(
+    getAllRevenueSeries,
+    (allRevenueSeries) => allRevenueSeries.find((series) => series.scenarioName === ScenarioNameEnum.ICFOLLOWON2)
+);
+
+export const getRevenueIcInitialSeries = createSelector(
+    getAllRevenueSeries,
+    (allRevenueSeries) => allRevenueSeries.find((series) => series.scenarioName === ScenarioNameEnum.ICINITIAL)
+);
+
+export const getRevenueYearPlus1Series = createSelector(
+    getAllRevenueSeries,
+    (allRevenueSeries) => allRevenueSeries.find((series) => series.scenarioName === ScenarioNameEnum.YEARPLUS1)
 );
 
 // -------------------------------------------------------------------

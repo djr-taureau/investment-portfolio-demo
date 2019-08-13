@@ -136,7 +136,6 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     ngOnChanges(changes: SimpleChanges): void {
         this.updateScales();
-        console.log(changes);
     }
 
     updateScales() {

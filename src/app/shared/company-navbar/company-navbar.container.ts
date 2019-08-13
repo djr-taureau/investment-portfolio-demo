@@ -57,7 +57,7 @@ export class CompanyNavbarContainer implements OnInit {
      */
     public onLinkClick(link: NavigationBarLink): void {
         CompanyNavbarContainer.logger.debug(`onLinkClick( ${JSON.stringify(link)} )`);
-        this.showExpandCollapse = link.route === "company/:id/dashboard";
+        this.showExpandCollapse = link.route.includes("company/");
         this.store$.dispatch(new CompanyNavigationItemClicked(link));
     }
 

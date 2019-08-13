@@ -12,6 +12,7 @@ import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { throwError } from "rxjs";
 import * as uuid from "uuid";
+import { IsoConversionService } from "./isoConversion.service";
 
 @Injectable()
 export class CompanyService {
@@ -113,11 +114,11 @@ export class CompanyService {
             map((result) => {
                 result.data.series.forEach((element) => {
                     // set an id since there isn't one returned
-                    element.id = uuid.v4();
-                    // calculate the vsPY total for usd
+                    // element.id = uuid.v4();
+                    // calculate the vsPYTotalUSD
                     // sum(amountInUSDrevenue) - sum(amountInUSDvsPY) / abs(sum(amountInUSDvsPY)) * 100
                     // e.g 100 * ((325.2 - 301.4) / ABS(301.4)) = 7.9%
-                    // calculate the vsPY total for native
+                    // calculate the vsPYTotalNative
                     // sum(amountInNativerevenue) - sum(amountInNativevsPY) / abs(sum(amountInNativevsPY)) * 100
                 });
                 return result.data.series;

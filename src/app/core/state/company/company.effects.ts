@@ -2,6 +2,7 @@ import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-se
 import * as _ from "lodash";
 import * as CompanyActions from "../company/company.actions";
 import * as ValuationActions from "./../valuation/valuation.actions";
+import * as RevenueActions from "./../revenue/revenue.actions";
 import { Observable, of } from "rxjs";
 import { Action, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
@@ -34,7 +35,7 @@ export class CompanyEffects {
         exhaustMap((id: string) =>
             this.companyService.getCompany(id).pipe(
                 concatMap((result: GetCompanyResponse) => {
-                    return [new CompanyActions.GetSuccess(result.data), new ValuationActions.GetAll(id)];
+                    return [new CompanyActions.GetSuccess(result.data), new ValuationActions.GetAll(id), new RevenueActions.GetAll(id)];
                 }),
                 catchError((error) => of(new CompanyActions.GetFailure(error)))
             )
