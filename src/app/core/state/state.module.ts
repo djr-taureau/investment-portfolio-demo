@@ -1,4 +1,5 @@
 import { CompanyInitiativeEffects } from "@core/state/company/dashboard/company-initiative.effects";
+import { CompanyRevenueEffects } from "@core/state/company/revenue/company-revenue.effects";
 import { PortfolioEffect } from "@core/state/portfolio/portfolio.effect";
 import { TeamMemberEffects } from "./team-member/team-member.effects";
 import { AuthEffect } from "./auth/auth.effect";
@@ -16,25 +17,26 @@ import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { StoreModule } from "@ngrx/store";
 import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
 import { TeamEffects } from "./team/team.effects";
+import { ValuationEffects } from "./valuation/valuation.effects";
+import { RevenueEffects } from "./revenue/revenue.effects";
 import * as CompanyDashboard from "@core/state/company/dashboard";
 import * as PortfolioListingLayout from "@core/state/portfolio-list";
 import * as PortfolioDashboard from "@core/state/portfolio-dashboard";
-import { ValuationEffects } from "./valuation/valuation.effects";
-import { RevenueEffects } from "./revenue/revenue.effects";
+import * as CompanyRevenue from "@core/state/company/revenue";
 
 const EFFECTS = [
     RouterEffect,
     AuthEffect,
+    CompanyEffects,
     CompanyFlowEffect,
     CompanyInitiativeEffects,
+    CompanyRevenueEffects,
+    PortfolioEffect,
     PortfolioFlowEffect,
-    CompanyEffects,
-    RevenueEffects,
     SnackbarEffect,
     TeamEffects,
     TeamMemberEffects,
-    ValuationEffects,
-    PortfolioEffect
+    ValuationEffects
 ];
 
 const MODULES = [
@@ -51,6 +53,7 @@ const MODULES = [
     StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
     StoreModule.forFeature("portfolioListing", PortfolioListingLayout.reducers),
     StoreModule.forFeature("portfolioDashboard", PortfolioDashboard.reducers),
+    StoreModule.forFeature("companyRevenue", CompanyRevenue.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and

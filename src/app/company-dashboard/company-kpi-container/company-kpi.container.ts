@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { ToggleCashDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
-import { Store } from "@ngrx/store";
+import { select, Store } from "@ngrx/store";
 import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
 import { Logger } from "@util/logger";
 import "zone.js";
+import { Observable } from "rxjs";
 import { ebitda, revenueMock2 } from "../financials-data";
+import * as fromCompanyRevenue from "@core/state/company/revenue";
 
 @Component({
     selector: "sbp-company-kpi-container",
@@ -13,11 +15,8 @@ import { ebitda, revenueMock2 } from "../financials-data";
 })
 export class CompanyKpiContainer implements OnInit {
     /**
-     * Constructor.
+     * Internal logger.
      */
-    constructor(private store$: Store<any>) {
-        CompanyKpiContainer.logger.debug(`constructor()`);
-    }
     private static logger: Logger = Logger.getLogger("CompanyKpiContainer");
 
     timelineData: any[];
@@ -25,18 +24,30 @@ export class CompanyKpiContainer implements OnInit {
     timelineData3: TimelineDataPointFin[];
 
     /**
-     * Internal logger.
+     * The total revenue for a given period.
      */
+    public revenueAsOf$: Observable<number>;
 
-    public onRevenueClick() {
-        this.store$.dispatch(new ToggleRevenueDetail());
-    }
+    /**
+     * The percent change from a prior period.
+     */
+    public revenueChangeFromPriorPeriod$: Observable<number>;
 
-    public onEBITDAClick() {
-        this.store$.dispatch(new ToggleEBITDADetail());
-    }
-    public onCashClick() {
-        this.store$.dispatch(new ToggleCashDetail());
+    /**
+     * The percent change from a prior budget.
+     */
+    public revenueChangeFromPriorBudget$: Observable<number>;
+
+    /**
+     * List of revenue summary line chart data.
+     */
+    public revenueSummaryLineChartData$: Observable<any[]>;
+
+    /**
+     * Constructor.
+     */
+    constructor(private store$: Store<any>) {
+        CompanyKpiContainer.logger.debug(`constructor()`);
     }
 
     /**
@@ -47,5 +58,22 @@ export class CompanyKpiContainer implements OnInit {
         this.timelineData = revenueMock2.series;
         this.timelineData2 = ebitda;
         this.timelineData3 = ebitda;
+
+        this.revenueAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueAsOf));
+        this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorPeriod));
+        this.revenueChangeFromPriorBudget$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorBudget));
+        this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getSummaryLineChartData));
+    }
+
+    public onRevenueClick() {
+        this.store$.dispatch(new ToggleRevenueDetail());
+    }
+
+    public onEBITDAClick() {
+        this.store$.dispatch(new ToggleEBITDADetail());
+    }
+
+    public onCashClick() {
+        this.store$.dispatch(new ToggleCashDetail());
     }
 }

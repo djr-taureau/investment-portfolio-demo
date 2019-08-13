@@ -1,13 +1,17 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, DecimalPipe } from "@angular/common";
 import { CalculatePortfolioDashboardNavBarClassesPipe } from "@shared/pipes/calculate-portfolio-dashboard-nav-bar-classes.pipe";
+import { MillionsPipe } from "@shared/pipes/millions.pipe";
+import { PositiveOrNegativePipe } from "@shared/pipes/positive-or-negative.pipe";
 import { CalculateNavBarClassesPipe } from "./calculate-nav-bar-classes.pipe";
 
-const PIPES = [CalculateNavBarClassesPipe, CalculatePortfolioDashboardNavBarClassesPipe];
+const PIPES = [CalculateNavBarClassesPipe, CalculatePortfolioDashboardNavBarClassesPipe, MillionsPipe, PositiveOrNegativePipe];
+const PROVIDERS = [DecimalPipe];
 
 @NgModule({
     imports: [CommonModule],
     exports: PIPES,
-    declarations: PIPES
+    declarations: PIPES,
+    providers: PROVIDERS
 })
 export class PipeModule {}

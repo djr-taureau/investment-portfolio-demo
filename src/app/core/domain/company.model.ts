@@ -235,6 +235,12 @@ export interface RevenueSeriesGraphData {
     date: Date;
     value: number;
 }
+
+export interface RevenuePeriod {
+    series_quarters: any[];
+    series_years: any[];
+}
+
 /**
  * Holds the yearly and quarterly sets of data for graphs
  * These are calculated set based on yearly summation or by quarter
@@ -294,6 +300,7 @@ export interface TopLineValuation {
     yearPlus1: TopLineValuationData;
     exit: TopLineValuationData;
 }
+
 export interface ValuationDetailData {
     id: string;
     reportingPeriod: string;
@@ -367,12 +374,14 @@ export interface RevenueSeries {
     data: RevenueSeriesData[];
 }
 
-export interface CompanyRevenueRequest {
-    companyId: string;
-    currency: string;
-    timeFrame: string;
-    endDate: string;
-}
+// TODO: TJM: Are you using this???
+// export interface CompanyRevenueRequest {
+//     companyId: string;
+//     currency: string;
+//     timeFrame: string;
+//     endDate: string;
+// }
+
 // This interface is the API response for getting Company Revenue for the
 // minimized and expanded cards on the Company Dashboard view for Revenue,
 // EBITDA, Cash Burn, and the 4 original Placeholder KPIs
@@ -424,4 +433,9 @@ export interface GetAllTeamsResponse extends ApiResponse {
 
 export interface GetTeamMemberResponse extends ApiResponse {
     data: TeamMember;
+}
+
+export interface CompanyRevenueRequest {
+    id: string;
+    date: string;
 }

@@ -11,19 +11,20 @@ import { RevenueSeries } from "@app/core/domain/company.model";
 
 @Injectable()
 export class RevenueEffects {
-    @Effect()
-    loadRevenues$: Observable<Action> = this.actions$.pipe(
-        ofType<RevenueActions.GetAll>(RevenueActionTypes.GetAll),
-        map((action) => action.payload),
-        exhaustMap((companyId: string) =>
-            this.companyService.getCompanyRevenue(companyId).pipe(
-                map((result: RevenueSeries[]) => {
-                    return new GetAllSuccess(result);
-                }),
-                catchError((error) => of(new GetAllFailure(error)))
-            )
-        )
-    );
+    // TODO: TJM: Do we need this?
+    // @Effect()
+    // loadRevenues$: Observable<Action> = this.actions$.pipe(
+    //     ofType<RevenueActions.GetAll>(RevenueActionTypes.GetAll),
+    //     map((action) => action.payload),
+    //     exhaustMap((companyId: string) =>
+    //         this.companyService.getCompanyRevenue(companyId).pipe(
+    //             map((result: RevenueSeries[]) => {
+    //                 return new GetAllSuccess(result);
+    //             }),
+    //             catchError((error) => of(new GetAllFailure(error)))
+    //         )
+    //     )
+    // );
 
     constructor(private actions$: Actions, private companyService: CompanyService) {}
 }

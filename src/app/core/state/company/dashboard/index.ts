@@ -21,7 +21,7 @@ export interface State extends fromRoot.AppState {
     companyDashboard: CompanyDashboard;
 }
 
-export const reducers: ActionReducerMap<CompanyDashboard, CompanyDashboardLayoutActions | CompanyInitiativeActions> = {
+export const reducers: ActionReducerMap<any, any> = {
     layout: fromCompanyDashboardLayout.reducer,
     initiatives: fromCompanyInitiatives.reducer
 };

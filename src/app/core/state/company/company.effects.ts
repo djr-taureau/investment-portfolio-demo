@@ -1,8 +1,5 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
-import * as _ from "lodash";
-import * as CompanyActions from "../company/company.actions";
-import * as ValuationActions from "./../valuation/valuation.actions";
-import * as RevenueActions from "./../revenue/revenue.actions";
+import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
 import { Observable, of } from "rxjs";
 import { Action, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
@@ -12,6 +9,10 @@ import { CompanyActionTypes } from "@core/state/company/company.actions";
 import { CompanyService } from "@core/service/company.service";
 import { DashboardAsOfDateChanged, DashboardCurrencyChanged } from "@core/state/flow/company-flow.actions";
 import { Injectable } from "@angular/core";
+import * as _ from "lodash";
+import * as CompanyActions from "../company/company.actions";
+import * as ValuationActions from "./../valuation/valuation.actions";
+import * as RevenueActions from "./../revenue/revenue.actions";
 
 @Injectable()
 export class CompanyEffects {
@@ -43,14 +44,19 @@ export class CompanyEffects {
     );
 
     @Effect()
-    getCompany$Success: Observable<Action> = this.actions$.pipe(
+    getCompanySuccess$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyActions.GetSuccess>(CompanyActionTypes.GetSuccess),
         map((action) => action.payload),
         concatMap((result: Company) => {
             const comp = result as Company;
             // TODO: Gman - update this to use the latest NON-FUTURE available period (once appropriate data for doing so is returned from API)
             const lastPeriod = _.takeRight(_.get(comp, "availablePeriods", []), 1)[0] as SelectorPeriod;
-            return [new DashboardAsOfDateChanged(lastPeriod), new DashboardCurrencyChanged(comp.defaultCurrency)];
+            const actions = [];
+            actions.push(new DashboardCurrencyChanged(comp.defaultCurrency));
+            if (lastPeriod) {
+                actions.push(new DashboardAsOfDateChanged(lastPeriod));
+            }
+            return actions;
         }),
         catchError((error) => of(new CompanyActions.GetFailure(error)))
     );
