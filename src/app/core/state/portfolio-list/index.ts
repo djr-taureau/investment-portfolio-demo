@@ -59,8 +59,7 @@ export const getTotalFund = createSelector(
 export const getTotalApproved = createSelector(
     fromCompanyState.getAllCompanies,
     (allComps) => {
-        // return _.sumBy(allComps, "approved") / 10000000000;
-        return 500000000 / 10000000000;
+        return _.sumBy(allComps, "approved") / 10000000000;
     }
 );
 

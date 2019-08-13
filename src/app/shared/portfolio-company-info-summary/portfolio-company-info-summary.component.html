@@ -5,7 +5,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 25"
          fxLayoutAlign="start center"
          fxLayoutGap="0px">
         <div class="item-cell__label">Companies</div>
@@ -54,7 +54,7 @@
                             <div class="marker"></div>
                             Private
                         </div>
-                        <div class="legend_value">{{ chartData[0].value}}</div>
+                        <div class="legend_value">{{ getChartData(0)}}</div>
                     </div>
                     <div fxLayout="row"
                          fxLayoutAlign="start center"
@@ -67,7 +67,7 @@
                             <div class="marker"></div>
                             Public
                         </div>
-                        <div class="legend_value">{{ chartData[1].value}}</div>
+                        <div class="legend_value">{{ getChartData(1)}}</div>
                     </div>
                 </div>
                 <div class="right-side"
@@ -85,7 +85,7 @@
                             <div class="marker"></div>
                             JV
                         </div>
-                        <div class="legend_value">{{ chartData[2].value}}</div>
+                        <div class="legend_value">{{ getChartData(2)}}</div>
                     </div>
                     <div fxLayout="row"
                          fxLayoutAlign="start center"
@@ -98,7 +98,7 @@
                             <div class="marker"></div>
                             Exited
                         </div>
-                        <div class="legend_value">{{ chartData[3].value}}</div>
+                        <div class="legend_value">{{ getChartData(3)}}</div>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 25"
          fxLayoutAlign="start center"
          fxLayoutGap="8px">
         <div class="item-cell__label">Invested / Approved / Total Fund ($B)</div>
@@ -129,7 +129,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 16.6"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">Total Value ($B)</div>
@@ -138,7 +138,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 16.6"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">MOIC</div>
@@ -147,7 +147,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 16.6"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">IRR</div>

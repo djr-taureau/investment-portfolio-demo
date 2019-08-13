@@ -4,6 +4,7 @@ import {
     portfolioDashboardInvestmentNavBarLink,
     PortfolioDashboardNavBarLink
 } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
+import { PortfolioInvestmentSummary } from "@core/domain/portfolio.model";
 import {
     PortfolioDashboardOverviewLayoutActions,
     PortfolioDashboardOverviewLayoutActionTypes

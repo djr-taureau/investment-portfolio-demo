@@ -20,7 +20,7 @@ import {
 } from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { SetSelectedCompanyLink, ToggleSlideout } from "@core/state/layout/layout.actions";
-import { SearchCompany } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
+import { SearchCompany } from "@core/state/portfolio-dashboard/portfolio-company-list.actions";
 import * as RouterActions from "@core/state/router/router.action";
 import { GetAll } from "@core/state/team/team.actions";
 import { Action, select, Store } from "@ngrx/store";

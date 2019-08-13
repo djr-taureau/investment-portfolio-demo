@@ -6,11 +6,11 @@ import { LegendComponent, LegendLabels, LegendMarkers, MarkersVisualArgs } from 
 import { Point } from "@progress/kendo-drawing/dist/es/geometry";
 
 @Component({
-    selector: "sbp-portfolio-listing-summary",
-    templateUrl: "./portfolio-listing-summary.component.html",
-    styleUrls: ["./portfolio-listing-summary.component.scss"]
+    selector: "sbp-portfolio-company-info-summary",
+    templateUrl: "./portfolio-company-info-summary.component.html",
+    styleUrls: ["./portfolio-company-info-summary.component.scss"]
 })
-export class PortfolioListingSummaryComponent implements OnInit {
+export class PortfolioCompanyInfoSummaryComponent implements OnInit {
     constructor() {}
 
     @Input()
@@ -93,6 +93,11 @@ export class PortfolioListingSummaryComponent implements OnInit {
     public getTotalPerc(): number {
         return 100;
     }
+
+    public getChartData(idx: number) {
+        return _.get(this, `chartData[${idx}.value`, 0);
+    }
+
     /**
      * Initialize the component.
      */

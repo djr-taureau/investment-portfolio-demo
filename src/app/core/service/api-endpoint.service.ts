@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import * as StringUtil from "@util/string.util";
+import * as _ from "lodash";
 
 @Injectable({
     providedIn: "root"
@@ -56,7 +57,7 @@ export class ApiEndpointService {
     public static ENDPOINT = {
         CONFIG: `assets/data/config.json`,
         LOGIN: `auth/login/`,
-        REGISTER: `auth/register/`,
+        REGISTER: `auth/register`,
         EXAMPLE_DETAILS: "example/{id}/details/{id}",
         COMPANIES: "companies",
         COMPANY: "companies/{id}",
@@ -64,7 +65,10 @@ export class ApiEndpointService {
         TEAMS: "companies/{id}/team-members",
         TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
         VALUATION: "companies/{id}/valuation",
-        REVENUE: "companies/{id}/revenue"
+        REVENUE: "companies/{id}/revenue",
+        PORTFOLIOS: "portfolio",
+        PORTFOLIO: "portfolio/{id}",
+        PORTFOLIO_INVESTMENT_SUMMARY: "portfolio/{id}/investmentsummary"
     };
 
     /**
@@ -73,8 +77,25 @@ export class ApiEndpointService {
     public static secureEndpoints = [
         ApiEndpointService.ENDPOINT.COMPANIES,
         ApiEndpointService.ENDPOINT.TEAMS,
-        ApiEndpointService.ENDPOINT.TEAM_MEMBER
+        ApiEndpointService.ENDPOINT.TEAM_MEMBER,
+        ApiEndpointService.ENDPOINT.PORTFOLIOS
     ];
+
+    public static addParams(template, params): string {
+        let result = template;
+
+        let i = 0;
+        const useableParams = _.pickBy(params, (p) => !_.isNil(p) && p !== "");
+        // add the params
+        _.forEach(useableParams, (v, k) => {
+            const startQuery = i === 0 || result.indexOf("?") === -1;
+            result += startQuery ? "?" : "&";
+            result += k + "=" + v;
+            i++;
+        });
+
+        return result;
+    }
 
     /**
      * Constructor.
@@ -127,7 +148,8 @@ export class ApiEndpointService {
      * @returns {boolean}
      */
     public isSecureEndpoint(requestedUrl: string = ""): boolean {
-        return ApiEndpointService.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
+        const check = ApiEndpointService.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
+        return check;
     }
 
     /**

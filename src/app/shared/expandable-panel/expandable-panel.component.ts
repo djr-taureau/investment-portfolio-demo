@@ -16,9 +16,7 @@ export class ExpandablePanelComponent {
         if (!value) {
             this._visible = value;
         } else if (this._visible !== value) {
-            setTimeout(() => {
-                this._visible = value;
-            }, 300);
+            this._visible = value;
         }
     }
     public get visible() {

@@ -1,4 +1,5 @@
 import { CompanyInitiativeEffects } from "@core/state/company/dashboard/company-initiative.effects";
+import { PortfolioEffect } from "@core/state/portfolio/portfolio.effect";
 import { TeamMemberEffects } from "./team-member/team-member.effects";
 import { AuthEffect } from "./auth/auth.effect";
 import { CompanyEffects } from "./company/company.effects";
@@ -32,7 +33,8 @@ const EFFECTS = [
     SnackbarEffect,
     TeamEffects,
     TeamMemberEffects,
-    ValuationEffects
+    ValuationEffects,
+    PortfolioEffect
 ];
 
 const MODULES = [

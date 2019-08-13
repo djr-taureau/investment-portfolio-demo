@@ -5,12 +5,10 @@ import * as _ from "lodash";
 import * as fromAuth from "./auth/auth.reducer";
 import * as fromCompany from "./company/company.reducer";
 import * as fromLayout from "./layout/layout.reducer";
-import * as fromPortfolioDashboard from "./portfolio-dashboard/porfolio-dashboard.reducer";
 import * as fromRouter from "@ngrx/router-store";
 import * as fromTeam from "./team/team.reducer";
 import * as fromTeamMember from "./team-member/team-member.reducer";
 import * as fromValuation from "./valuation/valuation.reducer";
-import * as TestUtil from "@util/test.util";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
 import { Company } from "@core/domain/company.model";
 import { RouterStateUrl } from "./router/custom-router-state.serializer";
@@ -19,7 +17,6 @@ export interface AppState {
     auth: fromAuth.AuthState;
     company: fromCompany.State;
     layout: fromLayout.LayoutState;
-    // portfolioDashboard: fromPortfolioDashboard.State;
     router: fromRouter.RouterReducerState<RouterStateUrl>;
     team: fromTeam.State;
     teamMember: fromTeamMember.State;
@@ -30,7 +27,6 @@ export interface AppState {
 export const reducers: ActionReducerMap<AppState> = {
     auth: fromAuth.authReducer,
     company: fromCompany.reducer,
-    // portfolioDashboard: fromPortfolioDashboard.reducer,
     layout: fromLayout.layoutReducer,
     revenue: fromRevenue.reducer,
     router: fromRouter.routerReducer,

@@ -1,11 +1,10 @@
-import { Company } from "@core/domain/company.model";
-import * as fromPortfolioListingState from "@core/state/portfolio-list";
+import * as fromPortfolioDashboard from "@core/state/portfolio-dashboard";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";
 
 @Component({
-    selector: "sbp-portfolio-listing-summary-container",
+    selector: "sbp-dashboard-company-info-summary-container",
     template: `
         <sbp-portfolio-company-info-summary
             fxFlex
@@ -20,7 +19,7 @@ import { select, Store } from "@ngrx/store";
         ></sbp-portfolio-company-info-summary>
     `
 })
-export class PortfolioListingSummaryContainer implements OnInit {
+export class CompanySummaryInfoContainer implements OnInit {
     /**
      * The total number of companies in the portfolio
      */
@@ -65,14 +64,14 @@ export class PortfolioListingSummaryContainer implements OnInit {
      * Initialize the component.
      */
     public ngOnInit(): void {
-        this.companyCount$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCount));
-        this.companyCountByType$ = this.store$.pipe(select(fromPortfolioListingState.getCompanyCountsByType));
-        this.totalInvested$ = this.store$.pipe(select(fromPortfolioListingState.getTotalInvested));
-        this.totalFund$ = this.store$.pipe(select(fromPortfolioListingState.getTotalFund));
-        this.totalApproved$ = this.store$.pipe(select(fromPortfolioListingState.getTotalApproved));
-        this.valuation$ = this.store$.pipe(select(fromPortfolioListingState.getValuation));
-        this.moic$ = this.store$.pipe(select(fromPortfolioListingState.getMoic));
-        this.irr$ = this.store$.pipe(select(fromPortfolioListingState.getIrr));
+        this.companyCount$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryCompanyCount));
+        this.companyCountByType$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryCountsByType));
+        this.totalInvested$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryInvested));
+        this.totalFund$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryTotalFund));
+        this.totalApproved$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryApproved));
+        this.valuation$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryTotalValue));
+        this.moic$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryMOIC));
+        this.irr$ = this.store$.pipe(select(fromPortfolioDashboard.getInvestmentSummaryGrossIRR));
     }
 
     constructor(private store$: Store<any>) {}

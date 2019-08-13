@@ -6,6 +6,7 @@ import { AuthService } from "@core/auth/auth.service";
 import { ApiService } from "@core/service/api.service";
 import { CompanyService } from "@core/service/company.service";
 import { CustomIconService } from "@core/service/custom-icon.service";
+import { PortfolioService } from "@core/service/portfolio.service";
 import { TeamService } from "@core/service/team.service";
 import { ValuationService } from "@core/service/valuation.service";
 import { IsoConversionService } from "./isoConversion.service";
@@ -17,6 +18,7 @@ const PROVIDERS = [
     AdalAuthContextService,
     CompanyService,
     CustomIconService,
+    PortfolioService,
     IsoConversionService,
     PortfolioDashboardOverviewRouteMonitorService,
     TeamService,

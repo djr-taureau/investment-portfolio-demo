@@ -2,6 +2,7 @@ import "hammerjs";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { CommonModule } from "@angular/common";
 import { ComparisonBarModule } from "@shared/comparison-bar/comparison-bar.module";
+import { PortfolioCompanyInfoSummaryModule } from "@shared/portfolio-company-info-summary/portfolio-company-info-summary.module";
 import { CompanyNavbarModule } from "./company-navbar/company-navbar.module";
 import { ChartModule } from "@shared/chart-components/chart.module";
 import { DirectivesModule } from "./directives/directives.module";
@@ -36,6 +37,7 @@ const MODULES = [
     IconizedSearchableComboModule,
     FilterablePanelModule,
     MaterialModule,
+    PortfolioCompanyInfoSummaryModule,
     PipeModule,
     DirectivesModule,
     PortfolioNavbarModule,

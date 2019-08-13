@@ -1,10 +1,10 @@
 import "rxjs/operators/first";
+import { LoadPortfolioFlow } from "@core/state/flow/portfolio-flow.actions";
 import * as _ from "lodash";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { ActivatedRoute } from "@angular/router";
 import { Company } from "@core/domain/company.model";
 import { getCompanyNavLinks } from "@core/state";
-import { LoadPortfolio } from "@core/state/flow/portfolio-flow.actions";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 import { Observable } from "rxjs";
 import { OnInit } from "@angular/core";
@@ -17,7 +17,7 @@ export class CoreCompanyContainer implements OnInit {
 
     ngOnInit() {
         // Load the portfolio
-        this.store$.dispatch(new LoadPortfolio());
+        this.store$.dispatch(new LoadPortfolioFlow());
 
         // Ensure that the url is evaluated for company id and updates the selected company if it exists
         this.route$.params.subscribe((params) => {

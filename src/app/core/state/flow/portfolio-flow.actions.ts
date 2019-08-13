@@ -3,10 +3,10 @@ import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
 export enum PortfolioFlowActionTypes {
-    // ChangeCompanyListGroup = "[Flow] Change Company List Group",
-    // ChangeCompanyListSort = "[Flow] Change Company List Sort",
+    LoadPortfolioFlow = "[Flow] Load Portfolio",
+    LoadPortfolioFlowFailure = "[Flow] Load Portfolio",
+    LoadPortfolioFlowSuccess = "[Flow] Load Portfolio",
 
-    LoadPortfolio = "[Flow] Load Portfolio",
     GoToPortfolio = "[Flow] Go To Portfolio",
 
     PortfolioNavigationItemClicked = "[Flow] Portfolio Navigation Item Clicked",
@@ -19,8 +19,20 @@ export class GoToPortfolio implements Action {
     constructor(public payload?: string) {}
 }
 
-export class LoadPortfolio implements Action {
-    readonly type = PortfolioFlowActionTypes.LoadPortfolio;
+export class LoadPortfolioFlow implements Action {
+    readonly type = PortfolioFlowActionTypes.LoadPortfolioFlow;
+
+    constructor(public payload?: string) {}
+}
+
+export class LoadPortfolioFlowFailure implements Action {
+    readonly type = PortfolioFlowActionTypes.LoadPortfolioFlowFailure;
+
+    constructor(public payload?: string) {}
+}
+
+export class LoadPortfolioFlowSuccess implements Action {
+    readonly type = PortfolioFlowActionTypes.LoadPortfolioFlowSuccess;
 
     constructor(public payload?: string) {}
 }
@@ -37,4 +49,10 @@ export class PortfolioDashboardOverviewNavigationItemClicked implements Action {
     constructor(public payload: PortfolioDashboardNavBarLink) {}
 }
 
-export type PortfolioFlowActions = GoToPortfolio | LoadPortfolio | PortfolioNavigationItemClicked | PortfolioDashboardOverviewNavigationItemClicked;
+export type PortfolioFlowActions =
+    | GoToPortfolio
+    | LoadPortfolioFlow
+    | LoadPortfolioFlowFailure
+    | LoadPortfolioFlowSuccess
+    | PortfolioNavigationItemClicked
+    | PortfolioDashboardOverviewNavigationItemClicked;
