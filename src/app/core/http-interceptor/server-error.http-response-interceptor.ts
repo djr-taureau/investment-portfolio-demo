@@ -43,7 +43,8 @@ export class ServerErrorHttpResponseInterceptor implements HttpInterceptor {
                         if (this.isAuthError(err)) {
                             this.createAuthError(err);
                         } else {
-                            this.store$.dispatch(new SnackBarActions.Open(this.getErrorMessage(err)));
+                            // Removing per SBMVP-923
+                            // this.store$.dispatch(new SnackBarActions.Open(this.getErrorMessage(err)));
                             return EMPTY;
                         }
                     }

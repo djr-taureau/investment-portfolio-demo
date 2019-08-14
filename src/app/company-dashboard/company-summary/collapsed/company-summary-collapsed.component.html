@@ -40,7 +40,7 @@
                 </kendo-chart>
             </div>
             <div class="percent-owned"
-                 *ngIf="showDonut()">{{ company.percentOwnership * 100 }}% OWN</div>
+                 *ngIf="showDonut()">{{ (company.percentOwnership || 0) * 100 }}% OWN</div>
             <div class="more-company-info hand-cursor"
                  (click)="onSeeMoreCompanyInfo(company.id)">
                 More company info
@@ -90,8 +90,8 @@
             <div>&nbsp;</div>
             <div class="deployed-denomination">($M)</div>
         </div>
-        <div class="deployed-value">{{ currentInvested | number:'1.1-1'  }}</div>
-        <div class="deployed-total">/ {{ currentApproved | number:'1.1-1' }}</div>
+        <div class="deployed-value">{{ currentInvested | millions:'1.1-1'  }}</div>
+        <div class="deployed-total">/ {{ currentApproved | millions:'1.1-1' }}</div>
     </div>
 
     <!--

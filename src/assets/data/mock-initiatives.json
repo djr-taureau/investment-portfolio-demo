@@ -2,11 +2,47 @@
 {
   "data": [
     {
+      "id": 61,
+      "companyId": 6,
+      "status": "IN_PROGRESS_ON_TRACK",
+      "title": "XXXX JV for SE Asia",
+      "description": "Focus on deal terms and setting of JV between XXXX and SYY by August",
+      "initiativeOwner": {
+        "id": 99,
+        "firstName":"Amit ",
+        "lastName": "Rohatgi"
+      }
+    },
+    {
+      "id": 62,
+      "companyId": 6,
+      "status": "IN_PROGRESS_ON_TRACK",
+      "title": "XYZ FaceID for XX offices",
+      "description": "Bring access control solutions from SXX to YY (operationally)",
+      "initiativeOwner": {
+        "id": 99,
+        "firstName":"Amit ",
+        "lastName": "Rohatgi"
+      }
+    },
+    {
+      "id": 63,
+      "companyId": 6,
+      "status": "IN_PROGRESS_ON_TRACK",
+      "title": "ZZZ engagement",
+      "description": "resurrect ZZZ engagement for villa entry/exit",
+      "initiativeOwner": {
+        "id": 99,
+        "firstName":"Amit ",
+        "lastName": "Rohatgi"
+      }
+    },
+    {
       "id": 1,
       "companyId": 8,
       "status": "IN_PROGRESS_ON_TRACK",
-      "title": "GrabST JV for SE Asia",
-      "description": "Focus on deal terms and setting of JV between Grab and ST by August",
+      "title": "XXX JV for SE Asia",
+      "description": "Focus on deal terms and setting of JV between XXX and YY by August",
       "initiativeOwner": {
         "id": 99,
         "firstName":"Amit ",
@@ -17,8 +53,8 @@
       "id": 2,
       "companyId": 8,
       "status": "IN_PROGRESS_ON_TRACK",
-      "title": "Sensetime FaceID for SB offices",
-      "description": "Bring access control solutions from ST to SB (operationally)",
+      "title": "ZZZZ FaceID for XX offices",
+      "description": "Bring access control solutions from XX to YY (operationally)",
       "initiativeOwner": {
         "id": 99,
         "firstName":"Amit ",
@@ -29,8 +65,8 @@
       "id": 3,
       "companyId": 8,
       "status": "IN_PROGRESS_ON_TRACK",
-      "title": "OYO engagement",
-      "description": "resurrect Oyo engagement for villa entry/exit",
+      "title": "ZZZ engagement",
+      "description": "resurrect ZZZ engagement for villa entry/exit",
       "initiativeOwner": {
         "id": 99,
         "firstName":"Amit ",
@@ -41,8 +77,8 @@
       "id": 4,
       "companyId": 100,
       "status": "IN_PROGRESS_ON_TRACK",
-      "title": "A.I. Marketplace",
-      "description": "Assist management with A.I. Marketplace business plan and execution",
+      "title": "ABC Marketplace",
+      "description": "Assist management with ABC Marketplace business plan and execution",
       "initiativeOwner": {
         "id": 100,
         "firstName":"Avi ",
@@ -53,7 +89,7 @@
       "id": 5,
       "companyId": 100,
       "status": "IN_PROGRESS_ON_TRACK",
-      "title": "Partner with WeWork",
+      "title": "Partner with YZYZY",
       "description": "Deploy robots at WeWork spaces to potentially clean, track, or collect info",
       "initiativeOwner": {
         "id": 100,
@@ -65,8 +101,8 @@
       "id": 6,
       "companyId": 100,
       "status": "IN_PROGRESS_NEEDS_ATTN",
-      "title": "Albertson's / Safeway",
-      "description": "Getting Brain and Tennant another shot at Albertson's / Safeway",
+      "title": "MMM / SSS",
+      "description": "Getting TTT and Tennant another shot at RRRR's / TTTTT",
       "initiativeOwner": {
         "id": 101,
         "firstName":"Adam ",
@@ -77,7 +113,7 @@
       "id": 7,
       "companyId": 100,
       "status": "IN_PROGRESS_NEEDS_ATTN",
-      "title": "Mapbox",
+      "title": "PPPP",
       "description": "Partner to provide indoor network coverage ",
       "initiativeOwner": {
         "id": 102,
