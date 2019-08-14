@@ -90,7 +90,7 @@ paths:
           - name: "as_of_date"
             in: "query"
             description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-            required: false
+            required: true
             type: "string"
       responses:
         200:
@@ -118,7 +118,7 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
       responses:
         200:
@@ -169,7 +169,7 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
       responses:
         200:
@@ -197,7 +197,7 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
       responses:
         200:
@@ -240,7 +240,7 @@ paths:
       parameters:
         - name: "companyId"
           in: "path"
-          description: "Id for the portfolio company being requested"
+          description: "Id for the company documents being requested"
           required: true
           type: "number"
         - name: "from"
@@ -300,11 +300,6 @@ paths:
           description: "Id for the portfolio summary being requested"
           required: true
           type: "number"
-        - name: "as_of_date"
-          in: "query"
-          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
-          type: "string"
       produces:
         - "application/json"
       responses:
@@ -353,11 +348,6 @@ paths:
           description: "Id for the portfolio being requested"
           required: true
           type: "number"
-        - name: "as_of_date"
-          in: "query"
-          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
-          type: "string"
       produces:
         - "application/json"
       responses:
@@ -383,11 +373,11 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
         - name: "metric_type"
           in: "query"
-          description: "Metric Typefor which to return data"
+          description: "Metric Type for which to return data"
           required: true
           type: "string"
           enum:
@@ -418,7 +408,7 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
         - name: "metric_type"
           in: "query"
@@ -453,12 +443,12 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
         - name: "by"
           in: "query"
           description: "Aggregate of exposure point for the portfolio being requested"
-          required: false
+          required: true
           type: "string"
           enum:
             - "SECTOR"
@@ -494,7 +484,7 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
         - name: "top"
           in: "query"
@@ -507,6 +497,7 @@ paths:
           description: "Related metric to key off of for aggregate ratios"
           required: false
           type: "string"
+          default: "UNREALIZED_VALUE"
           enum:
               - "UNREALIZED_VALUE"
               - "INCREASE_IN_TOTAL_VALUE"
@@ -514,7 +505,7 @@ paths:
         - name: "by"
           in: "query"
           description: "Aggregate grouping point for the portfolio being requested"
-          required: false
+          required: true
           type: "string"
           enum:
             - "SECTOR"
@@ -528,6 +519,7 @@ paths:
           description: "Type of scenario we are contrasting actuals against"
           required: false
           type: "string"
+          default: "BUDGET"
           enum:
             - "BUDGET"
             - "FORECAST"
