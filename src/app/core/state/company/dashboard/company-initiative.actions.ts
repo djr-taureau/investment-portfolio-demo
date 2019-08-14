@@ -1,5 +1,5 @@
 import { GetAllCompanyInitiativesResponse, Person } from "@core/domain/company.model";
-import { InitiativeStatusEnum } from "@core/domain/initiative.model";
+import { Initiative, InitiativeStatusEnum } from "@core/domain/initiative.model";
 import { Action } from "@ngrx/store";
 
 export enum CompanyInitiativeActionTypes {
@@ -22,7 +22,7 @@ export class GetAllInitiativesFailure implements Action {
 
 export class GetAllInitiativesSuccess implements Action {
     readonly type = CompanyInitiativeActionTypes.GetAllInitiativesSuccess;
-    constructor(public payload: GetAllCompanyInitiativesResponse) {}
+    constructor(public payload: Initiative[]) {}
 }
 
 export class FilterByOwner implements Action {

@@ -1,4 +1,5 @@
 import { CompanyInitiativeEffects } from "@core/state/company/dashboard/company-initiative.effects";
+import { CompanyDocumentsEffects } from "@core/state/company/documents/company-documents.effects";
 import { CompanyRevenueEffects } from "@core/state/company/revenue/company-revenue.effects";
 import { PortfolioEffect } from "@core/state/portfolio/portfolio.effect";
 import { TeamMemberEffects } from "./team-member/team-member.effects";
@@ -33,6 +34,10 @@ const EFFECTS = [
     CompanyRevenueEffects,
     PortfolioEffect,
     PortfolioFlowEffect,
+    CompanyEffects,
+    RevenueEffects,
+    PortfolioEffect,
+    CompanyDocumentsEffects,
     SnackbarEffect,
     TeamEffects,
     TeamMemberEffects,

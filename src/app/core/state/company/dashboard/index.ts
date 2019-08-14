@@ -3,18 +3,21 @@ import { Company } from "@core/domain/company.model";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { CompanyInitiativeActions } from "@core/state/company/dashboard/company-initiative.actions";
+import { CompanyDocumentsActions } from "@core/state/company/documents/company-documents.actions";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
 import { getSelectedCompany } from "../../";
 import { CompanyDashboardLayoutActions } from "./company-dashboard-layout.actions";
 import * as fromRoot from "../../";
 import * as fromCompanyDashboardLayout from "./company-dashboard-layout.reducer";
 import * as fromCompanyInitiatives from "./company-initiative.reducer";
+import * as fromCompanyDocuments from "../documents/company-documents.reducer";
 import * as _ from "lodash";
 import * as ObjectUtil from "@util/object.util";
 
 export interface CompanyDashboard {
     layout: fromCompanyDashboardLayout.CompanyDashboardLayoutState;
     initiatives: fromCompanyInitiatives.State;
+    documents: fromCompanyDocuments.State;
 }
 
 export interface State extends fromRoot.AppState {
@@ -23,7 +26,8 @@ export interface State extends fromRoot.AppState {
 
 export const reducers: ActionReducerMap<any, any> = {
     layout: fromCompanyDashboardLayout.reducer,
-    initiatives: fromCompanyInitiatives.reducer
+    initiatives: fromCompanyInitiatives.reducer,
+    documents: fromCompanyDocuments.reducer
 };
 
 export const selectCompanyDashboard = createFeatureSelector<State, CompanyDashboard>("companyDashboard");
@@ -149,5 +153,35 @@ export const getTopInitiativesByCompanyId = createSelector(
     getSelectedCompany,
     (allInitiatives, selectedCompany) => {
         return _.take(allInitiatives.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
+    }
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// Initiatives Selectors
+///////////////////////////////////////////////////////////////////////////////////////////
+export const selectCompanyDashboardDocumentsState = createSelector(
+    selectCompanyDashboard,
+    (state: CompanyDashboard) => state.documents
+);
+
+export const {
+    selectIds: getDocumentIds,
+    selectEntities: getDocumentEntities,
+    selectAll: getAllDocuments,
+    selectTotal: getTotalDocuments
+} = fromCompanyDocuments.adapter.getSelectors(selectCompanyDashboardDocumentsState);
+
+export const getDocumentCount = createSelector(
+    getAllInitiatives,
+    (allDocuments) => {
+        return allDocuments.length || 0;
+    }
+);
+
+export const getTopDocumentsByCompanyId = createSelector(
+    getAllInitiatives,
+    getSelectedCompany,
+    (allDocuments, selectedCompany) => {
+        return _.take(allDocuments.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
     }
 );

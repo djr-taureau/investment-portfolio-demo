@@ -17,7 +17,7 @@ export class CompanyInitiativeEffects {
         exhaustMap(() =>
             this.companyService.getCompanyInitiatives().pipe(
                 map((result: Initiative[]) => {
-                    return new CompanyInitiativeActions.GetAllInitiativesSuccess({ data: result } as GetAllCompanyInitiativesResponse);
+                    return new CompanyInitiativeActions.GetAllInitiativesSuccess(result);
                 }),
                 catchError((error) => of(new CompanyInitiativeActions.GetAllInitiativesFailure(error)))
             )

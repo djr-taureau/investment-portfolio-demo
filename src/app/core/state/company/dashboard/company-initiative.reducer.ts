@@ -22,7 +22,7 @@ export const initialState: State = adapter.getInitialState({
 export function reducer(state = initialState, action: CompanyInitiativeActions): State {
     switch (action.type) {
         case CompanyInitiativeActionTypes.GetAllInitiativesSuccess:
-            return adapter.addMany(action.payload.data, state);
+            return adapter.addMany(action.payload, state);
         default: {
             return state;
         }

@@ -1,4 +1,5 @@
 import { CompanyRevenueRequest, GetAllCompanyInitiativesResponse, RevenueSeries } from "@app/core/domain/company.model";
+import { CompanyDocument, GetAllCompanyDocumentsResponse } from "@core/domain/document.model";
 import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
 import { ApiEndpointService } from "./api-endpoint.service";
@@ -11,6 +12,8 @@ import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { throwError } from "rxjs";
+import * as uuid from "uuid";
+import { IsoConversionService } from "./isoConversion.service";
 
 @Injectable()
 export class CompanyService {
@@ -68,6 +71,29 @@ export class CompanyService {
             }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`getCompanyInitiativesFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Retrieves all initiatives for a company.
+     */
+    public getCompanyDocuments(id: string): Observable<CompanyDocument[]> {
+        const params = {
+            id
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_DOCUMENTS, params);
+        CompanyService.logger.debug(`getCompanyDocuments( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((response: GetAllCompanyDocumentsResponse) => {
+                const data = response.data || [];
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getCompanyDocumentsFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

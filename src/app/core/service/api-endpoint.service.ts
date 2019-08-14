@@ -62,6 +62,7 @@ export class ApiEndpointService {
         COMPANIES: "companies",
         COMPANY: "companies/{id}",
         COMPANY_INITIATIVES: `assets/data/mock-initiatives.json`, // "companies/{id}/initiatives",
+        COMPANY_DOCUMENTS: "companies/{id}/documents",
         TEAMS: "companies/{id}/team-members",
         TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
         VALUATION: "companies/{id}/valuation",
@@ -112,6 +113,7 @@ export class ApiEndpointService {
     public getEndpoint(endpoint: string, params?: {}): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
         const isInitiatives = ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES === endpoint;
+        // const isDocuments = ApiEndpointService.ENDPOINT.COMPANY_DOCUMENTS === endpoint;
         const url = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
         return StringUtil.replaceTokens(url, params);
     }
@@ -121,7 +123,7 @@ export class ApiEndpointService {
      */
     public getBaseUrl(): string {
         // TODO: BMR: 08/07/2019: Once Jon adds a trailing "/" to the config.json's API endpioint value we can remove the trailing "/" here.
-        return `${ApiEndpointService.BASE_URL.FROM_CONFIG}/`;
+        return `${ApiEndpointService.BASE_URL.FROM_CONFIG}`;
     }
 
     /**

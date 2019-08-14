@@ -1,6 +1,7 @@
-import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { GetAllInitiatives } from "@core/state/company/dashboard/company-initiative.actions";
-import { ValuationContainer } from "@core/slideout/valuation/valuation.container";
+import { GetAllDocuments } from "@core/state/company/documents/company-documents.actions";
+import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
+import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import { appRoutePaths } from "@app/app.routes";
 import { CompanyInfoContainer } from "@core/slideout/company-info/company-info.container";
 import { TakeawaysContainer } from "@core/slideout/takeaways/takeaways.container";
@@ -42,7 +43,6 @@ import { concatMap, map, tap, withLatestFrom } from "rxjs/operators";
 import { Observable } from "rxjs";
 import * as RouterActions from "@core/state/router/router.action";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
-import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
 
 @Injectable()
@@ -249,6 +249,7 @@ export class CompanyFlowEffect {
             actions.push(new SetSelectedCompany(companyId)); // set the selected company
             actions.push(new Get(companyId)); // get company details
             actions.push(new GetAll(companyId)); // get company team members
+            actions.push(new GetAllDocuments(companyId));
             actions.push(new RouterActions.UpdateUrlParams({ id: companyId }));
             actions.push(new GetAllInitiatives(companyId));
             // go to the current url but with the new id
