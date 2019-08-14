@@ -17,13 +17,37 @@
     //}
 
     .panel-container {
+        padding: 0 40px;
         height: 100%;
         min-height: 400px;
-        margin: 10px 40px;
+    }
+
+    .slack-coming-soon-container {
+        height: 100%;
+        min-height: 400px;
+
 
         sbp-filterable-panel {
             //width: 50%;
             height: 100%;
+        }
+    }
+
+    .slack-coming-soon {
+        opacity: 0.75;
+        border-radius: 6px;
+        background-color: $white;
+
+        div {
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 16px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.25px;
+            color: $grey-blue;
         }
     }
 }
