@@ -21,7 +21,7 @@ export enum ScenarioNameEnum {
     ICFOLLOWON1 = "icFollowOn1",
     ICFOLLOWON2 = "icFollowOn2",
     ICINITIAL = "icInitial",
-    YEARPLUS1 = "yearPlus1"
+    YEARPLUS1 = "valuationForecast"
 }
 
 export interface Company {
@@ -321,7 +321,7 @@ export interface ValuationDetail {
     icInitial: ValuationDetailData;
     icFollowOn1: ValuationDetailData;
     actual: ValuationDetailData;
-    yearPlus1: ValuationDetailData;
+    valuationForecast: ValuationDetailData;
     exit: ValuationDetailData;
 }
 export interface Valuation {
@@ -335,7 +335,7 @@ export class ValuationTableModel {
     icInitial: any;
     icFollowOn1: any;
     actual: any;
-    yearPlus1: any;
+    valuationForecast: any;
     exit: any;
 }
 
