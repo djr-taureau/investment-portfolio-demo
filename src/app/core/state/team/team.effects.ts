@@ -2,13 +2,12 @@ import * as TeamActions from "./team.actions";
 import * as _ from "lodash";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { Action, Store } from "@ngrx/store";
-import { asyncScheduler, EMPTY as empty, Observable, of } from "rxjs";
-import { catchError, debounceTime, exhaustMap, map, skip, switchMap, takeUntil } from "rxjs/operators";
+import { Observable, of } from "rxjs";
+import { catchError, exhaustMap, map } from "rxjs/operators";
 import { GetAllTeamsResponse } from "@core/domain/company.model";
 import { TeamActionTypes, GetAllFailure, GetAllSuccess } from "@core/state/team/team.actions";
 import { TeamService } from "@core/service/team.service";
 import { Injectable } from "@angular/core";
-import { PortfolioActionTypes, SearchCompanyFailure, SearchCompanySuccess } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
 
 @Injectable()
 export class TeamEffects {

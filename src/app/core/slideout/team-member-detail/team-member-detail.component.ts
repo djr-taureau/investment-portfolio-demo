@@ -29,6 +29,7 @@ export class TeamMemberDetailComponent implements OnInit {
     public titleText = `All Team Members`;
     public companiesCovered: Relationship[] = [];
     public boardSeats: Relationship[] = [];
+    public bioExists = false;
 
     /**
      * Dispatched when user clicks a member to view the detail page
@@ -48,6 +49,7 @@ export class TeamMemberDetailComponent implements OnInit {
     @Input()
     public set member(theMember: TeamMember) {
         if (theMember) {
+            this.bioExists = !!theMember.bio;
             theMember.companyRelationships.forEach((relationship) => {
                 if (relationship.relationship === CompanyRelationshipTypes.BOARD_SEAT) {
                     this.boardSeatsCount++;
@@ -113,10 +115,10 @@ export class TeamMemberDetailComponent implements OnInit {
      * Determines if the team member is lead for this company
      */
     public isLead(): boolean {
-        const leads = this.member.companyRelationships.filter(
-            (rel) => rel.companyId === this.company.id && rel.relationship === CompanyRelationshipTypes.LEAD
-        );
-        return (leads || []).length > -1;
+        const leads = this.member.companyRelationships.filter((rel) => {
+            return rel.companyId.toString() === this.company.id && rel.relationship === CompanyRelationshipTypes.LEAD;
+        });
+        return (leads || []).length > 0;
     }
 
     /**

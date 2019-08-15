@@ -1,7 +1,7 @@
-import { numberToSignedString } from "./string.utli";
 import { Component, OnInit, Input } from "@angular/core";
-import * as d3 from "d3";
 import { Logger } from "@util/logger";
+import * as d3 from "d3";
+
 @Component({
     selector: "sbp-kpi-summary",
     templateUrl: "./kpi-summary.component.html",
@@ -11,10 +11,14 @@ export class KpiSummaryComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("KpiSummaryComponent");
 
     parseDate = d3.timeParse("%m/%d/%Y");
+    // X-Axis
+    categoryAccessor: any;
+    // X-Axis
     dateAccessor: any;
+
     financialsAccessor: any;
     yAccessor: any;
-    categoryAccessor: any;
+
     projectedAccessor: any;
     pyAccessor: any;
     icAccessor: any;
@@ -54,22 +58,23 @@ export class KpiSummaryComponent implements OnInit {
 
     @Input()
     set pyValue(value: number) {
-        this.pyString = numberToSignedString(value);
+        // this.pyString = numberToSignedString(value);
+        // this.pyString = value;
         this.py = value;
     }
     public py?: number;
-    public pyString?: string;
+    // public pyString?: string;
 
     @Input()
     public icLabel?: string;
 
     @Input()
     set icValue(value: number) {
-        this.icString = numberToSignedString(value);
+        // this.icString = numberToSignedString(value);
         this.ic = value;
     }
     public ic?: number;
-    public icString?: string;
+    // public icString?: string;
 
     constructor() {
         KpiSummaryComponent.logger.debug(`constructor()`);

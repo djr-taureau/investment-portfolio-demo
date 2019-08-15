@@ -1,8 +1,10 @@
-import { RevenueSeries } from "@app/core/domain/company.model";
+import { CompanyRevenueRequest, GetAllCompanyInitiativesResponse, RevenueSeries } from "@app/core/domain/company.model";
+import { CompanyDocument, GetAllCompanyDocumentsResponse } from "@core/domain/document.model";
+import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
-import { Company, GetAllCompaniesResponse, GetCompanyResponse, Sector } from "@core/domain/company.model";
+import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "@core/domain/company.model";
 import { environment } from "../../../environments/environment";
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -11,6 +13,7 @@ import { map, catchError } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { throwError } from "rxjs";
 import * as uuid from "uuid";
+import { IsoConversionService } from "./isoConversion.service";
 
 @Injectable()
 export class CompanyService {
@@ -55,6 +58,48 @@ export class CompanyService {
     }
 
     /**
+     * Retrieves all initiatives for a company.
+     */
+    public getCompanyInitiatives(): Observable<Initiative[]> {
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES);
+        CompanyService.logger.debug(`getCompanyInitiatives( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((response: GetAllCompanyInitiativesResponse) => {
+                const data = response.data || [];
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getCompanyInitiativesFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Retrieves all initiatives for a company.
+     */
+    public getCompanyDocuments(id: string): Observable<CompanyDocument[]> {
+        const params = {
+            id
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_DOCUMENTS, params);
+        CompanyService.logger.debug(`getCompanyDocuments( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((response: GetAllCompanyDocumentsResponse) => {
+                const data = response.data || [];
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getCompanyDocumentsFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
      * Retrieves the company entity by ID.
      */
     public getCompany(id: string): Observable<GetCompanyResponse> {
@@ -81,27 +126,17 @@ export class CompanyService {
     /**
      * Gets the revenue for a given company
      */
-    public getCompanyRevenue(id: string): Observable<RevenueSeries[]> {
+    public getCompanyRevenue(request: CompanyRevenueRequest): Observable<RevenueSeries[]> {
         const params = {
-            id
+            id: request.id
         };
 
-        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params);
-        CompanyService.logger.debug(`getCompanyRevenue() url - ${url}`);
+        const endpoint = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params);
+        const url = `${endpoint}?as_of_date=${request.date}`;
+        CompanyService.logger.debug(`getCompanyRevenue( ${url} )`);
 
         return this.apiService.get(url).pipe(
-            map((result) => {
-                result.data.series.forEach((element) => {
-                    // set an id since there isn't one returned
-                    element.id = uuid.v4();
-                    // calculate the vsPY total for usd
-                    // sum(amountInUSDrevenue) - sum(amountInUSDvsPY) / abs(sum(amountInUSDvsPY)) * 100
-                    // e.g 100 * ((325.2 - 301.4) / ABS(301.4)) = 7.9%
-                    // calculate the vsPY total for native
-                    // sum(amountInNativerevenue) - sum(amountInNativevsPY) / abs(sum(amountInNativevsPY)) * 100
-                });
-                return result.data.series;
-            }),
+            map((result) => result.data),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`companyRevenueFault( ${fault.error.message} )`);
                 return throwError(fault);

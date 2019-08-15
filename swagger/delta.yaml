@@ -310,7 +310,7 @@ definitions:
       revenue:
         type: "array"
         items:
-          $ref: '#/definitions/CompanyRevenue'
+          $ref: '#/definitions/RevenueSeries'
       tags:
         type: "array"
         items:
@@ -402,7 +402,7 @@ definitions:
           - "OTHER_COMPANY"
           - "COMPANY_COVERED"
           - "BOARD_SEAT"
-  CompanyRevenue:
+  RevenueSeries:
     type: array
     items:
       $ref: '#/definitions/CompanyRevenueResponse'

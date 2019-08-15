@@ -5,7 +5,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 25"
          fxLayoutAlign="start center"
          fxLayoutGap="0px">
         <div class="item-cell__label">Companies</div>
@@ -54,7 +54,7 @@
                             <div class="marker"></div>
                             Private
                         </div>
-                        <div class="legend_value">{{ chartData[0].value}}</div>
+                        <div class="legend_value">{{ getChartData(0)}}</div>
                     </div>
                     <div fxLayout="row"
                          fxLayoutAlign="start center"
@@ -67,7 +67,7 @@
                             <div class="marker"></div>
                             Public
                         </div>
-                        <div class="legend_value">{{ chartData[1].value}}</div>
+                        <div class="legend_value">{{ getChartData(1)}}</div>
                     </div>
                 </div>
                 <div class="right-side"
@@ -85,7 +85,7 @@
                             <div class="marker"></div>
                             JV
                         </div>
-                        <div class="legend_value">{{ chartData[2].value}}</div>
+                        <div class="legend_value">{{ getChartData(2)}}</div>
                     </div>
                     <div fxLayout="row"
                          fxLayoutAlign="start center"
@@ -98,7 +98,7 @@
                             <div class="marker"></div>
                             Exited
                         </div>
-                        <div class="legend_value">{{ chartData[3].value}}</div>
+                        <div class="legend_value">{{ getChartData(3)}}</div>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 25"
          fxLayoutAlign="start center"
          fxLayoutGap="8px">
         <div class="item-cell__label">Invested / Approved / Total Fund ($B)</div>
@@ -115,11 +115,11 @@
              fxLayout="row"
              fxLayoutAlign="space-around center"
              fxLayoutGap="12px">
-            <div class="item-cell__value--invested">{{invested | number: '1.2'}}</div>
+            <div class="item-cell__value--invested">{{invested | billions: '1.0-1'}}</div>
             <div class="slash">/</div>
-            <div class="item-cell__value--approved">{{totalApproved}}</div>
+            <div class="item-cell__value--approved">{{totalApproved | billions: '1.0-1'}}</div>
             <div class="slash">/</div>
-            <div class="item-cell__value--total">{{totalFund}}</div>
+            <div class="item-cell__value--total">{{totalFund | billions: '1.0-1'}}</div>
         </div>
         <sbp-comparison-bar class="item-cell__progress-bar"
                             [value1]="getInvestedPerc()"
@@ -129,28 +129,28 @@
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 16.6"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">Total Value ($B)</div>
-        <div class="item-cell__value">{{valuation| number: '1.2'}}</div>
+        <div class="item-cell__value">{{valuation | billions: '1.0-1'}}</div>
     </div>
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 16.6"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">MOIC</div>
-        <div class="item-cell__value">{{moic| number: '1.0'}}x</div>
+        <div class="item-cell__value">{{moic | billions: '1.0-1'}}x</div>
     </div>
 
     <div class="item-cell"
          fxLayout="column"
-         fxFlex="0 0 20"
+         fxFlex="0 0 16.6"
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">IRR</div>
-        <div class="item-cell__value">{{irr | percent: '2.2'}}</div>
+        <div class="item-cell__value">{{irr | billions: '1.0-1'}}</div>
     </div>
 </div>

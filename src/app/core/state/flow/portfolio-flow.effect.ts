@@ -1,7 +1,7 @@
 import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
 import * as PortfolioDashboardOverviewLayoutActions from "@core/state/portfolio-dashboard/portfolio-dashboard-overview-layout.actions";
+import { LoadPortfolio, LoadPortfolioInvestmentSummary } from "@core/state/portfolio/portfolio.actions";
 import * as CompanyActions from "../company/company.actions";
-import { PortfolioDashboardOverviewNavigationItemClicked } from "./portfolio-flow.actions";
 import * as FlowActions from "./portfolio-flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
 import { Action, Store } from "@ngrx/store";
@@ -10,7 +10,11 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { appRoutePaths } from "@app/app.routes";
 import { catchError, concatMap, map } from "rxjs/operators";
 import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
-import { LoadPortfolioFailure, LoadPortfolioSuccess, PortfolioActionTypes, SearchCompany } from "../portfolio-dashboard/portfolio-dashboard.actions";
+import {
+    LoadPortfolioCompaniesFailure,
+    LoadPortfolioCompaniesSuccess,
+    PortfolioCompanyListActionTypes
+} from "../portfolio-dashboard/portfolio-company-list.actions";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 import { Observable, of } from "rxjs";
 import { PortfolioFlowActionTypes } from "./portfolio-flow.actions";
@@ -23,10 +27,14 @@ export class PortfolioFlowEffect {
      * Handles loading a portfolio
      */
     @Effect()
-    loadPortfolio$: Observable<Action> = this.actions$.pipe(
-        ofType(PortfolioFlowActionTypes.LoadPortfolio),
-        concatMap(() => [new CompanyActions.GetAll(), new LoadPortfolioSuccess()]),
-        catchError((err) => of(new LoadPortfolioFailure(err)))
+    loadPortfolioFlow$: Observable<Action> = this.actions$.pipe(
+        ofType(PortfolioFlowActionTypes.LoadPortfolioFlow),
+        concatMap(() => [
+            new CompanyActions.GetAll(),
+            new LoadPortfolioCompaniesSuccess(),
+            new LoadPortfolio("1"),
+            new LoadPortfolioInvestmentSummary({ id: "1" })
+        ])
     );
 
     /**
@@ -35,16 +43,15 @@ export class PortfolioFlowEffect {
     @Effect()
     goToPortfolio$: Observable<Action> = this.actions$.pipe(
         ofType(PortfolioFlowActionTypes.GoToPortfolio),
-        concatMap(() => [new RouterActions.GoToPortfolioDashboard(), new FlowActions.LoadPortfolio()]),
-        catchError((err) => of(new LoadPortfolioFailure(err)))
+        concatMap(() => [new RouterActions.GoToPortfolioDashboard(), new FlowActions.LoadPortfolioFlow()])
     );
 
     /**
      * Handles failures when loading a portfolio
      */
     @Effect()
-    loadPortfolioFailure$: Observable<Action> = this.actions$.pipe(
-        ofType(PortfolioActionTypes.LoadPortfolioFailure),
+    loadPortfolioFlowFailure$: Observable<Action> = this.actions$.pipe(
+        ofType(PortfolioFlowActionTypes.LoadPortfolioFlowFailure),
         concatMap(() => [
             // TODO: Determine what to do here
         ])
@@ -54,8 +61,8 @@ export class PortfolioFlowEffect {
      * Handles success when loading a portfolio
      */
     @Effect()
-    loadPortfolioSuccess$: Observable<Action> = this.actions$.pipe(
-        ofType(PortfolioActionTypes.LoadPortfolioSuccess),
+    loadPortfolioFlowSuccess$: Observable<Action> = this.actions$.pipe(
+        ofType(PortfolioFlowActionTypes.LoadPortfolioFlowSuccess),
         concatMap(() => [
             // TODO: Determine what to do here
         ])
@@ -131,7 +138,6 @@ export class PortfolioFlowEffect {
 
         if (content instanceof TemplateRef) {
             const viewRef = content.createEmbeddedView(null);
-            console.log(viewRef);
             // In earlier versions, you may need to add this line
             // this.appRef.attachView(viewRef);
             return [viewRef.rootNodes];

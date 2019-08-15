@@ -1,18 +1,18 @@
 <!-- CONTAINER -->
 <div class="container">
     <!-- TITLE ROW -->
-    <div class="box title">{{title}} ($M)</div>
+    <div class="box title">{{ title }} ($M)</div>
     <!-- CHARTS ROW -->
     <!-- VALUE COLUMN -->
-    <div class="box value">{{value}}</div>
+    <div class="box value">{{ value | millions: '1.0-1' }}</div>
     <div *ngIf="pyLabel"
-         class="box py">{{pyLabel}}</div>
-    <div *ngIf="pyString"
-         class="box py-val">{{pyString}}</div>
+         class="box py">{{ pyLabel }}</div>
+    <div *ngIf="py"
+         class="box py-val">{{ py | positiveOrNegative }}</div>
     <div *ngIf="icLabel"
-         class="box budget">{{icLabel}}</div>
-    <div *ngIf="icString"
-         class="box budget-val">{{icString}} %</div>
+         class="box budget">{{ icLabel }}</div>
+    <div *ngIf="ic"
+         class="box budget-val">{{ ic | positiveOrNegative }} %</div>
     <div *ngIf="data && title !== 'Cash Runway'"
          class="box timeline">
         <sbp-micro-timeline [data]="data"

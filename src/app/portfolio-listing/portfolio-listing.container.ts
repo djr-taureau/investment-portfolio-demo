@@ -66,11 +66,6 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
         this.tableData$ = this.store$.pipe(select(fromPortfolioListingState.getTableData));
         this.groupBy$ = this.store$.pipe(select(fromPortfolioListingState.getGroupBy));
         this.sortBy$ = this.store$.pipe(select(fromPortfolioListingState.getSortBy));
-        this.sortBy$.subscribe((value) => {
-            if (value) {
-                console.log("hey");
-            }
-        });
 
         super.ngOnInit();
     }

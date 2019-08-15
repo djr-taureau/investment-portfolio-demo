@@ -1,5 +1,5 @@
-import { ToggleCashDetail, ToggleEBITDADetail, ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
-import { getSelectedDatePart } from "@core/state/company/dashboard";
+import { GetAllInitiatives } from "@core/state/company/dashboard/company-initiative.actions";
+import { GetAllDocuments } from "@core/state/company/documents/company-documents.actions";
 import { ValuationContainer } from "./../../slideout/valuation/valuation.container";
 import * as PortfolioListingLayoutActions from "@core/state/portfolio-list/table/portfolio-listing-table.actions";
 import { appRoutePaths } from "@app/app.routes";
@@ -17,10 +17,7 @@ import {
     ToggleEBITDADetailExpanded,
     ToggleRevenueDetailExpanded
 } from "@core/state/company/dashboard/company-dashboard-layout.actions";
-import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { SetSelectedCompanyLink, ToggleSlideout } from "@core/state/layout/layout.actions";
-import { SearchCompany } from "@core/state/portfolio-dashboard/portfolio-dashboard.actions";
-import * as RouterActions from "@core/state/router/router.action";
 import { GetAll } from "@core/state/team/team.actions";
 import { Action, select, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
@@ -44,6 +41,9 @@ import {
 import { ComponentFactoryResolver, Injectable, Injector, TemplateRef } from "@angular/core";
 import { concatMap, map, tap, withLatestFrom } from "rxjs/operators";
 import { Observable } from "rxjs";
+import * as RouterActions from "@core/state/router/router.action";
+import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
+import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
 
 @Injectable()
 export class CompanyFlowEffect {
@@ -65,8 +65,15 @@ export class CompanyFlowEffect {
     @Effect()
     dashboardAsOfDateChanged$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyFlowActions.DashboardAsOfDateChanged>(CompanyFlowActionTypes.DashboardAsOfDateChanged),
-        map((action) => action.payload),
-        concatMap((selectedPeriod) => [new SelectAsOfDate(selectedPeriod)])
+        withLatestFrom(this.store$.pipe(select(getSelectedCompanyId))),
+        map(([action, id]) => {
+            return {
+                selectedPeriod: action.payload,
+                date: action.payload.date,
+                id
+            };
+        }),
+        concatMap((request) => [new SelectAsOfDate(request.selectedPeriod), new CompanyRevenueActions.Get(request.id, request.selectedPeriod)])
     );
 
     @Effect()
@@ -242,7 +249,9 @@ export class CompanyFlowEffect {
             actions.push(new SetSelectedCompany(companyId)); // set the selected company
             actions.push(new Get(companyId)); // get company details
             actions.push(new GetAll(companyId)); // get company team members
+            actions.push(new GetAllDocuments(companyId));
             actions.push(new RouterActions.UpdateUrlParams({ id: companyId }));
+            actions.push(new GetAllInitiatives(companyId));
             // go to the current url but with the new id
             // actions.push(new CompanyNavigationItemClicked())
             return actions;
@@ -302,7 +311,6 @@ export class CompanyFlowEffect {
 
         if (content instanceof TemplateRef) {
             const viewRef = content.createEmbeddedView(null);
-            console.log(viewRef);
             // In earlier versions, you may need to add this line
             // this.appRef.attachView(viewRef);
             return [viewRef.rootNodes];

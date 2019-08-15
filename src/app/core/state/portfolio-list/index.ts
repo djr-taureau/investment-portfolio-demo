@@ -45,29 +45,28 @@ export const getCompanyCount = createSelector(
 export const getTotalInvested = createSelector(
     fromCompanyState.getAllCompanies,
     (allComps) => {
-        return _.sumBy(allComps, "invested") / 10000000000;
+        return _.sumBy(allComps, "invested");
     }
 );
 
 export const getTotalFund = createSelector(
     fromCompanyState.getAllCompanies,
     (allComps) => {
-        return _.sumBy(allComps, "totalValue") / 10000000000;
+        return _.sumBy(allComps, "totalValue");
     }
 );
 
 export const getTotalApproved = createSelector(
     fromCompanyState.getAllCompanies,
     (allComps) => {
-        // return _.sumBy(allComps, "approved") / 10000000000;
-        return 500000000 / 10000000000;
+        return _.sumBy(allComps, "approved");
     }
 );
 
 export const getValuation = createSelector(
     fromCompanyState.getAllCompanies,
     (allComps) => {
-        return _.sumBy(allComps, "totalValue") / 10000000000;
+        return _.sumBy(allComps, "totalValue");
     }
 );
 
@@ -145,8 +144,8 @@ export const getTableData = createSelector(
                 sectors: secs,
                 sectorsAdditional: { value: "", visible: false },
                 region: company.region || "TODO",
-                countryFlag: "assets/image/flag.png",
-                country: "TODO",
+                countryISO: company.countryISO2 || "us",
+                country: company.country || "TODO",
                 invested: company.invested,
                 totalValue: company.totalValue,
                 moic: company.moic,

@@ -1,0 +1,256 @@
+<div fxLayout="column"
+     fxLayoutAlign="start stretch"
+     fxFlex>
+
+    <table class="table"
+           mat-table
+           [dataSource]="documents"
+           class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+				The actual rendered columns are set as a property on the row definition" -->
+        <!-- -----------------------------------------MAIN COLUMNS -->
+        <ng-container matColumnDef="format">
+            <th mat-header-cell
+                *matHeaderCellDef></th>
+            <td mat-cell
+                *matCellDef="let element">
+                <img matListAvatar
+                     src="{{getFormatImage(element)}}">
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">DOCUMENT NAME</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="document-name">{{element.name}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">TYPE</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="10px">
+                    <div class="types">{{element.type}}</div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="dateAdded">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">DATE ADDED</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="added_date">{{element.createdByDate}}</div>
+            </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="addedBy">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">ADDED BY</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div fxLayout="row"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="10px">
+                    <div class="added_by">{{element.createdBy.firstName}} {{element.createdBy.lastName}}</div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="password">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">PASSWORD</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="password"
+                     *ngIf="element.password">COPY <img matListAvatar
+                         src="assets/image/lock.svg"></div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="comments">
+            <th mat-header-cell
+                *matHeaderCellDef>
+                <div class="header-label">COMMENTS</div>
+            </th>
+            <td mat-cell
+                *matCellDef="let element">
+                <div class="comments"
+                     *ngIf="(element.comments || []).length > 0">
+                    <img matListAvatar
+                         src="assets/image/comment.svg">
+                    {{ (element.comments || []).length }}</div>
+            </td>
+        </ng-container>
+
+
+
+        <!--    ---------------------------- GROUPING COLUMNS ------------------------------------>
+        <!--            <ng-container matColumnDef="a">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                    <img src="assets/image/up.svg"-->
+        <!--                         *ngIf="group.expanded" />-->
+        <!--                    <img src="assets/image/down.svg"-->
+        <!--                         *ngIf="!group.expanded" />-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+
+        <!--            <ng-container matColumnDef="b">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group"-->
+        <!--                    class="group-name">-->
+        <!--                    <div fxLayout="row"-->
+        <!--                         fxLayoutAlign="start start"-->
+        <!--                         fxLayoutGap=5px>-->
+        <!--                        <div class="group-name">{{group[groupByColumns[group.level-1]]}}</div>-->
+        <!--                        <div class="group-count">({{group.count}})</div>-->
+        <!--                    </div>-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="c">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="d">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="e">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                </td>-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="f">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                    <div class="group-numbers">{{group.investedSum}}</div>-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="g">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                    <div class="group-numbers">{{group.valuationSum}}</div>-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="h">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                    <div class="group-numbers">{{group.moicSum}}x</div>-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="i">-->
+        <!--                <th mat-header-cell-->
+        <!--                    *matHeaderCellDef>-->
+        <!--                </th>-->
+        <!--                <td mat-cell-->
+        <!--                    *matCellDef="let group">-->
+        <!--                    <div class="group-irr">N/A</div>-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+
+        <!-- --------------------------------MAIN HEADER AND ROW DEFINITIONS -->
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row
+            (click)="onRowClick(row)"
+            *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+        <!-- if we wanted to click on header for sort (click)="groupHeaderClick(row)"> </tr> -->
+
+        <!-- --------------------------------GROUPING ROW DEFINITION -->
+        <!--            <tr mat-row-->
+        <!--                class="group-header"-->
+        <!--                *matRowDef="let group; columns: displayedGroupColumns when: isGroup"-->
+        <!--                (click)="groupHeaderClick(group)">-->
+        <!--            </tr>-->
+
+    </table>
+</div>
+
+
+<!--    <h1 class="coming-soon">Coming soon!</h1>-->
+<!--    <div fxLayout="column"-->
+<!--         fxFlex-->
+<!--         fxLayoutAlign="start stretch"-->
+<!--         class="items-list">-->
+<!--        <ng-container *ngFor="let item of documents; trackBy: trackByFn">-->
+<!--            &lt;!&ndash; BEGIN TEMPLATE FOR LOOP &ndash;&gt;-->
+<!--            <div class="item"-->
+<!--                 fxLayout="row"-->
+<!--                 fxLayoutAlign="start start"-->
+<!--                 fxLayoutGap="16px">-->
+<!--                &lt;!&ndash; LEFT SIDE &ndash;&gt;-->
+<!--                <div class="status-container">-->
+<!--                    <img [src]="getFormatImage(item)"-->
+<!--                         class="status-icon">-->
+<!--                </div>-->
+
+<!--                &lt;!&ndash; RIGHT SIDE &ndash;&gt;-->
+<!--                <div class="content"-->
+<!--                     fxLayout="column"-->
+<!--                     fxLayoutAlign="start stretch"-->
+<!--                     fxFlex-->
+<!--                     fxLayoutGap="3px">-->
+<!--                    <div class="title-container"-->
+<!--                         fxLayoutAlign="start center"-->
+<!--                         fxLayoutGap="8px">-->
+<!--                        <div class="title">{{ item.title }} ({{ item.initiativeOwner.firstName }} {{ item.initiativeOwner.lastName }})</div>-->
+<!--                    </div>-->
+<!--                    <div class="description">-->
+<!--                        {{ item.description }}-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            &lt;!&ndash; END TEMPLATE FOR LOOP &ndash;&gt;-->
+<!--        </ng-container>-->
+<!--    </div>-->
+<!--    <div fxFlex></div>-->

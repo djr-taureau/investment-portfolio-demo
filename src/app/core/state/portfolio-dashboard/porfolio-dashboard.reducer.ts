@@ -1,5 +1,4 @@
-import { CompanyActionTypes } from "../company/company.actions";
-import { PortfolioDashboardActions, PortfolioActionTypes } from "./portfolio-dashboard.actions";
+import { PortfolioCompanyListActions, PortfolioCompanyListActionTypes } from "./portfolio-company-list.actions";
 
 export interface State {
     loaded: boolean;
@@ -19,28 +18,28 @@ const initialState: State = {
     searchQuery: ""
 };
 
-export function reducer(state = initialState, action: PortfolioDashboardActions): State {
+export function reducer(state = initialState, action: PortfolioCompanyListActions): State {
     switch (action.type) {
-        case PortfolioActionTypes.LoadPortfolio:
+        case PortfolioCompanyListActionTypes.LoadPortfolioCompanies:
             return {
                 ...state,
                 loading: true
             };
 
-        case PortfolioActionTypes.LoadPortfolioSuccess:
+        case PortfolioCompanyListActionTypes.LoadPortfolioCompaniesSuccess:
             return {
                 ...state,
                 loaded: true,
                 loading: false
             };
-        case PortfolioActionTypes.LoadPortfolioFailure:
+        case PortfolioCompanyListActionTypes.LoadPortfolioCompaniesFailure:
             return {
                 ...state,
                 loaded: false,
                 loading: false
             };
 
-        case PortfolioActionTypes.SearchCompany:
+        case PortfolioCompanyListActionTypes.SearchCompany:
             const query = action.payload;
 
             if (query === "") {
@@ -60,7 +59,7 @@ export function reducer(state = initialState, action: PortfolioDashboardActions)
                 searchQuery: query
             };
 
-        case PortfolioActionTypes.SearchCompanySuccess:
+        case PortfolioCompanyListActionTypes.SearchCompanySuccess:
             return {
                 ...state,
                 searchResultsIds: action.payload.map((company) => company.id),
@@ -69,7 +68,7 @@ export function reducer(state = initialState, action: PortfolioDashboardActions)
                 searchQuery: state.searchQuery
             };
 
-        case PortfolioActionTypes.SearchCompanyFailure:
+        case PortfolioCompanyListActionTypes.SearchCompanyFailure:
             return {
                 ...state,
                 searching: false,

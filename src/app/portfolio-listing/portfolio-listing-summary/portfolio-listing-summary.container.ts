@@ -7,7 +7,7 @@ import { select, Store } from "@ngrx/store";
 @Component({
     selector: "sbp-portfolio-listing-summary-container",
     template: `
-        <sbp-portfolio-listing-summary
+        <sbp-portfolio-company-info-summary
             fxFlex
             [companyCount]="companyCount$ | async"
             [invested]="totalInvested$ | async"
@@ -17,7 +17,7 @@ import { select, Store } from "@ngrx/store";
             [totalApproved]="totalApproved$ | async"
             [valuation]="valuation$ | async"
             [chartData]="companyCountByType$ | async"
-        ></sbp-portfolio-listing-summary>
+        ></sbp-portfolio-company-info-summary>
     `
 })
 export class PortfolioListingSummaryContainer implements OnInit {

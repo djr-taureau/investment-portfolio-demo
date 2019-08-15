@@ -1,1 +1,22 @@
+:host {
+    sbp-expandable-panel {
+        border: none;
 
+        .chart-container {
+            .watermark {
+                position: relative;
+                top: -350px;
+                left: 250px;
+                opacity: .2;
+                font-size: 67px;
+                color: #ccc;
+                float: left;
+                z-index: 100;
+                transform: rotate(-25deg);
+                clip: auto;
+            }
+
+            img {}
+        }
+    }
+}

@@ -1,0 +1,343 @@
+@import "../../../assets/scss/variables";
+@import "../../../assets/scss/pointers";
+
+:host {
+    margin: 0 40px;
+
+    table {
+        border-radius: 6px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0) !important;
+        background-color: rgba(255, 255, 255, 0) !important;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        padding: 0px;
+
+        .group-header {
+            height: 32px !important;
+            background-color: rgba($light-grey-blue, 0.5) !important;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: $slate;
+
+            img {
+                width: 16px;
+                height: 16px;
+            }
+
+            &-label {
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.5px;
+                color: $slate;
+            }
+
+            &-count {
+                opacity: 0.75;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: 500;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.3px;
+                color: $slate;
+            }
+        }
+
+        .mat-header-row {
+            background: none !important;
+            // min-height: 30px;
+            height: 0px;
+            text-transform: uppercase;
+            color: $grey-blue;
+
+            .mat-header-cell {
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: bold;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: 0.3px;
+                color: rgba($grey-blue, .75);
+
+                // .header-label {
+                position: relative;
+                top: -5px;
+                text-align: right;
+
+                &:nth-child(2),
+                &:nth-child(3),
+                &:nth-child(4),
+                &:nth-child(5) {
+                    text-align: left;
+                }
+
+                // }
+
+
+            }
+        }
+
+        img {
+            height: 20px;
+            width: 20px;
+        }
+
+        .mat-row {
+            background-color: $white;
+            padding: 0 12px;
+            height: 72px;
+            @extend .hand-cursor;
+
+            .mat-cell {
+                .document-name {
+                    font-family: PostGrotesk;
+                    font-size: 16px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: normal;
+                    color: $dark;
+                }
+
+                .added_date {
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.14;
+                    letter-spacing: normal;
+                    color: $slate;
+                }
+
+                .sectypestors {
+                    font-family: PostGrotesk;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    opacity: 0.5;
+                    border-radius: 2px;
+                    background-color: $light-periwinkle;
+                }
+
+                //.sectorsAdditional {
+                //    font-family: PostGrotesk;
+                //    font-size: 12px;
+                //    font-weight: 500;
+                //    font-style: normal;
+                //    font-stretch: normal;
+                //    line-height: normal;
+                //    letter-spacing: 0.5px;
+                //    color: $dark-sky-blue;
+                //}
+
+                .added_by {
+                    opacity: 0.75;
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.14;
+                    letter-spacing: normal;
+                    color: $slate;
+                }
+
+                .password,
+                .comments {
+                    opacity: 0.75;
+                    font-family: PostGrotesk;
+                    font-size: 14px;
+                    font-weight: normal;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: 1.07;
+                    letter-spacing: normal;
+                    text-align: right;
+                    color: var(--slate);
+                }
+
+                &:nth-child(1) {
+                    width: 30px;
+                }
+
+                &:nth-child(2) {
+                    font-weight: bold;
+                }
+
+            }
+        }
+    }
+
+    .group-name {
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        color: $slate;
+    }
+
+    .group-count {
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.25px;
+        color: $slate;
+    }
+
+    .group-numbers {
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: right;
+        color: $slate;
+    }
+
+    .group-irr {
+        opacity: 0.5;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 300;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: right;
+        color: $slate;
+    }
+
+    .row__icon {
+        padding: 0 12px 0 0px;
+    }
+
+    .tag {
+        height: 18px;
+        opacity: 0.5;
+        border-radius: 2px;
+        background-color: #DCE3F0;
+    }
+
+    .tag__img {
+        width: 16px;
+        height: 16px;
+    }
+
+    .tag__text {
+        height: 13px;
+        font-family: PostGrotesk;
+        font-size: 10px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: center;
+        color: black;
+    }
+
+    th.mat-header-cell {
+        border: none;
+    }
+
+    mat-cell.group_bkg {
+        height: 32px;
+        opacity: 0.5;
+        background-color: $light-grey-blue;
+    }
+
+    .mat-row {
+
+        height: 72px;
+        background-color: rgba(255, 255, 255, 0);
+    }
+
+    .Total-Valuation {
+        //width: 51px;
+        height: 16px;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.5px;
+        text-align: right;
+
+    }
+
+    .column-name {
+        //width: 102px;
+        height: 16px;
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 12px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: 0.3px;
+        color: var($grey-blue);
+        text-transform: uppercase;
+    }
+
+
+    .company-name-text {
+        //width: 180px;
+        height: 21px;
+        font-family: PostGrotesk;
+        font-size: 16px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+
+    }
+
+
+    .mat-cell data-grid-text {
+        //width: 60px;
+        height: 15px;
+        opacity: 0.75;
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.07;
+        letter-spacing: normal;
+        text-align: right;
+
+    }
+}

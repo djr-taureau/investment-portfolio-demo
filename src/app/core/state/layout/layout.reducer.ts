@@ -96,8 +96,8 @@ export const initialState: LayoutState = {
             icon: "assets/image/documents.svg",
             label: "Documents",
             route: appRoutePaths.companyDocuments,
-            enabled: true,
-            showItemCount: true
+            enabled: false,
+            showItemCount: false
         }
     ],
     currentUrl: "",

@@ -85,17 +85,10 @@ export class BarChartComponent implements OnInit, OnChanges {
         });
         const data = [3, 4, 2, -1, 2, 4];
 
-        if (data) {
-            console.log("where is it", data);
-        }
         this.buildChart();
     }
 
-    ngOnChanges() {
-        if (this.chart) {
-            console.log("barry", this.chart);
-        }
-    }
+    ngOnChanges() {}
 
     buildChart() {
         const DATA_MAX = 50;

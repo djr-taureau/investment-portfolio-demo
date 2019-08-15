@@ -1,7 +1,7 @@
 @import "../../../assets/scss/variables";
 
 :host {
-    margin: 0 40px;
+    //margin: 0 40px;
     border-radius: 6px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     background-color: $white;
@@ -25,7 +25,7 @@
         }
 
         &__label {
-            width: 75%;
+            width: 90%;
             font-family: PostGrotesk;
             font-size: 12px;
             font-weight: 500;

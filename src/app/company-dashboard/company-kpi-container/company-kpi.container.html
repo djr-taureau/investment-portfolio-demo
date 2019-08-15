@@ -8,11 +8,11 @@
                          [title]="'Revenue'"
                          [denomination]="'USD'"
                          [currencySymbol]="'$'"
-                         [value]="325.3"
+                         [value]="revenueAsOf$ | async"
                          [pyLabel]="'vs PY'"
-                         [pyValue]="+44.1"
+                         [pyValue]="revenueChangeFromPriorPeriod$ | async"
                          [icLabel]="'vs Bud'"
-                         [icValue]="'-42'"
+                         [icValue]="revenueChangeFromPriorBudget$ | async"
                          (click)="onRevenueClick()">
         </sbp-kpi-summary>
     </div>
@@ -45,11 +45,19 @@
         </sbp-kpi-summary>
     </div>
     <div class="chart">
-        <sbp-kpi-summary sbpTooltip="Coming Soon!"
-                         [data]="timelineData3"
-                         [title]="'Cash Runway'"
-                         [denomination]="'USD'"
-                         [value]="'27 Months'">
-        </sbp-kpi-summary>
+        <div class="cash-runway-container"
+             fxLayout="column"
+             fxLayoutAlign="start stretch">
+            <!-- TITLE ROW -->
+            <div class="box title">Cash Runway ($M)</div>
+            <div class="value"
+                 fxLayout="column"
+                 fxLayoutAlign="center center"
+                 fxFlex>
+                <div fxLayout="row"
+                     fxLayoutAlign="center center"
+                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>27</span> <span class="months">months</span></div>
+            </div>
+        </div>
     </div>
 </div>

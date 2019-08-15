@@ -133,7 +133,6 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         this.updateScales();
-        console.log(changes);
     }
 
     updateScales() {

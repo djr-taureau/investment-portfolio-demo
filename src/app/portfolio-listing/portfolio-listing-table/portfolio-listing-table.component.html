@@ -77,8 +77,9 @@
                 <div fxLayout="row"
                      fxLayoutAlign="start center"
                      fxLayoutGap="10px">
-                    <img matListAvatar
-                         src="{{element.countryFlag}}">
+                    <!-- <img matListAvatar
+                         src="{{element.countryFlag}}"> -->
+                    <span class="flag-icon flag-icon-{{element.countryISO2 | lowercase}} flag-icon-squared"></span>
                     <div class="country">{{element.country}}</div>
                 </div>
             </td>

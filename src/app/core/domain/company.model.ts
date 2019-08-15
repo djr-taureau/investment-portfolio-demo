@@ -1,4 +1,5 @@
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
+import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponse } from "./api.model";
 
 export interface AvailablePeriod {
@@ -15,6 +16,14 @@ export enum CompanyTypeEnum {
     EXITED = "EXITED"
 }
 
+export enum ScenarioNameEnum {
+    ACTUAL = "actual",
+    ICFOLLOWON1 = "icFollowOn1",
+    ICFOLLOWON2 = "icFollowOn2",
+    ICINITIAL = "icInitial",
+    YEARPLUS1 = "yearPlus1"
+}
+
 export interface Company {
     id: string;
     type: CompanyTypeEnum; // enum
@@ -23,6 +32,9 @@ export interface Company {
     approved: number;
     sectors: Sector[];
     region: string;
+    country: string; // this is an ISO alpha-3 value EG: USA GBR
+    countryISO2?: string; // alpha-2 for getting flag
+    countryName?: string; // country name for display
     funds: Fund[];
     fund: string;
     lastFollowOn: string;
@@ -50,7 +62,7 @@ export interface Company {
     moic: number;
     irr: number;
     logo: string;
-    revenue?: CompanyRevenue[];
+    revenue?: RevenueSeries[];
     availablePeriods: AvailablePeriod[];
 
     ///////////////////////////////////////////////////////////////////
@@ -216,23 +228,37 @@ export interface Takeaway {
     content: string;
 }
 
-export interface CompanyRevenue {
-    companyId: string;
-    quarter: number;
-    year: number;
-    actual: boolean;
-    revenue: number;
-    PY: number;
-    IC: number;
-    budget: number;
-    forecast: number;
-}
-
+/**
+ * Holds the graph values
+ */
 export interface RevenueSeriesGraphData {
     date: Date;
     value: number;
 }
 
+export interface RevenuePeriod {
+    series_quarters: any[];
+    series_years: any[];
+}
+
+/**
+ * Holds the yearly and quarterly sets of data for graphs
+ * These are calculated set based on yearly summation or by quarter
+ */
+export interface RevenueSeriesGraphSet {
+    usd: {
+        yearly: RevenueSeriesGraphData[];
+        quarterly: RevenueSeriesGraphData[];
+    };
+    native: {
+        yearly: RevenueSeriesGraphData[];
+        quarterly: RevenueSeriesGraphData[];
+    };
+}
+
+/**
+ * Data in the data property of the API response
+ */
 export interface RevenueSeriesData {
     date: string;
     financialQuarter: number;
@@ -240,6 +266,13 @@ export interface RevenueSeriesData {
     amountInUSD: number;
     projection: boolean;
 }
+
+/**
+ * Extended version of the response from the API
+ * Includes properties to hold all of the presentation
+ * level data. These are generated on the service call
+ * response.
+ */
 export interface RevenueSeries {
     name: string;
     displayOrder: number;
@@ -252,15 +285,11 @@ export interface RevenueSeries {
     vsBudTotalNative?: number; // vsBud total value on summary chart Native
     vsICTotalUSD?: number; // vsIC total value on summary chart USD
     vsICTotalNative?: number; // vsIC total value on summary chart Native
-    totalRevenue?: number; // total value on summary chart
-    actualSeriesData?: RevenueSeriesGraphData[];
-    yearPlus1GraphData?: RevenueSeriesGraphData[];
-    icInitialGraphData?: RevenueSeriesGraphData[];
-    icFollowOn1GraphData?: RevenueSeriesGraphData[];
-    icFollowOn2GraphData?: RevenueSeriesGraphData[];
-    projectedYearGraphData?: RevenueSeriesGraphData[];
-    budgetGraphData?: RevenueSeriesGraphData[];
+    totalRevenueUSD?: number; // total value on summary chart USD
+    totalRevenueNative?: number; // total value on summary chart Native
+    seriesGraphSet?: RevenueSeriesGraphSet;
 }
+
 export interface TopLineValuationData {
     totalValue: number;
     moic: number;
@@ -330,6 +359,29 @@ export interface CompanyUpdateResponse {
     date: string;
 }
 
+export interface RevenueSeriesData {
+    date: string;
+    financialQuarter: number;
+    amountInNative: number;
+    amountInUSD: number;
+    projection: boolean;
+}
+export interface RevenueSeries {
+    name: string;
+    displayOrder: number;
+    isScenario: boolean;
+    scenarioName: string;
+    data: RevenueSeriesData[];
+}
+
+// TODO: TJM: Are you using this???
+// export interface CompanyRevenueRequest {
+//     companyId: string;
+//     currency: string;
+//     timeFrame: string;
+//     endDate: string;
+// }
+
 // This interface is the API response for getting Company Revenue for the
 // minimized and expanded cards on the Company Dashboard view for Revenue,
 // EBITDA, Cash Burn, and the 4 original Placeholder KPIs
@@ -351,6 +403,10 @@ export interface CompanyRevenueResponse {
 
 export interface GetAllCompaniesResponse extends ApiResponse {
     data: Company[];
+}
+
+export interface GetAllCompanyInitiativesResponse extends ApiResponse {
+    data: Initiative[];
 }
 
 export interface GetCompanyResponse extends ApiResponse {
@@ -377,4 +433,9 @@ export interface GetAllTeamsResponse extends ApiResponse {
 
 export interface GetTeamMemberResponse extends ApiResponse {
     data: TeamMember;
+}
+
+export interface CompanyRevenueRequest {
+    id: string;
+    date: string;
 }

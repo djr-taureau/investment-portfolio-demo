@@ -14,7 +14,9 @@
                 <th mat-header-cell
                     *matHeaderCellDef></th>
                 <td mat-cell
-                    *matCellDef="let element"> {{element.label}} </td>
+                    *matCellDef="let element">
+                    <div class="label">{{element.label}}</div>
+                </td>
             </ng-container>
 
             <!-- Name Column -->
@@ -23,13 +25,16 @@
                     *matHeaderCellDef>
                     <div fxLayout="column"
                          fxLayoutAlign="start end"
-                         fxLayoutGap="10px">
+                         fxLayoutGap="10px"
+                         [ngClass]="{ 'icInitial': icFollowOn1Present, 'icFollowOn1': !icFollowOn1Present}">
                         <div class="date-label-icInitial">{{icInitialDate | date : 'MMM yy' }}</div>
                         <div>IC INITIAL</div>
                     </div>
                 </th>
                 <td mat-cell
-                    *matCellDef="let element"> {{element.icInitial}} </td>
+                    *matCellDef="let element">
+                    <div [ngClass]="{ 'icInitial': icFollowOn1Present, 'icFollowOn1': !icFollowOn1Present}">{{element.icInitial}}</div>
+                </td>
             </ng-container>
 
             <!-- Weight Column -->
@@ -38,13 +43,16 @@
                     *matHeaderCellDef>
                     <div fxLayout="column"
                          fxLayoutAlign="start end"
-                         fxLayoutGap="10px">
+                         fxLayoutGap="10px"
+                         class="icFollowOn1">
                         <div class="date-label-icFollowOn1">{{icFollownOn1Date | date : 'MMM yy' }}</div>
-                        <div>IC FOLLOW-ON</div>
+                        <div>IC LATEST</div>
                     </div>
                 </th>
                 <td mat-cell
-                    *matCellDef="let element"> {{element.icFollowOn1}} </td>
+                    *matCellDef="let element">
+                    <div class="icFollowOn1">{{element.icFollowOn1}}</div>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -53,13 +61,16 @@
                     *matHeaderCellDef>
                     <div fxLayout="column"
                          fxLayoutAlign="start end"
-                         fxLayoutGap="10px">
+                         fxLayoutGap="10px"
+                         class="actual">
                         <div class="date-label-actual">{{actualDate | date : 'MMM yy' }}</div>
-                        <div>CURRENT</div>
+                        <div class="actual-label">CURRENT</div>
                     </div>
                 </th>
-                <td mat-cell
-                    *matCellDef="let element"> {{element.actual}} </td>
+                <td mat-cell="actual"
+                    *matCellDef="let element">
+                    <div class="actual">{{element.actual}}</div>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -68,13 +79,16 @@
                     *matHeaderCellDef>
                     <div fxLayout="column"
                          fxLayoutAlign="start end"
-                         fxLayoutGap="10px">
+                         fxLayoutGap="10px"
+                         class="yearPlus1">
                         <div class="date-label">{{yearPlus1Date | date : 'MMM yy' }}</div>
                         <div>+1 YEAR</div>
                     </div>
                 </th>
                 <td mat-cell
-                    *matCellDef="let element"> {{element.yearPlus1}} </td>
+                    *matCellDef="let element">
+                    <div class="yearPlus1">{{element.yearPlus1}}</div>
+                </td>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -83,13 +97,16 @@
                     *matHeaderCellDef>
                     <div fxLayout="column"
                          fxLayoutAlign="start end"
-                         fxLayoutGap="10px">
+                         fxLayoutGap="10px"
+                         class="exit">
                         <div class="date-label">{{exitDate | date : 'MMM yy' }}</div>
                         <div>EXIT</div>
                     </div>
                 </th>
                 <td mat-cell
-                    *matCellDef="let element"> {{element.exit}} </td>
+                    *matCellDef="let element">
+                    <div class="exit">{{element.exit}}</div>
+                </td>
             </ng-container>
 
             <tr mat-header-row

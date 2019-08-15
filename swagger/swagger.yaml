@@ -76,7 +76,7 @@ paths:
       tags:
         - "revenue data"
       summary: "Gets revenue data for specific companyId"
-      description: "Returns an array of DataSeriesResponse"
+      description: "Returns the standard metrics response"
       operationId: "getRevenueByCompanyId"
       produces:
         - "application/json"
@@ -90,13 +90,13 @@ paths:
           - name: "as_of_date"
             in: "query"
             description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-            required: false
+            required: true
             type: "string"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/RevenueResponse"
+            $ref: "#/definitions/MetricsResponse"
         400:
           description: "Invalid ID supplied"
   /companies/{companyId}/ebitda:
@@ -104,7 +104,7 @@ paths:
       tags:
         - "ebitda data"
       summary: "Gets ebitda data for specific companyId"
-      description: "Returns an array of DataSeriesResponse"
+      description: "Returns the standard metrics response"
       operationId: "getEbitdaByCompanyId"
       produces:
         - "application/json"
@@ -118,13 +118,13 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/DataSeriesResponse"
+            $ref: "#/definitions/MetricsResponse"
         400:
           description: "Invalid ID supplied"
   /companies/{companyId}/valuation:
@@ -169,7 +169,7 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
       responses:
         200:
@@ -183,7 +183,7 @@ paths:
       tags:
         - "KPI data"
       summary: "Gets up to 4 KPIs data for specific companyId"
-      description: "Returns an array of KpiResponse"
+      description: "Returns the standard MetricsResponse"
       operationId: "getKpisByCompanyId"
       produces:
         - "application/json"
@@ -197,13 +197,13 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
           type: "string"
       responses:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/KpisData"
+            $ref: "#/definitions/KpisResponse"
         400:
           description: "Invalid ID supplied"
   /companies/{companyId}/team-members:
@@ -240,7 +240,7 @@ paths:
       parameters:
         - name: "companyId"
           in: "path"
-          description: "Id for the portfolio company being requested"
+          description: "Id for the company documents being requested"
           required: true
           type: "number"
         - name: "from"
@@ -264,7 +264,7 @@ paths:
     get:
       tags:
         - "team"
-      summary: "Retrieve specifica for a selected team member"
+      summary: "Retrieve specific for a selected team member"
       description: ""
       operationId: "getTeamMemberForCompany"
       produces:
@@ -300,11 +300,6 @@ paths:
           description: "Id for the portfolio summary being requested"
           required: true
           type: "number"
-        - name: "as_of_date"
-          in: "query"
-          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
-          type: "string"
       produces:
         - "application/json"
       responses:
@@ -353,11 +348,6 @@ paths:
           description: "Id for the portfolio being requested"
           required: true
           type: "number"
-        - name: "as_of_date"
-          in: "query"
-          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
-          type: "string"
       produces:
         - "application/json"
       responses:
@@ -367,11 +357,11 @@ paths:
             $ref: "#/definitions/InvestmentSummary"
         400:
           description: "Invalid status value"
-  /portfolio/{id}/portcometrics:
+  /portfolio/{id}/companyperformancebymetric:
     get:
       tags:
         - "portfolio"
-      summary: "Retrieve an aggregation of portco revenue or ebitda dollars"
+      summary: "Retrieve an aggregation of portco revenue or ebitda dollars. Used for Portfolio Dashboard Revenue/Ebitda widgets"
       description: ""
       operationId: "getPortfolioCompaniesMetricsSummary"
       parameters:
@@ -383,7 +373,42 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: false
+          required: true
+          type: "string"
+        - name: "metric_type"
+          in: "query"
+          description: "Metric Type for which to return data"
+          required: true
+          type: "string"
+          enum:
+              - REVENUE
+              - EBITDA
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/PortfolioCompaniesMetricsSummary"
+        400:
+          description: "Invalid status value"
+  /portfolio/{id}/companyperformancerange:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve an list of best/worst performing companies in portfolio by metric slice"
+      description: ""
+      operationId: "getPortfolioCompaniesMetricsRange"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio being requested"
+          required: true
+          type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: true
           type: "string"
         - name: "metric_type"
           in: "query"
@@ -399,14 +424,14 @@ paths:
         200:
           description: "successful operation"
           schema:
-            $ref: "#/definitions/PortfolioCompaniesMetricsSummary"
+            $ref: "#/definitions/PortfolioCompaniesMetricsRange"
         400:
           description: "Invalid status value"
   /portfolio/{id}/exposure:
     get:
       tags:
         - "portfolio"
-      summary: "Retrieve a list of groupings for the portfolio of Total Value by some aggregation point"
+      summary: "Retrieve a list of groupings for the portfolio of Total Value by some aggregation point. Used for Portfolio Dashboard Exposure by FX/Sector widgets"
       description: ""
       operationId: "getPortfolioExposureBy"
       parameters:
@@ -415,10 +440,15 @@ paths:
           description: "Id for the portfolio sectors being requested"
           required: true
           type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: true
+          type: "string"
         - name: "by"
           in: "query"
           description: "Aggregate of exposure point for the portfolio being requested"
-          required: false
+          required: true
           type: "string"
           enum:
             - "SECTOR"
@@ -436,6 +466,75 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/ExposureListResponse"
+        400:
+          description: "Invalid status value"
+  /portfolio/{id}/relativecompanyperformance:
+    get:
+      tags:
+        - "portfolio"
+      summary: "Retrieve a list of companies with data that expresses their profit & revenue relationship within the portfolio. Used for Portfolio Dashboard bubble chart & grouping widget"
+      description: ""
+      operationId: "getPortfolioCompanyPerformance"
+      parameters:
+        - name: "id"
+          in: "path"
+          description: "Id for the portfolio being requested"
+          required: true
+          type: "number"
+        - name: "as_of_date"
+          in: "query"
+          description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
+          required: true
+          type: "string"
+        - name: "top"
+          in: "query"
+          description: "Number of companies to return"
+          required: false
+          type: "number"
+          default: 10
+        - name: "accumulator"
+          in: "query"
+          description: "Related metric to key off of for aggregate ratios"
+          required: false
+          type: "string"
+          default: "UNREALIZED_VALUE"
+          enum:
+              - "UNREALIZED_VALUE"
+              - "INCREASE_IN_TOTAL_VALUE"
+              - "REVENUE"
+        - name: "by"
+          in: "query"
+          description: "Aggregate grouping point for the portfolio being requested"
+          required: true
+          type: "string"
+          enum:
+            - "SECTOR"
+            - "FX"
+            - "COUNTRY"
+            - "REGION"
+            - "TYPE"
+            - "STAGE"
+        - name: "scenario"
+          in: "query"
+          description: "Type of scenario we are contrasting actuals against"
+          required: false
+          type: "string"
+          default: "BUDGET"
+          enum:
+            - "BUDGET"
+            - "FORECAST"
+            - "PRIORYEAR"
+            - "PRIORQUARTER"
+            - "INVESTMENTCASE"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/BubbleChartResponse"
         400:
           description: "Invalid status value"
 definitions:
@@ -498,6 +597,22 @@ definitions:
         type: "string"
       avatar:
         type: "string"
+  BubbleChartResponse:
+    type: "object"
+    properties:
+      series:
+        type: array
+        items:
+            type: object
+            properties:
+                x:
+                  type: number
+                y:
+                    type: number
+                density:
+                    type: number
+                group:
+                    type: string
   CashData:
     type: "object"
     properties:
@@ -549,11 +664,6 @@ definitions:
         type: "number"
       portfolioPercentage:
         type: "number"
-  KpisData:
-    type: "object"
-    properties:
-      kpisData:
-        $ref: '#/definitions/DataSeriesResponse'
   Company:
     type: "object"
     properties:
@@ -895,7 +1005,34 @@ definitions:
                     type: number
                   projection:
                     type: boolean
-
+  PortfolioCompaniesMetricsRange:
+    type: object
+    properties:
+      highestValue:
+        type: array
+        items:
+          $ref: '#/definitions/RangeElement'
+      highestGrowth:
+        type: array
+        items:
+          $ref: '#/definitions/RangeElement'
+      lowestGrowth:
+        type: array
+        items:
+          $ref: '#/definitions/RangeElement'
+  RangeElement:
+    type: object
+    properties:
+      id:
+          type: number
+      label:
+          type: string
+      logoSrc:
+          type: string
+      value:
+          type: number
+      delta:
+          type: number
   PortfolioSummary:
     type: "object"
     properties:
@@ -939,12 +1076,16 @@ definitions:
         type: "string"
       name:
         type: "string"
-  RevenueResponse:
+  KpisResponse:
+    type: array
+    items:
+      $ref: "#/definitions/MetricsResponse"
+  MetricsResponse:
     allOf:
-      - $ref: "#/definitions/revenueGraph"
+      - $ref: "#/definitions/metricsGraph"
       - $ref: "#/definitions/comparisonGraph"
       - $ref: "#/definitions/tableData"
-  revenueGraph:
+  metricsGraph:
     type: object
     properties:
       series_quarters:
@@ -962,7 +1103,7 @@ definitions:
               type: boolean
             data:
               type: array
-              items:
+              items: # These can be optimized later....
                 type: object
                 properties:
                   date:
@@ -980,7 +1121,7 @@ definitions:
                     type: string
       series_years:
         type: array
-        items:
+        items: # These can be optimized later....
           type: object
           properties:
             name:
@@ -1014,7 +1155,7 @@ definitions:
     properties:
       series_quarters:
         type: array
-        items:
+        items: # These can be optimized later....
           type: object
           properties:
             date:
@@ -1024,7 +1165,7 @@ definitions:
               type: number
       series_years:
         type: array
-        items:
+        items: # These can be optimized later....
           type: object
           properties:
             date:
@@ -1048,7 +1189,7 @@ definitions:
               type: number
             data:
               type: array
-              items:
+              items: # These can be optimized later....
                 type: object
                 properties:
                   date:
@@ -1077,7 +1218,7 @@ definitions:
               type: number
             data:
               type: array
-              items:
+              items: # These can be optimized later....
                 type: object
                 properties:
                   date:
@@ -1093,7 +1234,6 @@ definitions:
                     type: string
                   sourceType:
                     type: string
-
   Takeaway:
     type: "object"
     properties:

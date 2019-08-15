@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgModule } from "@angular/core";
+import { PipeModule } from "@shared/pipes/pipe.module";
 import { MaterialModule } from "../material/material.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
@@ -50,7 +51,7 @@ export const COMPONENTS = [
 ];
 @NgModule({
     declarations: COMPONENTS,
-    imports: [CommonModule, FlexLayoutModule, MaterialModule, ButtonsModule, ChartsModule],
+    imports: [CommonModule, FlexLayoutModule, MaterialModule, PipeModule, ButtonsModule, ChartsModule],
     exports: COMPONENTS
 })
 export class ChartModule {}

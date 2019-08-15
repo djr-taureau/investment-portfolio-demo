@@ -31,19 +31,20 @@ html {
     @extend .not-allowed-cursor;
     opacity: .50 !important;
 
-    h1.coming-soon {
-        margin: 20px 0;
-        text-align: center;
-        opacity: 0.75;
-        font-family: PostGrotesk;
-        font-size: 16px;
-        font-weight: normal;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: 0.25px;
-        color: $grey-blue;
-    }
+}
+
+h1.coming-soon {
+    margin: 20px 0;
+    text-align: center;
+    opacity: 0.75;
+    font-family: PostGrotesk;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.25px;
+    color: $grey-blue;
 }
 
 // .my-select-panel-class {}

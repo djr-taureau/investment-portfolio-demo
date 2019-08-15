@@ -1,1 +1,14 @@
-Investment
+<div fxLayout="column"
+     fxLayoutAlign="start stretch"
+     fxLayoutGap="25px">
+
+    <!-- This is where the summary widget will go: -->
+    <sbp-dashboard-company-info-summary-container></sbp-dashboard-company-info-summary-container>
+
+    <sbp-expandable-panel [visible]="true">
+        <div class="chart-container">
+            <img src="assets/image/2019-08-13_1242.png">
+            <span class="watermark"> THIS IS FICTIONAL CHART/DATA</span>
+        </div>
+    </sbp-expandable-panel>
+</div>

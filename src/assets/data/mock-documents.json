@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": "0",
+      "type": "BOARD",
+      "format": "SLIDES",
+      "name": "First Quarter Updates",
+      "createdBy": {
+        "id": "0",
+        "firstName": "Dan",
+        "lastName": "Gordish"
+      },
+      "createdByDate": "2019-01-01",
+      "lastEditedBy": {
+        "id": "0",
+        "firstName": "Dan",
+        "lastName": "Gordish"
+      },
+      "lastEditedByDate": "2019-01-01",
+      "comments": [{
+        "userId": "0",
+        "userName": "dgordish",
+        "comment": "Test Comment"
+      }],
+    "password": "oicu812"
+    }
+  ]
+}

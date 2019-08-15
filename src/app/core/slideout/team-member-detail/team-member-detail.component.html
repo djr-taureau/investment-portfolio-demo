@@ -34,7 +34,7 @@
                          fxLayoutGap="5px">
                         <div class="member__header">{{member.name | titlecase}}</div>
                         <div class="lead_tag"
-                             *ngIf="member.teamLead">LEAD</div>
+                             *ngIf="isLead()">LEAD</div>
                     </div>
                     <!-- COMM ROW -->
                     <div fxLayout="row"
@@ -44,7 +44,7 @@
                              fxLayoutAlign="start center"
                              fxLayoutGap="5px">
                             <img matListAvatar
-                                 src="{{member.avatar}}">
+                                 src="assets/image/slack.png">
                             <div class="slack">{{member.slack | titlecase}}</div>
                         </div>
                         <!-- PHONE -->
@@ -73,21 +73,24 @@
              fxLayoutAlign="start stretch"
              fxLayoutGap="10px">
             <div class="biography-label">BIOGRAPHY</div>
-            <div class="biography-text">{{member.bio}}</div>
+            <div class="biography-text"
+                 *ngIf="bioExists">{{member.bio}}</div>
+            <div class="biography-text"
+                 *ngIf="!bioExists">[To Be Updated By User In Future Version]</div>
         </div>
-        <!-- TEAM ROW -->
-        <div class="section-row"
+        <!-- TEAM ROW OUT OF SCOPE FOR NOW, LEAVING IN CASE IT COMES BACK -->
+        <!-- <div class="section-row"
              fxLayout="column"
              fxLayoutAlign="start stretch"
-             fxLayoutGap="10px">
-            <!-- TEAM AND COUNT LABELS -->
-            <div fxLayout="row"
+             fxLayoutGap="10px"> -->
+        <!-- TEAM AND COUNT LABELS -->
+        <!-- <div fxLayout="row"
                  fxLayoutAlign="start start">
                 <div class="team-label">TEAM</div>
                 <div class="team-count">({{teamGroupMemberCount}})</div>
-            </div>
-            <!-- TEAM MEMBER WIDGETS ROW -->
-            <div fxLayout="row"
+            </div> -->
+        <!-- TEAM MEMBER WIDGETS ROW -->
+        <!-- <div fxLayout="row"
                  flLayoutAlign="start start"
                  fxLayoutGap="25px">
                 <div *ngFor="let person of teamGroup.members">
@@ -104,7 +107,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- RELATIONSHIPS ROW -->
         <div class="section-row"
              fxLayout="row"

@@ -10,7 +10,7 @@ export class PortfolioTableItem {
     sectorsAdditional?: { value: string; visible: boolean };
     sectorsGroup?: string;
     region: string;
-    countryFlag: string;
+    countryISO: string;
     country: string;
     invested: number;
     investedGroup?: string;

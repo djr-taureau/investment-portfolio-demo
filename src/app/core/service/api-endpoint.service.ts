@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import * as StringUtil from "@util/string.util";
+import * as _ from "lodash";
 
 @Injectable({
     providedIn: "root"
@@ -56,14 +57,19 @@ export class ApiEndpointService {
     public static ENDPOINT = {
         CONFIG: `assets/data/config.json`,
         LOGIN: `auth/login/`,
-        REGISTER: `auth/register/`,
+        REGISTER: `auth/register`,
         EXAMPLE_DETAILS: "example/{id}/details/{id}",
         COMPANIES: "companies",
         COMPANY: "companies/{id}",
+        COMPANY_INITIATIVES: `assets/data/mock-initiatives.json`, // "companies/{id}/initiatives",
+        COMPANY_DOCUMENTS: "companies/{id}/documents",
         TEAMS: "companies/{id}/team-members",
         TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
         VALUATION: "companies/{id}/valuation",
-        REVENUE: "companies/{id}/revenue"
+        REVENUE: "companies/{id}/revenue",
+        PORTFOLIOS: "portfolio",
+        PORTFOLIO: "portfolio/{id}",
+        PORTFOLIO_INVESTMENT_SUMMARY: "portfolio/{id}/investmentsummary"
     };
 
     /**
@@ -72,8 +78,25 @@ export class ApiEndpointService {
     public static secureEndpoints = [
         ApiEndpointService.ENDPOINT.COMPANIES,
         ApiEndpointService.ENDPOINT.TEAMS,
-        ApiEndpointService.ENDPOINT.TEAM_MEMBER
+        ApiEndpointService.ENDPOINT.TEAM_MEMBER,
+        ApiEndpointService.ENDPOINT.PORTFOLIOS
     ];
+
+    public static addParams(template, params): string {
+        let result = template;
+
+        let i = 0;
+        const useableParams = _.pickBy(params, (p) => !_.isNil(p) && p !== "");
+        // add the params
+        _.forEach(useableParams, (v, k) => {
+            const startQuery = i === 0 || result.indexOf("?") === -1;
+            result += startQuery ? "?" : "&";
+            result += k + "=" + v;
+            i++;
+        });
+
+        return result;
+    }
 
     /**
      * Constructor.
@@ -89,7 +112,9 @@ export class ApiEndpointService {
      */
     public getEndpoint(endpoint: string, params?: {}): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
-        const url = isConfig ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
+        const isInitiatives = ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES === endpoint;
+        // const isDocuments = ApiEndpointService.ENDPOINT.COMPANY_DOCUMENTS === endpoint;
+        const url = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
         return StringUtil.replaceTokens(url, params);
     }
 
@@ -98,7 +123,7 @@ export class ApiEndpointService {
      */
     public getBaseUrl(): string {
         // TODO: BMR: 08/07/2019: Once Jon adds a trailing "/" to the config.json's API endpioint value we can remove the trailing "/" here.
-        return `${ApiEndpointService.BASE_URL.FROM_CONFIG}/`;
+        return `${ApiEndpointService.BASE_URL.FROM_CONFIG}`;
     }
 
     /**
@@ -125,7 +150,8 @@ export class ApiEndpointService {
      * @returns {boolean}
      */
     public isSecureEndpoint(requestedUrl: string = ""): boolean {
-        return ApiEndpointService.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
+        const check = ApiEndpointService.secureEndpoints.some((url: string) => requestedUrl.toLowerCase().indexOf(url) > -1);
+        return check;
     }
 
     /**
