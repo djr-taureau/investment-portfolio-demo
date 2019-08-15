@@ -63,14 +63,3 @@ export class BarsComponent implements AfterContentInit, OnInit {
         });
     }
 }
-
-// svg.selectAll(".bar")
-//     .data(data)
-//     .enter()
-//     .append("rect")
-//     .attr("class", "bar")
-//     .attr("x", (d, i) => x(i))
-//     .attr("y", (d) => (d > 0 ? y(d) : y(0)))
-//     .attr("width", BAR_WIDTH)
-//     .attr("height", (d) => Math.abs(y(d) - y(0)))
-//     .attr("fill", (d) => (d > 0 ? "steelblue" : "tomato"));

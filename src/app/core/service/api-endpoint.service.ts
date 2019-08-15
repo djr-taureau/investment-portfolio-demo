@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { UrlUtil } from "@util/url.util";
 import * as StringUtil from "@util/string.util";
 import * as _ from "lodash";
 
@@ -52,6 +53,11 @@ export class ApiEndpointService {
     public static AUTH_CONTEXT = "auth/";
 
     /**
+     * Mock API context.
+     */
+    public static MOCK_CONTEXT = "assets/data/";
+
+    /**
      * Map of API endpoints.
      */
     public static ENDPOINT = {
@@ -67,6 +73,8 @@ export class ApiEndpointService {
         TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
         VALUATION: "companies/{id}/valuation",
         REVENUE: "companies/{id}/revenue",
+        EBIDTA: "companies/{id}/ebitda",
+        KPI: "companies/{id}/kpis",
         PORTFOLIOS: "portfolio",
         PORTFOLIO: "portfolio/{id}",
         PORTFOLIO_INVESTMENT_SUMMARY: "portfolio/{id}/investmentsummary"
@@ -82,22 +90,6 @@ export class ApiEndpointService {
         ApiEndpointService.ENDPOINT.PORTFOLIOS
     ];
 
-    public static addParams(template, params): string {
-        let result = template;
-
-        let i = 0;
-        const useableParams = _.pickBy(params, (p) => !_.isNil(p) && p !== "");
-        // add the params
-        _.forEach(useableParams, (v, k) => {
-            const startQuery = i === 0 || result.indexOf("?") === -1;
-            result += startQuery ? "?" : "&";
-            result += k + "=" + v;
-            i++;
-        });
-
-        return result;
-    }
-
     /**
      * Constructor.
      */
@@ -110,12 +102,17 @@ export class ApiEndpointService {
      * at build time or at runtime via (for example) query string params...but for now we'll
      * keep this dumb simple.
      */
-    public getEndpoint(endpoint: string, params?: {}): string {
+    public getEndpoint(endpoint: string, params?: {}, query?: {}): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
         const isInitiatives = ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES === endpoint;
-        // const isDocuments = ApiEndpointService.ENDPOINT.COMPANY_DOCUMENTS === endpoint;
-        const url = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
-        return StringUtil.replaceTokens(url, params);
+        const baseUrl = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
+        const urlWithParams: string = StringUtil.replaceTokens(baseUrl, params);
+
+        // if (endpoint === ApiEndpointService.ENDPOINT.REVENUE) {
+        //     return `${ApiEndpointService.MOCK_CONTEXT}ryde-rev-2018-03-31.json`;
+        // }
+
+        return this.addQueryParams(urlWithParams, query);
     }
 
     /**
@@ -161,5 +158,51 @@ export class ApiEndpointService {
      */
     public isMockRoute(url: string = ""): boolean {
         return url.toLowerCase().indexOf("mock") > -1;
+    }
+
+    /**
+     * Determines if the API should use mock API endpoints.
+     */
+    public useMockEndpoint(): boolean {
+        return !!UrlUtil.getQueryStringParamValue("mocks", UrlUtil.STRING_TYPE);
+    }
+
+    /**
+     * Determines if the API should use mock API endpoints.
+     */
+    public getMockEndpoint(endpoint: string): string {
+        const mocks: string = UrlUtil.getQueryStringParamValue("mocks", UrlUtil.STRING_TYPE) as string;
+        const baseMockUrl = "assets/data/";
+
+        if (endpoint === ApiEndpointService.ENDPOINT.REVENUE) {
+            if (mocks.indexOf("revenue") !== -1) {
+                return `${baseMockUrl}ryde-rev-2018-03-31.json`;
+            } else {
+                return "";
+            }
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Adds query string params to a URL.
+     * @param template
+     * @param params
+     */
+    public addQueryParams(template, params): string {
+        let result = template;
+
+        let i = 0;
+        const useableParams = _.pickBy(params, (p) => !_.isNil(p) && p !== "");
+        // add the params
+        _.forEach(useableParams, (v, k) => {
+            const startQuery = i === 0 || result.indexOf("?") === -1;
+            result += startQuery ? "?" : "&";
+            result += k + "=" + v;
+            i++;
+        });
+
+        return result;
     }
 }

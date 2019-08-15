@@ -1,9 +1,9 @@
 import { AfterContentInit, Component, ElementRef, Input, OnInit } from "@angular/core";
+import { RevenueSeriesData } from "@core/domain/company.model";
 import * as d3 from "d3";
 import { axisLeft as d3_axisLeft, selectAll as d3_selectAll } from "d3";
 import { select } from "d3-selection";
 import * as _ from "lodash";
-import { cashburn, revenueMock2 } from "../../../company-dashboard/financials-data";
 import { DimensionsType, getUniqueId } from "../chart/utils";
 @Component({
     selector: "sbp-micro-bar",
@@ -16,12 +16,22 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     private margin: any = { top: 4, bottom: 75, left: 85, right: 30 };
     private chart: any;
 
-    @Input() id: string;
-    @Input() data: any[];
     @Input() xAccessor: any;
     @Input() yAccessor: any;
     @Input() categoryAccessor: any;
     @Input() projectedAccessor: any;
+
+    @Input()
+    public set data(value: RevenueSeriesData[]) {
+        if (value) {
+            this._data = value;
+            this.update();
+        }
+    }
+    public get data(): RevenueSeriesData[] {
+        return this._data;
+    }
+    private _data: RevenueSeriesData[];
 
     public timePeriods: any[];
     public actualsObj;
@@ -57,6 +67,7 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     xAxisBottom: any;
     yAxisGrid: any;
     indexSelected: number;
+    dataValues;
     y;
     barId: string = getUniqueId("bar-chart");
 
@@ -81,7 +92,6 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
         this.el = elementRef.nativeElement;
-        this.data = cashburn;
     }
 
     ngOnInit() {
@@ -89,24 +99,35 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
         this.budgetVis = true;
         this.forecastVis = true;
         this.yAxisTickValues = [0.2, 0, 80];
-        this.data = revenueMock2.series;
-        this.actualsObj = _.find(this.data, (v) => v.id === "actuals");
-        this.budgetObj = _.find(this.data, (v) => v.id === "budget");
-        this.forecastObj = _.find(this.data, (v) => v.id === "forecast");
-        this.actuals = _.get(this.actualsObj, ["values"]);
-        this.budget = _.get(this.budgetObj, ["values"]);
-        this.forecast = _.get(this.forecastObj, ["values"]);
-        this.dateSelected = "4Q2018";
+        this.dateSelected = "4Q18";
         this.timePeriods = [];
-        this.actuals.map((v) => {
-            const timePart = `${v.quarter}Q${v.year}`;
-            this.timePeriods = this.timePeriods.concat(timePart);
-        });
-        const data = [3, 4, 2, -1, 2, 4];
+        if (this.data) {
+            this.data.map((v) => {
+                const timePart = `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
+                this.timePeriods = this.timePeriods.concat(timePart);
+            });
+        }
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        console.log(this.indexSelected);
         this.buildChart();
         this.updateScales();
+    }
+
+    private update(): void {
+        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
+        this.actualsVis = true;
+        this.budgetVis = true;
+        this.forecastVis = true;
+        this.yAxisTickValues = [0, 300, 450, 600, 750];
+        this.timePeriods = [];
+        // TODO:: djr after demo replace this with selector value
+        this.dateSelected = "4Q18";
+        this.data.map((v) => {
+            if (this.categoryAccessor && this.categoryAccessor(v) === this.dateSelected) {
+                this.selectedValue = true;
+            }
+            this.timePeriods = this.timePeriods.concat(this.categoryAccessor(v));
+        });
+        this.dataValues = _.map(this.data, _.property("valueInNative"));
     }
 
     ngAfterContentInit() {
@@ -115,7 +136,7 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     }
 
     updateScales() {
-        const dataset = [-1, -1.1, -1.2, -0.8, 1.1, 1.2];
+        const dataset = this.dataValues || [];
         this.xScale = d3
             .scaleBand<string, number>()
             .domain(this.timePeriods)
@@ -162,7 +183,7 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     }
 
     buildChart() {
-        const dataset = [-1, -1.1, -1.2, -0.8, 1.1, 1.2];
+        const dataset = this.dataValues || [];
         const maxHeight = d3.max(dataset, (d) => {
             return d;
         });

@@ -44,6 +44,8 @@ import { Observable } from "rxjs";
 import * as RouterActions from "@core/state/router/router.action";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
+import * as CompanyEbitdaActions from "@core/state/company/ebitda/company-ebitda.actions";
+import * as CompanyKpiActions from "@core/state/company/kpi/company-kpi.actions";
 
 @Injectable()
 export class CompanyFlowEffect {
@@ -73,7 +75,12 @@ export class CompanyFlowEffect {
                 id
             };
         }),
-        concatMap((request) => [new SelectAsOfDate(request.selectedPeriod), new CompanyRevenueActions.Get(request.id, request.selectedPeriod)])
+        concatMap((request) => [
+            new SelectAsOfDate(request.selectedPeriod),
+            new CompanyRevenueActions.Get(request.id, request.selectedPeriod),
+            new CompanyEbitdaActions.Get(request.id, request.selectedPeriod),
+            new CompanyKpiActions.Get(request.id, request.selectedPeriod)
+        ])
     );
 
     @Effect()

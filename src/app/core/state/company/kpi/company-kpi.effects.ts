@@ -1,19 +1,19 @@
 import { CompanyChartDataRequest } from "@core/domain/company.model";
-import { CompanyRevenueActionTypes } from "@core/state/company/revenue/company-revenue.actions";
+import { CompanyKpiActionTypes } from "@core/state/company/kpi/company-kpi.actions";
 import { Observable, of } from "rxjs";
 import { Action, select, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, withLatestFrom } from "rxjs/operators";
 import { CompanyService } from "@core/service/company.service";
 import { Injectable } from "@angular/core";
-import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
+import * as CompanyKpiActions from "@core/state/company/kpi/company-kpi.actions";
 import * as fromCompanyDashboard from "@core/state/company/dashboard";
 
 @Injectable()
-export class CompanyRevenueEffects {
+export class CompanyKpiEffects {
     @Effect()
-    getCompanyRevenue$: Observable<Action> = this.actions$.pipe(
-        ofType<CompanyRevenueActions.Get>(CompanyRevenueActionTypes.Get),
+    getCompanyKpi$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyKpiActions.Get>(CompanyKpiActionTypes.Get),
         withLatestFrom(this.store$.pipe(select(fromCompanyDashboard.getSelectedPeriod))),
         map(
             ([action, period]): CompanyChartDataRequest => {
@@ -25,9 +25,9 @@ export class CompanyRevenueEffects {
             }
         ),
         exhaustMap((request) =>
-            this.companyService.getRevenue(request).pipe(
-                map((result: any) => new CompanyRevenueActions.GetSuccess(result)),
-                catchError((error) => of(new CompanyRevenueActions.GetFailure(error)))
+            this.companyService.getKpi(request).pipe(
+                map((result: any) => new CompanyKpiActions.GetSuccess(result)),
+                catchError((error) => of(new CompanyKpiActions.GetFailure(error)))
             )
         )
     );

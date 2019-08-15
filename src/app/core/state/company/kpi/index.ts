@@ -3,51 +3,51 @@ import { ChartDataPeriod } from "@core/domain/company.model";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
-import { CompanyRevenueActions } from "@core/state/company/revenue/company-revenue.actions";
+import { CompanyKpiActions } from "@core/state/company/kpi/company-kpi.actions";
 import * as fromCompanyDashboard from "@core/state/company/dashboard";
 import * as fromRoot from "@core/state";
-import * as fromCompanyRevenue from "@core/state/company/revenue/company-revenue.reducer";
+import * as fromCompanyKpi from "@core/state/company/kpi/company-kpi.reducer";
 import * as ObjectUtil from "@util/object.util";
 
-export interface CompanyRevenue {
-    data: fromCompanyRevenue.State;
+export interface CompanyKpi {
+    data: fromCompanyKpi.State;
 }
 
 export interface State extends fromRoot.AppState {
-    companyRevenue: CompanyRevenue;
+    companyKpi: CompanyKpi;
 }
 
-export const reducers: ActionReducerMap<CompanyRevenue, CompanyRevenueActions> = {
-    data: fromCompanyRevenue.reducer
+export const reducers: ActionReducerMap<CompanyKpi, CompanyKpiActions> = {
+    data: fromCompanyKpi.reducer
 };
 
-export const selectCompanyRevenue = createFeatureSelector<any, any>("companyRevenue");
+export const selectCompanyKpi = createFeatureSelector<any, any>("companyKpi");
 
-export const selectCompanyRevenueDataState = createSelector(
-    selectCompanyRevenue,
-    (state: CompanyRevenue) => state.data
+export const selectCompanyKpiDataState = createSelector(
+    selectCompanyKpi,
+    (state: CompanyKpi) => state.data
 );
 
 export const getComparisonGraph = createSelector(
-    selectCompanyRevenueDataState,
-    fromCompanyRevenue.getComparisonGraph
+    selectCompanyKpiDataState,
+    fromCompanyKpi.getComparisonGraph
 );
 
 export const getMetricsGraph = createSelector(
-    selectCompanyRevenueDataState,
-    fromCompanyRevenue.getMetricsGraph
+    selectCompanyKpiDataState,
+    fromCompanyKpi.getMetricsGraph
 );
 
 export const getTableData = createSelector(
-    selectCompanyRevenueDataState,
-    fromCompanyRevenue.getTableData
+    selectCompanyKpiDataState,
+    fromCompanyKpi.getTableData
 );
 
 /**
- * This is the value for 1.1 in the Solution Summary - aka the summary revenue chart:
- * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ * This is the value for 1.1 in the Solution Summary - aka the summary kpi chart:
+ * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Kpi+Widget+-+SS
  */
-export const getRevenueAsOf = createSelector(
+export const getKpiAsOf = createSelector(
     getMetricsGraph,
     fromCompanyDashboard.getSelectedPeriod,
     fromCompanyDashboard.getSelectedDatePart,
@@ -69,9 +69,9 @@ export const getRevenueAsOf = createSelector(
 );
 
 /**
- * This is the value for 1.2 in the Solution Summary - aka the summary revenue chart:
+ * This is the value for 1.2 in the Solution Summary - aka the summary kpi chart:
  * It represents the vsPQ or vsPY percentage values.
- * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Kpi+Widget+-+SS
  */
 export const getChangeFromPriorPeriod = createSelector(
     getTableData,
@@ -95,9 +95,9 @@ export const getChangeFromPriorPeriod = createSelector(
 );
 
 /**
- * This is the value for 1.3 in the Solution Summary - aka the summary revenue chart:
+ * This is the value for 1.3 in the Solution Summary - aka the summary kpi chart:
  * It represents the vsBud or icLatest percentage values.
- * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Kpi+Widget+-+SS
  */
 export const getChangeFromPriorBudget = createSelector(
     getTableData,
@@ -121,9 +121,9 @@ export const getChangeFromPriorBudget = createSelector(
 );
 
 /**
- * This is the value for 1.3 in the Solution Summary - aka the summary revenue chart:
+ * This is the value for 1.3 in the Solution Summary - aka the summary kpi chart:
  * It represents the vsBud or icLatest percentage values.
- * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Kpi+Widget+-+SS
  */
 export const getSummaryLineChartData = createSelector(
     getMetricsGraph,
@@ -133,50 +133,13 @@ export const getSummaryLineChartData = createSelector(
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
+            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
             const scenarioName = "actual";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
             return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
         } else {
-            return [];
-        }
-    }
-);
-
-export const getBudgetLineChartData = createSelector(
-    getMetricsGraph,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
-    (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-        if (metricsGraph && period && datePart && currency) {
-            const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
-            const scenarioName = "budget";
-            const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
-            const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-            return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-        } else {
-            return [];
-        }
-    }
-);
-
-export const getForecastLineChartData = createSelector(
-    getMetricsGraph,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
-    (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-        if (metricsGraph && period && datePart && currency) {
-            const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
-            const scenarioName = "forecast";
-            const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
-            const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-            return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-        } else {
-            return [];
+            return 0;
         }
     }
 );

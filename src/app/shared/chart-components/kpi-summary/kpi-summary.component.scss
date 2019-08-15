@@ -86,11 +86,20 @@
         line-height: normal;
         letter-spacing: normal;
         text-align: right;
-        color: $jade;
+        color: $pale-red;
         justify-self: end;
         align-self: end;
 
     }
+
+    .positive-value {
+        color: $jade;
+    }
+
+    .negative-value {
+        color: $pale-red;
+    }
+
 
     .budget {
         grid-column: 3;

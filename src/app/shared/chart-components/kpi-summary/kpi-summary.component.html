@@ -1,10 +1,10 @@
 <!-- CONTAINER -->
 <div class="container">
     <!-- TITLE ROW -->
-    <div class="box title">{{ title }} ($M)</div>
+    <div class="box title">{{ title }} ({{currencySymbol}}M)</div>
     <!-- CHARTS ROW -->
     <!-- VALUE COLUMN -->
-    <div class="box value">{{ value | millions: '1.0-1' }}</div>
+    <div class="box value">{{ value }}</div>
     <div *ngIf="pyLabel"
          class="box py">{{ pyLabel }}</div>
     <div *ngIf="py"
@@ -16,6 +16,8 @@
     <div *ngIf="data && title !== 'Cash Runway'"
          class="box timeline">
         <sbp-micro-timeline [data]="data"
+                            [barChartData1]="barChartData1"
+                            [barChartData2]="barChartData2"
                             [xAccessor]="dateAccessor"
                             [yAccessor]="yAccessor"
                             [categoryAccessor]="categoryAccessor"
@@ -23,14 +25,14 @@
     </div>
     <div *ngIf="data && title !== 'Cash Runway'"
          class="box py-chart">
-        <sbp-micro-bar [data]="data"
+        <sbp-micro-bar [data]="barChartData1"
                        [xAccessor]="dateAccessor"
                        [categoryAccessor]="categoryAccessor"
                        [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
     </div>
     <div *ngIf="data && title !== 'Cash Runway'"
          class="box budget-chart">
-        <sbp-micro-bar [data]="data"
+        <sbp-micro-bar [data]="barChartData2"
                        [xAccessor]="dateAccessor"
                        [categoryAccessor]="categoryAccessor"
                        [projectedAccessor]="projectedAccessor"></sbp-micro-bar>

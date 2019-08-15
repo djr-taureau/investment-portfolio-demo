@@ -2,6 +2,7 @@ import { CompanyRevenueRequest, GetAllCompanyInitiativesResponse, RevenueSeries 
 import { CompanyDocument, GetAllCompanyDocumentsResponse } from "@core/domain/document.model";
 import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
+import { Observable, throwError } from "rxjs";
 import { ApiEndpointService } from "./api-endpoint.service";
 import { ApiService } from "./api.service";
 import { Company, GetAllCompaniesResponse, GetCompanyResponse } from "@core/domain/company.model";
@@ -10,10 +11,6 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
-import { Observable } from "rxjs";
-import { throwError } from "rxjs";
-import * as uuid from "uuid";
-import { IsoConversionService } from "./isoConversion.service";
 
 @Injectable()
 export class CompanyService {
@@ -124,21 +121,69 @@ export class CompanyService {
     }
 
     /**
-     * Gets the revenue for a given company
+     * Gets the revenue for a given company.
      */
-    public getCompanyRevenue(request: CompanyRevenueRequest): Observable<RevenueSeries[]> {
+    public getRevenue(request: CompanyRevenueRequest): Observable<RevenueSeries[]> {
         const params = {
             id: request.id
         };
+        const query = {
+            as_of_date: request.date
+        };
 
-        const endpoint = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params);
-        const url = `${endpoint}?as_of_date=${request.date}`;
-        CompanyService.logger.debug(`getCompanyRevenue( ${url} )`);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.REVENUE, params, query);
+        CompanyService.logger.debug(`getRevenue( ${url} )`);
 
         return this.apiService.get(url).pipe(
             map((result) => result.data),
             catchError((fault: HttpErrorResponse) => {
-                CompanyService.logger.warn(`companyRevenueFault( ${fault.error.message} )`);
+                CompanyService.logger.warn(`getRevenueFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Gets the EBITDA for a given company.
+     */
+    public getEbitda(request: CompanyRevenueRequest): Observable<RevenueSeries[]> {
+        const params = {
+            id: request.id
+        };
+        const query = {
+            as_of_date: request.date
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.EBIDTA, params, query);
+        CompanyService.logger.debug(`getEbitda( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((result) => result.data),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getEbitdaFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Gets the KPI for a given company.
+     */
+    public getKpi(request: CompanyRevenueRequest): Observable<RevenueSeries[]> {
+        const params = {
+            id: request.id
+        };
+        const query = {
+            as_of_date: request.date
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.KPI, params, query);
+        CompanyService.logger.debug(`getKpi( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((result) => result.data),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getKpiFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

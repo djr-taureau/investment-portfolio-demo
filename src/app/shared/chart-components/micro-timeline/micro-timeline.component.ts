@@ -1,11 +1,11 @@
 import { AfterContentInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 import { axisLeft as d3_axisLeft, selectAll as d3_selectAll } from "d3";
-import * as _ from "lodash";
-import { revenueMock2 } from "../../../company-dashboard/financials-data";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
+
 @Component({
     selector: "sbp-micro-timeline",
     templateUrl: "./micro-timeline.component.html",
@@ -15,7 +15,6 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     private static logger: Logger = Logger.getLogger("MicroTimelineComponent");
 
     @Input() id: string;
-    @Input() data: any[];
     @Input() label: string;
     @Input() newData: any;
     @Input() xAccessor?: any;
@@ -25,6 +24,44 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     @Input() projectedAccessor?: any;
     @Input() valueAccessor?: any;
     @Input() yLabelVisible?: boolean;
+
+    @Input()
+    public set data(value: any[]) {
+        if (value) {
+            // this._data = value;
+            this._apiData = value;
+            this.update();
+        }
+    }
+    public get data(): any[] {
+        return this._apiData;
+    }
+    private _data: any[];
+    private _apiData: RevenueSeriesData[];
+
+    @Input()
+    public set barChartData1(value: RevenueSeriesData[]) {
+        if (value) {
+            this._barChartData1 = value;
+            // this.update();
+        }
+    }
+    public get barChartData1(): RevenueSeriesData[] {
+        return this._barChartData1;
+    }
+    private _barChartData1: RevenueSeriesData[];
+
+    @Input()
+    public set barChartData2(value: RevenueSeriesData[]) {
+        if (value) {
+            this._barChartData2 = value;
+            // this.update();
+        }
+    }
+    public get barChartData2(): RevenueSeriesData[] {
+        return this._barChartData2;
+    }
+    private _barChartData2: RevenueSeriesData[];
 
     @ViewChild("container") container: ElementRef;
 
@@ -45,19 +82,10 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     dimensions: DimensionsType;
     xScale: any;
     yScale: ScaleType;
-    budgetScale: ScaleType;
-    forecastScale: ScaleType;
-    xAxisTickValues: any[];
-    yAxisTickValues: any[];
-    timePeriodAccessor;
-    yTickValues: any[];
     xAccessorScaled: any;
     yAccessorScaled: any;
-    budgetAccessorScaled: any;
-    forecastAccessorScaled: any;
     y0AccessorScaled: any;
-    y0BudgetAccessorScaled: any;
-    y0ForecastAccessorScaled: any;
+
     display = false;
     xAxisVisible = false;
     selectedValue = false;
@@ -98,31 +126,26 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     ngOnInit() {
         MicroTimelineComponent.logger.debug(`ngOnInit()`);
-        this.categoryAccessor = (v) => `${v.quarter}Q${v.year}`;
+    }
+
+    private update(): void {
+        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
         this.actualsVis = true;
         this.budgetVis = true;
         this.forecastVis = true;
-        this.yAxisTickValues = [0, 300, 450, 600, 750];
-        this.data = revenueMock2.series;
         this.activeStyle = "not-visible";
-        this.actualsObj = _.find(this.data, (v) => v.id === "actuals");
-        this.budgetObj = _.find(this.data, (v) => v.id === "budget");
-        this.forecastObj = _.find(this.data, (v) => v.id === "forecast");
-        this.actuals = _.get(this.actualsObj, ["values"]);
-        this.budget = _.get(this.budgetObj, ["values"]);
-        this.forecast = _.get(this.forecastObj, ["values"]);
         this.timePeriods = [];
-        this.dateSelected = "4Q2018";
-        this.actuals.map((v) => {
-            const timePart = `${v.quarter}Q${v.year}`;
+        // TODO:: djr  This needs to removed and taken from as of selector
+        this.dateSelected = "4Q18";
+        this.data.map((v) => {
             if (this.categoryAccessor && this.categoryAccessor(v) === this.dateSelected) {
                 this.selectedValue = true;
             }
-            this.timePeriods = this.timePeriods.concat(timePart);
+            this.timePeriods = this.timePeriods.concat(this.categoryAccessor(v));
         });
-        this.actualsPresentValue = this.actuals.filter((p) => this.categoryAccessor(p) === this.dateSelected);
-        this.historicalData = this.actuals.filter((v) => v.projected === false);
-        this.projectedData = this.actuals.filter((v) => v.projected === true);
+        this.actualsPresentValue = this.data.filter((p) => this.categoryAccessor(p) === this.dateSelected);
+        this.historicalData = this.data.filter((v) => v.projection === false);
+        this.projectedData = this.data.filter((v) => v.projection === true);
     }
 
     ngAfterContentInit() {
@@ -151,41 +174,29 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
         this.yScale = d3
             .scaleLinear()
-            .domain(d3.extent(this.actuals, this.yAccessor) as [number, number])
-            .range([this.dimensions.boundedHeight, 0])
-            .nice();
-        this.budgetScale = d3
-            .scaleLinear()
-            .domain(d3.extent(this.budget, this.yAccessor) as [number, number])
-            .range([this.dimensions.boundedHeight, 0])
-            .nice();
-        this.forecastScale = d3
-            .scaleLinear()
-            .domain(d3.extent(this.forecast, this.yAccessor) as [number, number])
+            .domain(d3.extent(this.data, this.yAccessor) as [number, number])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
 
         this.xAxisBottom = d3.axisBottom(this.xScale);
-
         this.xAccessorScaled = (d) => this.xScale(this.categoryAccessor(d));
         this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
-        this.budgetAccessorScaled = (d) => this.budgetScale(this.yAccessor(d));
-        this.forecastAccessorScaled = (d) => this.forecastScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
-        this.y0BudgetAccessorScaled = this.budgetScale(this.budgetScale.domain()[0]);
-        this.y0ForecastAccessorScaled = this.forecastScale(this.budgetScale.domain()[0]);
+
         this.yAxisGrid = d3_axisLeft(this.yAccessorScaled)
             .tickSize(-this.dimensions.boundedWidth)
             .tickFormat("")
             .ticks(6);
 
-        const svg = d3_selectAll("#micro-timeline")
+        const svg = d3
+            .select(this.el)
+            .selectAll("#micro-timeline")
             .select("svg")
             .append("g");
-        const line = d3
-            .line()
-            .x((d) => this.xAccessor)
-            .y((d) => this.yAccessor);
+        // const line = d3
+        //     .line()
+        //     .x((d) => this.xAccessor)
+        //     .y((d) => this.yAccessor);
 
         svg.append("line")
             .attr("x1", this.xScale(this.dateSelected))

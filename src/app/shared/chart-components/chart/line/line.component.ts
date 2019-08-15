@@ -9,7 +9,7 @@ import { curveLinear } from "d3-shape";
     `,
     styleUrls: ["./line.component.scss"]
 })
-export class LineComponent implements OnChanges, OnInit {
+export class LineComponent implements OnChanges {
     @Input() type: "area" | "line" | "projected-line";
     @Input() valueType: string;
     @Input() fillColor: string;
@@ -36,10 +36,6 @@ export class LineComponent implements OnChanges, OnInit {
     projectedData;
 
     constructor() {}
-
-    ngOnInit() {
-        console.log("micro", this.data);
-    }
 
     updateLineString(): void {
         this.interpolation = curveLinear;
