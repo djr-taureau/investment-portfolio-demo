@@ -108,9 +108,9 @@ export class ApiEndpointService {
         const baseUrl = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
         const urlWithParams: string = StringUtil.replaceTokens(baseUrl, params);
 
-        // if (endpoint === ApiEndpointService.ENDPOINT.REVENUE) {
-        //     return `${ApiEndpointService.MOCK_CONTEXT}ryde-rev-2018-03-31.json`;
-        // }
+        if (endpoint === ApiEndpointService.ENDPOINT.REVENUE) {
+            return `${ApiEndpointService.MOCK_CONTEXT}ryde-rev-2018-03-31.json`;
+        }
 
         return this.addQueryParams(urlWithParams, query);
     }
