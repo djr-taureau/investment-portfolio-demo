@@ -51,14 +51,14 @@ export class ValuationComponent implements OnInit {
             this.icInitialDate = value.valuationDetail.icInitial.reportingPeriod;
             this.icFollownOn1Date = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.reportingPeriod : null;
             this.actualDate = value.valuationDetail.actual.reportingPeriod;
-            this.yearPlus1Date = value.valuationDetail.yearPlus1.reportingPeriod;
+            this.yearPlus1Date = value.valuationDetail.valuationForecast.reportingPeriod;
             this.exitDate = this.exitPresent ? value.valuationDetail.exit.reportingPeriod : null;
             // get the approved values
             const approvedRow: ValuationTableModel = new ValuationTableModel();
             approvedRow.icInitial = (value.valuationDetail.icInitial.approved / 1000000).toFixed(1);
             approvedRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.approved / 1000000).toFixed(1) : 0;
             approvedRow.actual = (value.valuationDetail.actual.approved / 1000000).toFixed(1);
-            approvedRow.yearPlus1 = (value.valuationDetail.yearPlus1.approved / 1000000).toFixed(1);
+            approvedRow.valuationForecast = (value.valuationDetail.valuationForecast.approved / 1000000).toFixed(1);
             approvedRow.exit = this.exitPresent ? (value.valuationDetail.exit.approved / 1000000).toFixed(1) : 0;
             approvedRow.label = "Approved ($M)";
             this.dataSource.push(approvedRow);
@@ -67,7 +67,7 @@ export class ValuationComponent implements OnInit {
             investedRow.icInitial = (value.valuationDetail.icInitial.invested / 1000000).toFixed(1);
             investedRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.invested / 1000000).toFixed(1) : 0;
             investedRow.actual = (value.valuationDetail.actual.invested / 1000000).toFixed(1);
-            investedRow.yearPlus1 = (value.valuationDetail.yearPlus1.invested / 1000000).toFixed(1);
+            investedRow.valuationForecast = (value.valuationDetail.valuationForecast.invested / 1000000).toFixed(1);
             investedRow.exit = this.exitPresent ? (value.valuationDetail.exit.invested / 1000000).toFixed(1) : 0;
             investedRow.label = "Invested ($M)";
             this.dataSource.push(investedRow);
@@ -76,7 +76,7 @@ export class ValuationComponent implements OnInit {
             realizedValueRow.icInitial = (value.valuationDetail.icInitial.realizedValue / 1000000).toFixed(1);
             realizedValueRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.realizedValue / 1000000).toFixed(1) : 0;
             realizedValueRow.actual = (value.valuationDetail.actual.realizedValue / 1000000).toFixed(1);
-            realizedValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.realizedValue / 1000000).toFixed(1);
+            realizedValueRow.valuationForecast = (value.valuationDetail.valuationForecast.realizedValue / 1000000).toFixed(1);
             realizedValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.realizedValue / 1000000).toFixed(1) : 0;
             realizedValueRow.label = "Realized Value ($M)";
             this.dataSource.push(realizedValueRow);
@@ -85,7 +85,7 @@ export class ValuationComponent implements OnInit {
             unrealizedValueRow.icInitial = (value.valuationDetail.icInitial.unrealizedValue / 1000000).toFixed(1);
             unrealizedValueRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.unrealizedValue / 1000000).toFixed(1) : 0;
             unrealizedValueRow.actual = (value.valuationDetail.actual.unrealizedValue / 1000000).toFixed(1);
-            unrealizedValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.unrealizedValue / 1000000).toFixed(1);
+            unrealizedValueRow.valuationForecast = (value.valuationDetail.valuationForecast.unrealizedValue / 1000000).toFixed(1);
             unrealizedValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.unrealizedValue / 1000000).toFixed(1) : 0;
             unrealizedValueRow.label = "Unrealized Value ($M)";
             this.dataSource.push(unrealizedValueRow);
@@ -94,7 +94,7 @@ export class ValuationComponent implements OnInit {
             totalValueRow.icInitial = (value.valuationDetail.icInitial.totalValue / 1000000).toFixed(1);
             totalValueRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.totalValue / 1000000).toFixed(1) : 0;
             totalValueRow.actual = (value.valuationDetail.actual.totalValue / 1000000).toFixed(1);
-            totalValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.totalValue / 1000000).toFixed(1);
+            totalValueRow.valuationForecast = (value.valuationDetail.valuationForecast.totalValue / 1000000).toFixed(1);
             totalValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.totalValue / 1000000).toFixed(1) : 0;
             totalValueRow.label = "Total Value ($M)";
             this.dataSource.push(totalValueRow);
@@ -103,7 +103,7 @@ export class ValuationComponent implements OnInit {
             moicRow.icInitial = value.valuationDetail.icInitial.moic.toString() + "x";
             moicRow.icFollowOn1 = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.moic.toString() + "x" : null;
             moicRow.actual = value.valuationDetail.actual.moic.toString() + "x";
-            moicRow.yearPlus1 = value.valuationDetail.yearPlus1.moic.toString() + "x";
+            moicRow.valuationForecast = value.valuationDetail.valuationForecast.moic.toString() + "x";
             moicRow.exit = this.exitPresent ? value.valuationDetail.exit.moic.toString() + "x" : null;
             moicRow.label = "MOIC";
             this.dataSource.push(moicRow);
@@ -112,7 +112,7 @@ export class ValuationComponent implements OnInit {
             irrRow.icInitial = value.valuationDetail.icInitial.irr.toString() + "%";
             irrRow.icFollowOn1 = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.irr.toString() + "%" : null;
             irrRow.actual = value.valuationDetail.actual.irr.toString() + "%";
-            irrRow.yearPlus1 = value.valuationDetail.yearPlus1.irr.toString() + "%";
+            irrRow.valuationForecast = value.valuationDetail.valuationForecast.irr.toString() + "%";
             irrRow.exit = this.exitPresent ? value.valuationDetail.exit.irr.toString() + "%" : null;
             irrRow.label = "Gross IRR";
             this.dataSource.push(irrRow);
@@ -123,7 +123,7 @@ export class ValuationComponent implements OnInit {
                 ? (value.valuationDetail.icFollowOn1.companyEquityValue / 1000000).toFixed(1)
                 : 0;
             companyEquityValueRow.actual = (value.valuationDetail.actual.companyEquityValue / 1000000).toFixed(1);
-            companyEquityValueRow.yearPlus1 = (value.valuationDetail.yearPlus1.companyEquityValue / 1000000).toFixed(1);
+            companyEquityValueRow.valuationForecast = (value.valuationDetail.valuationForecast.companyEquityValue / 1000000).toFixed(1);
             companyEquityValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.companyEquityValue / 1000000).toFixed(1) : 0;
             companyEquityValueRow.label = "Company Equity Value ($M)";
             this.dataSource.push(companyEquityValueRow);
@@ -132,7 +132,7 @@ export class ValuationComponent implements OnInit {
             ownershipRow.icInitial = value.valuationDetail.icInitial.ownership.toString() + "%";
             ownershipRow.icFollowOn1 = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.ownership.toString() + "%" : null;
             ownershipRow.actual = value.valuationDetail.actual.ownership.toString() + "%";
-            ownershipRow.yearPlus1 = value.valuationDetail.yearPlus1.ownership.toString() + "%";
+            ownershipRow.valuationForecast = value.valuationDetail.valuationForecast.ownership.toString() + "%";
             ownershipRow.exit = this.exitPresent ? value.valuationDetail.exit.ownership.toString() + "%" : null;
             ownershipRow.label = "Ownership";
             this.dataSource.push(ownershipRow);
@@ -171,7 +171,7 @@ export class ValuationComponent implements OnInit {
     /**
      * Columns shown in table
      */
-    public displayedColumns: string[] = ["label", "icInitial", "icFollowOn1", "actual", "yearPlus1", "exit"];
+    public displayedColumns: string[] = ["label", "icInitial", "icFollowOn1", "actual", "valuationForecast", "exit"];
 
     /**
      * Data values for column headers
