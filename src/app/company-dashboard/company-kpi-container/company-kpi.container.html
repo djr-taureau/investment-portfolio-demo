@@ -4,11 +4,13 @@
      fxLayout="row"
      fxLayoutAlign="space-between center">
     <div class="chart">
-        <sbp-kpi-summary [data]="timelineData"
+        <sbp-kpi-summary [data]="revenueSummaryLineChartData$ | async"
+                         [barChartData1]="revenueChangeFromPriorPeriodBarChartData$ | async"
+                         [barChartData2]="revenueChangeFromPriorBudgetBarChartData$ | async"
                          [title]="'Revenue'"
-                         [denomination]="'USD'"
-                         [currencySymbol]="'$'"
-                         [value]="revenueAsOf$ | async"
+                         [denomination]="selectedCurrencyCode"
+                         [currencySymbol]="selectedCurrencySymbol"
+                         [value]="revenueAsOf$ | async | millions: '1.0-1'"
                          [pyLabel]="'vs PY'"
                          [pyValue]="revenueChangeFromPriorPeriod$ | async"
                          [icLabel]="'vs Bud'"
@@ -16,34 +18,38 @@
                          (click)="onRevenueClick()">
         </sbp-kpi-summary>
     </div>
-    <div class="chart">
-        <sbp-kpi-summary [data]="timelineData2"
-                         [title]="'EBITDA'"
-                         [denomination]="'USD'"
-                         [currencySymbol]="'$'"
-                         [value]="-81.2"
-                         [pyLabel]="'vs PY'"
-                         [pyValue]="+10.0"
-                         [icLabel]="'vs Bud'"
-                         [icValue]="'-5.0'"
-                         (click)="onEBITDAClick()">
-        </sbp-kpi-summary>
 
+    <div class="chart">
+        <sbp-kpi-summary [data]="ebitdaSummaryLineChartData$ | async"
+                         [barChartData1]="ebitdaChangeFromPriorPeriodBarChartData$ | async"
+                         [barChartData2]="ebitdaChangeFromPriorBudgetBarChartData$ | async"
+                         [title]="'EBITDA'"
+                         [denomination]="selectedCurrencyCode"
+                         [currencySymbol]="selectedCurrencySymbol"
+                         [value]="ebitdaAsOf$ | async | millions: '1.0-1'"
+                         [pyLabel]="'vs PY'"
+                         [pyValue]="ebitdaChangeFromPriorPeriod$ | async"
+                         [icLabel]="'vs Bud'"
+                         [icValue]="ebitdaChangeFromPriorBudget$ | async"
+                         (click)="onEbitdaClick()">
+        </sbp-kpi-summary>
     </div>
+
     <div class="chart">
         <sbp-kpi-summary sbpTooltip="Coming Soon!"
-                         [data]="timelineData3"
+                         [data]="revenueSummaryLineChartData$ | async"
                          [title]="'Cash'"
                          [denomination]="'USD'"
                          [currencySymbol]="'$'"
                          [value]="-34.6"
                          [pyLabel]="'vs PY'"
-                         [pyValue]="+10.0"
+                         [pyValue]="-2.0"
                          [icLabel]="'vs Bud'"
                          [icValue]="'-5.0'"
                          (click)="onCashClick()">
         </sbp-kpi-summary>
     </div>
+
     <div class="chart">
         <div class="cash-runway-container"
              fxLayout="column"
@@ -60,4 +66,5 @@
             </div>
         </div>
     </div>
+
 </div>

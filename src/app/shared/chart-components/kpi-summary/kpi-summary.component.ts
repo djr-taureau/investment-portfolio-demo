@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, OnChanges, Input, HostBinding } from "@angular/core";
+import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 
@@ -7,31 +8,37 @@ import * as d3 from "d3";
     templateUrl: "./kpi-summary.component.html",
     styleUrls: ["./kpi-summary.component.scss"]
 })
-export class KpiSummaryComponent implements OnInit {
+export class KpiSummaryComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("KpiSummaryComponent");
 
     parseDate = d3.timeParse("%m/%d/%Y");
+    // parseDate = d3.timeParse("%YYYY-%mm-%dd");
     // X-Axis
     categoryAccessor: any;
     // X-Axis
     dateAccessor: any;
-
-    financialsAccessor: any;
     yAccessor: any;
-
     projectedAccessor: any;
-    pyAccessor: any;
-    icAccessor: any;
     fillColor;
     display;
-    timelineId: string;
-    barId: string;
-    bar2Id: string;
+
+    @HostBinding("class.positive-value") positiveValue = false;
+    @HostBinding("class.negative-value") negativeValue = false;
+    @Input() style;
+    /**
+     * The line chart data.
+     */
+    @Input() data: RevenueSeriesData[];
 
     /**
-     * The title for the widget
+     * The first bar chart's data.
      */
-    @Input() data: any[];
+    @Input() barChartData1: RevenueSeriesData[];
+
+    /**
+     * The second bar chart's data.
+     */
+    @Input() barChartData2: RevenueSeriesData[];
 
     @Input()
     public title: string;
@@ -83,11 +90,21 @@ export class KpiSummaryComponent implements OnInit {
     ngOnInit() {
         KpiSummaryComponent.logger.debug(`ngOnInit()`);
         this.dateAccessor = (v) => this.parseDate(v.date);
-        this.categoryAccessor = (v) => `${v.quarter}Q${v.year}`;
-        this.financialsAccessor = (v) => v.value;
-        this.projectedAccessor = (v) => v.projected;
-        this.pyAccessor = (v) => v.PY;
-        this.icAccessor = (v) => v.IC;
-        this.yAccessor = (v) => v.amountInUSD;
+        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
+        this.projectedAccessor = (v) => v.projection;
+        this.yAccessor = (v) => v.amountInNative;
+    }
+
+    ngOnChanges() {
+        // TODO:: djr get this working for Thursday
+        if (Math.sign(this.py) === -1) {
+            console.log(Math.sign(this.py));
+            this.positiveValue = false;
+            this.negativeValue = true;
+        } else {
+            console.log("not");
+            this.positiveValue = true;
+            this.negativeValue = false;
+        }
     }
 }

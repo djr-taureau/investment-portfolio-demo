@@ -241,6 +241,11 @@ export interface RevenuePeriod {
     series_years: any[];
 }
 
+export interface ChartDataPeriod {
+    series_quarters: any[];
+    series_years: any[];
+}
+
 /**
  * Holds the yearly and quarterly sets of data for graphs
  * These are calculated set based on yearly summation or by quarter
@@ -265,6 +270,14 @@ export interface RevenueSeriesData {
     amountInNative: number;
     amountInUSD: number;
     projection: boolean;
+}
+
+export interface RevenueSeries {
+    name: string;
+    displayOrder: number;
+    isScenario: boolean;
+    scenarioName: string;
+    data: RevenueSeriesData[];
 }
 
 /**
@@ -359,21 +372,6 @@ export interface CompanyUpdateResponse {
     date: string;
 }
 
-export interface RevenueSeriesData {
-    date: string;
-    financialQuarter: number;
-    amountInNative: number;
-    amountInUSD: number;
-    projection: boolean;
-}
-export interface RevenueSeries {
-    name: string;
-    displayOrder: number;
-    isScenario: boolean;
-    scenarioName: string;
-    data: RevenueSeriesData[];
-}
-
 // TODO: TJM: Are you using this???
 // export interface CompanyRevenueRequest {
 //     companyId: string;
@@ -436,6 +434,11 @@ export interface GetTeamMemberResponse extends ApiResponse {
 }
 
 export interface CompanyRevenueRequest {
+    id: string;
+    date: string;
+}
+
+export interface CompanyChartDataRequest {
     id: string;
     date: string;
 }

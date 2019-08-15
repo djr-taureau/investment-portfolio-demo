@@ -14,7 +14,9 @@ body {
     font-family: PostGrotesk, sans-serif;
     max-width: 1440px;
     margin: 0 auto;
-    overflow: scroll;
+
+    // TODO: Fix this as it produces scroll bars for Windows Chrome
+    //overflow: scroll;
 }
 
 html {

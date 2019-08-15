@@ -17,7 +17,7 @@ export class RevenueEffects {
     //     ofType<RevenueActions.GetAll>(RevenueActionTypes.GetAll),
     //     map((action) => action.payload),
     //     exhaustMap((companyId: string) =>
-    //         this.companyService.getCompanyRevenue(companyId).pipe(
+    //         this.companyService.getRevenue(companyId).pipe(
     //             map((result: RevenueSeries[]) => {
     //                 return new GetAllSuccess(result);
     //             }),

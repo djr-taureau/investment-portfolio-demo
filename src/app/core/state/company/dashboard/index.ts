@@ -13,6 +13,7 @@ import * as fromCompanyInitiatives from "./company-initiative.reducer";
 import * as fromCompanyDocuments from "../documents/company-documents.reducer";
 import * as _ from "lodash";
 import * as ObjectUtil from "@util/object.util";
+import * as ArrayUtil from "@util/array.util";
 
 export interface CompanyDashboard {
     layout: fromCompanyDashboardLayout.CompanyDashboardLayoutState;
@@ -95,7 +96,8 @@ export const getSelectedCompanyAvailablePeriods = createSelector(
     getSelectedCompany,
     getSelectedDatePart,
     (selectedCompany: Company, selectedDatePart: DatePartType) => {
-        let periods = ObjectUtil.getNestedPropIfExists(selectedCompany, ["availablePeriods"], []);
+        let periods: any[] = ObjectUtil.getNestedPropIfExists(selectedCompany, ["availablePeriods"], []);
+        periods = periods.sort(ArrayUtil.sortDateYYYYMMDD("date"));
         periods = periods.map((p: SelectorPeriod) => {
             return {
                 ...p,
@@ -152,7 +154,12 @@ export const getTopInitiativesByCompanyId = createSelector(
     getAllInitiatives,
     getSelectedCompany,
     (allInitiatives, selectedCompany) => {
-        return _.take(allInitiatives.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
+        if (selectedCompany) {
+            allInitiatives = allInitiatives || [];
+            return _.take(allInitiatives.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
+        } else {
+            return [];
+        }
     }
 );
 

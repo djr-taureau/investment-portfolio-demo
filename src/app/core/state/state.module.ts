@@ -1,4 +1,6 @@
 import { CompanyInitiativeEffects } from "@core/state/company/dashboard/company-initiative.effects";
+import { CompanyEbitdaEffects } from "@core/state/company/ebitda/company-ebitda.effects";
+import { CompanyKpiEffects } from "@core/state/company/kpi/company-kpi.effects";
 import { CompanyDocumentsEffects } from "@core/state/company/documents/company-documents.effects";
 import { CompanyRevenueEffects } from "@core/state/company/revenue/company-revenue.effects";
 import { PortfolioEffect } from "@core/state/portfolio/portfolio.effect";
@@ -16,28 +18,28 @@ import { RouterEffect } from "./router/router.effect";
 import { SnackbarEffect } from "@core/state/snackbar/snackbar.effect";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { StoreModule } from "@ngrx/store";
-import { StoreRouterConnectingModule, RouterStateSerializer, routerReducer } from "@ngrx/router-store";
+import { StoreRouterConnectingModule, RouterStateSerializer } from "@ngrx/router-store";
 import { TeamEffects } from "./team/team.effects";
 import { ValuationEffects } from "./valuation/valuation.effects";
-import { RevenueEffects } from "./revenue/revenue.effects";
 import * as CompanyDashboard from "@core/state/company/dashboard";
 import * as PortfolioListingLayout from "@core/state/portfolio-list";
 import * as PortfolioDashboard from "@core/state/portfolio-dashboard";
 import * as CompanyRevenue from "@core/state/company/revenue";
+import * as CompanyEbitda from "@core/state/company/ebitda";
+import * as CompanyKpi from "@core/state/company/kpi";
 
 const EFFECTS = [
     RouterEffect,
     AuthEffect,
     CompanyEffects,
     CompanyFlowEffect,
+    CompanyDocumentsEffects,
     CompanyInitiativeEffects,
+    CompanyEbitdaEffects,
     CompanyRevenueEffects,
+    CompanyKpiEffects,
     PortfolioEffect,
     PortfolioFlowEffect,
-    CompanyEffects,
-    RevenueEffects,
-    PortfolioEffect,
-    CompanyDocumentsEffects,
     SnackbarEffect,
     TeamEffects,
     TeamMemberEffects,
@@ -59,6 +61,8 @@ const MODULES = [
     StoreModule.forFeature("portfolioListing", PortfolioListingLayout.reducers),
     StoreModule.forFeature("portfolioDashboard", PortfolioDashboard.reducers),
     StoreModule.forFeature("companyRevenue", CompanyRevenue.reducers),
+    StoreModule.forFeature("companyEbitda", CompanyEbitda.reducers),
+    StoreModule.forFeature("companyKpi", CompanyKpi.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and

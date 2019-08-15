@@ -51,10 +51,7 @@ export class PortfolioService {
             as_of_date: asOfDate
         };
 
-        const url = ApiEndpointService.addParams(
-            this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.PORTFOLIO_INVESTMENT_SUMMARY, params),
-            query
-        );
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.PORTFOLIO_INVESTMENT_SUMMARY, params, query);
 
         return this.apiService.get(url).pipe(
             map((response) => {

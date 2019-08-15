@@ -1,0 +1,858 @@
+{
+  "success": true,
+  "data": {
+    "metricsGraph": {
+      "series_quarters": [
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "actual",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 16177753.63,
+              "amountInUSD": 19507369.0,
+              "projection": false,
+              "comment": "A glitch in the night"
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "amountInNative": 715642500.51,
+              "amountInUSD": 862932059.5,
+              "projection": false
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "amountInNative": 548346460.78,
+              "amountInUSD": 661204079.0,
+              "projection": false
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "amountInNative": 475604537.73,
+              "amountInUSD": 573490818.83,
+              "projection": false
+            },
+            {
+              "date": "2019-03-31",
+              "amountInNative": 580467439.60,
+              "amountInUSD": 699936019,
+              "projection": false
+            },
+            {
+              "date": "2019-06-30",
+              "financialQuarter": 2,
+              "amountInNative": 43347689.65,
+              "amountInUSD": 52269270.91,
+              "projection": false
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 10,
+          "scenarioName": "budget",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 15000000.0,
+              "amountInUSD": 21049677.23,
+              "projection": true
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "amountInNative": 16000000.0,
+              "amountInUSD": 21124900.97,
+              "projection": true
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "amountInNative": 17000000.0,
+              "amountInUSD": 22170057.38,
+              "projection": true
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "amountInNative": 17500000.0,
+              "amountInUSD": 22347082.1,
+              "projection": true
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 18000000.0,
+              "amountInUSD": 23452768.72,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 12,
+          "isScenario": true,
+          "scenarioName": "forecast",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 14000000.0,
+              "amountInUSD": 19646365.42,
+              "projection": true
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "amountInNative": 14500000.0,
+              "amountInUSD": 19144441.51,
+              "projection": true
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "amountInNative": 16000000.0,
+              "amountInUSD": 20865936.35,
+              "projection": true
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "amountInNative": 17000000.0,
+              "amountInUSD": 21708594.04,
+              "projection": true
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 18000000.0,
+              "amountInUSD": 23452768.72,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 12,
+          "isScenario": true,
+          "scenarioName": "vsPQ",
+          "isCalculation": true,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 14000000.0,
+              "amountInUSD": 19646365.42,
+              "projection": true
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "amountInNative": 14500000.0,
+              "amountInUSD": 19144441.51,
+              "projection": true
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "amountInNative": 16000000.0,
+              "amountInUSD": 20865936.35,
+              "projection": true
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "amountInNative": 17000000.0,
+              "amountInUSD": 21708594.04,
+              "projection": true
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 18000000.0,
+              "amountInUSD": 23452768.72,
+              "projection": true
+            }
+          ]
+        }
+      ],
+      "series_years": [
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "actual",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 823444514.64,
+              "amountInUSD": 992921284.1,
+              "projection": false,
+              "comment": "A glitch in the night"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 1,
+              "amountInNative": 215560362.34,
+              "amountInUSD": 259925797.0,
+              "projection": false
+            },
+            {
+              "date": "2019-06-30",
+              "financialQuarter": 1,
+              "amountInNative": 742594368.06,
+              "amountInUSD": 895431010.01,
+              "projection": false
+            },
+            {
+              "date": "2020-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 36011585.75,
+              "amountInUSD": 43423290.20,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "budget",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2020-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "forecast",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2020-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "icInitial",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2020-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "icLatest",
+          "isCalculation": false,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2020-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": true
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "displayOrder": 1,
+          "scenarioName": "vsPY",
+          "isCalculation": true,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": false
+            },
+            {
+              "date": "2020-03-31",
+              "financialQuarter": 1,
+              "amountInNative": 54147305600000.0,
+              "amountInUSD": 75985553746840.0,
+              "projection": true
+            }
+          ]
+        }
+      ]
+    },
+    "comparisonGraph": {
+      "series_quarters": [
+        {
+          "date": "2018-03-31",
+          "value": -0.27
+        },
+        {
+          "date": "2018-06-30",
+          "value": 0.32
+        },
+        {
+          "date": "2018-09-30",
+          "value": 0.32
+        },
+        {
+          "date": "2018-12-31",
+          "value": 0.32
+        },
+        {
+          "date": "2019-03-31",
+          "value": 0.32
+        }
+      ],
+      "series_years": [
+        {
+          "date": "2017-03-31",
+          "value": -0.27
+        },
+        {
+          "date": "2018-03-31",
+          "value": 0.32
+        },
+        {
+          "date": "2019-03-31",
+          "value": 0.32
+        },
+        {
+          "date": "2020-03-31",
+          "value": 0.32
+        }
+      ]
+    },
+    "tableData": {
+      "series_quarters": [
+        {
+          "name": "Revenue",
+          "scenarioName": "actual",
+          "displayOrder": 1,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": 13536826400000.0,
+              "valueInUSD": 18996388436710.63,
+              "comment": "A glitch in the night",
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "valueInNative": 18997588436710,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "valueInNative": 18996388436710.63,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "valueInNative": 18996388436710.63,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "valueInNative": 18996388436710.63,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "B"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "vsBud",
+          "displayOrder": 10,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.101,
+              "valueInUSD": -0.109,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "valueInNative": -0.005,
+              "valueInUSD": 0.001,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "valueInNative": 0.101,
+              "valueInUSD": 0.106,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "valueInNative": 0.384,
+              "valueInUSD": 0.390,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.789,
+              "valueInUSD": -0.798,
+              "sourceType": "B"
+            },
+            {
+              "date": "2019-06-30",
+              "financialQuarter": 2,
+              "valueInNative": 0.405,
+              "valueInUSD": 0.410,
+              "sourceType": "B"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "vsPQ",
+          "displayOrder": 7,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "valueInNative": 0.112,
+              "valueInUSD": 0.116,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "valueInNative": 0.293,
+              "valueInUSD": 0.301,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "valueInNative": -0.104,
+              "valueInUSD": -0.107,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.684,
+              "valueInUSD": -0.698,
+              "sourceType": "B"
+            },
+            {
+              "date": "2019-06-30",
+              "financialQuarter": 2,
+              "valueInNative": 0.345,
+              "valueInUSD": 0.454,
+              "sourceType": "B"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "forecast",
+          "displayOrder": 13,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "B"
+            }
+          ]
+        }
+      ],
+      "series_years": [
+        {
+          "name": "Revenue",
+          "scenarioName": "actual",
+          "displayOrder": 1,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "comment": "A glitch in the night",
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-06-30",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2020-3-31",
+              "financialQuarter": 3,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "E"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "vsBud",
+          "displayOrder": 1,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2020-3-31",
+              "financialQuarter": 3,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "E"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "vsPY",
+          "displayOrder": 1,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.232,
+              "valueInUSD": -0.240,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": 0.145,
+              "valueInUSD": 0.150,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "valueInNative": 0.293,
+              "valueInUSD": 0.301,
+              "sourceType": "A"
+            },
+            {
+              "date": "2020-3-31",
+              "financialQuarter": 3,
+              "valueInNative": -0.101,
+              "valueInUSD": -0.109,
+              "sourceType": "E"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "forecast",
+          "displayOrder": 13,
+          "data": [
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-06-30",
+              "financialQuarter": 2,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-09-30",
+              "financialQuarter": 3,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-12-31",
+              "financialQuarter": 4,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.441,
+              "valueInUSD": -0.442,
+              "sourceType": "B"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "icInitial",
+          "displayOrder": 1,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "valueInNative": 13536826400000.0,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": 18997588436710,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "valueInNative": 18996388436710.63,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "A"
+            },
+            {
+              "date": "2020-3-31",
+              "financialQuarter": 3,
+              "valueInNative": 18996388436710.63,
+              "valueInUSD": 18996388436710.63,
+              "sourceType": "E"
+            }
+          ]
+        },
+        {
+          "name": "Revenue",
+          "scenarioName": "icLatest",
+          "displayOrder": 1,
+          "data": [
+            {
+              "date": "2017-03-31",
+              "financialQuarter": 1,
+              "valueInNative": -0.232,
+              "valueInUSD": -0.240,
+              "sourceType": "A"
+            },
+            {
+              "date": "2018-03-31",
+              "financialQuarter": 1,
+              "valueInNative": 0.145,
+              "valueInUSD": 0.150,
+              "sourceType": "A"
+            },
+            {
+              "date": "2019-06-31",
+              "financialQuarter": 1,
+              "valueInNative": 0.293,
+              "valueInUSD": 0.301,
+              "sourceType": "A"
+            },
+            {
+              "date": "2020-3-31",
+              "financialQuarter": 3,
+              "valueInNative": -0.101,
+              "valueInUSD": -0.109,
+              "sourceType": "E"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { ChartDataPeriod } from "@core/domain/company.model";
-import { CompanyRevenueActions, CompanyRevenueActionTypes } from "@core/state/company/revenue/company-revenue.actions";
+import { CompanyKpiActions, CompanyKpiActionTypes } from "@core/state/company/kpi/company-kpi.actions";
 
 export interface State {
     comparisonGraph: ChartDataPeriod;
@@ -22,9 +22,9 @@ function save(data: any, state: State = initialState): State {
     };
 }
 
-export function reducer(state: State = initialState, action: CompanyRevenueActions): State {
+export function reducer(state: State = initialState, action: CompanyKpiActions): State {
     switch (action.type) {
-        case CompanyRevenueActionTypes.GetSuccess:
+        case CompanyKpiActionTypes.GetSuccess:
             return save(action.payload, state);
 
         default:

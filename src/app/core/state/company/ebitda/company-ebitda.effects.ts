@@ -1,19 +1,19 @@
 import { CompanyChartDataRequest } from "@core/domain/company.model";
-import { CompanyRevenueActionTypes } from "@core/state/company/revenue/company-revenue.actions";
+import { CompanyEbitdaActionTypes } from "@core/state/company/ebitda/company-ebitda.actions";
 import { Observable, of } from "rxjs";
 import { Action, select, Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, withLatestFrom } from "rxjs/operators";
 import { CompanyService } from "@core/service/company.service";
 import { Injectable } from "@angular/core";
-import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
+import * as CompanyEbitdaActions from "@core/state/company/ebitda/company-ebitda.actions";
 import * as fromCompanyDashboard from "@core/state/company/dashboard";
 
 @Injectable()
-export class CompanyRevenueEffects {
+export class CompanyEbitdaEffects {
     @Effect()
-    getCompanyRevenue$: Observable<Action> = this.actions$.pipe(
-        ofType<CompanyRevenueActions.Get>(CompanyRevenueActionTypes.Get),
+    getCompanyEbitda$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyEbitdaActions.Get>(CompanyEbitdaActionTypes.Get),
         withLatestFrom(this.store$.pipe(select(fromCompanyDashboard.getSelectedPeriod))),
         map(
             ([action, period]): CompanyChartDataRequest => {
@@ -25,9 +25,9 @@ export class CompanyRevenueEffects {
             }
         ),
         exhaustMap((request) =>
-            this.companyService.getRevenue(request).pipe(
-                map((result: any) => new CompanyRevenueActions.GetSuccess(result)),
-                catchError((error) => of(new CompanyRevenueActions.GetFailure(error)))
+            this.companyService.getEbitda(request).pipe(
+                map((result: any) => new CompanyEbitdaActions.GetSuccess(result)),
+                catchError((error) => of(new CompanyEbitdaActions.GetFailure(error)))
             )
         )
     );

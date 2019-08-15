@@ -1,6 +1,6 @@
-import { Component, Input, AfterContentInit, OnInit, ViewEncapsulation } from "@angular/core";
-import { useAccessor } from "../utils";
+import { AfterContentInit, Component, Input, OnInit } from "@angular/core";
 import { Logger } from "@util/logger";
+import { useAccessor } from "../utils";
 
 @Component({
     selector: "[sbpCircles]",
