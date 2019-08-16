@@ -37,7 +37,7 @@ export class ConfigService {
      * Requests the application's config data.
      */
     public load(): Promise<Config> {
-        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.CONFIG);
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.CONFIG, null, null, true);
         ConfigService.logger.debug(`load()`);
         return (
             this.http

@@ -102,7 +102,7 @@ export class ApiEndpointService {
      * at build time or at runtime via (for example) query string params...but for now we'll
      * keep this dumb simple.
      */
-    public getEndpoint(endpoint: string, params?: {}, query?: {}): string {
+    public getEndpoint(endpoint: string, params?: {}, query?: {}, noCache: boolean = false): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
         const isInitiatives = ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES === endpoint;
         const baseUrl = isConfig || isInitiatives ? `${endpoint}` : `${this.getBaseUrl()}${endpoint}`;
@@ -112,6 +112,9 @@ export class ApiEndpointService {
             return `${ApiEndpointService.MOCK_CONTEXT}ryde-rev-2018-03-31.json`;
         }
 
+        if (noCache) {
+            query = this.addNoCacheToQuery(query);
+        }
         return this.addQueryParams(urlWithParams, query);
     }
 
@@ -119,7 +122,6 @@ export class ApiEndpointService {
      * Getter for the base URL for the API.
      */
     public getBaseUrl(): string {
-        // TODO: BMR: 08/07/2019: Once Jon adds a trailing "/" to the config.json's API endpioint value we can remove the trailing "/" here.
         return `${ApiEndpointService.BASE_URL.FROM_CONFIG}`;
     }
 
@@ -204,5 +206,14 @@ export class ApiEndpointService {
         });
 
         return result;
+    }
+
+    /**
+     * Adds a `noCache` parameter to the query string object.
+     * @param query
+     */
+    private addNoCacheToQuery(query: object): object {
+        const noCache: string = String(new Date().getTime());
+        return Object.assign(query || {}, { noCache });
     }
 }
