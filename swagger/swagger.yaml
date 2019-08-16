@@ -514,6 +514,7 @@ paths:
             - "REGION"
             - "TYPE"
             - "STAGE"
+            - "DEALLEAD"
         - name: "scenario"
           in: "query"
           description: "Type of scenario we are contrasting actuals against"
