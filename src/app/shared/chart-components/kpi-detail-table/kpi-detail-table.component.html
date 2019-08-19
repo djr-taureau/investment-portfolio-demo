@@ -1,19 +1,25 @@
 <table class="kpi-detail-table">
+
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // Header Row
+    //////////////////////////////////////////////////////////////////
+    -->
+
     <tr class="header">
         <th scope="col"></th>
         <th class="col-header"
-            scope="col">4Q17 A</th>
-        <th class="col-header"
-            scope="col">1Q18 A</th>
-        <th class="col-header"
-            scope="col">2Q18 A</th>
-        <th class="col-header"
-            scope="col">3Q18 A</th>
-        <th class="current"
-            scope="col">4Q18 A</th>
-        <th class="col-header"
-            scope="col">1Q19 E</th>
+            scope="col"
+            *ngFor="let header of revenueTableDataHeaders; let i=index; trackBy: trackByFn">{{ header }}</th>
     </tr>
+
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // Rows
+    // TODO: BMR: Right now these rows rae hardcoded but I think they'll need to be dynamic for each scenario in the `tableData` from the API.
+    //////////////////////////////////////////////////////////////////
+    -->
+
     <tr class="row-divider">
         <th class="row-header"
             scope="row">
@@ -21,61 +27,63 @@
                  class="legend-actual">
             REVENUE
         </th>
-        <td>141.2</td>
-        <td>223.2</td>
-        <td>123.3</td>
-        <td>123.4</td>
-        <td>123.5</td>
-        <td>123.5</td>
+        <td *ngFor="let asOf of revenueTableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | millions:'1.1-1' }}</td>
     </tr>
     <tr>
         <th class="row-header"
-            scope="row">vs PY</th>
-        <td>+ 10.0%</td>
-        <td>+ 25.3%</td>
-        <td>+ 23.2%</td>
-        <td>+ 5.0%</td>
-        <td>+ 3.9%</td>
-        <td>+ 10.0%</td>
+            scope="row">
+            vs Bud
+        </th>
+        <td *ngFor="let vsBud of revenueTableDataVsBud; let i=index; trackBy: trackByFn"
+            [ngClass]="
+            {
+                'py-positive': vsBud > 0,
+                'py-negative': vsBud < 0
+            }">
+            {{ vsBud | positiveOrNegative | percent:'1.1-5' }}
+        </td>
     </tr>
     <tr>
         <th class="row-header"
             scope="row">
             vs PQ
         </th>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
+        <td *ngFor="let vsPq of revenueTableDataVsPq; let i=index; trackBy: trackByFn"
+            [ngClass]="
+            {
+                'py-positive': vsPq > 0,
+                'py-negative': vsPq < 0
+            }">
+            {{ vsPq | positiveOrNegative | percent:'1.1-5' }}
+        </td>
     </tr>
-    <tr>
-        <th class="row-header"
-            scope="row">
-            <img src="assets/image/legend-mgmt-bud.svg"
-                 class="legend-mgmt-bud">
-            vs Mgmt Budget
-        </th>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-    </tr>
-    <tr>
-        <th class="row-header"
-            scope="row">
-            <img src="assets/image/legend-mgmt-fcst.svg"
-                 class="legend-mgmt-fcst">
-            vs Mgmt Forecast
-        </th>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-        <td>hold</td>
-    </tr>
+
+    <!--    <tr>-->
+    <!--        <th class="row-header"-->
+    <!--            scope="row">-->
+    <!--            <img src="assets/image/legend-mgmt-bud.svg"-->
+    <!--                 class="legend-mgmt-bud">-->
+    <!--            vs Mgmt Budget-->
+    <!--        </th>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--    </tr>-->
+    <!--    <tr>-->
+    <!--        <th class="row-header"-->
+    <!--            scope="row">-->
+    <!--            <img src="assets/image/legend-mgmt-fcst.svg"-->
+    <!--                 class="legend-mgmt-fcst">-->
+    <!--            vs Mgmt Forecast-->
+    <!--        </th>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--        <td>hold</td>-->
+    <!--    </tr>-->
 </table>

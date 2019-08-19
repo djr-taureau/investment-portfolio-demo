@@ -17,6 +17,10 @@ import { Observable } from "rxjs";
                 [actuals]="revenueSummaryLineChartData$ | async"
                 [budget]="revenueBudgetLineChartData$ | async"
                 [forecast]="revenueForecastLineChartData$ | async"
+                [revenueTableDataHeaders]="revenueTableDataHeaders$ | async"
+                [revenueTableDataAsOf]="revenueTableDataAsOf$ | async"
+                [revenueTableDataVsBud]="revenueTableDataVsBud$ | async"
+                [revenueTableDataVsPq]="revenueTableDataVsPq$ | async"
             ></sbp-company-kpi-detail-component>
         </sbp-expandable-panel>
     `,
@@ -28,6 +32,10 @@ export class CompanyRevenueDetailContainer implements OnInit {
     public revenueSummaryLineChartData$: Observable<RevenueSeriesData[]>;
     public revenueBudgetLineChartData$: Observable<RevenueSeriesData[]>;
     public revenueForecastLineChartData$: Observable<RevenueSeriesData[]>;
+    public revenueTableDataHeaders$: Observable<string[]>;
+    public revenueTableDataAsOf$: Observable<number[]>;
+    public revenueTableDataVsBud$: Observable<number[]>;
+    public revenueTableDataVsPq$: Observable<number[]>;
 
     constructor(private store$: Store<any>) {}
 
@@ -40,5 +48,11 @@ export class CompanyRevenueDetailContainer implements OnInit {
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getSummaryLineChartData));
         this.revenueBudgetLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getBudgetLineChartData));
         this.revenueForecastLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getForecastLineChartData));
+
+        // Table data
+        this.revenueTableDataHeaders$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataHeaders));
+        this.revenueTableDataAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataRevenueAsOf));
+        this.revenueTableDataVsBud$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataRevenueVsBud));
+        this.revenueTableDataVsPq$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataRevenueVsPq));
     }
 }

@@ -54,6 +54,10 @@ export class CompanyKpiDetailComponent implements OnInit {
     @Input() actuals: RevenueSeriesData[];
     @Input() budget: RevenueSeriesData[];
     @Input() forecast: RevenueSeriesData[];
+    @Input() revenueTableDataHeaders: string[];
+    @Input() revenueTableDataAsOf: number[];
+    @Input() revenueTableDataVsBud: number[];
+    @Input() revenueTableDataVsPq: number[];
 
     constructor(public store$: Store<any>, public route$: ActivatedRoute) {
         CompanyKpiDetailComponent.logger.debug(`constructor()`);

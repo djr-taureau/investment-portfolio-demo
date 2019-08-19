@@ -15,5 +15,9 @@
 </div>
 <div fxFlex="50"
      fxFlexAlign="end end">
-    <sbp-kpi-detail-table></sbp-kpi-detail-table>
+    <sbp-kpi-detail-table [revenueTableDataHeaders]="revenueTableDataHeaders"
+                          [revenueTableDataAsOf]="revenueTableDataAsOf"
+                          [revenueTableDataVsBud]="revenueTableDataVsBud"
+                          [revenueTableDataVsPq]="revenueTableDataVsPq">
+    </sbp-kpi-detail-table>
 </div>

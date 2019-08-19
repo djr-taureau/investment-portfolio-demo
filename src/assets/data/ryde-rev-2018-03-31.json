@@ -460,37 +460,44 @@
             {
               "date": "2018-03-31",
               "financialQuarter": 1,
-              "valueInNative": 13536826400000.0,
-              "valueInUSD": 18996388436710.63,
+              "valueInNative": 16177753.63,
+              "valueInUSD": 19507369.0,
               "comment": "A glitch in the night",
               "sourceType": "A"
             },
             {
               "date": "2018-06-30",
               "financialQuarter": 2,
-              "valueInNative": 18997588436710,
-              "valueInUSD": 18996388436710.63,
+              "valueInNative": 715642500.51,
+              "valueInUSD": 862932059.5,
               "sourceType": "A"
             },
             {
               "date": "2018-09-30",
               "financialQuarter": 3,
-              "valueInNative": 18996388436710.63,
-              "valueInUSD": 18996388436710.63,
+              "valueInNative": 548346460.78,
+              "valueInUSD": 661204079.0,
               "sourceType": "A"
             },
             {
               "date": "2018-12-31",
               "financialQuarter": 4,
-              "valueInNative": 18996388436710.63,
-              "valueInUSD": 18996388436710.63,
+              "valueInNative": 475604537.73,
+              "valueInUSD": 573490818.83,
               "sourceType": "A"
             },
             {
               "date": "2019-03-31",
               "financialQuarter": 1,
-              "valueInNative": 18996388436710.63,
-              "valueInUSD": 18996388436710.63,
+              "valueInNative": 580467439.60,
+              "valueInUSD": 699936019,
+              "sourceType": "B"
+            },
+            {
+              "date": "2019-06-30",
+              "financialQuarter": 2,
+              "valueInNative": 43347689.65,
+              "valueInUSD": 52269270.91,
               "sourceType": "B"
             }
           ]
@@ -645,30 +652,30 @@
             {
               "date": "2017-03-31",
               "financialQuarter": 1,
-              "valueInNative": -0.441,
-              "valueInUSD": -0.442,
+              "valueInNative": 823444514.64,
+              "valueInUSD": 992921284.1,
               "comment": "A glitch in the night",
               "sourceType": "A"
             },
             {
               "date": "2018-12-31",
               "financialQuarter": 1,
-              "valueInNative": -0.441,
-              "valueInUSD": -0.442,
+              "valueInNative": 215560362.34,
+              "valueInUSD": 259925797.0,
               "sourceType": "A"
             },
             {
               "date": "2019-06-30",
               "financialQuarter": 1,
-              "valueInNative": -0.441,
-              "valueInUSD": -0.442,
+              "valueInNative": 742594368.06,
+              "valueInUSD": 895431010.01,
               "sourceType": "A"
             },
             {
               "date": "2020-3-31",
               "financialQuarter": 3,
-              "valueInNative": -0.441,
-              "valueInUSD": -0.442,
+              "valueInNative": 36011585.75,
+              "valueInUSD": 43423290.20,
               "sourceType": "E"
             }
           ]
@@ -686,7 +693,7 @@
               "sourceType": "A"
             },
             {
-              "date": "2018-03-31",
+              "date": "2018-12-31",
               "financialQuarter": 1,
               "valueInNative": -0.441,
               "valueInUSD": -0.442,

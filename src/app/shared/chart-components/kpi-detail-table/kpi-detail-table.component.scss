@@ -72,7 +72,8 @@
         border: dotted 1px $light-grey-blue;
     }
 
-    td.py-positive {
+    td.py-positive,
+    td.py-negative {
         font-family: PostGrotesk;
         font-size: 14px;
         font-weight: bold;
@@ -81,7 +82,14 @@
         line-height: normal;
         letter-spacing: normal;
         text-align: right;
+    }
+
+    td.py-positive {
         color: $jade;
+    }
+
+    td.py-negative {
+        color: $pale-red;
     }
 
 }
