@@ -21,10 +21,9 @@ export class KpiSummaryComponent implements OnInit, OnChanges {
     projectedAccessor: any;
     fillColor;
     display;
+    isPositivePY: boolean;
+    isPositiveIC: boolean;
 
-    @HostBinding("class.positive-value") positiveValue = false;
-    @HostBinding("class.negative-value") negativeValue = false;
-    @Input() style;
     /**
      * The line chart data.
      */
@@ -96,15 +95,15 @@ export class KpiSummaryComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-        // TODO:: djr get this working for Thursday
-        if (Math.sign(this.py) === -1) {
-            console.log(Math.sign(this.py));
-            this.positiveValue = false;
-            this.negativeValue = true;
+        if (this.py < 0) {
+            this.isPositivePY = false;
         } else {
-            console.log("not");
-            this.positiveValue = true;
-            this.negativeValue = false;
+            this.isPositivePY = true;
+        }
+        if (this.ic < 0) {
+            this.isPositiveIC = false;
+        } else {
+            this.isPositiveIC = true;
         }
     }
 }

@@ -17,7 +17,7 @@ export class ApiEndpointService {
     public static BASE_URL = {
         LOCAL: "http://localhost:4401/",
         V5: "https://prism-dev-api-management.azure-api.net/sbdevapi5/v5/",
-        REMOTE: "https://prism-dev-api-management.azure-api.net/latest/",
+        REMOTE: "https://prism-test-api-management.azure-api.net/",
         FROM_CONFIG: "POPULATED_BY_CONFIG.JSON"
     };
 
@@ -102,6 +102,7 @@ export class ApiEndpointService {
      * at build time or at runtime via (for example) query string params...but for now we'll
      * keep this dumb simple.
      */
+
     public getEndpoint(endpoint: string, params?: {}, query?: {}, noCache: boolean = false): string {
         const isConfig = ApiEndpointService.ENDPOINT.CONFIG === endpoint;
         const isInitiatives = ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES === endpoint;

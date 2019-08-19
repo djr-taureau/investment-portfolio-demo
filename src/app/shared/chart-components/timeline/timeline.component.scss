@@ -6,13 +6,11 @@
         min-width: 500px;
         width: calc(100% + 1em);
         margin-bottom: 2em;
-        background: white;
+        background: $white;
         padding: 0.6em 1em;
         margin: 0.5em;
-        background-color: white;
+        background-color: $white;
         border-radius: 6px;
-
-
 
         .axis-grid {
             opacity: 0.10;
@@ -73,7 +71,9 @@
             stroke: $light-navy;
         }
 
-
+        path.domain {
+            display: none;
+        }
 
         .y-axis-label {
             fill: #34495e;
@@ -92,20 +92,17 @@
                 }
             }
 
-            .y-axis-label {
-                fill: #34495e;
-                font-size: 1.4em;
-                text-anchor: middle;
-                transform: rotate(-90deg);
-            }
-
-
             .x-axis-label {
                 display: none;
             }
 
+        }
 
-
+        .y-axis-label-line {
+            fill: #34495e;
+            font-size: 1.4em;
+            text-anchor: middle;
+            transform: rotate(-90deg);
         }
 
     }
@@ -115,7 +112,7 @@
     width: 334px;
     height: 165px;
     border-radius: 6px;
-    background-color: white;
+    background-color: $white;
 }
 
 div .card {
@@ -282,18 +279,3 @@ div .card {
         margin-right: 39px;
     }
 }
-
-
-// .axis-grid .x .axis .x-line line {
-
-
-// .axis-grid {
-//     opacity: 0.75;
-//     shape-rendering: crispEdges;
-//     stroke: $light-navy;
-//     stroke-dasharray: 3, 3;
-// }
-
-// .tick {
-//     stroke: $light-navy;
-// }

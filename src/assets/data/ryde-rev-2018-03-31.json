@@ -40,6 +40,9 @@
             },
             {
               "date": "2019-03-31",
+
+              "financialQuarter": 1,
+
               "amountInNative": 580467439.60,
               "amountInUSD": 699936019,
               "projection": false

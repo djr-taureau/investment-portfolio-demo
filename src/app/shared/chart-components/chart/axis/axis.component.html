@@ -6,7 +6,7 @@
               [attr.x2]="dimensions.boundedWidth">
     </svg:line>
     <svg:text *ngFor="let tick of xAxisTickValues; let idx=index; trackBy: trackByFn"
-              [ngClass]="{'tick-selected-value': tick === selectedValue, 'x-tick': tick !== selectedValue}"
+              [ngClass]="{'tick selected-value': tick === selectedValue, 'x-tick': tick !== selectedValue}"
               attr.transform="translate({{scale(tick)}}, 25)">
         {{ tick }}
     </svg:text>
@@ -25,7 +25,7 @@
     </svg:line>
     <svg:text *ngFor="let tick of yAxisTickValues; let idx=index; trackBy: trackByFn"
               class="y-tick"
-              attr.transform="translate(-1, {{scale(tick)}})">
+              attr.transform="translate(-2, {{scale(tick)}})">
         {{ tick }}
     </svg:text>
     <svg:text *ngIf="label"

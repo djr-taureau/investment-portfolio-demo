@@ -1,11 +1,17 @@
 <div fxFlex="50"
      fxLayout="row"
-     fxFlexAlign="center stretch">
-    <sbp-timeline [data]="data"
-                  [xAccessor]="dateAccessor"
-                  [yAccessor]="yAccessor"
-                  [categoryAccessor]="categoryAccessor"
-                  [yLabelVisible]="true"></sbp-timeline>
+     fxFlexAlign="start stretch">
+    <!-- <div class="y-axis-label-line"></div> -->
+    <ng-container *ngIf="actuals && budget && forecast">
+        <sbp-timeline [data]="data"
+                      [actuals]="actuals"
+                      [budget]="budget"
+                      [forecast]="forecast"
+                      [xAccessor]="dateAccessor"
+                      [yAccessor]="yAccessor"
+                      [categoryAccessor]="categoryAccessor"
+                      [yLabelVisible]="true"></sbp-timeline>
+    </ng-container>
 </div>
 <div fxFlex="50"
      fxFlexAlign="end end">

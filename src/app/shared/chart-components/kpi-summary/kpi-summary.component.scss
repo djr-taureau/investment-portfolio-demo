@@ -9,7 +9,7 @@
         border-radius: 6px;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         // border: solid 2px $dark-sky-blue;
-        background-color: white;
+        background-color: $white;
         display: grid;
         grid-gap: 5px;
         grid-template-columns: 168px 73px 73px;
@@ -86,11 +86,22 @@
         line-height: normal;
         letter-spacing: normal;
         text-align: right;
+
         color: $pale-red;
         justify-self: end;
         align-self: end;
 
+        &.positive-py {
+            color: $jade;
+        }
+
+        &.negative-py {
+            color: $pale-red;
+        }
+
+
     }
+
 
     .positive-value {
         color: $jade;
@@ -99,6 +110,7 @@
     .negative-value {
         color: $pale-red;
     }
+
 
 
     .budget {
@@ -110,7 +122,7 @@
         text-align: left;
     }
 
-    .budget-val {
+    .ic-val {
         grid-column: 3;
         grid-row: 2;
         margin-top: 5px;
@@ -122,9 +134,16 @@
         line-height: normal;
         letter-spacing: normal;
         text-align: right;
-        color: $pale-red;
         justify-self: end;
         align-self: end;
+
+        &.positive-ic {
+            color: $jade;
+        }
+
+        &.negative-ic {
+            color: $pale-red;
+        }
     }
 
     .timeline {

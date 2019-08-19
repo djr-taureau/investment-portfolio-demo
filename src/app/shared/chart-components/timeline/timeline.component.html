@@ -42,35 +42,42 @@
                       ry="5" />
             </clipPath>
         </svg:defs>
-        <svg:g sbpAxis
-               dimension="x"
-               [dimensions]="dimensions"
-               [scale]="xScale"
-               [formatTick]=""
-               [label]="label"
-               [xAxisTickValues]="timePeriods"
-               [xAxisBottom]="xAxisBottom"
-               [xAxisVisible]="true">
-        </svg:g>
-        <svg:g sbpAxis
-               dimension="y"
-               [dimensions]="dimensions"
-               [scale]="yScale"
-               [label]="'test this label'"
-               [yAxisTickValues]="yAxisTickValues"
-               [yAxisVisible]="true"
-               [yAxisGrid]="yAxisGrid">
-        </svg:g>
-        <svg:g sbpLine
-               [type]="'area'"
-               [data]="data"
-               [xAccessor]="xAccessorScaled"
-               [yAccessor]="yAccessorScaled"
-               [y0Accessor]="y0AccessorScaled"
-               fill="url(#{{ gradientId }})">
-        </svg:g>
+        <ng-container *ngIf="actuals">
+            <svg:g sbpAxis
+                   dimension="x"
+                   [dimensions]="dimensions"
+                   [scale]="xScale"
+                   [formatTick]=""
+                   [numberOfTicks]="10"
+                   [label]="label"
+                   [xAxisTickValues]="timePeriods"
+                   [xAxisBottom]="xAxisBottom"
+                   [xAxisVisible]="true">
+            </svg:g>
+
+            <svg:g sbpAxis
+                   dimension="y"
+                   [dimensions]="dimensions"
+                   [scale]="yScale"
+                   [label]=""
+                   [numberOfTicks]="5"
+                   [formatTick]=""
+                   [yAxisTickValues]="yAxisTickValues"
+                   [yAxisVisible]="true"
+                   [yAxisGrid]="yAxisGrid">
+            </svg:g>
+
+            <!-- <svg:g sbpLine
+                   [type]="'area'"
+                   [data]="actuals"
+                   [xAccessor]="xAccessorScaled"
+                   [yAccessor]="yAccessorScaled"
+                   [y0Accessor]="y0AccessorScaled"
+                   fill="url(#{{ gradientId }})">
+            </svg:g> -->
+        </ng-container>
         <!-- actuals -->
-        <ng-container *ngIf="actualsVis">
+        <ng-container *ngIf="actuals && actualsVis">
             <svg:g sbpLine
                    class="actuals"
                    [type]="'line'"
@@ -104,7 +111,7 @@
             </svg:g>
         </ng-container>
         <!-- budget -->
-        <ng-container *ngIf="budgetVis">
+        <ng-container *ngIf="budget && budgetVis">
             <svg:g sbpLine
                    class="budget"
                    [type]="'line'"
@@ -125,7 +132,7 @@
             </svg:g>
         </ng-container>
         <!-- forecast -->
-        <ng-container *ngIf="forecastVis">
+        <ng-container *ngIf="forecast && forecastVis">
             <svg:g sbpLine
                    class="forecast"
                    [type]="'line'"

@@ -1,12 +1,12 @@
 import { AfterContentInit, Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
-import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
+import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
-import { axisLeft as d3_axisLeft, select as d3_select, selectAll as d3_selectAll } from "d3";
-import * as _ from "lodash";
-import { revenueMock2 } from "../../../company-dashboard/financials-data";
+import * as d3Tip from "d3-tip";
+import { axisLeft as d3_axisLeft, axisBottom as d3_axisBottom, selectAll as d3_selectAll } from "d3";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
+import * as _ from "lodash";
 
 @Component({
     selector: "sbp-timeline",
@@ -17,6 +17,43 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input() data: any[];
+
+    @Input()
+    public set actuals(value: RevenueSeriesData[]) {
+        if (value) {
+            this._actuals = value;
+            this.update();
+        }
+    }
+    public get actuals(): RevenueSeriesData[] {
+        return this._actuals;
+    }
+    private _actuals: RevenueSeriesData[];
+
+    @Input()
+    public set budget(value: RevenueSeriesData[]) {
+        if (value) {
+            this._budget = value;
+            this.update();
+        }
+    }
+    public get budget(): RevenueSeriesData[] {
+        return this._budget;
+    }
+    private _budget: RevenueSeriesData[];
+
+    @Input()
+    public set forecast(value: RevenueSeriesData[]) {
+        if (value) {
+            this._forecast = value;
+            this.update();
+        }
+    }
+    public get forecast(): RevenueSeriesData[] {
+        return this._forecast;
+    }
+    private _forecast: RevenueSeriesData[];
+
     @Input() label: string;
     @Input() newData: any;
     @Input() xAccessor?: any;
@@ -30,20 +67,13 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     @ViewChild("container") container: ElementRef;
 
     public timePeriods: any[];
-    public actualsObj;
-    public budgetObj;
-    public forecastObj;
-    public actuals;
-    public budget;
-    public forecast;
-    public seriesData: SeriesItem[];
     public actualsVis: boolean;
     public forecastVis: boolean;
     public budgetVis: boolean;
 
     el: HTMLElement;
-    historicalData: TimelineDataPointFin[];
-    projectedData: TimelineDataPointFin[];
+    historicalData: RevenueSeriesData[];
+    projectedData: RevenueSeriesData[];
     dimensions: DimensionsType;
     xScale: any;
     yScale: ScaleType;
@@ -69,15 +99,18 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     actualsPresentValue;
     dateSelected;
     selectedValue: boolean;
+    tooltipScale: any;
+    sourceValues: any;
+    indexSource: any;
 
     constructor(elementRef: ElementRef) {
         TimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
-            marginTop: 40,
+            marginTop: 25,
             marginRight: 30,
             marginBottom: 75,
             marginLeft: 75,
-            height: 350,
+            height: 325,
             width: 690
         };
         this.dimensions = {
@@ -97,33 +130,48 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
     ngOnInit() {
         TimelineComponent.logger.debug(`ngOnInit()`);
+        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
         this.actualsVis = true;
         this.budgetVis = true;
         this.forecastVis = true;
         this.yAxisTickValues = [0, 300, 450, 600, 750];
-        this.data = revenueMock2.series;
-        this.actualsObj = _.find(this.data, (v) => v.id === "actuals");
-        this.budgetObj = _.find(this.data, (v) => v.id === "budget");
-        this.forecastObj = _.find(this.data, (v) => v.id === "forecast");
-        this.actuals = _.get(this.actualsObj, ["values"]);
-        this.budget = _.get(this.budgetObj, ["values"]);
-        this.forecast = _.get(this.forecastObj, ["values"]);
         this.timePeriods = [];
-        this.dateSelected = "4Q2018";
+        this.dateSelected = "4Q18";
         this.actuals.map((v) => {
-            const timePart = `${v.quarter}Q${v.year}`;
             if (this.categoryAccessor && this.categoryAccessor(v) === this.dateSelected) {
                 this.selectedValue = true;
             }
-            this.timePeriods = this.timePeriods.concat(timePart);
+            // djr -- this has to be done because the api doesn't support the labels otherwise
+            // if (v.projection === true) {
+            //     const actual = 'A';
+            // } else {
+            //     const actual = 'E';
+            // }
+            this.timePeriods = this.timePeriods.concat(this.categoryAccessor(v));
         });
-        this.historicalData = this.actuals.filter((v) => v.projected === false);
-        this.projectedData = this.actuals.filter((v) => v.projected === true);
+        this.historicalData = this.actuals.filter((v) => v.projection === false);
+        this.projectedData = this.actuals.filter((v) => v.projection === true);
         this.actualsPresentValue = this.actuals.filter((p) => this.categoryAccessor(p) === this.dateSelected);
     }
 
+    private update(): void {
+        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
+
+        // TODO:: djr  This needs to removed and taken from as of selector
+        this.dateSelected = "4Q18";
+        this.actualsPresentValue = this.actuals.filter((p) => this.categoryAccessor(p) === this.dateSelected);
+        this.historicalData = this.actuals.filter((v) => v.projection === false);
+        this.projectedData = this.actuals.filter((v) => v.projection === true);
+        this.sourceValues = _.map(this.data, _.property("sourceType"));
+        this.indexSource = _.indexOf(this.sourceValues, "B", 0);
+    }
+
     ngAfterContentInit() {
-        this.updateDimensions();
+        if (!this.data && !this.timePeriods && !this.actuals && !this.budget && !this.forecast) {
+            return;
+        } else {
+            this.updateDimensions();
+        }
     }
 
     @HostListener("window:resize", ["$event"])
@@ -132,13 +180,20 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        this.updateScales();
+        if (this.data && this.timePeriods && this.actuals && this.budget && this.forecast) {
+            this.updateScales();
+        }
     }
 
     updateScales() {
-        if (!this.data) {
+        if (!this.data && !this.timePeriods && !this.actuals && !this.budget && !this.forecast) {
             return;
         }
+        const series = ["Actual", "Mgmt Bud", "Mgmt Fcst"];
+        const color = d3
+            .scaleOrdinal()
+            .domain(series)
+            .range(["#124f8c", "#47a2d6", "#124f8c"]);
         this.xScale = d3
             .scaleBand()
             .domain(this.timePeriods)
@@ -147,7 +202,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
         this.yScale = d3
             .scaleLinear()
-            .domain([d3.min(this.actuals, this.yAccessor), 750])
+            .domain([d3.min(this.actuals, this.yAccessor), d3.max(this.actuals, this.yAccessor)])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
         this.budgetScale = d3
@@ -166,12 +221,15 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
         this.forecastAccessorScaled = (d) => this.forecastScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
         this.y0BudgetAccessorScaled = this.budgetScale(this.budgetScale.domain()[0]);
-        this.y0ForecastAccessorScaled = this.forecastScale(this.budgetScale.domain()[0]);
+        this.y0ForecastAccessorScaled = this.forecastScale(this.forecastScale.domain()[0]);
         this.yAxisGrid = d3_axisLeft(this.yScale)
             .tickSize(-this.dimensions.boundedWidth, 10, 40)
-            .tickFormat("")
             .ticks(5);
-        // const yAxis = d3_axisLeft(this.yScale).ticks(5);
+        const yAxis = d3_axisLeft(this.yScale).tickValues(this.yScale.ticks(this.yAxisTickValues).concat(this.yScale.domain()));
+        // .ticks(5);
+        // yAxis.tickValues(thisscale.ticks(5).concat(scale.domain()));
+        // const xAxis = d3_axisBottom(this.yScale).scale(this.xScale);
+
         const svg = d3_selectAll("#multi-timeline").select("svg");
 
         svg.append("g")
@@ -179,15 +237,25 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .call(
                 this.make_y_gridlines()
                     .tickSize(-this.dimensions.boundedWidth, 0, 0)
-                    .tickFormat("")
+                    .tickFormat(",")
             );
+        svg.append("g")
+            .attr("class", "axis y-axis")
+            .call(yAxis);
         // svg.append("g")
-        //     .attr("class", "axis y-axis")
-        //     .call(yAxis);
+        //   .attr("class", "axis x-axis")
+        //    .call(xAxis);        // text label for the y axis
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - this.dimensions.marginLeft)
+            .attr("x", 0 - this.dimensions.height / 2)
+            .attr("dy", "1em")
+            .attr("class", "y-axis-label-line")
+            .style("text-anchor", "middle")
+            .text("Revenue ($M)");
     }
-
     make_y_gridlines() {
-        return d3_axisLeft(this.yScale).ticks(6);
+        return d3_axisLeft(this.yScale).ticks(5);
     }
 
     toggleVisibilty(event) {
@@ -202,9 +270,4 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
                 this.forecastVis = !this.forecastVis;
         }
     }
-}
-
-export interface SeriesItem {
-    name: string;
-    data: number[];
 }

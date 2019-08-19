@@ -17,13 +17,20 @@
     }
 
     text {
-        &.label {
+        &.label &.y-axis-label-line {
             text-anchor: middle;
             font-size: 0.8em;
             letter-spacing: 0.01em;
             fill: $grey-blue;
         }
+
+        &.selected-value {
+            stroke: $light-navy;
+            fill: $light-navy;
+        }
     }
+
+
 
     // .tick {
     //     font-size: 0.9em;
@@ -38,6 +45,11 @@
         opacity: 0.75;
         transition: all 0.3s ease-out;
         fill: $grey-blue;
+
+        &.selected-value {
+            stroke: $light-navy;
+            fill: $light-navy;
+        }
     }
 
     .y-tick {
@@ -78,17 +90,7 @@
         // text-anchor: end;
         font-size: larger;
         fill: $grey-blue;
+
+
     }
-
-    // .axis path,
-    // .axis line {
-    //   fill: none;
-    //   stroke:$grey-blue;
-    //   shape-rendering: crispEdges;
-    // }
-
 }
-
-
-
-// svgGroup.append("text").attr("class", "blue").attr("x", "240").attr("y", 0).attr("alignment-baseline", "middle").attr("text-anchor", "end").text(axisTypes[p]);

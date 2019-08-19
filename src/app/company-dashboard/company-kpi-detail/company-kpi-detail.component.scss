@@ -2,9 +2,9 @@
 
 :host {
 
-    .bar-chart {
-        margin-left: 27px;
-    }
+    // .bar-chart {
+    //     margin-left: 27px;
+    // }
 
     .y-axis-label-line {
         fill: #34495e;
@@ -19,12 +19,11 @@
         line-height: normal;
         letter-spacing: 0.5px;
         color: $grey-blue;
-        text-anchor: middle;
+        text-anchor: end;
         transform: rotate(-90deg);
         padding: 8px;
-        margin-top: 10px;
+        margin-top: 40px;
         margin-left: 5px;
-        margin-bottom: 60px;
 
         .M {
 
@@ -74,7 +73,7 @@
         margin-left: 20px;
     }
 
-    button.actuals-button {
+    button.actuals-button .k-button-icontext .k-button {
         width: 38px;
         height: 16px;
         font-family: PostGrotesk;

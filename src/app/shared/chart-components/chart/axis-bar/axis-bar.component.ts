@@ -12,6 +12,7 @@ export class AxisBarComponent implements OnChanges, AfterContentInit {
     @Input() dimensions: DimensionsType;
     @Input() dimension: "x" | "y";
     @Input() scale: ScaleType;
+    @Input() yScale: any;
     @Input() tickFormat: any;
     @Input() orient: string;
     @Input() label: string;
@@ -19,6 +20,7 @@ export class AxisBarComponent implements OnChanges, AfterContentInit {
     @Input() formatTick: any;
     ticks: any;
     tickColorStyle: string;
+    y0: any;
 
     constructor() {
         this.dimension = "x";

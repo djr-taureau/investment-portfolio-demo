@@ -8,8 +8,8 @@ import { useAccessor } from "../utils";
         <ng-container *ngFor="let circle of data; trackBy: keyAccessor">
             <svg:circle
                 *ngIf="circle || visible"
-                [attr.cx]="xAccessor(circle, $index)"
-                [attr.cy]="yAccessor(circle, $index)"
+                [attr.cx]="accessorFunction(xAccessor, circle)"
+                [attr.cy]="accessorFunction(yAccessor, circle)"
                 [attr.r]="radius"
                 [ngClass]="circleStyles"
             ></svg:circle>
@@ -36,6 +36,9 @@ export class CirclesComponent implements AfterContentInit, OnInit {
     constructor() {}
 
     ngOnInit() {
+        if (!this.data) {
+            return;
+        }
         CirclesComponent.logger.debug(`OnInit()`);
         if (!this.visible) {
             this.visibleToggle = "not-visible";

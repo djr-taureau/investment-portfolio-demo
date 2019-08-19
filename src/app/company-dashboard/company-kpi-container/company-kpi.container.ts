@@ -136,8 +136,6 @@ export class CompanyKpiContainer implements OnInit {
      */
     public ngOnInit() {
         CompanyKpiContainer.logger.debug(`ngOnInit()`);
-        // TODO:: I don't think this selector is working
-        // this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
         this.selectedCurrency$ = this.store$.pipe(select(getSelectedCurrency));
         this.selectedCurrency$.subscribe((v) => {
             this.selectedCurrencyCode = v.currencyCode;

@@ -5,6 +5,7 @@ import { axisLeft as d3_axisLeft, selectAll as d3_selectAll } from "d3";
 import { select } from "d3-selection";
 import * as _ from "lodash";
 import { DimensionsType, getUniqueId } from "../chart/utils";
+import { roundedRect } from "./shape.helper";
 @Component({
     selector: "sbp-micro-bar",
     template: `
@@ -20,6 +21,7 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     @Input() yAccessor: any;
     @Input() categoryAccessor: any;
     @Input() projectedAccessor: any;
+    @Input() title: string;
 
     @Input()
     public set data(value: RevenueSeriesData[]) {
@@ -59,6 +61,7 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     yTickValues: any[];
     xAccessorScaled: any;
     yAccessorScaled: any;
+    sourceTypeAccessor: any;
     budgetAccessorScaled: any;
     forecastAccessorScaled: any;
     y0AccessorScaled: any;
@@ -68,8 +71,12 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
     yAxisGrid: any;
     indexSelected: number;
     dataValues;
+    sourceValues;
+    indexSource;
+    edges: boolean[];
     y;
     barId: string = getUniqueId("bar-chart");
+    barTitle: string;
 
     private width: number;
     private height: number;
@@ -78,7 +85,7 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
         this.dimensions = {
             marginTop: 3,
             marginRight: 5,
-            marginBottom: 3,
+            marginBottom: 5,
             marginLeft: 2,
             height: 60,
             width: 71,
@@ -108,12 +115,12 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
             });
         }
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        this.buildChart();
-        this.updateScales();
+        this.barTitle = `.${this.title}-bar`;
     }
 
     private update(): void {
         this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
+        this.sourceTypeAccessor = (d) => d.sourceType;
         this.actualsVis = true;
         this.budgetVis = true;
         this.forecastVis = true;
@@ -128,125 +135,87 @@ export class MicroBarComponent implements OnInit, AfterContentInit {
             this.timePeriods = this.timePeriods.concat(this.categoryAccessor(v));
         });
         this.dataValues = _.map(this.data, _.property("valueInNative"));
+        this.sourceValues = _.map(this.data, _.property("sourceType"));
+        this.indexSource = _.indexOf(this.sourceValues, "B", 0);
     }
 
     ngAfterContentInit() {
-        this.buildChart();
-        this.updateScales();
+        if (this.data) {
+            this.updateScales();
+        }
     }
 
     updateScales() {
-        const dataset = this.dataValues || [];
-        this.xScale = d3
-            .scaleBand<string, number>()
-            .domain(this.timePeriods)
-            .range([0, this.dimensions.boundedWidth]);
-        this.yScale = d3
+        const BAR_WIDTH = (this.dimensions.width - this.dataValues.length) / this.dataValues.length;
+        const y0 = Math.max(Math.abs(d3.min(this.dataValues)), Math.abs(d3.max(this.dataValues)));
+        const x = d3
             .scaleLinear()
-            .domain([d3.min(dataset), d3.max(dataset)])
-            .range([this.dimensions.boundedHeight, 0])
-            .nice();
-        this.xAxisBottom = d3.axisBottom(this.xScale);
-        this.xAccessorScaled = (d) => this.xScale(this.categoryAccessor(d));
-        this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
-        this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
-        this.yAxisGrid = d3_axisLeft(this.yAccessorScaled)
-            .tickSize(-this.dimensions.boundedWidth)
-            .tickFormat("")
-            .ticks(6);
-        const svg = d3_selectAll("#hist")
-            .select("svg")
+            .domain([0, this.dataValues.length])
+            .range([0, this.dimensions.width]);
+        const y = d3
+            .scaleLinear()
+            .domain([-y0 - 0.4, y0 + 0.4])
+            .range([this.dimensions.height, 0]);
+        const xAccessor = (d, i) => x(i);
+        this.edges = [false, false, false, false];
+        const edgesAccessor = (d): boolean[] => {
+            if (Math.sign(d) === 1) {
+                return [true, true, false, false];
+            } else {
+                return [false, false, true, true];
+            }
+        };
+        const yAccessor = (d) => (d > 0 ? y(d) : y(0));
+        const heightAccessor = (d) => Math.abs(y(d) - y(0));
+        const radius = Math.min(this.dimensions.height, 3);
+        // TODO:: possible solution for rounded corners currently not working
+        const path = (d, i) => roundedRect(xAccessor(d, i), yAccessor(d), heightAccessor(d), BAR_WIDTH, radius, edgesAccessor(d));
+        const svg = d3
+            .select(this.el)
+            .selectAll("#hist")
+            .append("svg")
+            .attr("width", this.dimensions.width)
+            .attr("height", this.dimensions.height)
             .append("g");
-        const line = d3
-            .line()
-            .x((d) => this.xAccessor)
-            .y((d) => this.yAccessor);
         svg.append("line")
-            .attr("x1", this.xScale(this.dateSelected))
-            .attr("y1", this.dimensions.marginTop)
-            .attr("x2", this.xScale(this.dateSelected))
-            .attr("y2", this.yScale(0))
+            .attr("x1", x(this.indexSource - 1) + 5)
+            .attr("y1", this.dimensions.marginTop - 20)
+            .attr("x2", x(this.indexSource - 1) + 5)
+            .attr("y2", y(0))
+            // .attr("y2", d3.min(y(0), y(this.indexSource - 1))
             .attr("class", "select-line")
             .style("stroke-width", 2)
             .style("stroke", "#dbe3f1");
+        svg.selectAll(".bar")
+            .data(this.dataValues)
+            .enter()
+            .append("rect")
+            .attr("class", "bar")
+            .attr("x", (d, i) => x(i))
+            .attr("y", (d) => (d > 0 ? y(d) : y(0)))
+            .attr("width", 10)
+            .attr("height", (d) => Math.abs(y(d) - y(0)))
+            .attr("fill", (d) => (d > 0 ? "#20a187" : "#eb643f"))
+            .attr("opacity", (d, i) => (this.sourceValues[i] === "B" ? "0.25" : "1"))
+            .attr("stroke", (d, i) => {
+                if (this.timePeriods[i] === this.dateSelected && d > 0) {
+                    return "#115449";
+                } else if (this.timePeriods[i] === this.dateSelected && d < 0) {
+                    return "#6b291d";
+                } else {
+                    return;
+                }
+            });
         svg.append("line")
             .attr("x1", 0)
-            .attr("y1", this.yScale(0))
+            .attr("y1", y(0))
             .attr("x2", this.dimensions.width)
-            .attr("y2", this.yScale(0))
+            .attr("y2", y(0))
             .style("stroke-dasharray", "10, 2")
             .style("opacity", "0.5")
             .style("stroke", "#68758c");
         svg.append("g")
-            .attr("transform", "translate(0," + this.dimensions.height + ")")
-            .call(d3.axisBottom(this.xScale));
-    }
-
-    buildChart() {
-        const dataset = this.dataValues || [];
-        const maxHeight = d3.max(dataset, (d) => {
-            return d;
-        });
-        const svg = select(this.el)
-            .selectAll("#hist")
-            .append("svg")
-            .attr("width", this.dimensions.width)
-            .attr("height", this.dimensions.height);
-        const barpadding = 2;
-        const bars = svg
-            .selectAll("rect")
-            .data(dataset)
-            .enter()
-            .append("rect");
-        bars.attr("x", (d, i) => {
-            return i * (this.dimensions.width / dataset.length);
-        })
-            .attr("y", (d) => {
-                if (d > 0) {
-                    return this.dimensions.height / 2 - 10 * d;
-                } else {
-                    return this.dimensions.height / 2;
-                }
-            })
-            .style("stroke-linecap", "round")
-            .attr("width", 10)
-            .attr("height", (d) => {
-                return Math.abs(10 * d);
-            });
-        bars.attr("fill", (d) => {
-            if (d < 0) {
-                return "#eb643f";
-            } else {
-                return "#20a187";
-            }
-        });
-        bars.attr("opacity", (d, i) => {
-            if (i > this.indexSelected) {
-                return "0.25";
-            } else {
-                return "1";
-            }
-        });
-        bars.attr("stroke", (d, i) => {
-            if (i === this.indexSelected) {
-                return "#115449";
-            } else {
-                return "none";
-            }
-        });
-        const tags = svg
-            .selectAll("text")
-            .data(dataset)
-            .enter()
-            .append("text");
-        tags.attr("x", (d, i) => {
-            return i * (this.dimensions.width / dataset.length) + 6;
-        }).attr("y", (d) => {
-            if (d > 0) {
-                return this.dimensions.height / 2 - 10 * d + 6;
-            } else {
-                return this.dimensions.height / 2 + 10 * Math.abs(d) - 6;
-            }
-        });
+            .attr("transform", "translate(-1," + this.dimensions.height + ")")
+            .call(d3.axisBottom(x));
     }
 }

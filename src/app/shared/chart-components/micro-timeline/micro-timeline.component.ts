@@ -5,6 +5,7 @@ import * as d3 from "d3";
 import { axisLeft as d3_axisLeft, selectAll as d3_selectAll } from "d3";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType, ScaleType } from "../interfaces/types";
+import * as _ from "lodash";
 
 @Component({
     selector: "sbp-micro-timeline",
@@ -97,6 +98,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     yAxisGrid;
     dateSelected;
     actualsPresentValue;
+    indexSelected;
     el: HTMLElement;
 
     constructor(elementRef: ElementRef) {
@@ -104,7 +106,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
         this.dimensions = {
             marginTop: 15,
             marginRight: 11,
-            marginBottom: 37.5,
+            marginBottom: 20,
             marginLeft: 1,
             height: 110,
             width: 120
@@ -146,10 +148,13 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
         this.actualsPresentValue = this.data.filter((p) => this.categoryAccessor(p) === this.dateSelected);
         this.historicalData = this.data.filter((v) => v.projection === false);
         this.projectedData = this.data.filter((v) => v.projection === true);
+        this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
     }
 
     ngAfterContentInit() {
-        this.updateDimensions();
+        if (this.data) {
+            this.updateDimensions();
+        }
     }
 
     @HostListener("window:resize", ["$event"])
@@ -162,7 +167,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     }
 
     updateScales() {
-        if (!this.timePeriods) {
+        if (!this.timePeriods && !this.data) {
             return;
         }
 
@@ -183,28 +188,24 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
         this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
 
-        this.yAxisGrid = d3_axisLeft(this.yAccessorScaled)
-            .tickSize(-this.dimensions.boundedWidth)
-            .tickFormat("")
-            .ticks(6);
-
         const svg = d3
             .select(this.el)
             .selectAll("#micro-timeline")
             .select("svg")
             .append("g");
-        // const line = d3
-        //     .line()
-        //     .x((d) => this.xAccessor)
-        //     .y((d) => this.yAccessor);
 
-        svg.append("line")
-            .attr("x1", this.xScale(this.dateSelected))
-            .attr("y1", this.dimensions.boundedHeight + 2)
-            .attr("x2", this.xScale(this.dateSelected))
-            .attr("y2", this.dimensions.marginTop - 10)
-            .attr("class", "select-line")
-            .style("stroke-width", 1)
-            .style("stroke", "#99a8bf");
+        const line = d3
+            .line()
+            .x((d) => this.xAccessor)
+            .y((d) => this.yAccessor);
+        // ?? Cannot figure out why this is rendering two or three lines
+        // svg.append("line")
+        //     .attr("x1", this.xScale(this.dateSelected))
+        //     .attr("y1", this.dimensions.boundedHeight + 2)
+        //     .attr("x2", this.xScale(this.dateSelected))
+        //     .attr("y2", this.dimensions.marginTop - this.yScale(this.dateSelected))
+        //     .attr("class", "select-line")
+        //     .style("stroke-width", 1)
+        //     .style("stroke", "#99a8bf");
     }
 }

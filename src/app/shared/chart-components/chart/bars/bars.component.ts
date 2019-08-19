@@ -1,16 +1,17 @@
 import { Component, Input, AfterContentInit, OnInit } from "@angular/core";
 import { useAccessor } from "../utils";
+import * as _ from "lodash";
 
 @Component({
     selector: "[sbpBars]",
     template: `
         <ng-container *ngFor="let bar of data; trackBy: keyAccessor">
             <svg:rect
-                [attr.x]="accessorFunction(xAccessor, bar)"
-                [attr.y]="accessorFunction(yAccessor, bar)"
-                [attr.width]="max(accessorFunction(widthAccessor, bar), 0)"
-                [attr.height]="max(accessorFunction(heightAccessor, bar), 0)"
-                [attr.stroke-width]="'3'"
+                [attr.x]="accessorFunction(xAccessor, bar, $index)"
+                [attr.y]="accessorFunction(yAccessor, bar, $index)"
+                [attr.width]="10"
+                [attr.height]="accessorFunction(heightAccessor, bar, $index)"
+                [attr.stroke-width]="'2'"
                 [ngClass]="{
                     'projected-positive': projectedValue,
                     'historical-negative': !projectedValue
@@ -22,10 +23,12 @@ import { useAccessor } from "../utils";
 })
 export class BarsComponent implements AfterContentInit, OnInit {
     @Input() data: any[];
+    @Input() sourceValues: any[];
     @Input() keyAccessor: any;
     @Input() xAccessor: any;
     @Input() yAccessor: any;
     @Input() projectedAccessor: any;
+    @Input() sourceTypeAccessor: any;
     @Input() projected: boolean;
     @Input() widthAccessor: any;
     @Input() heightAccessor: any;
@@ -35,6 +38,7 @@ export class BarsComponent implements AfterContentInit, OnInit {
     projectedValue: boolean;
     positiveValue: boolean;
     newYAccessor: any;
+    indexSelected;
 
     max = Math.max;
     min = Math.min;
@@ -44,21 +48,19 @@ export class BarsComponent implements AfterContentInit, OnInit {
     constructor() {}
 
     ngOnInit() {
-        this.heightAccessor = (d) => Math.abs(this.yAccessor(d) - this.yAccessor(0));
-        this.newYAccessor = (d) => (d > 0 ? this.yAccessor(d) : this.yAccessor(0));
+        // this.heightAccessor = (d) => Math.abs(this.yAccessor(d) * 10);
+        // this.heightAccessor = (d) => Math.abs(this.yAccessor(d) - this.yAccessor(0));
+        // this.newYAccessor = (d) => (d > 0 ? this.yAccessor(d) : this.yAccessor(0));
     }
 
     ngAfterContentInit() {
-        this.data.map((v) => {
-            if (this.projectedAccessor) {
-                if (this.projectedAccessor(v)) {
-                    this.projectedValue = this.projectedAccessor(v);
+        this.sourceValues.map((v) => {
+            if (this.sourceTypeAccessor) {
+                if (this.sourceTypeAccessor(v) === "B") {
+                    this.projectedValue = true;
                 } else {
-                    this.projectedValue = this.projectedAccessor(v);
+                    this.projectedValue = false;
                 }
-            }
-            if (v.date > Date.now().toString()) {
-                const projected = true;
             }
         });
     }

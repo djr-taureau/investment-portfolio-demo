@@ -37,7 +37,7 @@ export class AxisComponent implements OnChanges, AfterContentInit {
         this.dimension = "x";
         this.formatTick = d3.format(",");
         this.textAnchor = "start";
-        this.selectedValue = "4Q2018";
+        this.selectedValue = "4Q18";
 
         if (this.xAxisVisible) {
             this.xAxisStyles = ["label label-display tick-display"];
@@ -55,12 +55,21 @@ export class AxisComponent implements OnChanges, AfterContentInit {
         if (!this.ticks) {
             return;
         }
-        const dateSelected = "4Q2018";
+        const dateSelected = "4Q18";
         if (!this.dimensions || !this.scale) {
             return;
         }
+
+        const numberOfTicks =
+            this.dimension === "x"
+                ? this.dimensions.boundedWidth < 600
+                    ? this.dimensions.boundedWidth / 100
+                    : this.dimensions.boundedWidth / 250
+                : this.dimensions.boundedHeight / 70;
         if (this.numberOfTicks) {
             this.ticks = this.scale.ticks(this.numberOfTicks);
+        } else {
+            this.ticks = this.scale.ticks(numberOfTicks);
         }
     }
 

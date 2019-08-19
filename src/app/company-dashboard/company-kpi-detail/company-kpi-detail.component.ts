@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { TimelineDataPointFin } from "@shared/chart-components/interfaces/types";
+import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 import "zone.js";
@@ -23,14 +23,37 @@ export class CompanyKpiDetailComponent implements OnInit {
     yAccessor: any;
     budgetAccessor: any;
     forecastAccessor: any;
+    dateSelected;
+    selectedValue;
+    timePeriods;
+    actualsPresentValue;
+    historicalData;
+    projectedData;
 
     /**
      * Constructor.
      * @param store$
      * @param route$
      */
-    // TODO::Pass in DataSeries Array
-    @Input() data: TimelineDataPointFin[];
+
+    @Input()
+    public set data(value: any[]) {
+        if (value) {
+            // this._data = value;
+            this._apiData = value;
+            // this.update();
+        }
+    }
+    public get data(): any[] {
+        return this._apiData;
+    }
+    private _data: any[];
+    private _apiData: RevenueSeriesData[];
+
+    @Input() title: string;
+    @Input() actuals: RevenueSeriesData[];
+    @Input() budget: RevenueSeriesData[];
+    @Input() forecast: RevenueSeriesData[];
 
     constructor(public store$: Store<any>, public route$: ActivatedRoute) {
         CompanyKpiDetailComponent.logger.debug(`constructor()`);
@@ -41,7 +64,7 @@ export class CompanyKpiDetailComponent implements OnInit {
     public ngOnInit() {
         CompanyKpiDetailComponent.logger.debug(`ngOnInit()`);
         this.dateAccessor = (v) => this.parseDate(v.date);
-        this.categoryAccessor = (v) => `${v.quarter}Q${v.year}`;
-        this.yAccessor = (v) => v.amountInUSD;
+        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
+        this.yAccessor = (v) => v.amountInNative; // ?? : Do we need to have this toggle
     }
 }

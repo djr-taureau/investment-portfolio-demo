@@ -13,20 +13,23 @@
                dimension="x"
                [dimensions]="dimensions"
                [scale]="xScale"
-               [label]="label">
+               [yScale]="yScale"
+               [orient]="'bottom'">
         </svg:g>
-        <svg:g sbpAxis
+        <svg:g sbpAxisBar
                dimension="y"
                [dimensions]="dimensions"
                [scale]="yScale"
-               label="Count">
+               [orient]="'left'">
         </svg:g>
         <svg:g sbpBars
                [data]="bins"
                [keyAccessor]="keyAccessor"
                [xAccessor]="xAccessorScaled"
                [yAccessor]="yAccessorScaled"
-               [projected]="barFillStyle"
+               [projected]="false"
+               [sourceTypeAccessor]="sourceTypeAccessor"
+               [sourceValues]="sourceValues"
                [projectedAccessor]="projectedAccessor"
                [widthAccessor]="widthAccessorScaled"
                [heightAccessor]="heightAccessorScaled"

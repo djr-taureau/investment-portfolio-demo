@@ -8,12 +8,20 @@
     <div *ngIf="pyLabel"
          class="box py">{{ pyLabel }}</div>
     <div *ngIf="py"
-         class="box py-val">{{ py | positiveOrNegative }}</div>
+         class="box py-val"
+         [ngClass]="{
+            'positive-py': isPositivePY,
+            'negative-py': !isPositivePY
+        }">{{ py  | positiveOrNegative | percent:'1.1-5' }}</div>
     <div *ngIf="icLabel"
          class="box budget">{{ icLabel }}</div>
     <div *ngIf="ic"
-         class="box budget-val">{{ ic | positiveOrNegative }} %</div>
-    <div *ngIf="data && title !== 'Cash Runway'"
+         class="box ic-val"
+         [ngClass]="{
+            'positive-ic': isPositiveIC,
+            'negative-ic': !isPositiveIC
+        }">{{ ic  | positiveOrNegative | percent:'1.1-5' }}</div>
+    <div *ngIf="data && barChartData1 && barChartData2 && title !== 'Cash Runway'"
          class="box timeline">
         <sbp-micro-timeline [data]="data"
                             [barChartData1]="barChartData1"
@@ -23,16 +31,18 @@
                             [categoryAccessor]="categoryAccessor"
                             [yLabelVisible]="false"></sbp-micro-timeline>
     </div>
-    <div *ngIf="data && title !== 'Cash Runway'"
+    <div *ngIf="barChartData1 && title !== 'Cash Runway'"
          class="box py-chart">
         <sbp-micro-bar [data]="barChartData1"
+                       [title]="'bar1'"
                        [xAccessor]="dateAccessor"
                        [categoryAccessor]="categoryAccessor"
                        [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
     </div>
-    <div *ngIf="data && title !== 'Cash Runway'"
+    <div *ngIf="barChartData2 && title !== 'Cash Runway'"
          class="box budget-chart">
         <sbp-micro-bar [data]="barChartData2"
+                       [title]="'bar2'"
                        [xAccessor]="dateAccessor"
                        [categoryAccessor]="categoryAccessor"
                        [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
