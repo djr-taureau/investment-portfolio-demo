@@ -978,6 +978,7 @@ definitions:
                     type: number
                   amountInUSD:
                     type: number
+
                   projection:
                     type: boolean
       series_years:
@@ -1009,18 +1010,36 @@ definitions:
   PortfolioCompaniesMetricsRange:
     type: object
     properties:
-      highestValue:
-        type: array
-        items:
-          $ref: '#/definitions/RangeElement'
-      highestGrowth:
-        type: array
-        items:
-          $ref: '#/definitions/RangeElement'
-      lowestGrowth:
-        type: array
-        items:
-          $ref: '#/definitions/RangeElement'
+      series_quarters:
+        type: object
+        properties:
+          highestValue:
+            type: array
+            items:
+              $ref: '#/definitions/RangeElement'
+          highestGrowth:
+              type: array
+              items:
+                  $ref: '#/definitions/RangeElement'
+          lowestGrowth:
+              type: array
+              items:
+                  $ref: '#/definitions/RangeElement'
+      series_year:
+        type: object
+        properties:
+          highestValue:
+            type: array
+            items:
+              $ref: '#/definitions/RangeElement'
+          highestGrowth:
+              type: array
+              items:
+                  $ref: '#/definitions/RangeElement'
+          lowestGrowth:
+              type: array
+              items:
+                  $ref: '#/definitions/RangeElement'
   RangeElement:
     type: object
     properties:
