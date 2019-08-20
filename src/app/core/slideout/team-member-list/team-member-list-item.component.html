@@ -24,21 +24,21 @@
         <!-- Socials Row -->
         <div class="socials_box"
              fxLayout="row wrap"
-             fxLayoutAlign="space-between center"
+             fxLayoutAlign="start center"
              fxFlex>
-            <div fxLayout="row"
-                 #slackBox
+
+            <div #slackBox
+                 fxLayout="row"
+                 fxLayoutAlign="start center"
                  fxFlex="33%"
                  fxFlex.lt-lg="100"
-                 fxLayoutGap="5px">
-                <img matListAvatar
-                     src="{{member.avatar}}">
-                <img matListAvatar
-                     src="assets/image/slack.png">
-                <div class="slack">{{member.slack | titlecase | sbpEllipsis: getSlackWidth()}}</div>
+                 fxLayoutGap="5px"
+                 class="row__icon slack">
+                <mat-icon><img src="assets/image/slack.png"></mat-icon>
+                <div class="row__slack">{{member.slack | titlecase | sbpEllipsis: getSlackWidth()}}</div>
             </div>
             <div fxLayout="row"
-                 fxFlex="33%"
+                 fxFlex="20%"
                  fxFlex.lt-lg="100"
                  fxLayoutAlign="start center"
                  fxLayoutGap="5px"

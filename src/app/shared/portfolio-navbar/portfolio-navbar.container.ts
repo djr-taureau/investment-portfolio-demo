@@ -1,18 +1,20 @@
+import * as fromState from "@core/state/";
 import { Component, OnInit } from "@angular/core";
-import { Route } from "@angular/router";
 import { select, Store } from "@ngrx/store";
 import { Observable } from "rxjs";
 import { PortfolioNavigationItemClicked } from "@core/state/flow/portfolio-flow.actions";
 import { Logger } from "@util/logger";
 import { NavigationBarLink } from "../navigation-bar/navigation-bar-link";
 
-import * as fromState from "@core/state/";
-import { NavigationBarComponent } from "../navigation-bar/navigation-bar.component";
-
 @Component({
     selector: "sbp-portfolio-navbar-container",
     template: `
-        <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)"></sbp-navigation-bar>
+        <sbp-navigation-bar
+            [links]="links$ | async"
+            [selectedLink]="selectedLink$ | async"
+            (linkClick)="onLinkClick($event)"
+            [showContent]="false"
+        ></sbp-navigation-bar>
     `,
     styleUrls: ["./portfolio-navbar.container.component.scss"]
 })

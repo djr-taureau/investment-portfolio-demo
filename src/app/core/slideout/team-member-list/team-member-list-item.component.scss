@@ -23,16 +23,19 @@
         }
     }
 
-    .slack {
-        font-family: PostGrotesk;
-        font-size: 10px;
-        font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: normal;
-        letter-spacing: 0.5px;
-        color: $grey-blue;
-    }
+    //.slack {
+    //    width: 16px !important;
+    //    height: 16px !important;
+    //    font-family: PostGrotesk;
+    //    font-size: 10px;
+    //    font-weight: bold;
+    //    font-style: normal;
+    //    font-stretch: normal;
+    //    line-height: normal;
+    //    letter-spacing: 0.5px;
+    //    color: $grey-blue;
+    //    //border: solid 1px $light-periwinkle;
+    //}
 
     .lead_tag {
         // opacity: 0.5;
@@ -70,7 +73,8 @@
     }
 
     .row__email,
-    .row__phone {
+    .row__phone,
+    .row__slack {
         font-family: PostGrotesk;
         font-size: 10px;
         font-weight: bold;
@@ -91,6 +95,7 @@
         letter-spacing: 0.5px;
         color: grey;
 
+        &.slack,
         &.phone,
         &.email {
             mat-icon {
@@ -98,6 +103,14 @@
                 height: 16px;
                 border: solid 1px $light-periwinkle;
                 object-fit: contain;
+            }
+
+            img {
+                position: relative;
+                width: 12px;
+                height: 12px;
+                left: 2px;
+                top: -2px;
             }
         }
     }

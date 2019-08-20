@@ -1,6 +1,6 @@
 {
   "name": "sbproot-ui",
-  "version": "0.0.330",
+  "version": "0.0.334",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

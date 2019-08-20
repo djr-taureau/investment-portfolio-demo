@@ -25,6 +25,9 @@ export class NavigationBarComponent implements OnInit {
     @Input()
     public selectedLink: string;
 
+    @Input()
+    public showContent = false;
+
     /**
      * Emits link clicks
      */

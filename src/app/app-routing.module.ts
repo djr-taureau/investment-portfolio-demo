@@ -97,7 +97,7 @@ const routes: Routes = [
          *
          * NOTE: Use `enableTracing: true` to see Angular built-in router logging.
          */
-        RouterModule.forRoot(routes, { useHash: true, enableTracing: false })
+        RouterModule.forRoot(routes, { useHash: true, enableTracing: false, scrollPositionRestoration: "enabled" })
     ],
     exports: [RouterModule],
     providers: PROVIDERS
