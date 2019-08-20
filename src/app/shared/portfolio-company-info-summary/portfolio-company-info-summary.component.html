@@ -115,11 +115,11 @@
              fxLayout="row"
              fxLayoutAlign="space-around center"
              fxLayoutGap="12px">
-            <div class="item-cell__value--invested">{{invested | billions: '1.0-1'}}</div>
+            <div class="item-cell__value--invested">{{invested | billions: '1.1'}}</div>
             <div class="slash">/</div>
-            <div class="item-cell__value--approved">{{totalApproved | billions: '1.0-1'}}</div>
+            <div class="item-cell__value--approved">{{totalApproved | billions: '1.1'}}</div>
             <div class="slash">/</div>
-            <div class="item-cell__value--total">{{totalFund | billions: '1.0-1'}}</div>
+            <div class="item-cell__value--total">{{totalFund | billions: '1.1'}}</div>
         </div>
         <sbp-comparison-bar class="item-cell__progress-bar"
                             [value1]="getInvestedPerc()"
@@ -133,7 +133,7 @@
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">Total Value ($B)</div>
-        <div class="item-cell__value">{{valuation | billions: '1.0-1'}}</div>
+        <div class="item-cell__value">{{valuation | billions: '1.1'}}</div>
     </div>
 
     <div class="item-cell"
@@ -142,7 +142,7 @@
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">MOIC</div>
-        <div class="item-cell__value">{{moic | billions: '1.0-1'}}x</div>
+        <div class="item-cell__value">{{moic | billions: '1.2'}}x</div>
     </div>
 
     <div class="item-cell"
@@ -151,6 +151,6 @@
          fxLayoutAlign="start center"
          fxLayoutGap="12px">
         <div class="item-cell__label">IRR</div>
-        <div class="item-cell__value">{{irr | billions: '1.0-1'}}</div>
+        <div class="item-cell__value">{{irr | billions: '1.1'}}</div>
     </div>
 </div>

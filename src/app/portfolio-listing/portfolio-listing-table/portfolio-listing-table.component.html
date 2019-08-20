@@ -92,7 +92,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="invested">{{element.invested.toLocaleString('en', {useGrouping:true})}}</div>
+                <div class="invested">{{element.invested.toLocaleString('en', {useGrouping:true}) | billions: '1.1'}}</div>
             </td>
         </ng-container>
 
@@ -103,7 +103,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="totalValue">{{element.totalValue.toLocaleString('en', {useGrouping:true})}}</div>
+                <div class="totalValue">{{element.totalValue.toLocaleString('en', {useGrouping:true} ) | billions: '1.1'}}</div>
             </td>
         </ng-container>
 
@@ -114,7 +114,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="moic">{{element.moic}}x</div>
+                <div class="moic">{{element.moic | billions: '1.2'}}x</div>
             </td>
         </ng-container>
 
@@ -125,7 +125,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let element">
-                <div class="irr">{{element.irr}}%</div>
+                <div class="irr">{{element.irr | billions: '1.1'}}%</div>
             </td>
         </ng-container>
 
@@ -191,7 +191,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let group">
-                <div class="group-numbers">{{group.investedSum}}</div>
+                <div class="group-numbers">{{group.investedSum | billions: '1.1'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="g">
@@ -200,7 +200,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let group">
-                <div class="group-numbers">{{group.valuationSum}}</div>
+                <div class="group-numbers">{{group.valuationSum | billions: '1.1'}}</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="h">
@@ -209,7 +209,7 @@
             </th>
             <td mat-cell
                 *matCellDef="let group">
-                <div class="group-numbers">{{group.moicSum}}x</div>
+                <div class="group-numbers">{{group.moicSum | billions: '1.2'}}x</div>
             </td>
         </ng-container>
         <ng-container matColumnDef="i">
