@@ -15,7 +15,7 @@ export class CompanyInitiativeEffects {
     getInitiatives$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyInitiativeActions.GetAllInitiatives>(CompanyInitiativeActionTypes.GetAllInitiatives),
         exhaustMap(() =>
-            this.companyService.getCompanyInitiatives().pipe(
+            this.companyService.getInitiatives().pipe(
                 map((result: Initiative[]) => {
                     return new CompanyInitiativeActions.GetAllInitiativesSuccess(result);
                 }),

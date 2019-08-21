@@ -1,0 +1,70 @@
+<div #container
+     #anchor
+     class="kpi-container"
+     fxLayout="row"
+     fxLayoutAlign="space-between center">
+    <div class="chart">
+        <sbp-summary-widget [data]="revenueSummaryLineChartData$ | async"
+                            [barChartData1]="revenueChangeFromPriorPeriodBarChartData$ | async"
+                            [barChartData2]="revenueChangeFromPriorBudgetBarChartData$ | async"
+                            [title]="'Revenue'"
+                            [denomination]="selectedCurrencyCode"
+                            [currencySymbol]="selectedCurrencySymbol"
+                            [value]="revenueAsOf$ | async | millions: '1.0-1'"
+                            [pyLabel]="'vs PY'"
+                            [pyValue]="revenueChangeFromPriorPeriod$ | async"
+                            [icLabel]="'vs Bud'"
+                            [icValue]="revenueChangeFromPriorBudget$ | async"
+                            (click)="onRevenueClick()">
+        </sbp-summary-widget>
+    </div>
+
+    <div class="chart">
+        <sbp-summary-widget [data]="ebitdaSummaryLineChartData$ | async"
+                            [barChartData1]="ebitdaChangeFromPriorPeriodBarChartData$ | async"
+                            [barChartData2]="ebitdaChangeFromPriorBudgetBarChartData$ | async"
+                            [title]="'EBITDA'"
+                            [denomination]="selectedCurrencyCode"
+                            [currencySymbol]="selectedCurrencySymbol"
+                            [value]="ebitdaAsOf$ | async | millions: '1.0-1'"
+                            [pyLabel]="'vs PY'"
+                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async"
+                            [icLabel]="'vs Bud'"
+                            [icValue]="ebitdaChangeFromPriorBudget$ | async"
+                            (click)="onEbitdaClick()">
+        </sbp-summary-widget>
+    </div>
+
+    <div class="chart">
+        <sbp-summary-widget sbpTooltip="Coming Soon!"
+                            [data]="revenueSummaryLineChartData$ | async"
+                            [title]="'Cash'"
+                            [denomination]="'USD'"
+                            [currencySymbol]="'$'"
+                            [value]="-34.6"
+                            [pyLabel]="'vs PY'"
+                            [pyValue]="-2.0"
+                            [icLabel]="'vs Bud'"
+                            [icValue]="'-5.0'"
+                            (click)="onCashClick()">
+        </sbp-summary-widget>
+    </div>
+
+    <div class="chart">
+        <div class="cash-runway-container"
+             fxLayout="column"
+             fxLayoutAlign="start stretch">
+            <!-- TITLE ROW -->
+            <div class="box title">Cash Runway ($M)</div>
+            <div class="value"
+                 fxLayout="column"
+                 fxLayoutAlign="center center"
+                 fxFlex>
+                <div fxLayout="row"
+                     fxLayoutAlign="center center"
+                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>27</span> <span class="months">months</span></div>
+            </div>
+        </div>
+    </div>
+
+</div>

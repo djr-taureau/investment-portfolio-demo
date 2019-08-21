@@ -1,4 +1,4 @@
-import "zone.js";
+// import "zone.js";
 import { Component, OnInit, Input } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { expandOutFromTop } from "@shared/animations/slide.animations";
@@ -32,6 +32,9 @@ export class CompanyDashboardComponent implements OnInit {
 
     @Input()
     public showEBITDADetail = false;
+
+    @Input()
+    public showKpiDetail = false;
 
     constructor(private store$: Store<any>) {}
     ngOnInit() {}

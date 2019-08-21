@@ -23,8 +23,11 @@
     <sbp-company-EBITDA-detail-container [@expandOutFromTop]="showEBITDADetail"></sbp-company-EBITDA-detail-container>
     <sbp-company-cash-detail-container [@expandOutFromTop]="showCashDetail"></sbp-company-cash-detail-container>
 
+    <!-- TODO: BMR: Need to refactor `sbp-company-kpi-detail` to `sbp-company-detail-widget` -->
+    <!--    <sbp-company-kpi-detail-container [@expandOutFromBottom]="showKpiDetail"></sbp-company-kpi-detail-container>-->
+
     <!-- Widget Row line 2 -->
-    <!--    <sbp-company-kpi-container-two fxFlexOffset="15px"></sbp-company-kpi-container-two>-->
+    <sbp-company-summary-widgets-container fxFlexOffset="15px"></sbp-company-summary-widgets-container>
 
     <!--    <sbp-expandable-panel [@expandOutFromTop]="isDetailRowTwoExpanded"></sbp-expandable-panel>-->
 

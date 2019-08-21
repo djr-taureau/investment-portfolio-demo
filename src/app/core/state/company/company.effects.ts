@@ -20,7 +20,7 @@ export class CompanyEffects {
     getCompanies$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyActions.GetAll>(CompanyActionTypes.GetAll),
         exhaustMap(() =>
-            this.companyService.getCompanies().pipe(
+            this.companyService.getAll().pipe(
                 map((result: Company[]) => {
                     return new CompanyActions.GetAllSuccess(result);
                 }),
@@ -34,7 +34,7 @@ export class CompanyEffects {
         ofType<CompanyActions.Get>(CompanyActionTypes.Get),
         map((action) => action.payload),
         exhaustMap((id: string) =>
-            this.companyService.getCompany(id).pipe(
+            this.companyService.get(id).pipe(
                 concatMap((result: GetCompanyResponse) => {
                     return [new CompanyActions.GetSuccess(result.data), new ValuationActions.GetAll(id), new RevenueActions.GetAll(id)];
                 }),

@@ -32,9 +32,9 @@ export enum CompanyFlowActionTypes {
     DashboardAsOfDateChanged = "[Company Flow] Dashboard - As of Date Changed",
 
     ToggleRevenueDetail = "[Company Flow] Dashboard - Toggle Revenue Detail",
-    ToggleEBITDADetail = "[Company Flow] Dashboard - Toggle EBITDA Detail",
+    ToggleEbitdaDetail = "[Company Flow] Dashboard - Toggle EBITDA Detail",
     ToggleCashDetail = "[Company Flow] Dashboard - Toggle Cash Detail",
-    ToggleKPIDetail = "[Company Flow] Dashboard - Toggle KPI Detail",
+    ToggleKpiDetail = "[Company Flow] Dashboard - Toggle KPI Detail",
 
     SelectCompany = "[Flow] Select Company",
     FindCompanies = "[Flow] Find Companies",
@@ -163,14 +163,20 @@ export class ToggleCashDetail implements Action {
     constructor(public payload?: string) {}
 }
 
-export class ToggleEBITDADetail implements Action {
-    readonly type = CompanyFlowActionTypes.ToggleEBITDADetail;
+export class ToggleEbitdaDetail implements Action {
+    readonly type = CompanyFlowActionTypes.ToggleEbitdaDetail;
 
     constructor(public payload?: string) {}
 }
 
 export class ToggleRevenueDetail implements Action {
     readonly type = CompanyFlowActionTypes.ToggleRevenueDetail;
+
+    constructor(public payload?: string) {}
+}
+
+export class ToggleKpiDetail implements Action {
+    readonly type = CompanyFlowActionTypes.ToggleKpiDetail;
 
     constructor(public payload?: string) {}
 }
@@ -223,8 +229,9 @@ export type CompanyFlowActions =
     | SelectCompany
     | SortCompanies
     | ToggleCashDetail
-    | ToggleEBITDADetail
+    | ToggleEbitdaDetail
     | ToggleRevenueDetail
+    | ToggleKpiDetail
     | FilterInitiativesByOwner
     | FilterInitiativesByStatus
     | ViewAllInitiatives

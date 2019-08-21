@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { getShowEBITDADetail } from "@core/state/company/dashboard";
-import { ToggleEBITDADetail } from "@core/state/flow/company-flow.actions";
+import { ToggleEbitdaDetail } from "@core/state/flow/company-flow.actions";
 import { select, Store } from "@ngrx/store";
 import { expandOutFromTop } from "@shared/animations/slide.animations";
 import { Observable } from "rxjs";
@@ -21,7 +21,7 @@ export class CompanyEBITDADetailContainer implements OnInit {
     constructor(private store$: Store<any>) {}
 
     public onClose(): void {
-        this.store$.dispatch(new ToggleEBITDADetail());
+        this.store$.dispatch(new ToggleEbitdaDetail());
     }
     public ngOnInit(): void {
         this.isExpanded$ = this.store$.pipe(select(getShowEBITDADetail));

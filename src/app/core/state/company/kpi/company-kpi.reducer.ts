@@ -1,24 +1,18 @@
-import { ChartDataPeriod } from "@core/domain/company.model";
+import { ChartPeriodDataSets } from "@core/domain/company.model";
 import { CompanyKpiActions, CompanyKpiActionTypes } from "@core/state/company/kpi/company-kpi.actions";
 
 export interface State {
-    comparisonGraph: ChartDataPeriod;
-    metricsGraph: ChartDataPeriod;
-    tableData: ChartDataPeriod;
+    chartDataPeriodSets: ChartPeriodDataSets[];
 }
 
 export const initialState: State = {
-    comparisonGraph: null,
-    metricsGraph: null,
-    tableData: null
+    chartDataPeriodSets: null
 };
 
 function save(data: any, state: State = initialState): State {
     return {
         ...state,
-        comparisonGraph: data.comparisonGraph,
-        metricsGraph: data.metricsGraph,
-        tableData: data.tableData
+        chartDataPeriodSets: data
     };
 }
 
@@ -32,6 +26,4 @@ export function reducer(state: State = initialState, action: CompanyKpiActions):
     }
 }
 
-export const getComparisonGraph = (state: State) => state.comparisonGraph;
-export const getMetricsGraph = (state: State) => state.metricsGraph;
-export const getTableData = (state: State) => state.tableData;
+export const getChartDataPeriodSets = (state: State) => state.chartDataPeriodSets;

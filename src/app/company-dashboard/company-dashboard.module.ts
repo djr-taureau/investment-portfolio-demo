@@ -5,8 +5,8 @@ import { CompanySummaryModule } from "@app/company-dashboard/company-summary/com
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
-import { CompanyKpiContainer } from "./company-kpi-container/company-kpi.container";
-import { CompanyKpiContainerTwo } from "./company-kpi-container-two/company-kpi.container-two";
+import { CompanySummaryTopWidgetsContainer } from "./company-summary-top-widgets/company-summary-top-widgets.container";
+import { CompanySummaryWidgetsContainer } from "./company-summary-widgets/company-summary-widgets.container";
 import { CompanyKpiDetailComponent } from "./company-kpi-detail/company-kpi-detail.component";
 import { CompanyRevenueDetailContainer } from "@app/company-dashboard/company-revenue-detail/company-revenue-detail.container";
 import { CompanyEBITDADetailContainer } from "@app/company-dashboard/company-EBITDA-detail/company-EBITDA-detail.container";
@@ -21,8 +21,8 @@ import { SharedModule } from "@shared/shared.module";
 const COMPONENTS: any = [
     CompanyDashboardComponent,
     CompanyDashboardContainer,
-    CompanyKpiContainer,
-    CompanyKpiContainerTwo,
+    CompanySummaryTopWidgetsContainer,
+    CompanySummaryWidgetsContainer,
     CompanyRevenueDetailContainer,
     PeriodSelectorComponent,
     PeriodSelectorContainer,
@@ -30,6 +30,7 @@ const COMPONENTS: any = [
     CompanyEBITDADetailContainer,
     CompanyInitiativesSummaryComponent,
     CompanyInitiativesSummaryContainer,
+    CompanyCashDetailContainer,
     CompanyCashDetailContainer
 ];
 

@@ -11,6 +11,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Logger } from "@util/logger";
 import { map, catchError } from "rxjs/operators";
+import { v4 as uuid } from "uuid";
 
 @Injectable()
 export class CompanyService {
@@ -36,19 +37,19 @@ export class CompanyService {
     /**
      * Retrieves all the companies.
      */
-    public getCompanies(): Observable<Company[]> {
+    public getAll(): Observable<Company[]> {
         const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANIES);
-        CompanyService.logger.debug(`getCompanies( ${url} )`);
+        CompanyService.logger.debug(`getAll( ${url} )`);
 
         return this.apiService.get(url).pipe(
             map((response: GetAllCompaniesResponse) => {
                 const data = response.data || [];
                 const entities: Company[] = this.mapper.mapEntitiesFromApiToClient(this.mapper.mapCompanyFromApiToClient, data);
-                CompanyService.logger.debug(`getCompaniesSuccess( Returning ${entities.length} entities. )`);
+                CompanyService.logger.debug(`getAllSuccess( Returning ${entities.length} entities. )`);
                 return entities;
             }),
             catchError((fault: HttpErrorResponse) => {
-                CompanyService.logger.warn(`companiesFault( ${fault.error.message} )`);
+                CompanyService.logger.warn(`getAllFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );
@@ -57,40 +58,42 @@ export class CompanyService {
     /**
      * Retrieves all initiatives for a company.
      */
-    public getCompanyInitiatives(): Observable<Initiative[]> {
+    public getInitiatives(): Observable<Initiative[]> {
         const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_INITIATIVES);
-        CompanyService.logger.debug(`getCompanyInitiatives( ${url} )`);
+        CompanyService.logger.debug(`getInitiatives( ${url} )`);
 
         return this.apiService.get(url).pipe(
             map((response: GetAllCompanyInitiativesResponse) => {
                 const data = response.data || [];
+                CompanyService.logger.debug(`getInitiativesSuccess( Returning ${data.length} entities. )`);
                 return data;
             }),
             catchError((fault: HttpErrorResponse) => {
-                CompanyService.logger.warn(`getCompanyInitiativesFault( ${fault.error.message} )`);
+                CompanyService.logger.warn(`getInitiativesFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );
     }
 
     /**
-     * Retrieves all initiatives for a company.
+     * Retrieves all documents for a company.
      */
-    public getCompanyDocuments(id: string): Observable<CompanyDocument[]> {
+    public getDocuments(id: string): Observable<CompanyDocument[]> {
         const params = {
             id
         };
 
         const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_DOCUMENTS, params);
-        CompanyService.logger.debug(`getCompanyDocuments( ${url} )`);
+        CompanyService.logger.debug(`getDocuments( ${url} )`);
 
         return this.apiService.get(url).pipe(
             map((response: GetAllCompanyDocumentsResponse) => {
                 const data = response.data || [];
+                CompanyService.logger.debug(`getDocumentsSuccess( Returning ${data.length} entities. )`);
                 return data;
             }),
             catchError((fault: HttpErrorResponse) => {
-                CompanyService.logger.warn(`getCompanyDocumentsFault( ${fault.error.message} )`);
+                CompanyService.logger.warn(`getDocumentsFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );
@@ -99,8 +102,8 @@ export class CompanyService {
     /**
      * Retrieves the company entity by ID.
      */
-    public getCompany(id: string): Observable<GetCompanyResponse> {
-        CompanyService.logger.debug(`getCompany( ID: ${id} )`);
+    public get(id: string): Observable<GetCompanyResponse> {
+        CompanyService.logger.debug(`get( ID: ${id} )`);
 
         const params = {
             id
@@ -111,10 +114,11 @@ export class CompanyService {
             map((response: GetCompanyResponse) => {
                 const comp = response.data;
                 const updated: Company = this.mapper.mapCompanyFromApiToClient(comp);
+                CompanyService.logger.debug(`get( Returning company ID: ${id}, name: ${updated.name}. )`);
                 return { data: updated } as GetCompanyResponse;
             }),
             catchError((fault: HttpErrorResponse) => {
-                CompanyService.logger.warn(`getCompanyFault( ${fault.error.message} )`);
+                CompanyService.logger.warn(`getFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );
@@ -182,6 +186,14 @@ export class CompanyService {
 
         return this.apiService.get(url).pipe(
             map((result) => result.data),
+            map((data: any[]) => {
+                return data.map((item) => {
+                    return {
+                        ...item,
+                        id: uuid()
+                    };
+                });
+            }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`getKpiFault( ${fault.error.message} )`);
                 return throwError(fault);

@@ -14,7 +14,8 @@ import {
     SelectCurrency,
     SelectDatePart,
     ToggleCashDetailExpanded,
-    ToggleEBITDADetailExpanded,
+    ToggleEbitdaDetailExpanded,
+    ToggleKpiExpanded,
     ToggleRevenueDetailExpanded
 } from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { SetSelectedCompanyLink, ToggleSlideout } from "@core/state/layout/layout.actions";
@@ -91,14 +92,21 @@ export class CompanyFlowEffect {
 
     @Effect()
     toggleEBITDADetail$: Observable<Action> = this.actions$.pipe(
-        ofType<CompanyFlowActions.ToggleEBITDADetail>(CompanyFlowActionTypes.ToggleEBITDADetail),
-        concatMap(() => [new ToggleEBITDADetailExpanded()])
+        ofType<CompanyFlowActions.ToggleEbitdaDetail>(CompanyFlowActionTypes.ToggleEbitdaDetail),
+        concatMap(() => [new ToggleEbitdaDetailExpanded()])
     );
 
     @Effect()
     toggleRevenueDetail$: Observable<Action> = this.actions$.pipe(
         ofType<CompanyFlowActions.ToggleRevenueDetail>(CompanyFlowActionTypes.ToggleRevenueDetail),
         concatMap(() => [new ToggleRevenueDetailExpanded()])
+    );
+
+    @Effect()
+    toggleKpiDetail$: Observable<Action> = this.actions$.pipe(
+        ofType<CompanyFlowActions.ToggleKpiDetail>(CompanyFlowActionTypes.ToggleKpiDetail),
+        map((action) => action.payload),
+        concatMap((id: string) => [new ToggleKpiExpanded(id)])
     );
 
     // TODO: GMAN - Commenting the rest of these out for now until we have two separate flows (portfolio and company) so as not to execute effects 2x

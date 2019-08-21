@@ -1,7 +1,7 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
-import { ToggleEBITDADetail } from "@core/state/flow/company-flow.actions";
+import { ToggleEbitdaDetail } from "@core/state/flow/company-flow.actions";
 import { Action } from "@ngrx/store";
 
 export enum CompanyDashboardLayoutActionTypes {
@@ -9,9 +9,10 @@ export enum CompanyDashboardLayoutActionTypes {
     SelectCurrency = "[DashboardLayout] Select Currency",
     SelectDatePart = "[DashboardLayout] Select Date Part",
     SelectAsOfDate = "[DashboardLayout] Select As Of Date",
-    ToggleEBITDADetailExpanded = "[DashboardLayout] Toggle EBITDA Detail Expanded",
+    ToggleEbitdaDetailExpanded = "[DashboardLayout] Toggle EBITDA Detail Expanded",
     ToggleCashDetailExpanded = "[DashboardLayout] Toggle Cash Detail Expanded",
-    ToggleRevenueDetailExpanded = "[DashboardLayout] Toggle Revenue Detail Expanded"
+    ToggleRevenueDetailExpanded = "[DashboardLayout] Toggle Revenue Detail Expanded",
+    ToggleKpiExpanded = "[DashboardLayout] Toggle KPI Detail Expanded"
 }
 
 export class ExpandOrCollapse implements Action {
@@ -41,8 +42,8 @@ export class ToggleCashDetailExpanded implements Action {
 
     constructor() {}
 }
-export class ToggleEBITDADetailExpanded implements Action {
-    readonly type = CompanyDashboardLayoutActionTypes.ToggleEBITDADetailExpanded;
+export class ToggleEbitdaDetailExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleEbitdaDetailExpanded;
 
     constructor() {}
 }
@@ -52,11 +53,18 @@ export class ToggleRevenueDetailExpanded implements Action {
     constructor() {}
 }
 
+export class ToggleKpiExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleKpiExpanded;
+
+    constructor(public payload: string) {}
+}
+
 export type CompanyDashboardLayoutActions =
     | ExpandOrCollapse
     | SelectCurrency
     | SelectDatePart
     | SelectAsOfDate
     | ToggleCashDetailExpanded
-    | ToggleEBITDADetailExpanded
-    | ToggleRevenueDetailExpanded;
+    | ToggleEbitdaDetailExpanded
+    | ToggleRevenueDetailExpanded
+    | ToggleKpiExpanded;

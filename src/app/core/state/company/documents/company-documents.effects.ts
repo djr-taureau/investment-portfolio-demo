@@ -15,7 +15,7 @@ export class CompanyDocumentsEffects {
         ofType<CompanyDocumentActions.GetAllDocuments>(CompanyDocumentActionTypes.GetAllDocuments),
         map((action) => action.payload),
         exhaustMap((id: string) =>
-            this.companyService.getCompanyDocuments(id).pipe(
+            this.companyService.getDocuments(id).pipe(
                 map((result: CompanyDocument[]) => {
                     return new CompanyDocumentActions.GetAllDocumentsSuccess(result);
                 }),

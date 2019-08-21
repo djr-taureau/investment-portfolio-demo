@@ -17,7 +17,6 @@ import { PipeModule } from "./pipes/pipe.module";
 import { PortfolioNavbarModule } from "./portfolio-navbar/portfolio-navbar.module";
 import { TeamMemberAvatarModule } from "@shared/team-member/avatar/team-member-avatar.module";
 import { ValuationModule } from "@shared/valuation/valuation.module";
-import { SummaryWidgetModule } from "./chart-components/summary-widget/summary-widget.module";
 
 const MODULES = [
     // Angular Modules
@@ -43,8 +42,7 @@ const MODULES = [
     PortfolioNavbarModule,
     TeamMemberAvatarModule,
     ValuationModule,
-    ChartModule,
-    SummaryWidgetModule
+    ChartModule
 ];
 
 const DECLARATIONS = [];

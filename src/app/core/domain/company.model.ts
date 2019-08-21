@@ -236,9 +236,11 @@ export interface RevenueSeriesGraphData {
     value: number;
 }
 
-export interface RevenuePeriod {
-    series_quarters: any[];
-    series_years: any[];
+export interface ChartPeriodDataSets {
+    id?: string;
+    comparisonGraph: ChartDataPeriod;
+    metricsGraph: ChartDataPeriod;
+    tableData: ChartDataPeriod;
 }
 
 export interface ChartDataPeriod {

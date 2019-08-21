@@ -4,7 +4,7 @@ import { Store } from "@ngrx/store";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
-import "zone.js";
+// import "zone.js";
 
 @Component({
     selector: "sbp-company-kpi-detail-component",

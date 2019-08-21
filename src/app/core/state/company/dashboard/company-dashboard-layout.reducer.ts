@@ -10,7 +10,8 @@ export interface CompanyDashboardLayoutState {
     selectedPeriod: SelectorPeriod;
     showRevenueDetail: boolean;
     showCashDetail: boolean;
-    showEBITDADetail: boolean;
+    showEbitdaDetail: boolean;
+    showKpiDetail: boolean;
 }
 
 export const initialState: CompanyDashboardLayoutState = {
@@ -20,7 +21,8 @@ export const initialState: CompanyDashboardLayoutState = {
     selectedPeriod: null,
     showRevenueDetail: false,
     showCashDetail: false,
-    showEBITDADetail: false
+    showEbitdaDetail: false,
+    showKpiDetail: false
 };
 
 function toggleRevenueDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
@@ -28,16 +30,18 @@ function toggleRevenueDetail(state: CompanyDashboardLayoutState = initialState):
         ...state,
         showRevenueDetail: !state.showRevenueDetail,
         showCashDetail: false,
-        showEBITDADetail: false
+        showEbitdaDetail: false,
+        showKpiDetail: false
     };
 }
 
-function toggleEBITDADetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+function toggleEbitdaDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
     return {
         ...state,
         showRevenueDetail: false,
         showCashDetail: false,
-        showEBITDADetail: !state.showEBITDADetail
+        showEbitdaDetail: !state.showEbitdaDetail,
+        showKpiDetail: false
     };
 }
 
@@ -46,7 +50,18 @@ function toggleCashDetail(state: CompanyDashboardLayoutState = initialState): Co
         ...state,
         showRevenueDetail: false,
         showCashDetail: !state.showCashDetail,
-        showEBITDADetail: false
+        showEbitdaDetail: false,
+        showKpiDetail: false
+    };
+}
+
+function toggleKpiDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+    return {
+        ...state,
+        showRevenueDetail: false,
+        showCashDetail: false,
+        showEbitdaDetail: false,
+        showKpiDetail: !state.showKpiDetail
     };
 }
 
@@ -78,10 +93,16 @@ export function reducer(state: CompanyDashboardLayoutState = initialState, actio
             };
         case CompanyDashboardLayoutActionTypes.ToggleCashDetailExpanded:
             return toggleCashDetail(state);
-        case CompanyDashboardLayoutActionTypes.ToggleEBITDADetailExpanded:
-            return toggleEBITDADetail(state);
+
+        case CompanyDashboardLayoutActionTypes.ToggleEbitdaDetailExpanded:
+            return toggleEbitdaDetail(state);
+
         case CompanyDashboardLayoutActionTypes.ToggleRevenueDetailExpanded:
             return toggleRevenueDetail(state);
+
+        case CompanyDashboardLayoutActionTypes.ToggleKpiExpanded:
+            return toggleKpiDetail(state);
+
         default:
             return state;
     }
@@ -92,5 +113,6 @@ export const getSelectedCurrency = (state: CompanyDashboardLayoutState) => state
 export const getSelectedDatePart = (state: CompanyDashboardLayoutState) => state.selectedDatePart;
 export const getSelectedPeriod = (state: CompanyDashboardLayoutState) => state.selectedPeriod;
 export const getShowCashDetail = (state: CompanyDashboardLayoutState) => state.showCashDetail;
-export const getShowEBITDADetail = (state: CompanyDashboardLayoutState) => state.showEBITDADetail;
+export const getShowEBITDADetail = (state: CompanyDashboardLayoutState) => state.showEbitdaDetail;
 export const getShowRevenueDetail = (state: CompanyDashboardLayoutState) => state.showRevenueDetail;
+export const getShowKpiDetail = (state: CompanyDashboardLayoutState) => state.showKpiDetail;

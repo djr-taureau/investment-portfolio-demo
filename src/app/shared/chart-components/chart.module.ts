@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { NgModule } from "@angular/core";
+import { SummaryWidgetContainer } from "@shared/chart-components/summary-widget/summary-widget.container";
 import { PipeModule } from "@shared/pipes/pipe.module";
 import { MaterialModule } from "../material/material.module";
 import { ChartsModule } from "@progress/kendo-angular-charts";
@@ -14,7 +15,7 @@ import { BarsComponent } from "./chart/bars/bars.component";
 import { GradientComponent } from "./chart/gradient/gradient.component";
 import { MicroTimelineComponent } from "./micro-timeline/micro-timeline.component";
 import { MicroHistogramComponent } from "./micro-histogram/micro-histogram.component";
-import { KpiSummaryComponent } from "./kpi-summary/kpi-summary.component";
+import { SummaryWidgetComponent } from "./summary-widget/summary-widget.component";
 import { MicroBarComponent } from "./micro-bar/micro-bar.component";
 import { TimelineComponent } from "./timeline/timeline.component";
 import { MultiLineKendoComponent } from "./multi-line-kendo/multi-line-kendo.component";
@@ -27,27 +28,23 @@ import { BarChartComponent } from "./detail-bar-chart/bar-chart.component";
 export const COMPONENTS = [
     AxisComponent,
     AxisBarComponent,
-    LineComponent,
-    CirclesComponent,
+    BarChartComponent,
     BarsComponent,
     ChartComponent,
     CirclesComponent,
+    DetailBarChartComponent,
     GradientComponent,
-    KpiSummaryComponent,
+    HistogramComponent,
+    KpiDetailTableComponent,
     LineComponent,
+    MicroBarComponent,
     MicroHistogramComponent,
-    MicroBarComponent,
-    KpiSummaryComponent,
-    KpiSummaryComponent,
-    MicroBarComponent,
     MicroTimelineComponent,
-    TimelineComponent,
     MultiLineKendoComponent,
     MultiLineComponent,
-    HistogramComponent,
-    DetailBarChartComponent,
-    KpiDetailTableComponent,
-    BarChartComponent
+    SummaryWidgetComponent,
+    SummaryWidgetContainer,
+    TimelineComponent
 ];
 @NgModule({
     declarations: COMPONENTS,

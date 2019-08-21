@@ -78,6 +78,11 @@ export const getShowRevenueDetail = createSelector(
     fromCompanyDashboardLayout.getShowRevenueDetail
 );
 
+export const getShowKpiDetail = createSelector(
+    selectCompanyDashboardLayoutState,
+    fromCompanyDashboardLayout.getShowKpiDetail
+);
+
 /**
  * Returns the selected company's financial year end month
  */
