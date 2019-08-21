@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { ChartColor } from "@core/domain/chart-data.model";
 import { Company, Tag, Takeaway, TeamMember, TeamMemberGroup, Valuation } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
+import * as _ from "lodash";
 
 @Component({
     selector: "sbp-company-summary-expanded",
@@ -23,7 +24,7 @@ export class CompanySummaryExpandedComponent implements OnInit {
             this._company = value;
 
             // Create chart data.
-            this.percentOwnershipChartData = this.createPercentOwnershipChartData(value);
+            // this.percentOwnershipChartData = this.createPercentOwnershipChartData(value);
             // this.amountDeployedChartData = this.createAmountDeployedChartData(value);
         }
     }
@@ -83,6 +84,11 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public currentApproved = 0;
     @Input()
     public amountDeployedChartData: any[];
+    /**
+     * The percent owned chart data.
+     */
+    @Input()
+    public percentOwnershipChartData: any[];
 
     /**
      * Request to see all takeaways.
@@ -113,11 +119,6 @@ export class CompanySummaryExpandedComponent implements OnInit {
      */
     @Output()
     public seeValuations: EventEmitter<string> = new EventEmitter<string>();
-
-    /**
-     * The percent owned chart data.
-     */
-    public percentOwnershipChartData: any[] = [];
 
     /**
      * Constructor.
@@ -188,12 +189,14 @@ export class CompanySummaryExpandedComponent implements OnInit {
      * Creates the percent ownership chart data.
      * @param company
      */
-    private createPercentOwnershipChartData(company: Company): any[] {
-        return [
-            { value: company.percentOwnership, color: ChartColor.lightNavy },
-            { value: 1 - company.percentOwnership, color: ChartColor.lightPeriwinkle }
-        ];
-    }
+    // private createPercentOwnershipChartData(company: Company): any[] {
+    //     return [
+    //
+    //             ];
+    //     //     { value: company.fdOwnership, color: ChartColor.lightNavy },
+    //     //     { value: 1 - company.fdOwnership, color: ChartColor.lightPeriwinkle }
+    //     // ];
+    // }
 
     /**
      * Creates the amount deployed chart data.

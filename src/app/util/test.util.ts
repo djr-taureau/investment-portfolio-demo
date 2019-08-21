@@ -68,7 +68,7 @@ export const getCompanyDefault = (): Company => {
         deployed: 0,
         deployedTotal: 0,
         description: "",
-        fdOwnership: "",
+        fdOwnership: null,
         fiscalYearEnd: null,
         foundedDate: "",
         founders: [],
@@ -86,7 +86,6 @@ export const getCompanyDefault = (): Company => {
         logo: "",
         moic: 0,
         name: "",
-        percentOwnership: 0,
         region: "",
         revenue: [],
         score: 0,
@@ -100,7 +99,8 @@ export const getCompanyDefault = (): Company => {
         takeaways: [],
         type: CompanyTypeEnum.PUBLIC,
         // valuation: null,
-        website: ""
+        website: "",
+        yearOfIncorporation: ""
     };
 };
 

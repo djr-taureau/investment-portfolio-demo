@@ -11,6 +11,15 @@
         padding: 30px 40px;
         background-color: $white;
 
+        .logo-container {
+            .logo {
+                border: 1px solid $light-periwinkle;
+                border-radius: 6px;
+                height: 60px;
+                width: 60px;
+            }
+        }
+
         .trend {
             margin: 0 15px;
         }

@@ -21,8 +21,6 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public set company(theCompany: Company) {
         if (theCompany) {
             this._company = theCompany;
-            // Donut chart requires this format
-            this.chartData = [{ value: theCompany.percentOwnership, color: "#124f8c" }, { value: 1 - theCompany.percentOwnership, color: "#dbe3f1" }];
         }
     }
     public get company(): Company {
@@ -55,9 +53,11 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public currentInvested = 0;
     @Input()
     public currentApproved = 0;
+
     /**
      * The percent owned chart data.
      */
+    @Input()
     public chartData: any[] = [];
 
     /**
@@ -154,10 +154,6 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public onValuationClick(id: string): void {
         CompanySummaryCollapsedComponent.logger.debug(`onValuationClick( Company ID: ${id} )`);
         this.seeValuations.emit(id);
-    }
-
-    public showDonut(): boolean {
-        return _.get(this, "company.percentOwnership", -1) > 0;
     }
 
     public getCompanyLogo(): string {

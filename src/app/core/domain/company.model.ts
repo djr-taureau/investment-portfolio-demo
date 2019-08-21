@@ -57,13 +57,14 @@ export interface Company {
     investingEntity: string;
     initialInvestment: string;
     latestFollowOnDate: string;
-    fdOwnership: string;
+    fdOwnership: number;
     boardMembers: BoardMember[];
     moic: number;
     irr: number;
     logo: string;
     revenue?: RevenueSeries[];
     availablePeriods: AvailablePeriod[];
+    yearOfIncorporation: string;
 
     ///////////////////////////////////////////////////////////////////
     // DASHBOARD HEADER SECTION
@@ -79,7 +80,6 @@ export interface Company {
     tags: Tag[];
 
     // Displayed in the company header to the right of the tags.
-    percentOwnership: number;
 
     // Displayed in the company header under the team members as a list.
     takeaways: string[];

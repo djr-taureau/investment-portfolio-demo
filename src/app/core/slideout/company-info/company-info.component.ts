@@ -23,7 +23,7 @@ export class CompanyInfoComponent {
                 })
                 .join(", ");
             // Donut chart requires this format
-            this.chartData = [{ value: theCompany.percentOwnership }, { value: 1 - theCompany.percentOwnership }];
+            // this.chartData = [{ value: theCompany.percentOwnership }, { value: 1 - theCompany.percentOwnership }];
             // this.fiscalYearEndString =
         }
     }
@@ -53,7 +53,7 @@ export class CompanyInfoComponent {
     public closePanel: EventEmitter<any> = new EventEmitter();
 
     public getOwnershipPercent() {
-        return _.get(this, "company.percentOwnership", 0) * 100;
+        return _.get(this, "company.fdOwnership", 0);
     }
 
     public getCompanySectors() {

@@ -1,3 +1,4 @@
+import { ChartColor } from "@core/domain/chart-data.model";
 import { ScenarioNameEnum } from "./../domain/company.model";
 import { CompanyRelationshipTypes, TeamMemberGroupTypes } from "@core/domain/company.model";
 import * as ObjectUtil from "@util/object.util";
@@ -231,6 +232,13 @@ export const getSelectedCompanyYearExitValuation = createSelector(
     (company: Company) => ObjectUtil.getNestedPropIfExists(company, ["valuation", "topLineValuations", "2", "exit"], {})
 );
 
+export const getSelectedOwnershipChartData = createSelector(
+    getSelectedCompany,
+    (company: Company) => [
+        { value: company.fdOwnership / 10, color: ChartColor.lightNavy },
+        { value: 1 - company.fdOwnership, color: ChartColor.lightPeriwinkle }
+    ]
+);
 // -------------------------------------------------------------------
 // TEAM MEMBER SELECTORS
 // -------------------------------------------------------------------

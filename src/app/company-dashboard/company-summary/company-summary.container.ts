@@ -35,6 +35,7 @@ import * as _ from "lodash";
             (seeTeamMember)="seeTeamMember($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
             (seeValuations)="seeValuations($event)"
+            [chartData]="percentOwnershipChartData$ | async"
         >
         </sbp-company-summary-collapsed>
 
@@ -62,6 +63,7 @@ import * as _ from "lodash";
             (seeTeamMember)="seeTeamMember($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
             (seeValuations)="seeValuations($event)"
+            [percentOwnershipChartData]="percentOwnershipChartData$ | async"
         >
         </sbp-company-summary-expanded>
     `
@@ -111,6 +113,8 @@ export class CompanySummaryContainer implements OnInit {
      * The current valuation.
      */
     public valuation$: Observable<Valuation>;
+
+    percentOwnershipChartData$: Observable<any[]>;
 
     /**
      * Valuation props
@@ -170,6 +174,8 @@ export class CompanySummaryContainer implements OnInit {
                 ];
             }
         });
+
+        this.percentOwnershipChartData$ = this.store$.pipe(select(fromState.getSelectedOwnershipChartData));
 
         this.teamGroup$ = this.store$.pipe(select(fromState.getDealTeamGroup));
         this.teamMembers$ = this.store$.pipe(select(fromState.getDealTeamMembers));

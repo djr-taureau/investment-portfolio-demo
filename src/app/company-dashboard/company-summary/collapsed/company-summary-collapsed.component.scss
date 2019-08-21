@@ -58,9 +58,19 @@
         }
 
         .name-container,
+        .team-member-container,
         .deployed-container,
         .export-container {
-            height: 100%;
+            height: 75px;
+        }
+
+        .chart-container {
+            margin-left: -10px;
+        }
+
+        .more-company-info,
+        .all-team-members {
+            height: 30px;
         }
 
         .all-team-members {

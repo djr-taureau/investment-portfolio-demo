@@ -22,13 +22,18 @@
     ////////////////////////////////////////////////////////////////////////////////////
     -->
     <div fxLayout="column"
-         fxLayoutAlign="space-between stretch"
+         fxLayoutAlign="start stretch"
+         fxLayoutGap="5px"
          class="name-container">
-        <div class="company-name">{{ getCompanyName()}}</div>
+        <div class="company-name"
+             fxFlex="70%">{{ getCompanyName()}}</div>
         <div fxLayout="row"
-             fxLayoutAlign="start center">
-            <div *ngIf="showDonut()">
-                <kendo-chart style="height: 35px; width: 35px;">
+             fxLayoutAlign="start center"
+             fxLayoutGap="12px"
+             fxFlex="30%"
+             class="company-ownership-info">
+            <div class="chart-container">
+                <kendo-chart style="height: 35px; width: 35px; margin-right: -10px;">
                     <kendo-chart-series>
                         <kendo-chart-series-item type="donut"
                                                  field="value"
@@ -39,9 +44,10 @@
                     <kendo-chart-legend [visible]="false"></kendo-chart-legend>
                 </kendo-chart>
             </div>
-            <div class="percent-owned"
-                 *ngIf="showDonut()">{{ (company.percentOwnership || 0) * 100 }}% OWN</div>
+            <div class="percent-owned">{{ company.fdOwnership }}% OWN</div>
             <div class="more-company-info hand-cursor"
+                 fxLayout="row"
+                 fxLayoutAlign="start center"
                  (click)="onSeeMoreCompanyInfo(company.id)">
                 More company info
             </div>
@@ -54,10 +60,11 @@
     ////////////////////////////////////////////////////////////////////////////////////
     -->
     <div fxLayout="column"
-         fxLayoutAlign="space-between stretch"
+         fxLayoutAlign="start stretch"
          class="team-member-container">
         <div fxLayout="row"
-             fxLayoutAlign="center stretch"
+             fxFlex="70%"
+             fxLayoutAlign="center"
              class="team-member-avatar-container">
             <ng-container *ngFor="let teamMember of teamMembers">
                 <sbp-team-member-avatar [teamMember]="teamMember"
@@ -65,7 +72,9 @@
                 </sbp-team-member-avatar>
             </ng-container>
         </div>
-        <div class="more-company-info hand-cursor"
+        <div class="all-team-members hand-cursor"
+             fxLayout="row"
+             fxLayoutAlign="start center"
              (click)="onAllTeamMembersClick(company.id)">All Team Members</div>
     </div>
 
