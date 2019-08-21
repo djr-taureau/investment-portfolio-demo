@@ -1,3 +1,4 @@
+import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Company, TeamMember, TeamMemberGroup } from "@core/domain/company.model";
@@ -166,6 +167,6 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     }
 
     public getCompanyOwnership(): string {
-        return _.get(this, "company.fdOwnership", "--");
+        return ObjectUtil.getNestedPropIfExists(this, ["company", "fdOwnership"], "--");
     }
 }
