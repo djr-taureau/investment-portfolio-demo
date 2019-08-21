@@ -10,4 +10,19 @@
 
         background-color: #ebeff5;
     }
+
+    .modal-overlay {
+        height: 100%;
+        width: 100%;
+        background-color: rgba(#68758C, .3);
+        position: fixed;
+        float: left;
+        top: 0px;
+        left: 0px;
+        z-index: 200;
+    }
+
+    sbp-slideout-container {
+        z-index: 500;
+    }
 }

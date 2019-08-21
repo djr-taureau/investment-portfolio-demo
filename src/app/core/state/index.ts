@@ -212,6 +212,16 @@ export const getSelectedCompanyTakeaways = createSelector(
     (company: Company) => (company ? company.takeaways : []) || []
 );
 
+export const getSelectedCompanyTopTakeaways = createSelector(
+    getSelectedCompany,
+    (company: Company) => _.take((company ? company.takeaways : []) || [], 3)
+);
+
+export const getSelectedCompanyTakeawayCount = createSelector(
+    getSelectedCompany,
+    (company: Company) => ((company ? company.takeaways : []) || []).length
+);
+
 export const getSelectedCompanyTakeawayDate = createSelector(
     getSelectedCompany,
     (company: Company) => (company ? company.takeawayDate : "") || ""
@@ -235,8 +245,8 @@ export const getSelectedCompanyYearExitValuation = createSelector(
 export const getSelectedOwnershipChartData = createSelector(
     getSelectedCompany,
     (company: Company) => [
-        { value: company.fdOwnership / 10, color: ChartColor.lightNavy },
-        { value: 1 - company.fdOwnership, color: ChartColor.lightPeriwinkle }
+        { value: ObjectUtil.getNestedPropIfExists(company, ["fdOwnership"], 0) / 10, color: ChartColor.lightNavy },
+        { value: 1 - ObjectUtil.getNestedPropIfExists(company, ["fdOwnership"], 0), color: ChartColor.lightPeriwinkle }
     ]
 );
 // -------------------------------------------------------------------

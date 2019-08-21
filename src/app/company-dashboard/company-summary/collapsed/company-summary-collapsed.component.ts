@@ -164,4 +164,8 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     public getCompanyName(): string {
         return _.get(this, "company.name", "...");
     }
+
+    public getCompanyOwnership(): string {
+        return _.get(this, "company.fdOwnership", "--");
+    }
 }

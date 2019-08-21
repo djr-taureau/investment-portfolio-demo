@@ -4,7 +4,7 @@ import { Company, TeamMember } from "@core/domain/company.model";
 import { Component, OnInit } from "@angular/core";
 import { CloseCompanyInfoPanel } from "@core/state/flow/company-flow.actions";
 import { CoreCompanyContainer } from "@shared/company/core-company.container";
-import { getSelectedCompany, getSelectedCompanyBoardMembers } from "@core/state";
+import { default as fromState, getSelectedCompany, getSelectedCompanyBoardMembers, getSelectedOwnershipChartData } from "@core/state";
 import { Logger } from "@util/logger";
 import { Observable, of } from "rxjs";
 import { Store, select } from "@ngrx/store";
@@ -12,7 +12,13 @@ import { Store, select } from "@ngrx/store";
 @Component({
     selector: "sbp-company-info-container",
     template: `
-        <sbp-company-info [company]="company$ | async" [boardMembers]="boardMembers$ | async" (closePanel)="onClose()"> </sbp-company-info>
+        <sbp-company-info
+            [company]="company$ | async"
+            [boardMembers]="boardMembers$ | async"
+            (closePanel)="onClose()"
+            [chartData]="percentOwnershipChartData$ | async"
+        >
+        </sbp-company-info>
     `
 })
 export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit {
@@ -31,6 +37,7 @@ export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit
      */
     public boardMembers$: Observable<TeamMember[]>;
 
+    public percentOwnershipChartData$: Observable<any[]>;
     /**
      * Handles the close of the panel
      */
@@ -44,6 +51,7 @@ export class CompanyInfoContainer extends CoreCompanyContainer implements OnInit
     public ngOnInit(): void {
         this.company$ = this.store$.pipe(select(getSelectedCompany));
         this.boardMembers$ = this.store$.pipe(select(getSelectedCompanyBoardMembers));
+        this.percentOwnershipChartData$ = this.store$.pipe(select(getSelectedOwnershipChartData));
         super.ngOnInit();
     }
 

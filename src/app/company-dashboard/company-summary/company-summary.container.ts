@@ -46,6 +46,7 @@ import * as _ from "lodash";
             [teamGroup]="teamGroup$ | async"
             [tags]="tags$ | async"
             [takeaways]="takeaways$ | async"
+            [takeawayCount]="takeawayCount$ | async"
             [currentIrr]="currentIrr"
             [currentMoic]="currentMoic"
             [currentTotalValue]="currentTotalValue"
@@ -110,11 +111,16 @@ export class CompanySummaryContainer implements OnInit {
     public takeaways$: Observable<string[]>;
 
     /**
+     * The takeaways count observable.
+     */
+    public takeawayCount$: Observable<number>;
+
+    /**
      * The current valuation.
      */
     public valuation$: Observable<Valuation>;
 
-    percentOwnershipChartData$: Observable<any[]>;
+    public percentOwnershipChartData$: Observable<any[]>;
 
     /**
      * Valuation props
@@ -150,10 +156,12 @@ export class CompanySummaryContainer implements OnInit {
     public ngOnInit() {
         CompanySummaryContainer.logger.debug(`ngOnInit()`);
 
+        this.percentOwnershipChartData$ = this.store$.pipe(select(fromState.getSelectedOwnershipChartData));
         this.collapsed$ = this.store$.pipe(select(fromCompanyDashboardLayout.getCollapsed));
         this.expanded$ = this.store$.pipe(select(fromCompanyDashboardLayout.getExpanded));
         this.company$ = this.store$.pipe(select(fromState.getSelectedCompany));
-        this.takeaways$ = this.store$.pipe(select(fromState.getSelectedCompanyTakeaways));
+        this.takeaways$ = this.store$.pipe(select(fromState.getSelectedCompanyTopTakeaways));
+        this.takeawayCount$ = this.store$.pipe(select(fromState.getSelectedCompanyTakeawayCount));
         this.valuation$ = this.store$.pipe(select(fromState.getSelectedValuation));
         this.valuation$.subscribe((value) => {
             if (value) {
@@ -174,8 +182,6 @@ export class CompanySummaryContainer implements OnInit {
                 ];
             }
         });
-
-        this.percentOwnershipChartData$ = this.store$.pipe(select(fromState.getSelectedOwnershipChartData));
 
         this.teamGroup$ = this.store$.pipe(select(fromState.getDealTeamGroup));
         this.teamMembers$ = this.store$.pipe(select(fromState.getDealTeamMembers));

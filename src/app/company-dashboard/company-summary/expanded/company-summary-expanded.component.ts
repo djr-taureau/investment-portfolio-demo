@@ -58,6 +58,12 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public takeaways: string[] = [];
 
     /**
+     * The total amount of takeaways for the selected company
+     */
+    @Input()
+    public takeawayCount = 0;
+
+    /**
      * Valuation props
      */
     @Input()

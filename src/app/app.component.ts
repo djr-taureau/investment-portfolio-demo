@@ -1,7 +1,8 @@
 import { AuthService } from "@core/auth/auth.service";
 import { InitializationService } from "@core/service/initialization.service";
 import * as fromState from "@core/state/";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ToggleSlideout } from "@core/state/layout/layout.actions";
 import { select, Store } from "@ngrx/store";
 import { simpleFade } from "@shared/animations/fade.animations";
 import { Observable } from "rxjs";
@@ -25,6 +26,12 @@ export class AppComponent implements OnInit {
      */
     public showSlideout$: Observable<boolean>;
 
+    @ViewChild("modalOverlay")
+    public modalOverlay;
+
+    public onClickModalOverlay() {
+        this.store$.dispatch(new ToggleSlideout(false));
+    }
     /**
      * Constructor.
      */
@@ -38,7 +45,6 @@ export class AppComponent implements OnInit {
     public ngOnInit(): void {
         AppComponent.logger.debug(`ngOnInit()`);
         this.showSlideout$ = this.store$.pipe(select(fromState.getShowSlideout));
-
         this.initializationService.init();
     }
 }
