@@ -1,3 +1,4 @@
+import { ChartDataPeriod } from "@core/domain/company.model";
 import { PortfolioMetricTypes, PortfolioPerformanceChartDataRequest } from "@core/domain/portfolio.model";
 import { PortfolioService } from "@core/service/portfolio.service";
 import { PortfolioEbitdaActionTypes } from "@core/state/portfolio-dashboard/ebitda/portfolio-ebitda.actions";
@@ -29,7 +30,7 @@ export class PortfolioEbitdaEffects {
         ),
         exhaustMap((request) =>
             this.portfolioService.getPerformanceByMetric(request).pipe(
-                map((result: any) => new PortfolioEbitdaActions.GetSuccess(result)),
+                map((result: any) => new PortfolioEbitdaActions.GetSuccess(result as ChartDataPeriod)),
                 catchError((error) => of(new PortfolioEbitdaActions.GetFailure(error)))
             )
         )

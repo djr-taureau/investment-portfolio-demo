@@ -66,9 +66,9 @@ const MODULES = [
     StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
     StoreModule.forFeature("portfolioListing", PortfolioListingLayout.reducers),
     StoreModule.forFeature("portfolioDashboard", PortfolioDashboard.reducers),
-    StoreModule.forFeature("portfolioRevenue", CompanyRevenue.reducers),
+    StoreModule.forFeature("portfolioRevenue", PortfolioRevenue.reducers),
     StoreModule.forFeature("portfolioEbitda", PortfolioEbitda.reducers),
-    StoreModule.forFeature("companyRevenue", PortfolioRevenue.reducers),
+    StoreModule.forFeature("companyRevenue", CompanyRevenue.reducers),
     StoreModule.forFeature("companyEbitda", CompanyEbitda.reducers),
     StoreModule.forFeature("companyKpi", CompanyKpi.reducers),
 
