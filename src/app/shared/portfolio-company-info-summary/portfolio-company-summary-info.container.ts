@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { select, Store } from "@ngrx/store";
 
 @Component({
-    selector: "sbp-dashboard-company-info-summary-container",
+    selector: "sbp-company-info-summary-container",
     template: `
         <sbp-portfolio-company-info-summary
             fxFlex
@@ -19,7 +19,7 @@ import { select, Store } from "@ngrx/store";
         ></sbp-portfolio-company-info-summary>
     `
 })
-export class CompanySummaryInfoContainer implements OnInit {
+export class PortfolioCompanySummaryInfoContainer implements OnInit {
     /**
      * The total number of companies in the portfolio
      */

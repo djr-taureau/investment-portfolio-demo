@@ -13,11 +13,11 @@ export enum CompanyFlowActionTypes {
     OpenTakeawaysPanel = "[Company Flow] Open Takeaways Panel",
     CloseTakeawaysPanel = "[Company Flow] Close Takeaways Panel",
 
-    OpenTeamMemberListPanel = "[Flow] Open Team Member List Panel",
-    CloseTeamMemberListPanel = "[Flow] Close Team Member List Panel",
+    OpenTeamMemberListPanel = "[Company Flow] Open Team Member List Panel",
+    CloseTeamMemberListPanel = "[Company Flow] Close Team Member List Panel",
 
-    OpenTeamMemberDetailPanel = "[Flow] Open Team Member Detail Panel",
-    CloseTeamMemberDetailPanel = "[Flow] Close Team Member Detail Panel",
+    OpenTeamMemberDetailPanel = "[Company Flow] Open Team Member Detail Panel",
+    CloseTeamMemberDetailPanel = "[Company Flow] Close Team Member Detail Panel",
 
     OpenValuationPanel = "[Company Flow] Open Valuation Panel",
     CloseValuationPanel = "[Company Flow] Close Valuation Panel",
@@ -36,15 +36,15 @@ export enum CompanyFlowActionTypes {
     ToggleCashDetail = "[Company Flow] Dashboard - Toggle Cash Detail",
     ToggleKpiDetail = "[Company Flow] Dashboard - Toggle KPI Detail",
 
-    SelectCompany = "[Flow] Select Company",
-    FindCompanies = "[Flow] Find Companies",
-    GroupCompanies = "[Flow] Group Companies",
-    SortCompanies = "[Flow] Sort Companies",
+    SelectCompany = "[Company Flow] Select Company",
+    FindCompanies = "[Company Flow] Find Companies",
+    GroupCompanies = "[Company Flow] Group Companies",
+    SortCompanies = "[Company Flow] Sort Companies",
 
-    FilterInitiativesByStatus = "[Flow] Company - Filter Initiatives By Status",
-    FilterInitiativesByOwner = "[Flow] Company - Filter Initiatives By Status",
-    ViewAllInitiatives = "[Flow] Company - View All Initiatives",
-    ViewInitiativeDetails = "[Flow] Company - View Initiative Details"
+    FilterInitiativesByStatus = "[Company Flow] Company - Filter Initiatives By Status",
+    FilterInitiativesByOwner = "[Company Flow] Company - Filter Initiatives By Status",
+    ViewAllInitiatives = "[Company Flow] Company - View All Initiatives",
+    ViewInitiativeDetails = "[Company FCompany low] Company - View Initiative Details"
 }
 
 export class CloseCompanyInfoPanel implements Action {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { getSelectedCurrency } from "@core/state/company/dashboard";
+import { ToggleEbitdaDetail } from "@core/state/flow/company-flow.actions";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";

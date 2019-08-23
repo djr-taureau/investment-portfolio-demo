@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Portfolio, PortfolioInvestmentSummary } from "@core/domain/portfolio.model";
+import { Portfolio, PortfolioInvestmentSummary, PortfolioPerformanceChartDataRequest } from "@core/domain/portfolio.model";
 import { ApiEndpointService } from "@core/service/api-endpoint.service";
 import { ApiService } from "@core/service/api.service";
 import { Store } from "@ngrx/store";
@@ -38,6 +38,30 @@ export class PortfolioService {
             }),
             catchError((fault: HttpErrorResponse) => {
                 PortfolioService.logger.warn(`getPortfolio( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    public getPerformanceByMetric(request: PortfolioPerformanceChartDataRequest): Observable<any> {
+        const params = {
+            id: request.id
+        };
+
+        const query = {
+            metric_type: request.metric_type,
+            as_of_date: request.date
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.PORTFOLIO_COMPANY_PERFORMANCE, params, query);
+
+        return this.apiService.get(url).pipe(
+            map((response) => {
+                const data = response.data;
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                PortfolioService.logger.warn(`getPerformanceByMetric( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

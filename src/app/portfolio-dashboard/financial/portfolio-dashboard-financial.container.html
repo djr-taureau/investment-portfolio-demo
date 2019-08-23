@@ -1,0 +1,10 @@
+<sbp-portfolio-dashboard-financial [revenueSeries1BarChartData]="revenueChangeFromPriorPeriodBarChartData$ | async"
+                                   [revenueSeries1Label]="'vs PY'"
+                                   [revenueSeries1Value]="revenueChangeFromPriorPeriod$ | async"
+                                   [revenueSeries2BarChartData]="revenueChangeFromPriorBudgetBarChartData$ | async"
+                                   [revenueSeries2Label]="'vs Bud'"
+                                   [revenueSeries2Value]="revenueChangeFromPriorBudget$ | async"
+                                   [revenueSummaryLineChartData]="revenueSummaryLineChartData$ | async"
+                                   [revenueTitle]="'Revenue'"
+                                   [revenueTotalValue]=""
+                                   (revenueClick)="onRevenueClick()"></sbp-portfolio-dashboard-financial>

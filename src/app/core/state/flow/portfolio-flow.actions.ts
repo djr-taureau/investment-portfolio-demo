@@ -1,16 +1,24 @@
+import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
+import { CurrencyType } from "@core/domain/enum/currency-type.enum";
+import { DatePartType } from "@core/domain/enum/date-part-type.enum";
+import { Portfolio } from "@core/domain/portfolio.model";
 import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
 export enum PortfolioFlowActionTypes {
-    LoadPortfolioFlow = "[Flow] Load Portfolio",
-    LoadPortfolioFlowFailure = "[Flow] Load Portfolio",
-    LoadPortfolioFlowSuccess = "[Flow] Load Portfolio",
+    LoadPortfolioFlow = "[Portfolio Flow] Load Portfolio",
+    LoadPortfolioFlowFailure = "[Portfolio Flow] Load Portfolio - Failure",
+    LoadPortfolioFlowSuccess = "[Portfolio Flow] Load Portfolio - Success",
 
-    GoToPortfolio = "[Flow] Go To Portfolio",
+    GoToPortfolio = "[Portfolio Flow] Go To Portfolio",
 
-    PortfolioNavigationItemClicked = "[Flow] Portfolio Navigation Item Clicked",
-    PortfolioDashboardOverviewNavigationItemClicked = "[Flow] Portfolio Dashboard Overview Navigation Item Clicked"
+    PortfolioNavigationItemClicked = "[Portfolio Flow] Portfolio Navigation Item Clicked",
+    PortfolioDashboardOverviewNavigationItemClicked = "[Portfolio Flow] Portfolio Dashboard Overview Navigation Item Clicked",
+
+    DashboardCurrencyChanged = "[Portfolio Flow] Dashboard - Currency Changed",
+    DashboardDatePartChanged = "[Portfolio Flow] Dashboard - Date Part Changed",
+    DashboardAsOfDateChanged = "[Portfolio Flow] Dashboard - As of Date Changed"
 }
 
 export class GoToPortfolio implements Action {
@@ -34,7 +42,7 @@ export class LoadPortfolioFlowFailure implements Action {
 export class LoadPortfolioFlowSuccess implements Action {
     readonly type = PortfolioFlowActionTypes.LoadPortfolioFlowSuccess;
 
-    constructor(public payload?: string) {}
+    constructor(public payload: Portfolio) {}
 }
 
 export class PortfolioNavigationItemClicked implements Action {
@@ -49,7 +57,25 @@ export class PortfolioDashboardOverviewNavigationItemClicked implements Action {
     constructor(public payload: PortfolioDashboardNavBarLink) {}
 }
 
+export class DashboardAsOfDateChanged implements Action {
+    readonly type = PortfolioFlowActionTypes.DashboardAsOfDateChanged;
+    constructor(public payload: SelectorPeriod) {}
+}
+
+export class DashboardCurrencyChanged implements Action {
+    readonly type = PortfolioFlowActionTypes.DashboardCurrencyChanged;
+    constructor(public payload: CurrencyType) {}
+}
+
+export class DashboardDatePartChanged implements Action {
+    readonly type = PortfolioFlowActionTypes.DashboardDatePartChanged;
+    constructor(public payload: DatePartType) {}
+}
+
 export type PortfolioFlowActions =
+    | DashboardAsOfDateChanged
+    | DashboardCurrencyChanged
+    | DashboardDatePartChanged
     | GoToPortfolio
     | LoadPortfolioFlow
     | LoadPortfolioFlowFailure

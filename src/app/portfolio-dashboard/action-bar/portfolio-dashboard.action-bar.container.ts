@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
-import { DashboardAsOfDateChanged, DashboardCurrencyChanged, DashboardDatePartChanged } from "@core/state/flow/company-flow.actions";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
+import { DashboardAsOfDateChanged, DashboardCurrencyChanged, DashboardDatePartChanged } from "@core/state/flow/portfolio-flow.actions";
 import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
@@ -122,12 +122,10 @@ export class PortfolioDashboardActionBarContainer implements OnInit {
 
     public ngOnInit(): void {
         // TODO: BMR: These will be implemented in a followup PR once we know more about the data.
-        // this.selectedPeriod$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedPeriod));
-        // this.selectedCurrency$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedCurrency));
-        // this.selectedDatePartType$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedDatePart));
-        // this.alternateCurrency$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedCompanyAlternateCurrency));
-        // this.fye$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedCompanyFYE));
-        // this.availablePeriods$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedCompanyAvailablePeriods));
+        this.selectedPeriod$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedPeriod));
+        this.selectedCurrency$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedCurrency));
+        this.selectedDatePartType$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedDatePart));
+        this.availablePeriods$ = this.store$.pipe(select(fromPortfolioDashboard.getPortfolioAvailablePeriods));
         this.showCurrencySelector$ = this.store$.pipe(select(fromPortfolioDashboard.getDisplayCurrencySelector));
         this.showDateUnitSelector$ = this.store$.pipe(select(fromPortfolioDashboard.getDisplayDateUnitSelector));
         this.showHistoricalResults$ = this.store$.pipe(select(fromPortfolioDashboard.getDisplayHistoricalResults));

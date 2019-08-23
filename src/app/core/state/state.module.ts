@@ -3,6 +3,8 @@ import { CompanyEbitdaEffects } from "@core/state/company/ebitda/company-ebitda.
 import { CompanyKpiEffects } from "@core/state/company/kpi/company-kpi.effects";
 import { CompanyDocumentsEffects } from "@core/state/company/documents/company-documents.effects";
 import { CompanyRevenueEffects } from "@core/state/company/revenue/company-revenue.effects";
+import { PortfolioEbitdaEffects } from "@core/state/portfolio-dashboard/ebitda/portfolio-ebitda.effects";
+import { PortfolioRevenueEffects } from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.effects";
 import { PortfolioEffect } from "@core/state/portfolio/portfolio.effect";
 import { TeamMemberEffects } from "./team-member/team-member.effects";
 import { AuthEffect } from "./auth/auth.effect";
@@ -26,6 +28,8 @@ import * as PortfolioListingLayout from "@core/state/portfolio-list";
 import * as PortfolioDashboard from "@core/state/portfolio-dashboard";
 import * as CompanyRevenue from "@core/state/company/revenue";
 import * as CompanyEbitda from "@core/state/company/ebitda";
+import * as PortfolioRevenue from "@core/state/portfolio-dashboard/revenue";
+import * as PortfolioEbitda from "@core/state/portfolio-dashboard/ebitda";
 import * as CompanyKpi from "@core/state/company/kpi";
 
 const EFFECTS = [
@@ -43,7 +47,9 @@ const EFFECTS = [
     SnackbarEffect,
     TeamEffects,
     TeamMemberEffects,
-    ValuationEffects
+    ValuationEffects,
+    PortfolioEbitdaEffects,
+    PortfolioRevenueEffects
 ];
 
 const MODULES = [
@@ -60,7 +66,9 @@ const MODULES = [
     StoreModule.forFeature("companyDashboard", CompanyDashboard.reducers),
     StoreModule.forFeature("portfolioListing", PortfolioListingLayout.reducers),
     StoreModule.forFeature("portfolioDashboard", PortfolioDashboard.reducers),
-    StoreModule.forFeature("companyRevenue", CompanyRevenue.reducers),
+    StoreModule.forFeature("portfolioRevenue", CompanyRevenue.reducers),
+    StoreModule.forFeature("portfolioEbitda", PortfolioEbitda.reducers),
+    StoreModule.forFeature("companyRevenue", PortfolioRevenue.reducers),
     StoreModule.forFeature("companyEbitda", CompanyEbitda.reducers),
     StoreModule.forFeature("companyKpi", CompanyKpi.reducers),
 

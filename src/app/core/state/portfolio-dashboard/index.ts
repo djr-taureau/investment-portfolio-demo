@@ -1,11 +1,16 @@
+import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { CompanyTypeEnum } from "@core/domain/company.model";
+import { Portfolio } from "@core/domain/portfolio.model";
 import { getAllCompanies } from "@core/state";
+import * as ArrayUtil from "@util/array.util";
+import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromRoot from "@core/state";
 import * as fromPortfolio from "@core/state/portfolio/porfolio.reducer";
-import * as fromPortfolioDashboard from "@core/state/portfolio-dashboard/porfolio-dashboard.reducer";
+import * as fromPortfolioCompanyList from "@core/state/portfolio-dashboard/company-list/porfolio-company-list.reducer";
 import * as fromPortfolioDashboardOverviewLayout from "@core/state/portfolio-dashboard/porfolio-dashboard-overview-layout.reducer";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
+import moment from "moment";
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 // State Definition
@@ -13,7 +18,7 @@ import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/s
 
 // Define the combined state.
 export interface PortfolioDashboardState {
-    main: fromPortfolioDashboard.State;
+    companyList: fromPortfolioCompanyList.State;
     overviewLayout: fromPortfolioDashboardOverviewLayout.State;
     portfolio: fromPortfolio.State;
 }
@@ -25,7 +30,7 @@ export interface State extends fromRoot.AppState {
 
 // Define the combined reducers.
 export const reducers: ActionReducerMap<PortfolioDashboardState> = {
-    main: fromPortfolioDashboard.reducer,
+    companyList: fromPortfolioCompanyList.reducer,
     overviewLayout: fromPortfolioDashboardOverviewLayout.reducer,
     portfolio: fromPortfolio.reducer
 };
@@ -33,32 +38,32 @@ export const reducers: ActionReducerMap<PortfolioDashboardState> = {
 export const selectPortfolioDashboard = createFeatureSelector<PortfolioDashboardState>("portfolioDashboard");
 
 ///////////////////////////////////////////////////////////////////////////////////////////
-// Main Selectors
+// Company List Selectors
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-export const selectPortfolioDashboardMainState = createSelector(
+export const selectPortfolioDashboardCompanyListState = createSelector(
     selectPortfolioDashboard,
-    (state: PortfolioDashboardState) => state.main
+    (state: PortfolioDashboardState) => state.companyList
 );
 
 export const getSearchCompanyIds = createSelector(
-    selectPortfolioDashboardMainState,
-    fromPortfolioDashboard.getSearchResultIds
+    selectPortfolioDashboardCompanyListState,
+    fromPortfolioCompanyList.getSearchResultIds
 );
 
 export const getSearchQuery = createSelector(
-    selectPortfolioDashboardMainState,
-    fromPortfolioDashboard.getSearchQuery
+    selectPortfolioDashboardCompanyListState,
+    fromPortfolioCompanyList.getSearchQuery
 );
 
 export const getSearchLoading = createSelector(
-    selectPortfolioDashboardMainState,
-    fromPortfolioDashboard.getSearching
+    selectPortfolioDashboardCompanyListState,
+    fromPortfolioCompanyList.getSearching
 );
 
 export const getSearchError = createSelector(
-    selectPortfolioDashboardMainState,
-    fromPortfolioDashboard.getSearchError
+    selectPortfolioDashboardCompanyListState,
+    fromPortfolioCompanyList.getSearchError
 );
 
 export const getSearchResults = createSelector(
@@ -106,6 +111,21 @@ export const getDisplayHistoricalResults = createSelector(
 export const getDisplayProjectedResults = createSelector(
     selectPortfolioDashboardOverviewLayoutState,
     fromPortfolioDashboardOverviewLayout.getDisplayProjectedResults
+);
+
+export const getSelectedPeriod = createSelector(
+    selectPortfolioDashboardOverviewLayoutState,
+    fromPortfolioDashboardOverviewLayout.getSelectedPeriod
+);
+
+export const getSelectedDatePart = createSelector(
+    selectPortfolioDashboardOverviewLayoutState,
+    fromPortfolioDashboardOverviewLayout.getSelectedDatePart
+);
+
+export const getSelectedCurrency = createSelector(
+    selectPortfolioDashboardOverviewLayoutState,
+    fromPortfolioDashboardOverviewLayout.getSelectedCurrency
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -201,5 +221,23 @@ export const getInvestmentSummaryCountsByType = createSelector(
             { value: exited, name: CompanyTypeEnum.EXITED.toLowerCase(), color: "#dbe3f1" }
         ];
         return result;
+    }
+);
+
+export const getPortfolioAvailablePeriods = createSelector(
+    getPortfolio,
+    (portfolio: Portfolio) => {
+        let periods: any[] = ObjectUtil.getNestedPropIfExists(portfolio, ["funds", "0", "availablePeriods"], []);
+        periods = periods.map((p: string) => {
+            const asDate = new Date(p);
+            const qtr = moment(asDate).quarter();
+            return {
+                date: p,
+                id: asDate.getFullYear(),
+                quarterLabel: "CQ" + String(qtr) + " " + asDate.getFullYear(),
+                yearLabel: "CY " + asDate.getFullYear()
+            } as SelectorPeriod;
+        });
+        return periods;
     }
 );

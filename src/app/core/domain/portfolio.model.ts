@@ -1,3 +1,5 @@
+import { AvailablePeriod } from "@core/domain/company.model";
+
 export interface Portfolio {
     id: number;
     name: string;
@@ -9,7 +11,10 @@ export interface PortfolioFund {
     totalFund: number;
     fundInception: number;
     name: string;
-    id: number;
+    // id: number;
+    portfolio_id: number;
+    availablePeriods: AvailablePeriod[];
+    grossIRR: number;
 }
 
 export interface PortfolioInvestmentSummary {
@@ -23,4 +28,14 @@ export interface PortfolioInvestmentSummary {
     public: number;
     jv: number;
     exited: number;
+}
+export interface PortfolioPerformanceChartDataRequest {
+    id: string;
+    date: string;
+    metric_type;
+}
+
+export enum PortfolioMetricTypes {
+    EBITDA = "EBITDA",
+    REVENUE = "REVENUE"
 }

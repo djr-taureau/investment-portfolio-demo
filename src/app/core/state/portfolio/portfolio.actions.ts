@@ -30,7 +30,7 @@ export class LoadPortfolioSuccess implements Action {
 
 export class LoadPortfolioInvestmentSummary implements Action {
     readonly type = PortfolioActionTypes.LoadPortfolioInvestmentSummary;
-    constructor(public payload: { id: string; asof?: string }) {}
+    constructor(public payload: { id: string; asOf?: string }) {}
 }
 
 export class LoadPortfolioInvestmentSummaryFailure implements Action {

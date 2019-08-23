@@ -1,46 +1,47 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
-import { ChartDataPeriod } from "@core/domain/company.model";
+import { ChartDataPeriod, RevenueSeriesData } from "@core/domain/company.model";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
+import { PortfolioRevenueActions } from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.actions";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
 import { CompanyRevenueActions } from "@core/state/company/revenue/company-revenue.actions";
-import * as fromCompanyDashboard from "@core/state/company/dashboard";
+import * as fromPortfolioDashboard from "@core/state/portfolio-dashboard";
 import * as fromRoot from "@core/state";
-import * as fromCompanyRevenue from "@core/state/company/revenue/company-revenue.reducer";
+import * as fromPortfolioRevenue from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.reducer";
 import * as ObjectUtil from "@util/object.util";
 
-export interface CompanyRevenue {
-    data: fromCompanyRevenue.State;
+export interface PortfolioRevenue {
+    data: fromPortfolioRevenue.State;
 }
 
 export interface State extends fromRoot.AppState {
-    companyRevenue: CompanyRevenue;
+    companyRevenue: PortfolioRevenue;
 }
 
-export const reducers: ActionReducerMap<CompanyRevenue, CompanyRevenueActions> = {
-    data: fromCompanyRevenue.reducer
+export const reducers: ActionReducerMap<PortfolioRevenue, PortfolioRevenueActions> = {
+    data: fromPortfolioRevenue.reducer
 };
 
 export const selectCompanyRevenue = createFeatureSelector<any, any>("companyRevenue");
 
 export const selectCompanyRevenueDataState = createSelector(
     selectCompanyRevenue,
-    (state: CompanyRevenue) => state.data
+    (state: PortfolioRevenue) => state.data
 );
 
 export const getComparisonGraph = createSelector(
     selectCompanyRevenueDataState,
-    fromCompanyRevenue.getComparisonGraph
+    fromPortfolioRevenue.getComparisonGraph
 );
 
 export const getMetricsGraph = createSelector(
     selectCompanyRevenueDataState,
-    fromCompanyRevenue.getMetricsGraph
+    fromPortfolioRevenue.getMetricsGraph
 );
 
 export const getTableData = createSelector(
     selectCompanyRevenueDataState,
-    fromCompanyRevenue.getTableData
+    fromPortfolioRevenue.getTableData
 );
 
 /**
@@ -49,9 +50,9 @@ export const getTableData = createSelector(
  */
 export const getRevenueAsOf = createSelector(
     getMetricsGraph,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -75,9 +76,9 @@ export const getRevenueAsOf = createSelector(
  */
 export const getChangeFromPriorPeriod = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -101,9 +102,9 @@ export const getChangeFromPriorPeriod = createSelector(
  */
 export const getChangeFromPriorBudget = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -127,9 +128,9 @@ export const getChangeFromPriorBudget = createSelector(
  */
 export const getSummaryLineChartData = createSelector(
     getMetricsGraph,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -145,9 +146,9 @@ export const getSummaryLineChartData = createSelector(
 
 export const getBudgetLineChartData = createSelector(
     getMetricsGraph,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -164,9 +165,9 @@ export const getBudgetLineChartData = createSelector(
 
 export const getForecastLineChartData = createSelector(
     getMetricsGraph,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -188,9 +189,9 @@ export const getForecastLineChartData = createSelector(
  */
 export const getChangeFromPriorPeriodBarChartData = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -211,9 +212,9 @@ export const getChangeFromPriorPeriodBarChartData = createSelector(
  */
 export const getChangeFromPriorBudgetBarChartData = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedPeriod,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedPeriod,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -234,8 +235,8 @@ export const getChangeFromPriorBudgetBarChartData = createSelector(
  */
 export const getTableDataHeaders = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -260,8 +261,8 @@ export const getTableDataHeaders = createSelector(
  */
 export const getTableDataRevenueAsOf = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -284,8 +285,8 @@ export const getTableDataRevenueAsOf = createSelector(
  */
 export const getTableDataRevenueVsBud = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
@@ -308,8 +309,8 @@ export const getTableDataRevenueVsBud = createSelector(
  */
 export const getTableDataRevenueVsPq = createSelector(
     getTableData,
-    fromCompanyDashboard.getSelectedDatePart,
-    fromCompanyDashboard.getSelectedCurrency,
+    fromPortfolioDashboard.getSelectedDatePart,
+    fromPortfolioDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
