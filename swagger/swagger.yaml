@@ -90,7 +90,6 @@ paths:
           - name: "as_of_date"
             in: "query"
             description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-            required: true
             type: "string"
       responses:
         200:
@@ -118,7 +117,6 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
       responses:
         200:
@@ -169,7 +167,6 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
       responses:
         200:
@@ -197,7 +194,6 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
       responses:
         200:
@@ -373,12 +369,10 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
         - name: "metric_type"
           in: "query"
           description: "Metric Type for which to return data"
-          required: true
           type: "string"
           enum:
               - REVENUE
@@ -408,12 +402,10 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
         - name: "metric_type"
           in: "query"
           description: "Metric Typefor which to return data"
-          required: true
           type: "string"
           enum:
               - REVENUE
@@ -443,12 +435,10 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
         - name: "by"
           in: "query"
           description: "Aggregate of exposure point for the portfolio being requested"
-          required: true
           type: "string"
           enum:
             - "SECTOR"
@@ -484,7 +474,6 @@ paths:
         - name: "as_of_date"
           in: "query"
           description: "As-Of Date for which to return data, in the format YYYY-MM-dd"
-          required: true
           type: "string"
         - name: "top"
           in: "query"
@@ -505,7 +494,6 @@ paths:
         - name: "by"
           in: "query"
           description: "Aggregate grouping point for the portfolio being requested"
-          required: true
           type: "string"
           enum:
             - "SECTOR"
