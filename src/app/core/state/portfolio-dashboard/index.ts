@@ -2,7 +2,6 @@ import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-se
 import { CompanyTypeEnum } from "@core/domain/company.model";
 import { Portfolio } from "@core/domain/portfolio.model";
 import { getAllCompanies } from "@core/state";
-import * as ArrayUtil from "@util/array.util";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromRoot from "@core/state";

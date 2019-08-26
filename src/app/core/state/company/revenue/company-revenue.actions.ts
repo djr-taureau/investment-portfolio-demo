@@ -1,9 +1,9 @@
 import { Action } from "@ngrx/store";
 
 export enum CompanyRevenueActionTypes {
-    Get = "[CompanyRevenue] Get",
-    GetFailure = "[CompanyRevenue] Get Failure",
-    GetSuccess = "[CompanyRevenue] Get Success"
+    Get = "[Company Revenue] Get",
+    GetFailure = "[Company Revenue] Get - Failure",
+    GetSuccess = "[Company Revenue] Get - Success"
 }
 
 export class Get implements Action {

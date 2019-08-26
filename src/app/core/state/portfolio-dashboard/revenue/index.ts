@@ -4,7 +4,6 @@ import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
 import { PortfolioRevenueActions } from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.actions";
 import { createSelector, createFeatureSelector, ActionReducerMap } from "@ngrx/store";
-import { CompanyRevenueActions } from "@core/state/company/revenue/company-revenue.actions";
 import * as fromPortfolioDashboard from "@core/state/portfolio-dashboard";
 import * as fromRoot from "@core/state";
 import * as fromPortfolioRevenue from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.reducer";
@@ -15,32 +14,32 @@ export interface PortfolioRevenue {
 }
 
 export interface State extends fromRoot.AppState {
-    companyRevenue: PortfolioRevenue;
+    portfolioRevenue: PortfolioRevenue;
 }
 
 export const reducers: ActionReducerMap<PortfolioRevenue, PortfolioRevenueActions> = {
     data: fromPortfolioRevenue.reducer
 };
 
-export const selectCompanyRevenue = createFeatureSelector<any, any>("companyRevenue");
+export const selectPortfolioRevenue = createFeatureSelector<any, any>("portfolioRevenue");
 
-export const selectCompanyRevenueDataState = createSelector(
-    selectCompanyRevenue,
+export const selectPortfolioRevenueDataState = createSelector(
+    selectPortfolioRevenue,
     (state: PortfolioRevenue) => state.data
 );
 
 export const getComparisonGraph = createSelector(
-    selectCompanyRevenueDataState,
+    selectPortfolioRevenueDataState,
     fromPortfolioRevenue.getComparisonGraph
 );
 
 export const getMetricsGraph = createSelector(
-    selectCompanyRevenueDataState,
+    selectPortfolioRevenueDataState,
     fromPortfolioRevenue.getMetricsGraph
 );
 
 export const getTableData = createSelector(
-    selectCompanyRevenueDataState,
+    selectPortfolioRevenueDataState,
     fromPortfolioRevenue.getTableData
 );
 

@@ -1,9 +1,10 @@
+import { ChartDataPeriod } from "@core/domain/company.model";
 import { Action } from "@ngrx/store";
 
 export enum PortfolioRevenueActionTypes {
     Get = "[Portfolio Revenue] Get",
-    GetFailure = "[Portfolio Revenue] Get Failure",
-    GetSuccess = "[Portfolio Revenue] Get Success"
+    GetFailure = "[Portfolio Revenue] Get - Failure",
+    GetSuccess = "[Portfolio Revenue] Get - Success"
 }
 
 export class Get implements Action {
@@ -13,8 +14,7 @@ export class Get implements Action {
 
 export class GetSuccess implements Action {
     readonly type = PortfolioRevenueActionTypes.GetSuccess;
-    // TODO: BMR: What type is the payload?
-    constructor(public payload: any) {}
+    constructor(public payload: ChartDataPeriod) {}
 }
 
 export class GetFailure implements Action {

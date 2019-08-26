@@ -1,3 +1,4 @@
+import { ChartDataPeriod } from "@core/domain/company.model";
 import { PortfolioMetricTypes, PortfolioPerformanceChartDataRequest } from "@core/domain/portfolio.model";
 import { PortfolioService } from "@core/service/portfolio.service";
 import { PortfolioRevenueActionTypes } from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.actions";
@@ -29,7 +30,7 @@ export class PortfolioRevenueEffects {
         ),
         exhaustMap((request) =>
             this.portfolioService.getPerformanceByMetric(request).pipe(
-                map((result: any) => new PortfolioRevenueActions.GetSuccess(result)),
+                map((result: any) => new PortfolioRevenueActions.GetSuccess(result as ChartDataPeriod)),
                 catchError((error) => of(new PortfolioRevenueActions.GetFailure(error)))
             )
         )
@@ -38,7 +39,7 @@ export class PortfolioRevenueEffects {
     /**
      * Constructor.
      * @param actions$
-     * @param companyService
+     * @param PortfolioService
      * @param store$
      */
     constructor(private actions$: Actions, private portfolioService: PortfolioService, private store$: Store<any>) {}

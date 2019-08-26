@@ -16,9 +16,7 @@ export const initialState: State = {
 function save(data: any, state: State = initialState): State {
     return {
         ...state,
-        comparisonGraph: data.comparisonGraph,
-        metricsGraph: data.metricsGraph,
-        tableData: data.tableData
+        metricsGraph: data
     };
 }
 
