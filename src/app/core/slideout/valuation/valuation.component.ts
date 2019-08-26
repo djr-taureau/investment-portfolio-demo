@@ -1,3 +1,4 @@
+import { DecimalPipe } from "@angular/common";
 import { ValuationTableModel } from "./../../domain/company.model";
 import { Logger } from "app/util/logger";
 import { EventEmitter } from "@angular/core";
@@ -9,7 +10,8 @@ import { Component, OnInit } from "@angular/core";
 @Component({
     selector: "sbp-valuation-slideout",
     templateUrl: "./valuation.component.html",
-    styleUrls: ["./valuation.component.scss"]
+    styleUrls: ["./valuation.component.scss"],
+    providers: [DecimalPipe]
 })
 export class ValuationComponent implements OnInit {
     /**
@@ -55,85 +57,102 @@ export class ValuationComponent implements OnInit {
             this.exitDate = this.exitPresent ? value.valuationDetail.exit.reportingPeriod : null;
             // get the approved values
             const approvedRow: ValuationTableModel = new ValuationTableModel();
-            approvedRow.icInitial = (value.valuationDetail.icInitial.approved / 1000000).toFixed(1);
-            approvedRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.approved / 1000000).toFixed(1) : 0;
-            approvedRow.actual = (value.valuationDetail.actual.approved / 1000000).toFixed(1);
-            approvedRow.valuationForecast = (value.valuationDetail.valuationForecast.approved / 1000000).toFixed(1);
-            approvedRow.exit = this.exitPresent ? (value.valuationDetail.exit.approved / 1000000).toFixed(1) : 0;
+            approvedRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.approved / 1000000, "1.1-1");
+            approvedRow.icFollowOn1 = this.icFollowOn1Present
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.approved / 1000000, "1.1-1")
+                : 0.0;
+            approvedRow.actual = this.pipe.transform(value.valuationDetail.actual.approved / 1000000, "1.1-1");
+            approvedRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.approved / 1000000, "1.1-1");
+            approvedRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.approved / 1000000, "1.1-1") : 0;
             approvedRow.label = "Approved ($M)";
             this.dataSource.push(approvedRow);
             // get the invested values
             const investedRow: ValuationTableModel = new ValuationTableModel();
-            investedRow.icInitial = (value.valuationDetail.icInitial.invested / 1000000).toFixed(1);
-            investedRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.invested / 1000000).toFixed(1) : 0;
-            investedRow.actual = (value.valuationDetail.actual.invested / 1000000).toFixed(1);
-            investedRow.valuationForecast = (value.valuationDetail.valuationForecast.invested / 1000000).toFixed(1);
-            investedRow.exit = this.exitPresent ? (value.valuationDetail.exit.invested / 1000000).toFixed(1) : 0;
+            investedRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.invested / 1000000, "1.1-1");
+            investedRow.icFollowOn1 = this.icFollowOn1Present
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.invested / 1000000, "1.1-1")
+                : 0.0;
+            investedRow.actual = this.pipe.transform(value.valuationDetail.actual.invested / 1000000, "1.1-1");
+            investedRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.invested / 1000000, "1.1-1");
+            investedRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.invested / 1000000, "1.1-1") : 0.0;
             investedRow.label = "Invested ($M)";
             this.dataSource.push(investedRow);
             // get the realized values
             const realizedValueRow: ValuationTableModel = new ValuationTableModel();
-            realizedValueRow.icInitial = (value.valuationDetail.icInitial.realizedValue / 1000000).toFixed(1);
-            realizedValueRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.realizedValue / 1000000).toFixed(1) : 0;
-            realizedValueRow.actual = (value.valuationDetail.actual.realizedValue / 1000000).toFixed(1);
-            realizedValueRow.valuationForecast = (value.valuationDetail.valuationForecast.realizedValue / 1000000).toFixed(1);
-            realizedValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.realizedValue / 1000000).toFixed(1) : 0;
+            realizedValueRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.realizedValue / 1000000, "1.1-1");
+            realizedValueRow.icFollowOn1 = this.icFollowOn1Present
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.realizedValue / 1000000, "1.1-1")
+                : 0.0;
+            realizedValueRow.actual = this.pipe.transform(value.valuationDetail.actual.realizedValue / 1000000, "1.1-1");
+            realizedValueRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.realizedValue / 1000000, "1.1-1");
+            realizedValueRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.realizedValue / 1000000, "1.1-1") : 0.0;
             realizedValueRow.label = "Realized Value ($M)";
             this.dataSource.push(realizedValueRow);
             // get the unrealizedValue values
             const unrealizedValueRow: ValuationTableModel = new ValuationTableModel();
-            unrealizedValueRow.icInitial = (value.valuationDetail.icInitial.unrealizedValue / 1000000).toFixed(1);
-            unrealizedValueRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.unrealizedValue / 1000000).toFixed(1) : 0;
-            unrealizedValueRow.actual = (value.valuationDetail.actual.unrealizedValue / 1000000).toFixed(1);
-            unrealizedValueRow.valuationForecast = (value.valuationDetail.valuationForecast.unrealizedValue / 1000000).toFixed(1);
-            unrealizedValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.unrealizedValue / 1000000).toFixed(1) : 0;
+            unrealizedValueRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.unrealizedValue / 1000000, "1.1-1");
+            unrealizedValueRow.icFollowOn1 = this.icFollowOn1Present
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.unrealizedValue / 1000000, "1.1-1")
+                : 0.0;
+            unrealizedValueRow.actual = this.pipe.transform(value.valuationDetail.actual.unrealizedValue / 1000000, "1.1-1");
+            unrealizedValueRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.unrealizedValue / 1000000, "1.1-1");
+            unrealizedValueRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.unrealizedValue / 1000000, "1.1-1") : 0.0;
             unrealizedValueRow.label = "Unrealized Value ($M)";
             this.dataSource.push(unrealizedValueRow);
             // get the totalValue values
             const totalValueRow: ValuationTableModel = new ValuationTableModel();
-            totalValueRow.icInitial = (value.valuationDetail.icInitial.totalValue / 1000000).toFixed(1);
-            totalValueRow.icFollowOn1 = this.icFollowOn1Present ? (value.valuationDetail.icFollowOn1.totalValue / 1000000).toFixed(1) : 0;
-            totalValueRow.actual = (value.valuationDetail.actual.totalValue / 1000000).toFixed(1);
-            totalValueRow.valuationForecast = (value.valuationDetail.valuationForecast.totalValue / 1000000).toFixed(1);
-            totalValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.totalValue / 1000000).toFixed(1) : 0;
+            totalValueRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.totalValue / 1000000, "1.1-1");
+            totalValueRow.icFollowOn1 = this.icFollowOn1Present
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.totalValue / 1000000, "1.1-1")
+                : 0;
+            totalValueRow.actual = this.pipe.transform(value.valuationDetail.actual.totalValue / 1000000, "1.1-1");
+            totalValueRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.totalValue / 1000000, "1.1-1");
+            totalValueRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.totalValue / 1000000, "1.1-1") : 0;
             totalValueRow.label = "Total Value ($M)";
             this.dataSource.push(totalValueRow);
             // get the moic values
             const moicRow: ValuationTableModel = new ValuationTableModel();
-            moicRow.icInitial = value.valuationDetail.icInitial.moic.toString() + "x";
-            moicRow.icFollowOn1 = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.moic.toString() + "x" : null;
-            moicRow.actual = value.valuationDetail.actual.moic.toString() + "x";
-            moicRow.valuationForecast = value.valuationDetail.valuationForecast.moic.toString() + "x";
-            moicRow.exit = this.exitPresent ? value.valuationDetail.exit.moic.toString() + "x" : null;
+            moicRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.moic, "1.2-2") + "x";
+            moicRow.icFollowOn1 = this.icFollowOn1Present ? this.pipe.transform(value.valuationDetail.icFollowOn1.moic, "1.2-2") + "x" : null;
+            moicRow.actual = this.pipe.transform(value.valuationDetail.actual.moic, "1.2-2") + "x";
+            moicRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.moic, "1.2-2") + "x";
+            moicRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.moic, "1.2-2") + "x" : null;
             moicRow.label = "MOIC";
             this.dataSource.push(moicRow);
             // get the irr values
             const irrRow: ValuationTableModel = new ValuationTableModel();
-            irrRow.icInitial = value.valuationDetail.icInitial.irr.toString() + "%";
-            irrRow.icFollowOn1 = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.irr.toString() + "%" : null;
-            irrRow.actual = value.valuationDetail.actual.irr.toString() + "%";
-            irrRow.valuationForecast = value.valuationDetail.valuationForecast.irr.toString() + "%";
-            irrRow.exit = this.exitPresent ? value.valuationDetail.exit.irr.toString() + "%" : null;
+            irrRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.irr, "1.1-1") + "%";
+            irrRow.icFollowOn1 = this.icFollowOn1Present ? this.pipe.transform(value.valuationDetail.icFollowOn1.irr, "1.1-1") + "%" : null;
+            irrRow.actual = this.pipe.transform(value.valuationDetail.actual.irr, "1.1-1") + "%";
+            irrRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.irr, "1.1-1") + "%";
+            irrRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.irr, "1.1-1") + "%" : null;
             irrRow.label = "Gross IRR";
             this.dataSource.push(irrRow);
             // get the companyEquityValue values
             const companyEquityValueRow: ValuationTableModel = new ValuationTableModel();
-            companyEquityValueRow.icInitial = (value.valuationDetail.icInitial.companyEquityValue / 1000000).toFixed(1);
+            companyEquityValueRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.companyEquityValue / 1000000, "1.1-1");
             companyEquityValueRow.icFollowOn1 = this.icFollowOn1Present
-                ? (value.valuationDetail.icFollowOn1.companyEquityValue / 1000000).toFixed(1)
-                : 0;
-            companyEquityValueRow.actual = (value.valuationDetail.actual.companyEquityValue / 1000000).toFixed(1);
-            companyEquityValueRow.valuationForecast = (value.valuationDetail.valuationForecast.companyEquityValue / 1000000).toFixed(1);
-            companyEquityValueRow.exit = this.exitPresent ? (value.valuationDetail.exit.companyEquityValue / 1000000).toFixed(1) : 0;
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.companyEquityValue / 1000000, "1.1-1")
+                : 0.0;
+            companyEquityValueRow.actual = this.pipe.transform(value.valuationDetail.actual.companyEquityValue / 1000000, "1.1-1");
+            companyEquityValueRow.valuationForecast = this.pipe.transform(
+                value.valuationDetail.valuationForecast.companyEquityValue / 1000000,
+                "1.1-1"
+            );
+            companyEquityValueRow.exit = this.exitPresent
+                ? this.pipe.transform(value.valuationDetail.exit.companyEquityValue / 1000000, "1.1-1")
+                : 0.0;
             companyEquityValueRow.label = "Company Equity Value ($M)";
             this.dataSource.push(companyEquityValueRow);
             // get the ownership values
             const ownershipRow: ValuationTableModel = new ValuationTableModel();
-            ownershipRow.icInitial = value.valuationDetail.icInitial.ownership.toString() + "%";
-            ownershipRow.icFollowOn1 = this.icFollowOn1Present ? value.valuationDetail.icFollowOn1.ownership.toString() + "%" : null;
-            ownershipRow.actual = value.valuationDetail.actual.ownership.toString() + "%";
-            ownershipRow.valuationForecast = value.valuationDetail.valuationForecast.ownership.toString() + "%";
-            ownershipRow.exit = this.exitPresent ? value.valuationDetail.exit.ownership.toString() + "%" : null;
+            ownershipRow.icInitial = this.pipe.transform(value.valuationDetail.icInitial.ownership, "1.1-1") + "%";
+            ownershipRow.icFollowOn1 = this.icFollowOn1Present
+                ? this.pipe.transform(value.valuationDetail.icFollowOn1.ownership, "1.1-1") + "%"
+                : null;
+            ownershipRow.actual = this.pipe.transform(value.valuationDetail.actual.ownership, "1.1-1") + "%";
+            ownershipRow.valuationForecast = this.pipe.transform(value.valuationDetail.valuationForecast.ownership, "1.1-1") + "%";
+            ownershipRow.exit = this.exitPresent ? this.pipe.transform(value.valuationDetail.exit.ownership, "1.1-1") + "%" : null;
             ownershipRow.label = "Ownership";
             this.dataSource.push(ownershipRow);
         }
@@ -190,7 +209,7 @@ export class ValuationComponent implements OnInit {
         this.closePanel.emit();
     }
 
-    constructor() {}
+    constructor(private pipe: DecimalPipe) {}
 
     ngOnInit() {}
 }
