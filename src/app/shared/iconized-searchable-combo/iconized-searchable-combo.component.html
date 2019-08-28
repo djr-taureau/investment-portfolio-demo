@@ -1,13 +1,13 @@
 <div class="example-wrapper">
     <!-- ICON IN THE BOX -->
     <kendo-dropdownlist [data]="data"
+                        [value]="getDefaultValue()"
                         [textField]="textField"
                         [valueField]="valueField"
                         [valuePrimitive]="false"
-                        [(ngModel)]="selectedItem"
                         [filterable]="showFilter"
-                        (filterChange)="handleFilter($event)"
                         [popupSettings]="popupSettings"
+                        (filterChange)="handleFilter($event)"
                         (selectionChange)="onSelectionChange($event)"
                         class="list">
         <!-- THIS IS WHAT POPULATES THE COMBO AFTER SELECTION -->

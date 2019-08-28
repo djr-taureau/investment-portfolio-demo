@@ -21,6 +21,10 @@ export class IconizedSearchableComboComponent implements OnInit {
             this.source = items.slice();
         }
     }
+
+    /**
+     * NOTE: It's important to set a default array with at least one item so we can always set the
+     */
     public data: Array<any>;
     public source: Array<any>;
 
@@ -58,6 +62,14 @@ export class IconizedSearchableComboComponent implements OnInit {
     public selectedItem: IconizedItem;
 
     public currentSearchValue = "";
+
+    /**
+     * It appears that we're always setting the selected value to the last element so we'll do it here as well.
+     * Attempts to set it via the Kendo DropDown API were unsuccessful.
+     */
+    public getDefaultValue(): any {
+        return this.data.length > 0 ? this.data[this.data.length - 1] : {};
+    }
 
     /**
      * Sets list data source to filtered set

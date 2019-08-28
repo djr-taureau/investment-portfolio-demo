@@ -102,14 +102,14 @@ export const getSelectedCompanyAvailablePeriods = createSelector(
     getSelectedDatePart,
     (selectedCompany: Company, selectedDatePart: DatePartType) => {
         let periods: any[] = ObjectUtil.getNestedPropIfExists(selectedCompany, ["availablePeriods"], []);
-        periods = periods.sort(ArrayUtil.sortDateYYYYMMDD("date"));
-        periods = periods.map((p: SelectorPeriod) => {
+        periods = periods.map((p: SelectorPeriod, index) => {
             return {
                 ...p,
                 quarterLabel: "FQ" + p.financialQuarter + " " + new Date(p.date).getFullYear(),
                 yearLabel: "FY " + new Date(p.date).getFullYear()
             };
         });
+        periods = periods.sort(ArrayUtil.sortDateYYYYMMDD("date"));
         return periods;
     }
 );
