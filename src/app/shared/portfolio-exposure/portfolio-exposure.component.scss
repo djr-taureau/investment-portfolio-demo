@@ -1,0 +1,99 @@
+@import "../../../assets/scss/variables.scss";
+
+:host {
+
+    .card-container {
+        padding: 0;
+        position: relative;
+        width: 334px;
+        height: 170px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        // border: solid 2px $dark-sky-blue;
+        background-color: white;
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: 168px 73px 73px;
+        grid-template-rows: 23px 45px 113px;
+        transition: all 2s ease-out !important;
+
+        .box {
+            padding: 4px;
+
+        }
+
+        .title {
+            padding-left: 10px;
+            margin-left: 10px;
+            padding-top: 5px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            height: 16px;
+            font-family: PostGrotesk;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: 0.5px;
+            color: $grey-blue;
+        }
+
+        .value {
+            text-align: center;
+            ont-family: PostGrotesk;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: -0.2px;
+            text-align: right;
+            color: $dark;
+            font-size: 40px;
+            margin-top: -26px;
+        }
+
+        .symbol-label {
+            opacity: 0.75;
+            font-family: PostGrotesk;
+            font-size: 14px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            color: $grey-blue;
+        }
+
+        .value-as-line {
+            .line {
+                height: 4px;
+                border-radius: 2px;
+            }
+        }
+
+        .portfolio-value {
+            font-family: PostGrotesk;
+            font-size: 16px;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: right;
+            color: $dark;
+        }
+
+        .portfolio-perc {
+            font-family: PostGrotesk;
+            font-size: 14px;
+            font-weight: normal;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: right;
+            color: $grey-blue;
+        }
+    }
+}

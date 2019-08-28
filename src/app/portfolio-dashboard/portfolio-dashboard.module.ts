@@ -1,7 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { PortfolioDashboardActionBarModule } from "@app/portfolio-dashboard/action-bar/portfolio-dashboard.action-bar.module";
+import { PortfolioEbitdaDetailContainer } from "@app/portfolio-dashboard/financial/ebitda/portfolio-ebitda-detail.container";
+import { FxExposureContainer } from "@app/portfolio-dashboard/financial/fx-exposure/fx-exposure.container";
 import { PortfolioDashboardFinancialComponent } from "@app/portfolio-dashboard/financial/portfolio-dashboard-financial.component";
 import { PortfolioDashboardFinancialContainer } from "@app/portfolio-dashboard/financial/portfolio-dashboard-financial.container";
+import { PorfolioRevenueDetailContainer } from "@app/portfolio-dashboard/financial/revenue/porfolio-revenue-detail.container";
+import { SectorExposureContainer } from "@app/portfolio-dashboard/financial/sector-exposure/sector-exposure.container";
 import { PortfolioDashboardInvestmentComponent } from "@app/portfolio-dashboard/investment/portfolio-dashboard-investment.component";
 import { PortfolioDashboardNavBarModule } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar.module";
 import { SharedModule } from "@shared/shared.module";
@@ -15,7 +19,11 @@ const COMPONENTS: any = [
     PortfolioDashboardComponent,
     PortfolioDashboardInvestmentComponent,
     PortfolioDashboardFinancialComponent,
-    PortfolioDashboardFinancialContainer
+    PortfolioDashboardFinancialContainer,
+    PorfolioRevenueDetailContainer,
+    PortfolioEbitdaDetailContainer,
+    FxExposureContainer,
+    SectorExposureContainer
 ];
 const PORTFOLIO_DASHBOARD_ROUTES: Routes = [
     {
@@ -33,7 +41,7 @@ const PORTFOLIO_DASHBOARD_ROUTES: Routes = [
             },
             {
                 path: "financials",
-                component: PortfolioDashboardFinancialComponent
+                component: PortfolioDashboardFinancialContainer
             }
         ]
     }

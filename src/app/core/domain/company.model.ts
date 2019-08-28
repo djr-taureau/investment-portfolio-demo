@@ -6,6 +6,7 @@ export interface AvailablePeriod {
     // quarter: string;
     // year: number;
     financialQuarter: number;
+    fiscalQuarter: number;
     date: string;
     isProjection?: boolean;
 }

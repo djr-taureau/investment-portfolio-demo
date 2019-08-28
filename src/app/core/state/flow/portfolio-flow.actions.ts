@@ -3,6 +3,7 @@ import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/p
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
 import { Portfolio } from "@core/domain/portfolio.model";
+import { CompanyFlowActionTypes } from "@core/state/flow/company-flow.actions";
 import { Action } from "@ngrx/store";
 import { NavigationBarLink } from "@shared/navigation-bar/navigation-bar-link";
 
@@ -18,7 +19,10 @@ export enum PortfolioFlowActionTypes {
 
     DashboardCurrencyChanged = "[Portfolio Flow] Dashboard - Currency Changed",
     DashboardDatePartChanged = "[Portfolio Flow] Dashboard - Date Part Changed",
-    DashboardAsOfDateChanged = "[Portfolio Flow] Dashboard - As of Date Changed"
+    DashboardAsOfDateChanged = "[Portfolio Flow] Dashboard - As of Date Changed",
+
+    ToggleRevenueDetail = "[Portfolio Flow] Dashboard - Toggle Revenue Detail",
+    ToggleEbitdaDetail = "[Portfolio Flow] Dashboard - Toggle EBITDA Detail"
 }
 
 export class GoToPortfolio implements Action {
@@ -72,6 +76,18 @@ export class DashboardDatePartChanged implements Action {
     constructor(public payload: DatePartType) {}
 }
 
+export class ToggleEbitdaDetail implements Action {
+    readonly type = PortfolioFlowActionTypes.ToggleEbitdaDetail;
+
+    constructor(public payload?: string) {}
+}
+
+export class ToggleRevenueDetail implements Action {
+    readonly type = PortfolioFlowActionTypes.ToggleRevenueDetail;
+
+    constructor(public payload?: string) {}
+}
+
 export type PortfolioFlowActions =
     | DashboardAsOfDateChanged
     | DashboardCurrencyChanged
@@ -81,4 +97,6 @@ export type PortfolioFlowActions =
     | LoadPortfolioFlowFailure
     | LoadPortfolioFlowSuccess
     | PortfolioNavigationItemClicked
-    | PortfolioDashboardOverviewNavigationItemClicked;
+    | PortfolioDashboardOverviewNavigationItemClicked
+    | ToggleEbitdaDetail
+    | ToggleRevenueDetail;

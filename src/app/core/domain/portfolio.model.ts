@@ -35,7 +35,33 @@ export interface PortfolioPerformanceChartDataRequest {
     metric_type;
 }
 
+export interface PortfolioExposureDataRequest {
+    id: string;
+    as_of: string;
+    metric_type: string;
+    by: string;
+}
+
 export enum PortfolioMetricTypes {
     EBITDA = "EBITDA",
     REVENUE = "REVENUE"
+}
+
+export enum PortfolioExposureType {
+    SECTOR = "SECTOR",
+    FX = "FX",
+    COUNTRY = "COUNTRY",
+    DEALLEAD = "DEALLEAD",
+    REGION = "REGION",
+    TYPE = "TYPE",
+    STAGE = "STAGE"
+}
+
+export interface PortfolioExposure {
+    id: string;
+    metric: PortfolioMetricTypes;
+    type: PortfolioExposureType;
+    label: string;
+    portfolioValue: number;
+    portfolioPercentage: number;
 }

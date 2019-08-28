@@ -105,25 +105,13 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
      * Determines if the historical results are visible.
      */
     @Input()
-    public showHistoricalResults = true;
+    public showHistoricalResults = false;
 
     /**
      * Determines if the projected results are visible.
      */
     @Input()
-    public showProjectedResults = true;
-
-    /**
-     * The units that represent the historical Units
-     */
-    // @Input()
-    // public get historicalUnits(): SelectorPeriod[];
-
-    /**
-     * The units that represent the projected Unit
-     */
-    // @Input()
-    // public get projectedUnits(): SelectorPeriod[];
+    public showProjectedResults = false;
 
     // -----------------------------------------------
     // PUBLIC

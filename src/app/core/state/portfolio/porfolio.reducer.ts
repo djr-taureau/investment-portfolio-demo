@@ -1,6 +1,6 @@
 import { appRoutePaths } from "@app/app.routes";
 import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
-import { Portfolio, PortfolioInvestmentSummary } from "@core/domain/portfolio.model";
+import { Portfolio, PortfolioExposure, PortfolioInvestmentSummary } from "@core/domain/portfolio.model";
 import { PortfolioActions, PortfolioActionTypes } from "@core/state/portfolio/portfolio.actions";
 
 export interface State {

@@ -1,16 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { expandOutFromTop } from "@shared/animations/slide.animations";
 import { Logger } from "@util/logger";
 
 @Component({
     selector: "sbp-portfolio-dashboard-financial",
     templateUrl: "./portfolio-dashboard-financial.component.html",
-    styleUrls: ["./portfolio-dashboard-financial.component.scss"]
+    styleUrls: ["./portfolio-dashboard-financial.component.scss"],
+    animations: [expandOutFromTop]
 })
 export class PortfolioDashboardFinancialComponent implements OnInit {
     /**
      * Internal logger.
      */
     private static logger: Logger = Logger.getLogger("PortfolioDashboardFinancialComponent");
+    private _revenueSeries1BarChartData;
+    private _revenueSeries2BarChartData;
 
     // REVENUE
     @Input()
@@ -20,16 +24,28 @@ export class PortfolioDashboardFinancialComponent implements OnInit {
     public revenueSummaryLineChartData;
 
     @Input()
-    public revenueSeries1BarChartData;
+    public set revenueSeries1BarChartData(value) {
+        PortfolioDashboardFinancialComponent.logger.debug(`revenueSeries1BarChartData:${JSON.stringify(value)}`);
+        this._revenueSeries1BarChartData = value;
+    }
+    public get revenueSeries1BarChartData() {
+        return this._revenueSeries1BarChartData;
+    }
 
     @Input()
-    public revenueSeries2BarChartData;
+    public set revenueSeries2BarChartData(value) {
+        PortfolioDashboardFinancialComponent.logger.debug(`revenueSeries2BarChartData:${JSON.stringify(value)}`);
+        this._revenueSeries2BarChartData = value;
+    }
+    public get revenueSeries2BarChartData() {
+        return this._revenueSeries2BarChartData;
+    }
 
     @Input()
-    public revenueSeries1Label = "vs PY";
+    public revenueSeries1Label;
 
     @Input()
-    public revenueSeries2Label = "vs Bud";
+    public revenueSeries2Label;
 
     @Input()
     public revenueSeries1Value;
@@ -86,6 +102,15 @@ export class PortfolioDashboardFinancialComponent implements OnInit {
 
     @Output()
     public revenueClick: EventEmitter<any> = new EventEmitter<any>();
+
+    @Input()
+    public showRevenueDetail = false;
+
+    @Input()
+    public showCashDetail = false;
+
+    @Input()
+    public showEBITDADetail = false;
 
     // HANDLERS
     public onEbitdaClick($event) {

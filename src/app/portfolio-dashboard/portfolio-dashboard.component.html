@@ -1,5 +1,6 @@
 <div fxLayout="column"
-     fxLayoutAlign="start stretch">
+     fxLayoutAlign="start stretch"
+     fxFlex>
 
     <sbp-portfolio-navbar-container></sbp-portfolio-navbar-container>
     <!-- This is this view: https://zpl.io/VYrd0gn -->
@@ -21,7 +22,8 @@
     </div>
 
     <!-- This is where a container will go that holds widgets such as valuation, cashburn, market value, et al -->
-    <div class="content-container">
+    <div class="content-container"
+         fxFlex>
         <router-outlet></router-outlet>
     </div>
 

@@ -1,11 +1,12 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { CompanyTypeEnum } from "@core/domain/company.model";
-import { Portfolio } from "@core/domain/portfolio.model";
+import { Portfolio, PortfolioExposure, PortfolioExposureType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
 import { getAllCompanies } from "@core/state";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
 import * as fromRoot from "@core/state";
 import * as fromPortfolio from "@core/state/portfolio/porfolio.reducer";
+import * as fromPortfolioExposures from "@core/state/portfolio-dashboard/exposures/portfolio-exposures.reducer";
 import * as fromPortfolioCompanyList from "@core/state/portfolio-dashboard/company-list/porfolio-company-list.reducer";
 import * as fromPortfolioDashboardOverviewLayout from "@core/state/portfolio-dashboard/porfolio-dashboard-overview-layout.reducer";
 import { ActionReducerMap, createFeatureSelector, createSelector } from "@ngrx/store";
@@ -20,6 +21,7 @@ export interface PortfolioDashboardState {
     companyList: fromPortfolioCompanyList.State;
     overviewLayout: fromPortfolioDashboardOverviewLayout.State;
     portfolio: fromPortfolio.State;
+    exposures: fromPortfolioExposures.State;
 }
 
 // Extend the root app state with the context specific state defined here.
@@ -31,7 +33,8 @@ export interface State extends fromRoot.AppState {
 export const reducers: ActionReducerMap<PortfolioDashboardState> = {
     companyList: fromPortfolioCompanyList.reducer,
     overviewLayout: fromPortfolioDashboardOverviewLayout.reducer,
-    portfolio: fromPortfolio.reducer
+    portfolio: fromPortfolio.reducer,
+    exposures: fromPortfolioExposures.reducer
 };
 
 export const selectPortfolioDashboard = createFeatureSelector<PortfolioDashboardState>("portfolioDashboard");
@@ -125,6 +128,16 @@ export const getSelectedDatePart = createSelector(
 export const getSelectedCurrency = createSelector(
     selectPortfolioDashboardOverviewLayoutState,
     fromPortfolioDashboardOverviewLayout.getSelectedCurrency
+);
+
+export const getShowEBITDADetail = createSelector(
+    selectPortfolioDashboardOverviewLayoutState,
+    fromPortfolioDashboardOverviewLayout.getShowEBITDADetail
+);
+
+export const getShowRevenueDetail = createSelector(
+    selectPortfolioDashboardOverviewLayoutState,
+    fromPortfolioDashboardOverviewLayout.getShowRevenueDetail
 );
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -238,5 +251,48 @@ export const getPortfolioAvailablePeriods = createSelector(
             } as SelectorPeriod;
         });
         return periods;
+    }
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////
+// Portfolio Exposure Selectors
+///////////////////////////////////////////////////////////////////////////////////////////
+
+// export const getExposures = (state: State) => state.exposures;
+
+export const selectPortfolioExposuresState = createSelector(
+    selectPortfolioDashboard,
+    (state: PortfolioDashboardState) => state.exposures
+);
+
+export const {
+    selectIds: getExposureIds,
+    selectEntities: getExposureEntities,
+    selectAll: getAllExposures,
+    selectTotal: getTotalExposures
+} = fromPortfolioExposures.adapter.getSelectors(selectPortfolioExposuresState);
+
+// export const getAllExposures = createSelector(
+//     selectPortfolioExposuresState,
+//     fromPortfolioExposures.getExposures
+// );
+
+export const getAllPortfolioRevenueFxExposures = createSelector(
+    getAllExposures,
+    (allExposures: PortfolioExposure[]) => {
+        const result = (allExposures || []).filter(
+            (e: PortfolioExposure) => e.metric === PortfolioMetricTypes.REVENUE && e.type === PortfolioExposureType.FX
+        );
+        return result;
+    }
+);
+
+export const getAllPortfolioRevenueSectorExposures = createSelector(
+    getAllExposures,
+    (allExposures: PortfolioExposure[]) => {
+        const result = allExposures.filter(
+            (e: PortfolioExposure) => e.metric === PortfolioMetricTypes.REVENUE && e.type === PortfolioExposureType.SECTOR
+        );
+        return result;
     }
 );

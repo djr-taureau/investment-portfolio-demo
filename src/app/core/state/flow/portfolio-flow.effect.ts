@@ -1,8 +1,18 @@
 import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
-import { getSelectedCompanyId } from "@core/state";
+import { PortfolioExposureType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
 import { getPortfolio } from "@core/state/portfolio-dashboard";
-import { SelectAsOfDate, SelectCurrency, SelectDatePart } from "@core/state/portfolio-dashboard/portfolio-dashboard-overview-layout.actions";
+import {
+    SelectAsOfDate,
+    SelectCurrency,
+    SelectDatePart,
+    ToggleEbitdaDetailExpanded,
+    ToggleRevenueDetailExpanded
+} from "@core/state/portfolio-dashboard/portfolio-dashboard-overview-layout.actions";
 import * as PortfolioDashboardOverviewLayoutActions from "@core/state/portfolio-dashboard/portfolio-dashboard-overview-layout.actions";
+import {
+    LoadPortfolioRevenueFxExposures,
+    LoadPortfolioRevenueSectorExposures
+} from "@core/state/portfolio-dashboard/exposures/portfolio-exposure.actions";
 import { LoadPortfolio, LoadPortfolioInvestmentSummary } from "@core/state/portfolio/portfolio.actions";
 import * as CompanyActions from "../company/company.actions";
 import * as FlowActions from "./portfolio-flow.actions";
@@ -31,14 +41,7 @@ export class PortfolioFlowEffect {
     @Effect()
     loadPortfolioFlow$: Observable<Action> = this.actions$.pipe(
         ofType(PortfolioFlowActionTypes.LoadPortfolioFlow),
-        concatMap(() => [
-            new CompanyActions.GetAll(),
-            new LoadPortfolioCompaniesSuccess(),
-            new LoadPortfolio("1")
-            // new PortfolioEbitdaActions.Get("1"),
-            // new PortfolioRevenueActions.Get("1"),
-            // new LoadPortfolioInvestmentSummary({ id: "1" })
-        ])
+        concatMap(() => [new CompanyActions.GetAll(), new LoadPortfolioCompaniesSuccess(), new LoadPortfolio("1")])
     );
 
     /**
@@ -75,6 +78,22 @@ export class PortfolioFlowEffect {
             actions.push(new PortfolioEbitdaActions.Get({ id: String(portfolio.id), asOf: lastPeriod }));
             actions.push(new PortfolioRevenueActions.Get({ id: String(portfolio.id), asOf: lastPeriod }));
             actions.push(new LoadPortfolioInvestmentSummary({ id: String(portfolio.id), asOf: lastPeriod }));
+            actions.push(
+                new LoadPortfolioRevenueFxExposures({
+                    id: String(portfolio.id),
+                    as_of: lastPeriod,
+                    metric_type: PortfolioMetricTypes.REVENUE,
+                    by: PortfolioExposureType.FX
+                })
+            );
+            actions.push(
+                new LoadPortfolioRevenueSectorExposures({
+                    id: String(portfolio.id),
+                    as_of: lastPeriod,
+                    metric_type: PortfolioMetricTypes.REVENUE,
+                    by: PortfolioExposureType.SECTOR
+                })
+            );
             return actions;
         })
     );
@@ -160,9 +179,34 @@ export class PortfolioFlowEffect {
             new SelectAsOfDate(request.selectedPeriod),
             new PortfolioEbitdaActions.Get({ id: String(request.portfolio.id), asOf: request.selectedPeriod.date }),
             new PortfolioRevenueActions.Get({ id: String(request.portfolio.id), asOf: request.selectedPeriod.date }),
-            new LoadPortfolioInvestmentSummary({ id: String(request.portfolio.id), asOf: request.selectedPeriod.date })
+            new LoadPortfolioInvestmentSummary({ id: String(request.portfolio.id), asOf: request.selectedPeriod.date }),
+            new LoadPortfolioRevenueFxExposures({
+                id: String(request.portfolio.id),
+                as_of: request.selectedPeriod.date,
+                metric_type: PortfolioMetricTypes.REVENUE,
+                by: PortfolioExposureType.FX
+            }),
+            new LoadPortfolioRevenueSectorExposures({
+                id: String(request.portfolio.id),
+                as_of: request.selectedPeriod.date,
+                metric_type: PortfolioMetricTypes.REVENUE,
+                by: PortfolioExposureType.SECTOR
+            })
         ])
     );
+
+    @Effect()
+    toggleEBITDADetail$: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.ToggleEbitdaDetail>(PortfolioFlowActionTypes.ToggleEbitdaDetail),
+        concatMap(() => [new ToggleEbitdaDetailExpanded()])
+    );
+
+    @Effect()
+    toggleRevenueDetail$: Observable<Action> = this.actions$.pipe(
+        ofType<FlowActions.ToggleRevenueDetail>(PortfolioFlowActionTypes.ToggleRevenueDetail),
+        concatMap(() => [new ToggleRevenueDetailExpanded()])
+    );
+
     /**
      * Constructor
      */

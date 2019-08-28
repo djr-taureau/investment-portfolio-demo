@@ -1,14 +1,17 @@
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
+import { ToggleEbitdaDetail, ToggleRevenueDetail } from "@core/state/flow/portfolio-flow.actions";
 import * as fromPortfolioEbitda from "@core/state/portfolio-dashboard/ebitda";
 import * as fromPortfolioRevenue from "@core/state/portfolio-dashboard/revenue";
 import { select, Store } from "@ngrx/store";
+import { expandOutFromTop } from "@shared/animations/slide.animations";
 import { Logger } from "@util/logger";
 import { Observable, BehaviorSubject } from "rxjs";
 
 @Component({
     selector: "sbp-portfolio-dashboard-financial-container",
-    templateUrl: "./portfolio-dashboard-financial.container.html"
+    templateUrl: "./portfolio-dashboard-financial.container.html",
+    animations: [expandOutFromTop]
 })
 export class PortfolioDashboardFinancialContainer implements OnInit {
     /**
@@ -40,6 +43,16 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
      * List of revenue summary line chart data.
      */
     public revenueSummaryLineChartData$: Observable<RevenueSeriesData[]>;
+
+    /**
+     * The label for the first microbar chart
+     */
+    public revenueSeries1Label$: Observable<string>;
+
+    /**
+     * The label for the second microbar chart
+     */
+    public revenueSeries2Label$: Observable<string>;
 
     /**
      * List of revenue budget line chart data.
@@ -90,6 +103,16 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
     public ebitdaChangeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
 
     /**
+     * The label for the first microbar chart
+     */
+    public ebitdaSeries1Label$: Observable<string>;
+
+    /**
+     * The label for the second microbar chart
+     */
+    public ebitdaSeries2Label$: Observable<string>;
+
+    /**
      * The total kpi for a given period.
      */
     public kpiAsOf$: Observable<number>;
@@ -132,12 +155,6 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
     public ngOnInit() {
         PortfolioDashboardFinancialContainer.logger.debug(`ngOnInit()`);
 
-        // this.selectedCurrency$ = this.store$.pipe(select(fromPortfolioDashboard.getSelectedCurrency));
-        // this.selectedCurrency$.subscribe((v) => {
-        //     this.selectedCurrencyCode = v.currencyCode;
-        //     this.selectedCurrencySymbol = v.currencySymbol;
-        // });
-
         // Revenue summary chart data.
         this.revenueAsOf$ = this.store$.pipe(select(fromPortfolioRevenue.getRevenueAsOf));
         this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromPortfolioRevenue.getChangeFromPriorPeriod));
@@ -145,6 +162,9 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getSummaryLineChartData));
         this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getChangeFromPriorPeriodBarChartData));
         this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getChangeFromPriorBudgetBarChartData));
+
+        this.revenueSeries1Label$ = this.store$.pipe(select(fromPortfolioRevenue.getSeries1Label));
+        this.revenueSeries2Label$ = this.store$.pipe(select(fromPortfolioRevenue.getSeries2Label));
 
         //  Revenue Detail Chart Data
         this.revenueBudgetLineChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getBudgetLineChartData));
@@ -157,6 +177,9 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
         this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromPortfolioEbitda.getSummaryLineChartData));
         this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromPortfolioEbitda.getChangeFromPriorPeriodBarChartData));
         this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromPortfolioEbitda.getChangeFromPriorBudgetBarChartData));
+
+        this.ebitdaSeries1Label$ = this.store$.pipe(select(fromPortfolioEbitda.getSeries1Label));
+        this.ebitdaSeries2Label$ = this.store$.pipe(select(fromPortfolioEbitda.getSeries2Label));
     }
 
     /**
@@ -164,7 +187,7 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
      */
     public onRevenueClick() {
         PortfolioDashboardFinancialContainer.logger.debug(`onRevenueClick()`);
-        // this.store$.dispatch(new CompanyFlowActions.ToggleRevenueDetail());
+        this.store$.dispatch(new ToggleRevenueDetail());
     }
 
     /**
@@ -172,6 +195,6 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
      */
     public onEbitdaClick() {
         PortfolioDashboardFinancialContainer.logger.debug(`onEbitdaClick()`);
-        // this.store$.dispatch(new CompanyFlowActions.ToggleEBITDADetail());
+        this.store$.dispatch(new ToggleEbitdaDetail());
     }
 }

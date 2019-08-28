@@ -88,8 +88,8 @@ function selectNavLink(selectedLink: PortfolioDashboardNavBarLink, state: State 
         ...state,
         selectedNavLink: selectedLink,
         displayDateUnitSelector: displayFinancialControls(selectedLink),
-        displayHistoricalResults: displayFinancialControls(selectedLink),
-        displayProjectedResults: displayFinancialControls(selectedLink)
+        displayHistoricalResults: displayFinancialControls(selectedLink)
+        // displayProjectedResults: displayFinancialControls(selectedLink)
     };
 }
 

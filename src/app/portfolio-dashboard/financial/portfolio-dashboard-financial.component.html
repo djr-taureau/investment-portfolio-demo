@@ -1,72 +1,50 @@
-<div #container
-     #anchor
-     class="kpi-container"
-     fxLayout="row"
-     fxLayoutAlign="space-between center">
-    <div class="chart">
-        <sbp-summary-widget [data]="revenueSummaryLineChartData"
-                            [barChartData1]="revenueSeries1BarChartData"
-                            [barChartData2]="revenueSeries2BarChartData"
-                            [title]="revenueTitle"
-                            [denomination]="revenueDenomination"
-                            [currencySymbol]="revenueCurrencySymbol"
-                            [value]="revenueTotalValue| millions: '1.0-1'"
-                            [pyLabel]="revenueSeries1Label"
-                            [pyValue]="revenueSeries1Value | async"
-                            [icLabel]="revenueSeries2Label"
-                            [icValue]="revenueSeries2Value | async"
-                            (click)="onRevenueClick($event)">
-        </sbp-summary-widget>
-    </div>
-
-    <div class="chart">
-        <sbp-summary-widget [data]="ebitdaSummaryLineChartData"
-                            [barChartData1]="ebitdaSeries1BarChartData"
-                            [barChartData2]="ebitdaSeries2BarChartData"
-                            [title]="ebitdaTitle"
-                            [denomination]="ebitdaDenomination"
-                            [currencySymbol]="ebitdaCurrencySymbol"
-                            [value]="ebitdaTotalValue| millions: '1.0-1'"
-                            [pyLabel]="ebitdaSeries1Label"
-                            [pyValue]="ebitdaSeries1Value | async"
-                            [icLabel]="ebitdaSeries2Label"
-                            [icValue]="ebitdaSeries2Value | async"
-                            (click)="onEbitdaClick($event)">
-        </sbp-summary-widget>
-    </div>
-
-    <div class="chart">
-        <div class="cash-runway-container"
-             fxLayout="column"
-             fxLayoutAlign="start stretch">
-            <!-- TITLE ROW -->
-            <div class="box title">Placeholder</div>
-            <div class="value"
-                 fxLayout="column"
-                 fxLayoutAlign="center center"
-                 fxFlex>
-                <div fxLayout="row"
-                     fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>27</span> <span class="months">months</span></div>
-            </div>
+<div fxLayout="column"
+     fxLayoutAlign="start stretch"
+     fxFlex>
+    <div #container
+         #anchor
+         class="kpi-container"
+         fxLayout="row"
+         fxLayoutAlign="space-between center">
+        <div class="chart">
+            <sbp-summary-widget [data]="revenueSummaryLineChartData"
+                                [barChartData1]="revenueSeries1BarChartData"
+                                [barChartData2]="revenueSeries2BarChartData"
+                                [title]="revenueTitle"
+                                [denomination]="revenueDenomination"
+                                [currencySymbol]="revenueCurrencySymbol"
+                                [value]="revenueTotalValue| millions: '1.0-1'"
+                                [pyLabel]="revenueSeries1Label"
+                                [pyValue]="revenueSeries1Value | async"
+                                [icLabel]="revenueSeries2Label"
+                                [icValue]="revenueSeries2Value | async"
+                                (click)="onRevenueClick($event)">
+            </sbp-summary-widget>
         </div>
-    </div>
 
-    <div class="chart">
-        <div class="cash-runway-container"
-             fxLayout="column"
-             fxLayoutAlign="start stretch">
-            <!-- TITLE ROW -->
-            <div class="box title">Placeholder</div>
-            <div class="value"
-                 fxLayout="column"
-                 fxLayoutAlign="center center"
-                 fxFlex>
-                <div fxLayout="row"
-                     fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>27</span> <span class="months">months</span></div>
-            </div>
+        <div class="chart">
+            <sbp-summary-widget [data]="ebitdaSummaryLineChartData"
+                                [barChartData1]="ebitdaSeries1BarChartData"
+                                [barChartData2]="ebitdaSeries2BarChartData"
+                                [title]="ebitdaTitle"
+                                [denomination]="ebitdaDenomination"
+                                [currencySymbol]="ebitdaCurrencySymbol"
+                                [value]="ebitdaTotalValue| millions: '1.0-1'"
+                                [pyLabel]="ebitdaSeries1Label"
+                                [pyValue]="ebitdaSeries1Value | async"
+                                [icLabel]="ebitdaSeries2Label"
+                                [icValue]="ebitdaSeries2Value | async"
+                                (click)="onEbitdaClick($event)">
+            </sbp-summary-widget>
         </div>
-    </div>
 
+        <sbp-fx-exposure-container></sbp-fx-exposure-container>
+
+        <sbp-sector-exposure-container></sbp-sector-exposure-container>
+    </div>
+    <!-- Widget Detail Row -->
+    <sbp-portfolio-revenue-detail-container [@expandOutFromTop]="showRevenueDetail"></sbp-portfolio-revenue-detail-container>
+    <sbp-portfolio-EBITDA-detail-container [@expandOutFromTop]="showEBITDADetail"></sbp-portfolio-EBITDA-detail-container>
+
+    <div fxFlex></div>
 </div>

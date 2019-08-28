@@ -4,6 +4,7 @@ import { CompanyKpiEffects } from "@core/state/company/kpi/company-kpi.effects";
 import { CompanyDocumentsEffects } from "@core/state/company/documents/company-documents.effects";
 import { CompanyRevenueEffects } from "@core/state/company/revenue/company-revenue.effects";
 import { PortfolioEbitdaEffects } from "@core/state/portfolio-dashboard/ebitda/portfolio-ebitda.effects";
+import { PortfolioExposureEffect } from "@core/state/portfolio-dashboard/exposures/portfolio-exposure.effect";
 import { PortfolioRevenueEffects } from "@core/state/portfolio-dashboard/revenue/portfolio-revenue.effects";
 import { PortfolioEffect } from "@core/state/portfolio/portfolio.effect";
 import { TeamMemberEffects } from "./team-member/team-member.effects";
@@ -29,6 +30,7 @@ import * as PortfolioDashboard from "@core/state/portfolio-dashboard";
 import * as CompanyRevenue from "@core/state/company/revenue";
 import * as CompanyEbitda from "@core/state/company/ebitda";
 import * as PortfolioRevenue from "@core/state/portfolio-dashboard/revenue";
+import * as PortfolioExposures from "@core/state/portfolio-dashboard/exposures";
 import * as PortfolioEbitda from "@core/state/portfolio-dashboard/ebitda";
 import * as CompanyKpi from "@core/state/company/kpi";
 
@@ -49,7 +51,8 @@ const EFFECTS = [
     TeamMemberEffects,
     ValuationEffects,
     PortfolioEbitdaEffects,
-    PortfolioRevenueEffects
+    PortfolioRevenueEffects,
+    PortfolioExposureEffect
 ];
 
 const MODULES = [

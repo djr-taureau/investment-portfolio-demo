@@ -245,8 +245,8 @@ export const getSelectedCompanyYearExitValuation = createSelector(
 export const getSelectedOwnershipChartData = createSelector(
     getSelectedCompany,
     (company: Company) => [
-        { value: ObjectUtil.getNestedPropIfExists(company, ["fdOwnership"], 0) / 10, color: ChartColor.lightNavy },
-        { value: 1 - ObjectUtil.getNestedPropIfExists(company, ["fdOwnership"], 0), color: ChartColor.lightPeriwinkle }
+        { value: ObjectUtil.getNestedPropIfExists(company, ["fdOwnership"], 0) / 100, color: ChartColor.lightNavy },
+        { value: 1 - ObjectUtil.getNestedPropIfExists(company, ["fdOwnership"], 0) / 100, color: ChartColor.lightPeriwinkle }
     ]
 );
 // -------------------------------------------------------------------
