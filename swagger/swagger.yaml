@@ -608,7 +608,9 @@ definitions:
       cashRunwayInMonths:
         type: number
       cashData:
-        $ref: '#/definitions/DataSeriesResponse'
+        type: array
+        items:
+          $ref: '#/definitions/DataSeriesDataItem'
   DocumentsListResponse:
     type: array
     items:
