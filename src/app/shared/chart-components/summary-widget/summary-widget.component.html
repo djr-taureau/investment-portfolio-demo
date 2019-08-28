@@ -1,7 +1,7 @@
 <!-- CONTAINER -->
 <div class="container">
     <!-- TITLE ROW -->
-    <div class="box title">{{ title }} ({{currencySymbol}}M)</div>
+    <div class="box title">{{ title }} ({{currencySymbol}}{{scale}})</div>
     <!-- CHARTS ROW -->
     <!-- VALUE COLUMN -->
     <div class="box value">{{ value }}</div>
@@ -12,7 +12,7 @@
          [ngClass]="{
             'positive-py': isPositivePY,
             'negative-py': !isPositivePY
-        }">{{ py  | positiveOrNegative | percent:'1.1-5' }}</div>
+        }">{{ py }}%</div>
     <div *ngIf="icLabel"
          class="box budget">{{ icLabel }}</div>
     <div *ngIf="ic"
@@ -20,9 +20,9 @@
          [ngClass]="{
             'positive-ic': isPositiveIC,
             'negative-ic': !isPositiveIC
-        }">{{ ic  | positiveOrNegative | percent:'1.1-5' }}</div>
-    <div *ngIf="data && selectedPeriod && barChartData1 && barChartData2 && title !== 'Cash Runway'"
-         class="box timeline">
+        }">{{ ic }}%</div>
+    <!--    <div *ngIf="data && selectedPeriod && barChartData1 && barChartData2 && title !== 'Cash Runway'"-->
+    <div class="box timeline">
         <sbp-micro-timeline [data]="data"
                             [selectedPeriod]="selectedPeriod"
                             [barChartData1]="barChartData1"
@@ -54,5 +54,4 @@
     </div>
     <!-- <img src="assets/image/triangle.svg"
              class="triangle"> -->
-
 </div>

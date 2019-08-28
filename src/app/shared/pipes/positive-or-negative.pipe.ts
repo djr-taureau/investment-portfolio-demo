@@ -11,9 +11,9 @@ export class PositiveOrNegativePipe implements PipeTransform {
     constructor() {}
 
     /**
-     * Add a plus or minus in front of the value if positive or negative.
+     * Add a plus in front of the value if positive; if negative then the minus is already there.
      */
     transform(value: number): string {
-        return value === 0 ? `0.000}` : value > 0 ? `+${value}` : `${value}`;
+        return value === 0 ? `${value}` : value > 0 ? `+${value}` : `${value}`;
     }
 }

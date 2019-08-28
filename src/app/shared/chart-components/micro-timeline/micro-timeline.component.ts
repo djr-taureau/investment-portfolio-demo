@@ -31,7 +31,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     @Input()
     public set data(value: any[]) {
-        if (value) {
+        if (value && value.length > 0) {
             // this._data = value;
             this._apiData = value;
             this.update();
@@ -139,10 +139,11 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     }
 
     private update(): void {
-        if (!this.data && !this.yAccessorValue) {
+        if (!this.data || !this.selectedPeriod) {
             return;
         }
-        this.updateAccessorValue(this.yAccessorValue);
+
+        this.yAccessor = (v) => v.value;
         this.actualsVis = true;
         this.budgetVis = true;
         this.forecastVis = true;
@@ -151,7 +152,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
         this.dateSelected = this.selectedPeriod.date;
         if (this.data) {
             this.data.map((v) => {
-                if (v.date !== null && v.date !== undefined && v.date === this.dateSelected) {
+                if (!!v.date && v.date === this.dateSelected) {
                     this.selectedValue = true;
                 }
             });
@@ -168,19 +169,6 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     ngAfterContentInit() {
         if (this.data) {
             // this.updateDimensions();
-        }
-    }
-
-    updateAccessorValue(value: string) {
-        switch (value) {
-            case "valueInUSD": {
-                this.yAccessor = (v) => v.valueInUSD;
-                break;
-            }
-            case "valueInNative": {
-                this.yAccessor = (v) => v.valueInNative;
-                break;
-            }
         }
     }
 

@@ -38,6 +38,9 @@ export class LineComponent implements OnChanges {
     constructor() {}
 
     updateLineString(): void {
+        if (!this.data) {
+            return;
+        }
         this.interpolation = curveLinear;
         const lineGenerator = d3[this.type]()
             .x(this.xAccessor)

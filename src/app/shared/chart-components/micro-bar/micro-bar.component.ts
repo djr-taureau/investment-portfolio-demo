@@ -92,9 +92,7 @@ export class MicroBarComponent implements OnInit, OnChanges {
         this.el = elementRef.nativeElement;
     }
 
-    ngOnInit() {
-        // console.log(this.selectedPeriod.date);
-    }
+    ngOnInit() {}
 
     private update(): void {
         if (!this.data && !this.yAccessorValue) {
@@ -104,8 +102,6 @@ export class MicroBarComponent implements OnInit, OnChanges {
         this.sourceTypeAccessor = (d) => d.sourceType;
         this.timePeriods = [];
         this.dateSelected = this.selectedPeriod.date;
-        console.log(this.data);
-        console.log(this.yAccessorValue);
         if (this.data) {
             this.data.map((v) => {
                 if (v.date !== null && v.date !== undefined && v.date === this.dateSelected) {
@@ -149,7 +145,6 @@ export class MicroBarComponent implements OnInit, OnChanges {
         d3.select(this.el)
             .selectAll(".bar")
             .remove();
-        console.log(this.dataValues.length);
         const BAR_WIDTH = (this.dimensions.width - this.dataValues.length) / this.dataValues.length;
         const y0 = d3.max(d3.extent(this.dataValues).map((d) => Math.abs(d)));
 

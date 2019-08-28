@@ -13,6 +13,7 @@ export interface SelectorPeriod extends AvailablePeriod {
     quarterLabel?: string;
     yearLabel?: string;
     id: number;
+    fiscalDate?: string;
 }
 
 @Component({

@@ -180,7 +180,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     }
 
     updateScales() {
-        if (!this.timePeriods && !this.actuals && !this.budget && !this.forecast) {
+        if (!this.timePeriods || !this.actuals || !this.budget || !this.forecast || !this.xAccessor || !this.yAccessor) {
             return;
         }
         const series = ["Actual", "Mgmt Bud", "Mgmt Fcst"];

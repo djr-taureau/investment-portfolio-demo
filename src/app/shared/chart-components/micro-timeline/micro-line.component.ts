@@ -157,12 +157,6 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
         this.projectedData = this.data.filter((v) => v.projection === true);
         this.categorySelected = this.categoryAccessor(objSelected);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        console.log(this.data);
-        console.log(this.actualsPresentValue);
-        console.log(this.historicalData);
-        console.log(this.projectedData);
-        console.log(this.categorySelected);
-        console.log(this.timePeriods);
         this.updateScales();
     }
 
@@ -201,10 +195,6 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
         const projectedYMin = d3.min(this.projectedData.map((v) => this.yAccessor(v)));
         const projectedYMax = d3.max(this.projectedData.map((v) => this.yAccessor(v)));
 
-        console.log(actualsXMin);
-        console.log(actualsXMax);
-        console.log(this.xAccessor);
-        console.log(this.yAccessor);
         const xScale = d3
             .scaleTime()
             .domain([actualsXMin, projectedXMax])

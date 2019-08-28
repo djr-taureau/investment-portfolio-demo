@@ -60,7 +60,16 @@ export const getRevenueAsOf = createSelector(
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
             const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-            const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
+            let matchingDateIndex = 0;
+            if (datePart.id.toUpperCase() === "Q") {
+                matchingDateIndex = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+            } else {
+                const periodFiscalDateString = new Date(period.fiscalDate).getFullYear().toString();
+                matchingDateIndex = matchingDateData.findIndex((item) => {
+                    const itemDateString = new Date(item.date).getFullYear().toString();
+                    return itemDateString === periodFiscalDateString;
+                });
+            }
             return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
         } else {
             return 0;
@@ -81,12 +90,25 @@ export const getChangeFromPriorPeriod = createSelector(
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            // CM 8/27 5:25PM
+            // So with that in mind - yes use series_quarters/vsPY if QTR selected, and series_years/vsPY if YEAR selected.
+            // const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            const scenarioName = "vsPY";
             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
             const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-            const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
+            let matchingDateIndex = 0;
+            if (datePart.id.toUpperCase() === "Q") {
+                matchingDateIndex = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+            } else {
+                const periodFiscalDateString = new Date(period.fiscalDate).getFullYear().toString();
+                matchingDateIndex = matchingDateData.findIndex((item) => {
+                    const itemDateString = new Date(item.date).getFullYear().toString();
+                    return itemDateString === periodFiscalDateString;
+                });
+            }
+            // const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
             return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
         } else {
             return 0;
@@ -106,13 +128,28 @@ export const getChangeFromPriorBudget = createSelector(
     fromCompanyDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
-            const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsBud" : "icLatest";
+            const isQuarter = datePart.id.toUpperCase() === "Q";
+            const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+            const scenarioName: string = isQuarter ? "managementBudget" : "icLatest";
             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-            const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+            let actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+            // If icLatest is not in the series we look for icInitial
+            if (actualIndex === -1 && !isQuarter) {
+                actualIndex = dateDataList.findIndex((item) => item.scenarioName === "icInitial");
+            }
             const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-            const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
+            let matchingDateIndex = 0;
+            if (isQuarter) {
+                matchingDateIndex = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+            } else {
+                const periodFiscalDateString = new Date(period.fiscalDate).getFullYear().toString();
+                matchingDateIndex = matchingDateData.findIndex((item) => {
+                    const itemDateString = new Date(item.date).getFullYear().toString();
+                    return itemDateString === periodFiscalDateString;
+                });
+            }
+            // const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
             return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
         } else {
             return 0;
@@ -134,9 +171,22 @@ export const getSummaryLineChartData = createSelector(
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
             const scenarioName = "actual";
+            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
+            // TODO: REMOVE THIS WHEN THE API IS RETURNING PROJECTION PROPERTY
+            dateDataList.map((arrEl) => {
+                arrEl.data.map((el) => (el.projection = false));
+            });
             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-            return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+            const result = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+            return result.map((item) => {
+                const valueOrAmount = item[currencyKey] || 0;
+                return {
+                    ...item,
+                    value: valueOrAmount,
+                    amount: valueOrAmount
+                };
+            });
         } else {
             return [];
         }
@@ -194,7 +244,10 @@ export const getChangeFromPriorPeriodBarChartData = createSelector(
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            // CM 8/27 5:25PM
+            // So with that in mind - yes use series_quarters/vsPY if QTR selected, and series_years/vsPY if YEAR selected.
+            // const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            const scenarioName = "vsPY";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
             return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
@@ -216,10 +269,15 @@ export const getChangeFromPriorBudgetBarChartData = createSelector(
     fromCompanyDashboard.getSelectedCurrency,
     (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && period && datePart && currency) {
-            const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsBud" : "icLatest";
+            const isQuarter = datePart.id.toUpperCase() === "Q";
+            const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+            const scenarioName: string = isQuarter ? "managementBudget" : "icLatest";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-            const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+            let actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+            // If icLatest is not in the series we look for icInitial
+            if (actualIndex === -1 && !isQuarter) {
+                actualIndex = dateDataList.findIndex((item) => item.scenarioName === "icInitial");
+            }
             return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
         } else {
             return [];

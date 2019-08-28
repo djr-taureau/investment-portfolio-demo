@@ -11,11 +11,11 @@
                             [title]="'Revenue'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="revenueAsOf$ | async | millions: '1.0-1'"
+                            [value]="revenueAsOf$ | async | shortNumber: '1.0-1'"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="revenueChangeFromPriorPeriod$ | async"
+                            [pyValue]="revenueChangeFromPriorPeriod$ | async | shortNumber: '1.0-1'"
                             [icLabel]="icLabel"
-                            [icValue]="revenueChangeFromPriorBudget$ | async"
+                            [icValue]="revenueChangeFromPriorBudget$ | async | shortNumber: '1.0-1'"
                             (click)="onRevenueClick()">
         </sbp-summary-widget>
     </div>
@@ -27,11 +27,11 @@
                             [title]="'EBITDA'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="ebitdaAsOf$ | async | millions: '1.0-1'"
+                            [value]="ebitdaAsOf$ | async | shortNumber: '1.0-1'"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async"
+                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async | shortNumber: '1.0-1'"
                             [icLabel]="icLabel"
-                            [icValue]="ebitdaChangeFromPriorBudget$ | async"
+                            [icValue]="ebitdaChangeFromPriorBudget$ | async | shortNumber: '1.0-1'"
                             (click)="onEbitdaClick()">
         </sbp-summary-widget>
     </div>

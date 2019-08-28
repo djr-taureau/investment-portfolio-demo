@@ -26,6 +26,12 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
 
     @Input() selectedPeriod: any;
     /**
+     * Represents the M,B,T,Q value in the widget title
+     * EG: REVENUE ($M) => <title> (<currencySymbol><scale>)
+     */
+    public scale: string;
+
+    /**
      * The line chart data.
      */
     @Input() data: RevenueSeriesData[];
@@ -55,7 +61,21 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
      * Value for the line graphs to display
      */
     @Input()
-    public value: number | string;
+    set value(val: any) {
+        // TODO: set the MBTQ scale value here
+        this._value = val;
+        if (val >= 0 && val <= 999999999) {
+            this.scale = "M";
+        } else if (val > 999999999 && val <= 999999999999) {
+            this.scale = "B";
+        } else if (val > 999999999999 && val <= 999999999999999) {
+            this.scale = "T";
+        }
+    }
+    get value() {
+        return this._value;
+    }
+    private _value = 0;
 
     /**
      * Label for the py chart value
