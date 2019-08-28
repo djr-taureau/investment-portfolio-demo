@@ -1,5 +1,5 @@
 import { RevenueSeriesData } from "@core/domain/company.model";
-import { getSelectedCurrency } from "@core/state/company/dashboard";
+import { getSelectedCurrency, getSelectedDatePart } from "@core/state/company/dashboard";
 import { Observable } from "rxjs";
 import { Component, OnInit, Input } from "@angular/core";
 import { Logger } from "@util/logger";
@@ -44,6 +44,7 @@ export class SummaryWidgetContainer implements OnInit {
      */
     public selectedCurrencySymbol: string;
 
+    public selectedDatePart$: Observable<any>;
     /**
      * The selected currency code.
      */

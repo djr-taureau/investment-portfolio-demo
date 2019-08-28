@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import * as fromCompanyRevenue from "@core/state/company/revenue";
+import { getSelectedCurrency, getSelectedPeriod } from "@core/state/company/dashboard";
 import { getShowRevenueDetail } from "@core/state/company/dashboard";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { ToggleRevenueDetail } from "@core/state/flow/company-flow.actions";
@@ -14,6 +15,7 @@ import { Observable } from "rxjs";
             <sbp-company-kpi-detail-component
                 *ngIf="revenueSummaryLineChartData$ && revenueBudgetLineChartData$ && revenueForecastLineChartData$"
                 [title]="'REVENUE'"
+                [selectedPeriod]="selectedPeriod$ | async"
                 [actuals]="revenueSummaryLineChartData$ | async"
                 [budget]="revenueBudgetLineChartData$ | async"
                 [forecast]="revenueForecastLineChartData$ | async"
@@ -29,6 +31,7 @@ import { Observable } from "rxjs";
 })
 export class CompanyRevenueDetailContainer implements OnInit {
     public isExpanded$: Observable<boolean>;
+    public selectedPeriod$: Observable<any>;
     public revenueSummaryLineChartData$: Observable<RevenueSeriesData[]>;
     public revenueBudgetLineChartData$: Observable<RevenueSeriesData[]>;
     public revenueForecastLineChartData$: Observable<RevenueSeriesData[]>;
@@ -44,6 +47,7 @@ export class CompanyRevenueDetailContainer implements OnInit {
     }
     public ngOnInit(): void {
         this.isExpanded$ = this.store$.pipe(select(getShowRevenueDetail));
+        this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
         //  Revenue Detail Chart Data
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getSummaryLineChartData));
         this.revenueBudgetLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getBudgetLineChartData));

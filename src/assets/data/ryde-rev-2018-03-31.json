@@ -50,9 +50,9 @@
             {
               "date": "2019-06-30",
               "financialQuarter": 2,
-              "amountInNative": 43347689.65,
+              "amountInNative": 680467439.60,
               "amountInUSD": 52269270.91,
-              "projection": false
+              "projection": true
             }
           ]
         },

@@ -26,9 +26,9 @@
                dimension="x"
                [dimensions]="dimensions"
                [scale]="xScale"
-               [formatTick]=""
+               [formatTick]="formatDate"
                [label]="label"
-               [xAxisTickValues]="timePeriods"
+               [numberOfTicks]="5"
                [xAxisVisible]="false">
         </svg:g>
 
@@ -38,7 +38,7 @@
                [dimensions]="dimensions"
                [scale]="yScale"
                [label]=""
-               [numberOfTicks]=""
+               [numberOfTicks]="5"
                [yAxisVisible]="false">
         </svg:g>
 
@@ -62,28 +62,15 @@
 
             <!-- Historical Blue Line -->
             <svg:g sbpLine
-                   class="line"
+                   class="line actuals"
                    [type]="'line'"
                    [valueType]="'actuals'"
-                   [data]="historicalData"
+                   [data]="data"
                    [visible]="actualsVis"
                    [projectedAccessor]="projectedAccessor"
                    [xAccessor]="xAccessorScaled"
                    [yAccessor]="yAccessorScaled">
             </svg:g>
-
-            <!-- Projected Extended Blue Line -- NOT WORKING -->
-            <svg:g sbpLine
-                   class="projected"
-                   [type]="'line'"
-                   [valueType]="'projected'"
-                   [data]="projectedData"
-                   [visible]="actualsVis"
-                   [projectedAccessor]="projectedAccessor"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="yAccessorScaled">
-            </svg:g>
-
             <!-- Circle meeting point of hist and projected -->
             <svg:g sbpCircles
                    *ngIf="display || selectedValue"
@@ -96,6 +83,16 @@
                    [keyAccessor]="keyAccessor"
                    [xAccessor]="xAccessorScaled"
                    [yAccessor]="yAccessorScaled">
+            </svg:g>
+            <!-- Projected Extended Blue Line -- NOT WORKING -->
+            <svg:g sbpLine
+                   class="line projected"
+                   [type]="'line'"
+                   [valueType]="'projected'"
+                   [data]="projectedData"
+                   [visible]="actualsVis"
+                   [xAccessor]="xAccessorScaled"
+                   [yAccessor]="projectedAccessorScaled">
             </svg:g>
         </ng-container>
     </sbp-chart>

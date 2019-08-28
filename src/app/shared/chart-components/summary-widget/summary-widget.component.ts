@@ -11,7 +11,7 @@ import * as d3 from "d3";
 export class SummaryWidgetComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("SummaryWidgetComponent");
 
-    parseDate = d3.timeParse("%m/%d/%Y");
+    parseDate = d3.timeParse("%Y-%m-%d");
     // parseDate = d3.timeParse("%YYYY-%mm-%dd");
     // X-Axis
     categoryAccessor: any;
@@ -24,6 +24,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     isPositivePY: boolean;
     isPositiveIC: boolean;
 
+    @Input() selectedPeriod: any;
     /**
      * The line chart data.
      */
@@ -54,7 +55,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
      * Value for the line graphs to display
      */
     @Input()
-    public value: number;
+    public value: number | string;
 
     /**
      * Label for the py chart value
@@ -64,8 +65,6 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
 
     @Input()
     set pyValue(value: number) {
-        // this.pyString = numberToSignedString(value);
-        // this.pyString = value;
         this.py = value;
     }
     public py?: number;
@@ -76,10 +75,11 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
 
     @Input()
     set icValue(value: number) {
-        // this.icString = numberToSignedString(value);
         this.ic = value;
     }
     public ic?: number;
+
+    public yAccessorValue: string;
     // public icString?: string;
 
     constructor() {
@@ -89,9 +89,10 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     ngOnInit() {
         SummaryWidgetComponent.logger.debug(`ngOnInit()`);
         this.dateAccessor = (v) => this.parseDate(v.date);
+        this.yAccessor = (v) => v.amountInNative;
         this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
         this.projectedAccessor = (v) => v.projection;
-        this.yAccessor = (v) => v.amountInNative;
+        this.checkCurrencyValue(this.denomination);
     }
 
     ngOnChanges() {
@@ -104,6 +105,18 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
             this.isPositiveIC = false;
         } else {
             this.isPositiveIC = true;
+        }
+        if (this.value === 0) {
+            this.value = "NA";
+        }
+        this.checkCurrencyValue(this.denomination);
+    }
+
+    checkCurrencyValue(value: string) {
+        if (value === "USD") {
+            this.yAccessorValue = "valueInUSD";
+        } else {
+            this.yAccessorValue = "valueInNative";
         }
     }
 }

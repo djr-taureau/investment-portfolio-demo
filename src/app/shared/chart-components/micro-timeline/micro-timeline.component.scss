@@ -2,94 +2,145 @@
 
 :host {
 
-    ::ng-deep {
-        .container {
-            margin-bottom: 2em;
-            background: white;
-            padding: 0.6em 1em;
-            margin: 0.5em;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            background-color: $white;
+
+    .container {
+        margin-bottom: 2em;
+        background: white;
+        padding: 0.6em 1em;
+        margin: 0.5em;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        background-color: $white;
+        border-radius: 6px;
+        align-self: flex-start;
+    }
+
+    path {
+        .area {
+            fill: #47a2d6;
             border-radius: 6px;
-            align-self: flex-start;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            opacity: 0.15;
+            border: solid 2px $dark-sky-blue;
+            background-color: $white;
+
         }
 
-        .dot {
-            fill: #ffffff;
-            width: 12px;
-            height: 12px;
-            border-width: 3px;
-            box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
-            border-style: solid;
-            stroke-width: 1;
+    }
+
+    circle {
+        fill: #124f8c;
+        transition: all 0.3s ease-out;
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+        border-style: solid;
+        stroke-width: 2;
+        stroke: #124f8c;
+
+
+        &.selected-value {
+            fill: $white;
             stroke: #124f8c;
+            stroke-width: 3px;
         }
 
-        .dot-display {
+    }
+
+    circle.projected {
+        fill: #ffffff;
+        transition: all 0.3s ease-out;
+        width: 12px;
+        height: 12px;
+        border-width: 3px;
+        box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+        border-style: solid;
+        stroke-width: 2;
+        stroke: #124f8c;
+    }
+
+    circle.dot {
+        stroke-width: 2;
+        fill: $white;
+    }
+
+
+    // .dot {
+    //     fill: #ffffff;
+    //     width: 12px;
+    //     height: 12px;
+    //     border-width: 3px;
+    //     box-shadow: 0 2px 4px 0 rgba(18, 79, 140, 0.1);
+    //     border-style: solid;
+    //     stroke-width: 1;
+    //     stroke: #124f8c;
+    // }
+
+    .dot-display {
+        display: none;
+    }
+
+    .present-line {
+        stroke: $light-periwinkle;
+        stroke-width: 2px;
+        stroke-dasharray: 3, 3;
+    }
+
+    .select-line {
+        width: 1px;
+        border: solid 1px $light-periwinkle;
+    }
+
+    .y-axis-label {
+        fill: #34495e;
+        font-size: 1.4em;
+        text-anchor: middle;
+        transform: rotate(-90deg);
+
+        .display {
+            //display: none;
+            stroke-width: 2;
             display: none;
-        }
 
-        .present-line {
-            stroke: $light-periwinkle;
-            stroke-width: 2px;
-            stroke-dasharray: 3, 3;
-        }
-
-        .select-line {
-            width: 1px;
-            border: solid 1px $light-periwinkle;
+            &-none {
+                display: none;
+            }
         }
 
         .y-axis-label {
-            fill: #34495e;
+            fill: $grey-blue;
             font-size: 1.4em;
             text-anchor: middle;
             transform: rotate(-90deg);
-
-            .display {
-                //display: none;
-                stroke-width: 2;
-                display: none;
-
-                &-none {
-                    display: none;
-                }
-            }
-
-            .y-axis-label {
-                fill: $grey-blue;
-                font-size: 1.4em;
-                text-anchor: middle;
-                transform: rotate(-90deg);
-            }
-
-
-
-            .x-axis-label {
-                display: none;
-            }
-
-
-
         }
 
-    }
 
-    #container {
-        width: 334px;
-        height: 165px;
-        border-radius: 6px;
-        background-color: $white;
-    }
 
-    div .card {
-        width: 334px;
-        height: 165px;
-        border-radius: 6px;
-        background-color: $white;
+        .x-axis-label {
+            display: none;
+        }
+
+
+
     }
 
 }
+
+#container {
+    width: 334px;
+    height: 165px;
+    border-radius: 6px;
+    background-color: $white;
+}
+
+div .card {
+    width: 334px;
+    height: 165px;
+    border-radius: 6px;
+    background-color: $white;
+}
+
+
 
 // .axis-grid .x .axis .x-line line {
 

@@ -17,6 +17,7 @@ import { MicroTimelineComponent } from "./micro-timeline/micro-timeline.componen
 import { MicroHistogramComponent } from "./micro-histogram/micro-histogram.component";
 import { SummaryWidgetComponent } from "./summary-widget/summary-widget.component";
 import { MicroBarComponent } from "./micro-bar/micro-bar.component";
+import { MicroLineComponent } from "./micro-timeline/micro-line.component";
 import { TimelineComponent } from "./timeline/timeline.component";
 import { MultiLineKendoComponent } from "./multi-line-kendo/multi-line-kendo.component";
 import { MultiLineComponent } from "./multi-line/multi-line.component";
@@ -38,6 +39,7 @@ export const COMPONENTS = [
     KpiDetailTableComponent,
     LineComponent,
     MicroBarComponent,
+    MicroLineComponent,
     MicroHistogramComponent,
     MicroTimelineComponent,
     MultiLineKendoComponent,

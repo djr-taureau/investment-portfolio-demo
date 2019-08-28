@@ -41,7 +41,6 @@ export class CompanyKpiDetailComponent implements OnInit {
         if (value) {
             // this._data = value;
             this._apiData = value;
-            // this.update();
         }
     }
     public get data(): any[] {
@@ -50,6 +49,7 @@ export class CompanyKpiDetailComponent implements OnInit {
     private _data: any[];
     private _apiData: RevenueSeriesData[];
 
+    @Input() selectedPeriod: any;
     @Input() title: string;
     @Input() actuals: RevenueSeriesData[];
     @Input() budget: RevenueSeriesData[];
@@ -67,8 +67,5 @@ export class CompanyKpiDetailComponent implements OnInit {
      */
     public ngOnInit() {
         CompanyKpiDetailComponent.logger.debug(`ngOnInit()`);
-        this.dateAccessor = (v) => this.parseDate(v.date);
-        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
-        this.yAccessor = (v) => v.amountInNative; // ?? : Do we need to have this toggle
     }
 }

@@ -1,9 +1,9 @@
-<div fxFlex="50"
+<div fxFlex="70"
      fxLayout="row"
      fxFlexAlign="start stretch">
     <!-- <div class="y-axis-label-line"></div> -->
-    <ng-container *ngIf="actuals && budget && forecast">
-        <sbp-timeline [data]="data"
+    <sbp-timeline *ngIf="selectedPeriod && actuals && budget && forecast">
+        <sbp-timeline [selectedPeriod]="selectedPeriod"
                       [actuals]="actuals"
                       [budget]="budget"
                       [forecast]="forecast"
@@ -11,9 +11,9 @@
                       [yAccessor]="yAccessor"
                       [categoryAccessor]="categoryAccessor"
                       [yLabelVisible]="true"></sbp-timeline>
-    </ng-container>
+    </sbp-timeline>
 </div>
-<div fxFlex="50"
+<div fxFlex="30"
      fxFlexAlign="end end">
     <sbp-kpi-detail-table [revenueTableDataHeaders]="revenueTableDataHeaders"
                           [revenueTableDataAsOf]="revenueTableDataAsOf"

@@ -20,6 +20,7 @@ import { useAccessor } from "../utils";
 export class CirclesComponent implements AfterContentInit, OnInit {
     private static logger: Logger = Logger.getLogger("CirclesComponent");
     @Input() data: any[];
+    @Input() selectedPeriod: any;
     @Input() valueType: string;
     @Input() keyAccessor: any;
     @Input() xAccessor: any;

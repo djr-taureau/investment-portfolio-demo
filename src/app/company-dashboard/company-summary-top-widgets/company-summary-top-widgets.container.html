@@ -5,6 +5,7 @@
      fxLayoutAlign="space-between center">
     <div class="chart">
         <sbp-summary-widget [data]="revenueSummaryLineChartData$ | async"
+                            [selectedPeriod]="selectedPeriod$ | async"
                             [barChartData1]="revenueChangeFromPriorPeriodBarChartData$ | async"
                             [barChartData2]="revenueChangeFromPriorBudgetBarChartData$ | async"
                             [title]="'Revenue'"
@@ -13,7 +14,7 @@
                             [value]="revenueAsOf$ | async | millions: '1.0-1'"
                             [pyLabel]="'vs PY'"
                             [pyValue]="revenueChangeFromPriorPeriod$ | async"
-                            [icLabel]="'vs Bud'"
+                            [icLabel]="icLabel"
                             [icValue]="revenueChangeFromPriorBudget$ | async"
                             (click)="onRevenueClick()">
         </sbp-summary-widget>
@@ -29,7 +30,7 @@
                             [value]="ebitdaAsOf$ | async | millions: '1.0-1'"
                             [pyLabel]="'vs PY'"
                             [pyValue]="ebitdaChangeFromPriorPeriod$ | async"
-                            [icLabel]="'vs Bud'"
+                            [icLabel]="icLabel"
                             [icValue]="ebitdaChangeFromPriorBudget$ | async"
                             (click)="onEbitdaClick()">
         </sbp-summary-widget>
@@ -44,7 +45,7 @@
                             [value]="-34.6"
                             [pyLabel]="'vs PY'"
                             [pyValue]="-2.0"
-                            [icLabel]="'vs Bud'"
+                            [icLabel]="icLabel"
                             [icValue]="'-5.0'"
                             (click)="onCashClick()">
         </sbp-summary-widget>

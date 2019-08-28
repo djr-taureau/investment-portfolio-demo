@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
-import { getSelectedCurrency } from "@core/state/company/dashboard";
-import { ToggleEbitdaDetail } from "@core/state/flow/company-flow.actions";
+import { getSelectedCurrency, getSelectedPeriod, getSelectedDatePart } from "@core/state/company/dashboard";
+
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
@@ -20,9 +20,12 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("CompanySummaryTopWidgetsContainer");
 
+    public selectedPeriod$: Observable<any>;
+    public selectedDatePart$: Observable<any>;
     public selectedCurrency$: Observable<any>;
     public selectedCurrencySymbol: string;
     public selectedCurrencyCode: string;
+    public icLabel: string;
 
     /**
      * The total revenue for a given period.
@@ -96,10 +99,22 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      */
     public ngOnInit() {
         CompanySummaryTopWidgetsContainer.logger.debug(`ngOnInit()`);
+        this.selectedDatePart$ = this.store$.pipe(select(getSelectedDatePart));
+        this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
         this.selectedCurrency$ = this.store$.pipe(select(getSelectedCurrency));
         this.selectedCurrency$.subscribe((v) => {
             this.selectedCurrencyCode = v.currencyCode;
             this.selectedCurrencySymbol = v.currencySymbol;
+            console.log(v.currencyCode);
+        });
+
+        this.selectedDatePart$.subscribe((v) => {
+            if (v.id === "Y") {
+                this.icLabel = "vs IC";
+            } else {
+                this.icLabel = "vs Bud";
+            }
+            console.log(v);
         });
 
         // Revenue summary chart data.
