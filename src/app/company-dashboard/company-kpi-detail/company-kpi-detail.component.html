@@ -2,15 +2,15 @@
      fxLayout="row"
      fxFlexAlign="start stretch">
     <!-- <div class="y-axis-label-line"></div> -->
-    <sbp-timeline *ngIf="selectedPeriod && actuals && budget && forecast">
-        <sbp-timeline [selectedPeriod]="selectedPeriod"
-                      [actuals]="actuals"
-                      [budget]="budget"
-                      [forecast]="forecast"
-                      [xAccessor]="dateAccessor"
-                      [yAccessor]="yAccessor"
-                      [categoryAccessor]="categoryAccessor"
-                      [yLabelVisible]="true"></sbp-timeline>
+    <sbp-timeline *ngIf="selectedPeriod && actuals && budget && forecast"
+                  [selectedPeriod]="selectedPeriod"
+                  [actuals]="actuals"
+                  [budget]="budget"
+                  [forecast]="forecast"
+                  [xAccessor]="dateAccessor"
+                  [yAccessor]="yAccessor"
+                  [categoryAccessor]="categoryAccessor"
+                  [yLabelVisible]="true">
     </sbp-timeline>
 </div>
 <div fxFlex="30"
