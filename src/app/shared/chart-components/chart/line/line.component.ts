@@ -21,7 +21,7 @@ export class LineComponent implements OnChanges {
     @Input() y0Accessor?: any;
     @Input() interpolation?: any;
     @Input() fill?: string;
-    @Input() visible: boolean | true;
+    @Input() visible = true;
 
     @HostBinding("class.projected") projected = false;
 
@@ -38,7 +38,7 @@ export class LineComponent implements OnChanges {
     constructor() {}
 
     updateLineString(): void {
-        if (!this.data) {
+        if ((this.data || []).length < 1 || !this.xAccessor || !this.yAccessor) {
             return;
         }
         this.interpolation = curveLinear;
