@@ -382,3 +382,37 @@ export const getTableDataRevenueVsPq = createSelector(
         }
     }
 );
+
+export const getAllLineChartData = createSelector(
+    getMetricsGraph,
+    fromCompanyDashboard.getSelectedPeriod,
+    fromCompanyDashboard.getSelectedDatePart,
+    fromCompanyDashboard.getSelectedCurrency,
+    (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+        if (metricsGraph && period && datePart && currency) {
+            const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
+            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
+            const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
+            // TODO: REMOVE THIS WHEN THE API IS RETURNING PROJECTION PROPERTY
+            dateDataList.map((arrEl) => {
+                arrEl.data.map((el) => (el.projection = false));
+            });
+            // const result = dateDataList.map((item) => item.data || []);
+            return dateDataList.map((arrEl) => {
+                return {
+                    ...arrEl,
+                    data: arrEl.data.map((item) => {
+                        const valueOrAmount = item[currencyKey] || 0;
+                        return {
+                            ...item,
+                            value: valueOrAmount,
+                            amount: valueOrAmount
+                        };
+                    })
+                };
+            });
+        } else {
+            return [];
+        }
+    }
+);

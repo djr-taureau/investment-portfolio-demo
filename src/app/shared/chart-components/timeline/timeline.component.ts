@@ -1,3 +1,4 @@
+import { ChartDataPeriod } from "./../../../core/domain/company.model";
 import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
@@ -16,6 +17,9 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input() data: any[];
+
+    // TODO: DAVE here's the new input
+    @Input() allLineChartData: ChartDataPeriod[];
 
     @Input()
     public set actuals(value: RevenueSeriesData[]) {

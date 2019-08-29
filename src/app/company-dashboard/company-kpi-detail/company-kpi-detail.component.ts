@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { RevenueSeriesData } from "@core/domain/company.model";
+import { RevenueSeriesData, ChartDataPeriod } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 // import "zone.js";
@@ -54,6 +54,7 @@ export class CompanyKpiDetailComponent implements OnInit {
     @Input() actuals: RevenueSeriesData[];
     @Input() budget: RevenueSeriesData[];
     @Input() forecast: RevenueSeriesData[];
+    @Input() allLineChartData: ChartDataPeriod[];
     @Input() revenueTableDataHeaders: string[];
     @Input() revenueTableDataAsOf: number[];
     @Input() revenueTableDataVsBud: number[];

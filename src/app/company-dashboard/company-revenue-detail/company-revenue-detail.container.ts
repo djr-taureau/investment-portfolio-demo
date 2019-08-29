@@ -1,3 +1,4 @@
+import { ChartDataPeriod } from "./../../core/domain/company.model";
 import { Component, Input, OnInit } from "@angular/core";
 import * as fromCompanyRevenue from "@core/state/company/revenue";
 import { getSelectedCurrency, getSelectedPeriod } from "@core/state/company/dashboard";
@@ -19,6 +20,7 @@ import { Observable } from "rxjs";
                 [actuals]="revenueSummaryLineChartData$ | async"
                 [budget]="revenueBudgetLineChartData$ | async"
                 [forecast]="revenueForecastLineChartData$ | async"
+                [allLineChartData]="allLineChartData$ | async"
                 [revenueTableDataHeaders]="revenueTableDataHeaders$ | async"
                 [revenueTableDataAsOf]="revenueTableDataAsOf$ | async"
                 [revenueTableDataVsBud]="revenueTableDataVsBud$ | async"
@@ -35,6 +37,7 @@ export class CompanyRevenueDetailContainer implements OnInit {
     public revenueSummaryLineChartData$: Observable<RevenueSeriesData[]>;
     public revenueBudgetLineChartData$: Observable<RevenueSeriesData[]>;
     public revenueForecastLineChartData$: Observable<RevenueSeriesData[]>;
+    public allLineChartData$: Observable<ChartDataPeriod[]>;
     public revenueTableDataHeaders$: Observable<string[]>;
     public revenueTableDataAsOf$: Observable<number[]>;
     public revenueTableDataVsBud$: Observable<number[]>;
@@ -48,6 +51,7 @@ export class CompanyRevenueDetailContainer implements OnInit {
     public ngOnInit(): void {
         this.isExpanded$ = this.store$.pipe(select(getShowRevenueDetail));
         this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
+        this.allLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getAllLineChartData));
         //  Revenue Detail Chart Data
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getSummaryLineChartData));
         this.revenueBudgetLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getBudgetLineChartData));

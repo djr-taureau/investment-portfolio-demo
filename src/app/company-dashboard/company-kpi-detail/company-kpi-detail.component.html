@@ -1,6 +1,7 @@
 <div fxLayout="row">
     <!-- <div class="y-axis-label-line"></div> -->
     <sbp-timeline *ngIf="selectedPeriod && actuals && budget && forecast"
+                  [allLineChartData]="allLineChartData"
                   [selectedPeriod]="selectedPeriod"
                   [actuals]="actuals"
                   [budget]="budget"
