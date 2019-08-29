@@ -1,6 +1,4 @@
-<div fxFlex="70"
-     fxLayout="row"
-     fxFlexAlign="start stretch">
+<div fxLayout="row">
     <!-- <div class="y-axis-label-line"></div> -->
     <sbp-timeline *ngIf="selectedPeriod && actuals && budget && forecast"
                   [selectedPeriod]="selectedPeriod"
@@ -12,9 +10,7 @@
                   [categoryAccessor]="categoryAccessor"
                   [yLabelVisible]="true">
     </sbp-timeline>
-</div>
-<div fxFlex="30"
-     fxFlexAlign="end end">
+
     <sbp-kpi-detail-table [revenueTableDataHeaders]="revenueTableDataHeaders"
                           [revenueTableDataAsOf]="revenueTableDataAsOf"
                           [revenueTableDataVsBud]="revenueTableDataVsBud"
