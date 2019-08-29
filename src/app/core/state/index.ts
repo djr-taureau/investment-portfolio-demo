@@ -329,3 +329,74 @@ export const getSelectedValuation = createSelector(
     selectValuationState,
     fromValuation.getSelected
 );
+
+export const getSelectedValuationTopLineValuations = createSelector(
+    getSelectedValuation,
+    (valuation) => _.get(valuation, "topLineValuations", null)
+);
+
+export const getSelectedValuationValuationDetail = createSelector(
+    getSelectedValuation,
+    (valuation) => _.get(valuation, "valuationDetail", null)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentIrr = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "current.irr", 0)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentMoic = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "current.moic", 0)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentTotalValue = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "current.totalValue", 0) / 1000000
+);
+
+export const getSelectedValuationTopLineValuationsCurrentPlusOneRR = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "yearPlus1.irr", 0)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentPlusOneMoic = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "yearPlus1.moic", 0)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentPlusOneTotalValue = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "yearPlus1.totalValue", 0) / 1000000
+);
+
+export const getSelectedValuationTopLineValuationsCurrentExitIRR = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "exit.irr", 0)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentExitMoic = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "exit.moic", 0)
+);
+
+export const getSelectedValuationTopLineValuationsCurrentExitTotalValue = createSelector(
+    getSelectedValuationTopLineValuations,
+    (tlv) => _.get(tlv, "exit.totalValue", 0) / 1000000
+);
+
+export const getSelectedValuationTopLineValuationsCurrentInvested = createSelector(
+    getSelectedValuationValuationDetail,
+    (tlv) => _.get(tlv, "actual.invested", 0) / 1000000
+);
+
+export const getSelectedValuationTopLineValuationsCurrentApproved = createSelector(
+    getSelectedValuationValuationDetail,
+    (tlv) => _.get(tlv, "actual.approved", 0) / 1000000
+);
+
+export const getAmountDeployedChartData = createSelector(
+    getSelectedValuationTopLineValuationsCurrentInvested,
+    getSelectedValuationTopLineValuationsCurrentApproved,
+    (invested, approved) => [{ value: invested, color: ChartColor.lightNavy }, { value: approved - invested, color: ChartColor.lightPeriwinkle }]
+);

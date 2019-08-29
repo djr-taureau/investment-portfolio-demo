@@ -24,7 +24,7 @@ export class MicroBarComponent implements OnInit, OnChanges {
 
     @Input()
     public set data(value: RevenueSeriesData[]) {
-        if (value) {
+        if (value && value !== this._data) {
             this._data = value;
             this.update();
         }
@@ -46,7 +46,16 @@ export class MicroBarComponent implements OnInit, OnChanges {
     lineY1: any;
     lineY2: any;
     selectedValue: boolean;
-    dimensions: DimensionsType;
+    dimensions: DimensionsType = {
+        marginTop: 3,
+        marginRight: 5,
+        marginBottom: 5,
+        marginLeft: 2,
+        height: 60,
+        width: 71,
+        boundedHeight: 60,
+        boundedWidth: 71
+    };
     el: HTMLElement;
 
     timePeriodAccessor;
@@ -72,36 +81,53 @@ export class MicroBarComponent implements OnInit, OnChanges {
     barId: string = getUniqueId("bar-chart");
     barTitle: string;
 
-    constructor(elementRef: ElementRef) {
-        this.dimensions = {
-            marginTop: 3,
-            marginRight: 5,
-            marginBottom: 5,
-            marginLeft: 2,
-            height: 60,
-            width: 71,
-            boundedHeight: 60,
-            boundedWidth: 71
-        };
-
+    private setDimensions() {
         this.dimensions = {
             ...this.dimensions,
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
+    }
+
+    constructor(elementRef: ElementRef) {
+        // this.dimensions = {
+        //     marginTop: 3,
+        //     marginRight: 5,
+        //     marginBottom: 5,
+        //     marginLeft: 2,
+        //     height: 60,
+        //     width: 71,
+        //     boundedHeight: 60,
+        //     boundedWidth: 71
+        // };
+        //
+        // this.dimensions = {
+        //     ...this.dimensions,
+        //     boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
+        //     boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
+        // };
+
         this.el = elementRef.nativeElement;
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        // this.dimensions = {
+        //     ...this.dimensions,
+        //     boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
+        //     boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
+        // };
+        // this.el = elementRef.nativeElement;
+        this.setDimensions();
+    }
 
     private update(): void {
-        if (!this.data && !this.yAccessorValue) {
+        if ((this.data || []).length < 1 || !this.yAccessorValue) {
             return;
         }
         this.updateAccessorValue(this.yAccessorValue);
         this.sourceTypeAccessor = (d) => d.sourceType;
         this.timePeriods = [];
-        this.dateSelected = this.selectedPeriod.date;
+        this.dateSelected = _.get(this, "selectedPeriod.date", null);
         if (this.data) {
             this.data.map((v) => {
                 if (v.date !== null && v.date !== undefined && v.date === this.dateSelected) {
@@ -121,9 +147,7 @@ export class MicroBarComponent implements OnInit, OnChanges {
         this.updateScales();
     }
 
-    ngOnChanges() {
-        // this.updateScales();
-    }
+    ngOnChanges() {}
 
     updateAccessorValue(value: string) {
         switch (value) {
@@ -139,18 +163,22 @@ export class MicroBarComponent implements OnInit, OnChanges {
     }
 
     updateScales() {
+        const dataLength = (this.dataValues || []).length;
+        const dimensionWith = _.get(this, "dimensions.width", 0);
+        const BAR_WIDTH = Math.max((dimensionWith - dataLength) / dataLength, 1);
+
         d3.select(this.el)
             .selectAll("line.select-barline")
             .remove();
         d3.select(this.el)
             .selectAll(".bar")
             .remove();
-        const BAR_WIDTH = (this.dimensions.width - this.dataValues.length) / this.dataValues.length;
+
         const y0 = d3.max(d3.extent(this.dataValues).map((d) => Math.abs(d)));
 
         this.xScale = d3
             .scaleLinear()
-            .domain([0, this.dataValues.length])
+            .domain([0, (this.dataValues || []).length])
             .range([0, 90]);
 
         this.yScale = d3

@@ -46,7 +46,7 @@ export const getTableData = createSelector(
 
 export const getSeries1Label = createSelector(
     fromPortfolioDashboard.getSelectedDatePart,
-    (datePart) => (datePart.id.toUpperCase() === "Q" ? "vs PQ" : "vs PY")
+    (datePart) => (datePart.id.toUpperCase() === "Q" ? "vs PY" : "vs PY")
 );
 
 export const getSeries2Label = createSelector(
@@ -92,7 +92,7 @@ export const getChangeFromPriorPeriod = createSelector(
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPY" : "vsPY";
             const currencyKey = "valueInUSD";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
@@ -216,7 +216,7 @@ export const getChangeFromPriorPeriodBarChartData = createSelector(
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPY" : "vsPY";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
             const result = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
@@ -341,7 +341,7 @@ export const getTableDataRevenueVsPq = createSelector(
     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (tableData && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
+            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPY" : "vsPY";
             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);

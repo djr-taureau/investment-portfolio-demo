@@ -145,7 +145,7 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
         this.activeStyle = "not-visible";
         this.timePeriods = [];
         const objSelected = _.find(this.data, (v) => v.date === this.selectedPeriod.date);
-        this.dateSelected = this.selectedPeriod.date;
+        this.dateSelected = _.get(this, "selectedPeriod.date", null);
         this.data.map((v) => {
             if (this.categoryAccessor && v.date === this.dateSelected) {
                 this.selectedValue = true;

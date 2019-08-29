@@ -57,7 +57,7 @@ export class LineComponent implements OnChanges {
             this.visibleToggle = "not-visible";
             this.pathStyles = [`line ${this.valueType} ${this.visibleToggle}`];
         }
-        this.lineString = lineGenerator(this.data);
+        this.lineString = lineGenerator(this.data || []);
     }
 
     ngOnChanges(changes: SimpleChanges): void {

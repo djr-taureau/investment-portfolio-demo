@@ -22,10 +22,6 @@ export class CompanySummaryExpandedComponent implements OnInit {
     public set company(value: Company) {
         if (value) {
             this._company = value;
-
-            // Create chart data.
-            // this.percentOwnershipChartData = this.createPercentOwnershipChartData(value);
-            // this.amountDeployedChartData = this.createAmountDeployedChartData(value);
         }
     }
     public get company(): Company {

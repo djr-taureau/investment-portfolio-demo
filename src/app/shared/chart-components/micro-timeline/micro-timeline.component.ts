@@ -13,7 +13,7 @@ import { DimensionsType, ScaleType } from "../interfaces/types";
     templateUrl: "./micro-timeline.component.html",
     styleUrls: ["./micro-timeline.component.scss"]
 })
-export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChanges {
+export class MicroTimelineComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("MicroTimelineComponent");
 
     @Input() id: string;
@@ -78,7 +78,14 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     historicalData: any[];
     projectedData: any[];
-    dimensions: DimensionsType;
+    dimensions: DimensionsType = {
+        marginTop: 15,
+        marginRight: 11,
+        marginBottom: 20,
+        marginLeft: 1,
+        height: 110,
+        width: 120
+    };
     xScale: any;
     yScale: ScaleType;
     xAccessorScaled: any;
@@ -102,21 +109,17 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     indexSelected;
     el: HTMLElement;
 
-    constructor(elementRef: ElementRef) {
-        MicroTimelineComponent.logger.debug(`constructor()`);
-        this.dimensions = {
-            marginTop: 15,
-            marginRight: 11,
-            marginBottom: 20,
-            marginLeft: 1,
-            height: 110,
-            width: 120
-        };
+    private setDimensions() {
         this.dimensions = {
             ...this.dimensions,
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
+    }
+
+    constructor(elementRef: ElementRef) {
+        MicroTimelineComponent.logger.debug(`constructor()`);
+
         this.el = elementRef.nativeElement;
     }
 
@@ -129,6 +132,8 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
 
     ngOnInit() {
         MicroTimelineComponent.logger.debug(`ngOnInit()`);
+
+        this.setDimensions();
         this.projectedAccessor = (v) => v.projection;
         d3.select(this.el)
             .selectAll("line.select-timeline")
@@ -139,7 +144,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
     }
 
     private update(): void {
-        if (!this.data || !this.selectedPeriod) {
+        if ((this.data || []).length < 1 || !this.selectedPeriod) {
             return;
         }
 
@@ -149,7 +154,7 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
         this.forecastVis = true;
         this.activeStyle = "not-visible";
         this.timePeriods = [];
-        this.dateSelected = this.selectedPeriod.date;
+        this.dateSelected = _.get(this, "selectedPeriod.date", null);
         if (this.data) {
             this.data.map((v) => {
                 if (!!v.date && v.date === this.dateSelected) {
@@ -160,29 +165,16 @@ export class MicroTimelineComponent implements OnInit, AfterContentInit, OnChang
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         }
         this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
-        this.historicalData = this.data.filter((v) => v.projection === false);
-        this.projectedData = this.data.filter((v) => v.projection === true);
+        this.historicalData = _.take(this.data, this.data.length - 1);
+        this.projectedData = _.takeRight(this.data, 1);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.updateScales();
     }
 
-    ngAfterContentInit() {
-        if (this.data) {
-            // this.updateDimensions();
-        }
-    }
-
-    // @HostListener("window:resize", ["$event"])
-    // onResize() {
-    //     this.updateDimensions();
-    // }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        // this.updateScales();
-    }
+    ngOnChanges(changes: SimpleChanges): void {}
 
     updateScales() {
-        if (!this.timePeriods && !this.data) {
+        if ((this.timePeriods || []).length < 1 || (this.data || []).length < 1 || _.isNil(this.dateSelected)) {
             return;
         }
 

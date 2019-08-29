@@ -20,17 +20,17 @@ import * as _ from "lodash";
             [company]="company$ | async"
             [teamMembers]="teamMembers$ | async"
             [teamGroup]="teamGroup$ | async"
-            [currentIrr]="currentIrr"
-            [currentMoic]="currentMoic"
-            [currentTotalValue]="currentTotalValue"
-            [plusOneIrr]="plusOneIrr"
-            [plusOneMoic]="plusOneMoic"
-            [plusOneTotalValue]="plusOneTotalValue"
-            [exitIrr]="exitIrr"
-            [exitMoic]="exitMoic"
-            [exitTotalValue]="exitTotalValue"
-            [currentInvested]="currentInvested"
-            [currentApproved]="currentApproved"
+            [currentIrr]="currentIrr$ | async"
+            [currentMoic]="currentMoic$ | async"
+            [currentTotalValue]="currentTotalValue$ | async"
+            [plusOneIrr]="plusOneIrr$ | async"
+            [plusOneMoic]="plusOneMoic$ | async"
+            [plusOneTotalValue]="plusOneTotalValue$ | async"
+            [exitIrr]="exitIrr$ | async"
+            [exitMoic]="exitMoic$ | async"
+            [exitTotalValue]="exitTotalValue$ | async"
+            [currentInvested]="currentInvested$ | async"
+            [currentApproved]="currentApproved$ | async"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
             (seeTeamMember)="seeTeamMember($event)"
             (seeAllTeamMembers)="seeAllTeamMembers($event)"
@@ -47,18 +47,18 @@ import * as _ from "lodash";
             [tags]="tags$ | async"
             [takeaways]="takeaways$ | async"
             [takeawayCount]="takeawayCount$ | async"
-            [currentIrr]="currentIrr"
-            [currentMoic]="currentMoic"
-            [currentTotalValue]="currentTotalValue"
-            [plusOneIrr]="plusOneIrr"
-            [plusOneMoic]="plusOneMoic"
-            [plusOneTotalValue]="plusOneTotalValue"
-            [exitIrr]="exitIrr"
-            [exitMoic]="exitMoic"
-            [exitTotalValue]="exitTotalValue"
-            [currentInvested]="currentInvested"
-            [currentApproved]="currentApproved"
-            [amountDeployedChartData]="amountDeployedChartData"
+            [currentIrr]="currentIrr$ | async"
+            [currentMoic]="currentMoic$ | async"
+            [currentTotalValue]="currentTotalValue$ | async"
+            [plusOneIrr]="plusOneIrr$ | async"
+            [plusOneMoic]="plusOneMoic$ | async"
+            [plusOneTotalValue]="plusOneTotalValue$ | async"
+            [exitIrr]="exitIrr$ | async"
+            [exitMoic]="exitMoic$ | async"
+            [exitTotalValue]="exitTotalValue$ | async"
+            [currentInvested]="currentInvested$ | async"
+            [currentApproved]="currentApproved$ | async"
+            [amountDeployedChartData]="amountDeployedChartData$ | async"
             (seeAllTakeaways)="seeAllTakeaways($event)"
             (seeMoreCompanyInfo)="seeMoreCompanyInfo($event)"
             (seeTeamMember)="seeTeamMember($event)"
@@ -125,18 +125,19 @@ export class CompanySummaryContainer implements OnInit {
     /**
      * Valuation props
      */
-    public currentTotalValue = 0;
-    public currentMoic = 0;
-    public currentIrr = 0;
-    public plusOneTotalValue = 0;
-    public plusOneMoic = 0;
-    public plusOneIrr = 0;
-    public exitTotalValue = 0;
-    public exitMoic = 0;
-    public exitIrr = 0;
-    public currentInvested = 0;
-    public currentApproved = 0;
-    public amountDeployedChartData: any[];
+    public currentTotalValue$: Observable<number>;
+    public currentMoic$: Observable<number>;
+    public currentIrr$: Observable<number>;
+    public plusOneTotalValue$: Observable<number>;
+    public plusOneMoic$: Observable<number>;
+    public plusOneIrr$: Observable<number>;
+    public exitTotalValue$: Observable<number>;
+    public exitMoic$: Observable<number>;
+    public exitIrr$: Observable<number>;
+    public currentInvested$: Observable<number>;
+    public currentApproved$: Observable<number>;
+
+    public amountDeployedChartData$: Observable<any[]>;
 
     /**
      * The selected company observable.
@@ -163,25 +164,18 @@ export class CompanySummaryContainer implements OnInit {
         this.takeaways$ = this.store$.pipe(select(fromState.getSelectedCompanyTopTakeaways));
         this.takeawayCount$ = this.store$.pipe(select(fromState.getSelectedCompanyTakeawayCount));
         this.valuation$ = this.store$.pipe(select(fromState.getSelectedValuation));
-        this.valuation$.subscribe((value) => {
-            if (value) {
-                this.currentIrr = _.get(value, "topLineValuations.current.irr", 0);
-                this.currentMoic = _.get(value, "topLineValuations.current.moic", 0);
-                this.currentTotalValue = _.get(value, "topLineValuations.current.totalValue", 0) / 1000000;
-                this.plusOneIrr = _.get(value, "topLineValuations.yearPlus1.irr", 0);
-                this.plusOneMoic = _.get(value, "topLineValuations.yearPlus1.moic", 0);
-                this.plusOneTotalValue = _.get(value, "topLineValuations.yearPlus1.totalValue", 0) / 1000000;
-                this.exitIrr = _.get(value, "topLineValuations.exit.irr", 0);
-                this.exitMoic = _.get(value, "topLineValuations.exit.moic", 0);
-                this.exitTotalValue = _.get(value, "topLineValuations.exit.totalValue", 0) / 1000000;
-                this.currentInvested = _.get(value, "valuationDetail.actual.invested", 0) / 1000000;
-                this.currentApproved = _.get(value, "valuationDetail.actual.approved", 0) / 1000000;
-                this.amountDeployedChartData = [
-                    { value: this.currentInvested, color: ChartColor.lightNavy },
-                    { value: this.currentApproved - this.currentInvested, color: ChartColor.lightPeriwinkle }
-                ];
-            }
-        });
+        this.currentIrr$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentIrr));
+        this.currentMoic$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentMoic));
+        this.currentTotalValue$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentTotalValue));
+        this.plusOneIrr$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentPlusOneRR));
+        this.plusOneMoic$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentPlusOneMoic));
+        this.plusOneTotalValue$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentPlusOneTotalValue));
+        this.exitIrr$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentExitIRR));
+        this.exitMoic$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentExitMoic));
+        this.exitTotalValue$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentExitTotalValue));
+        this.currentInvested$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentInvested));
+        this.currentApproved$ = this.store$.pipe(select(fromState.getSelectedValuationTopLineValuationsCurrentApproved));
+        this.amountDeployedChartData$ = this.store$.pipe(select(fromState.getAmountDeployedChartData));
 
         this.teamGroup$ = this.store$.pipe(select(fromState.getDealTeamGroup));
         this.teamMembers$ = this.store$.pipe(select(fromState.getDealTeamMembers));

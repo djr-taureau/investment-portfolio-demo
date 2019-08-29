@@ -33,27 +33,27 @@ export class CompanySummaryCollapsedComponent implements OnInit {
      * Valuation props
      */
     @Input()
-    public currentTotalValue = 0;
+    public currentTotalValue;
     @Input()
-    public currentMoic = 0;
+    public currentMoic;
     @Input()
-    public currentIrr = 0;
+    public currentIrr;
     @Input()
-    public plusOneTotalValue = 0;
+    public plusOneTotalValue;
     @Input()
-    public plusOneMoic = 0;
+    public plusOneMoic;
     @Input()
-    public plusOneIrr = 0;
+    public plusOneIrr;
     @Input()
-    public exitTotalValue = 0;
+    public exitTotalValue;
     @Input()
-    public exitMoic = 0;
+    public exitMoic;
     @Input()
-    public exitIrr = 0;
+    public exitIrr;
     @Input()
-    public currentInvested = 0;
+    public currentApproved;
     @Input()
-    public currentApproved = 0;
+    public currentInvested;
 
     /**
      * The percent owned chart data.

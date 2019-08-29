@@ -22,19 +22,19 @@ export class ValuationComponent implements OnInit {
      * The value.
      */
     @Input()
-    public value = 0;
+    public value;
 
     /**
      * Teh MOIC value.
      */
     @Input()
-    public moic = 0;
+    public moic;
 
     /**
      * The gross IRR value.
      */
     @Input()
-    public grossIrr = 0;
+    public grossIrr;
 
     /**
      * Controls display of the moic and irr values based upon collapsed or expanded

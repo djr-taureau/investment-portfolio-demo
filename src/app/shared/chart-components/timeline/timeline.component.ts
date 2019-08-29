@@ -146,7 +146,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
         this.timePeriods = [];
         if (this.actuals && this.selectedPeriod && this.budget && this.forecast) {
-            this.dateSelected = this.selectedPeriod.date;
+            this.dateSelected = _.get(this, "selectedPeriod.date", null);
             this.actuals.map((v) => {
                 if (v.date === this.dateSelected && v.date !== null && v.date !== undefined) {
                     this.selectedValue = true;
