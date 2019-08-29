@@ -18,13 +18,13 @@
 
     .panel-container {
         padding: 0 40px;
-        height: 100%;
-        min-height: 400px;
+        // height: 100%;
+        // min-height: 400px;
     }
 
     .slack-coming-soon-container {
         height: 100%;
-        min-height: 400px;
+        min-height: 566px;
 
 
         sbp-filterable-panel {
@@ -37,6 +37,7 @@
         opacity: 0.75;
         border-radius: 6px;
         background-color: $white;
+        min-height: 566px;
 
         div {
             opacity: 0.75;

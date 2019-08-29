@@ -3,10 +3,10 @@
      class="kpi-container"
      fxLayout="row"
      fxLayoutAlign="space-between center">
-    <div class="chart"
-         *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
+    <ng-container class="chart"
+                  *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
 
         <sbp-summary-widget-container [id]="chartDataPeriodSet.id"></sbp-summary-widget-container>
 
-    </div>
+    </ng-container>
 </div>

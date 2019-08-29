@@ -1,6 +1,5 @@
 <div fxLayout="column"
-     fxLayoutAlign="start stretch"
-     fxFlex>
+     fxLayoutAlign="start space-between">
 
     <!-- Company Summary Header -->
     <sbp-company-summary-container></sbp-company-summary-container>
@@ -39,17 +38,15 @@
     <div class="panel-container"
          fxLayout="row"
          fxFlex
-         fxLayoutAlign="center center"
+         fxLayoutAlign="center stretch"
          fxLayoutGap="12px">
-        <sbp-company-initiatives-summary-container fxFlex="50%"
-                                                   fxFill></sbp-company-initiatives-summary-container>
+        <sbp-company-initiatives-summary-container fxFlex="50%">
+        </sbp-company-initiatives-summary-container>
 
         <div class="slack-coming-soon-container"
-             fxFlex="50%"
-             fxFill>
+             fxFlex="50%">
             <div class="slack-coming-soon"
                  fxLayout="column"
-                 fxFlexFill
                  fxLayoutAlign="center center">
 
                 <div fxLayout="column"
