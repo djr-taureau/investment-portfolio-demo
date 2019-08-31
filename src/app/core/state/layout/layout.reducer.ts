@@ -29,21 +29,21 @@ export const initialState: LayoutState = {
         },
         {
             icon: "assets/image/company.svg",
-            label: "List of Companies",
+            label: "Companies",
             route: appRoutePaths.portfolioListing,
             enabled: true,
             showItemCount: false
         },
         {
             icon: "assets/image/map.svg",
-            label: "Map View",
+            label: "Map",
             route: appRoutePaths.portfolioMapView,
             enabled: false,
             showItemCount: false
         },
         {
             icon: "assets/image/calendar.svg",
-            label: "Calendar View",
+            label: "Calendar",
             route: appRoutePaths.portfolioCalendarView,
             enabled: false,
             showItemCount: false

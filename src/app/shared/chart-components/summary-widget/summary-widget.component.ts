@@ -5,8 +5,8 @@ import * as d3 from "d3";
 
 @Component({
     selector: "sbp-summary-widget",
-    templateUrl: "./summary-widget.component.html",
-    styleUrls: ["./summary-widget.component.scss"]
+    templateUrl: "./summary-widget-terse.component.html",
+    styleUrls: ["./summary-widget.component-terse.scss"]
 })
 export class SummaryWidgetComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("SummaryWidgetComponent");

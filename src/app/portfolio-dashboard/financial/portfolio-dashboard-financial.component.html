@@ -8,6 +8,7 @@
          fxLayoutAlign="space-between center">
         <div class="chart">
             <sbp-summary-widget [data]="revenueSummaryLineChartData"
+                                [selectedPeriod]="selectedPeriod"
                                 [barChartData1]="revenueSeries1BarChartData"
                                 [barChartData2]="revenueSeries2BarChartData"
                                 [title]="revenueTitle"
@@ -15,15 +16,16 @@
                                 [currencySymbol]="revenueCurrencySymbol"
                                 [value]="revenueTotalValue| millions: '1.0-1'"
                                 [pyLabel]="revenueSeries1Label"
-                                [pyValue]="revenueSeries1Value | async"
+                                [pyValue]="revenueSeries1Value | millions: '1.0-1'"
                                 [icLabel]="revenueSeries2Label"
-                                [icValue]="revenueSeries2Value | async"
+                                [icValue]="revenueSeries2Value | millions: '1.0-1'"
                                 (click)="onRevenueClick($event)">
             </sbp-summary-widget>
         </div>
 
         <div class="chart">
             <sbp-summary-widget [data]="ebitdaSummaryLineChartData"
+                                [selectedPeriod]="selectedPeriod"
                                 [barChartData1]="ebitdaSeries1BarChartData"
                                 [barChartData2]="ebitdaSeries2BarChartData"
                                 [title]="ebitdaTitle"
@@ -31,9 +33,9 @@
                                 [currencySymbol]="ebitdaCurrencySymbol"
                                 [value]="ebitdaTotalValue| millions: '1.0-1'"
                                 [pyLabel]="ebitdaSeries1Label"
-                                [pyValue]="ebitdaSeries1Value | async"
+                                [pyValue]="ebitdaSeries1Value | millions: '1.0-1'"
                                 [icLabel]="ebitdaSeries2Label"
-                                [icValue]="ebitdaSeries2Value | async"
+                                [icValue]="ebitdaSeries2Value | millions: '1.0-1'"
                                 (click)="onEbitdaClick($event)">
             </sbp-summary-widget>
         </div>

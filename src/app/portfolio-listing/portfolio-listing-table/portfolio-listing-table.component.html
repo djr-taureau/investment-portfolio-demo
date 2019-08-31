@@ -87,6 +87,7 @@
 
         <ng-container matColumnDef="invested">
             <th mat-header-cell
+                class="invested"
                 *matHeaderCellDef>
                 <div class="header-label">INVESTED ($M)</div>
             </th>
@@ -98,8 +99,9 @@
 
         <ng-container matColumnDef="totalValue">
             <th mat-header-cell
+                class="total-value"
                 *matHeaderCellDef>
-                <div class="header-label">VALUATION ($M)</div>
+                <div class="header-label">TOTAL VALUE ($M)</div>
             </th>
             <td mat-cell
                 *matCellDef="let element">
@@ -109,6 +111,7 @@
 
         <ng-container matColumnDef="moic">
             <th mat-header-cell
+                class="moic"
                 *matHeaderCellDef>
                 <div class="header-label">MOIC</div>
             </th>
@@ -120,6 +123,7 @@
 
         <ng-container matColumnDef="irr">
             <th mat-header-cell
+                class="gross-irr"
                 *matHeaderCellDef>
                 <div class="header-label">GROSS IRR</div>
             </th>

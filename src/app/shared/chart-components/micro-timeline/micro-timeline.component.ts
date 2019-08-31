@@ -123,13 +123,6 @@ export class MicroTimelineComponent implements OnInit, OnChanges {
         this.el = elementRef.nativeElement;
     }
 
-    // updateDimensions() {
-    //     const width = this.container.nativeElement.offsetWidth;
-    //     this.dimensions.width = this.container.nativeElement.offsetWidth;
-    //     this.dimensions.boundedWidth = Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0);
-    //     this.updateScales();
-    // }
-
     ngOnInit() {
         MicroTimelineComponent.logger.debug(`ngOnInit()`);
 

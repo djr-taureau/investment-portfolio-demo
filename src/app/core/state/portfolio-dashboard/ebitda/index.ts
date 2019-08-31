@@ -51,7 +51,7 @@ export const getSeries1Label = createSelector(
 
 export const getSeries2Label = createSelector(
     fromPortfolioDashboard.getSelectedDatePart,
-    (datePart) => (datePart.id.toUpperCase() === "Q" ? "vs BUD" : "vs IC")
+    (datePart) => (datePart.id.toUpperCase() === "Q" ? "vs Bud" : "vs IC")
 );
 
 /**
@@ -66,7 +66,7 @@ export const getEbitdaAsOf = createSelector(
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
+            const currencyKey = "amountInUSD";
             const scenarioName = "actual";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
@@ -93,13 +93,13 @@ export const getChangeFromPriorPeriod = createSelector(
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
             const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPY" : "vsPY";
-            const currencyKey = "valueInUSD";
+            const currencyKey = "amountInUSD";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
             const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
             const matchingDateIndex: number = _.findIndex(matchingDateData, (item) => item.date === period.date);
-            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0) || [];
-            return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            return result;
         } else {
             return 0;
         }
@@ -112,21 +112,21 @@ export const getChangeFromPriorPeriod = createSelector(
  * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Ebitda+Widget+-+SS
  */
 export const getChangeFromPriorBudget = createSelector(
-    getTableData,
+    getMetricsGraph,
     fromPortfolioDashboard.getSelectedPeriod,
     fromPortfolioDashboard.getSelectedDatePart,
     fromPortfolioDashboard.getSelectedCurrency,
-    (tableData: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-        if (tableData && period && datePart && currency) {
+    (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+        if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsBud" : "icLatest";
-            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-            const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []) || [];
+            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "managementBudget" : "icLatest";
+            const currencyKey = "amountInUSD";
+            const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
             const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
             const matchingDateIndex: number = _.findIndex(matchingDateData, (item) => item.date === period.date);
-            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0) || [];
-            return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            return result;
         } else {
             return 0;
         }
@@ -146,14 +146,26 @@ export const getSummaryLineChartData = createSelector(
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
-            const scenarioName = "budget";
+            const currencyKey = "amountInUSD";
+            const scenarioName = "managementBudget";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
             const result = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
             // HACK BECAUSE API RESPONSE IS NAMED DIFFERENTLY AND MAKES CHARTS NOT WORK
-            result.map((item) => _.extend(item, { financialQuarter: item.calendarQuarter, amountInNative: item.amountInUSD }));
-            return result;
+            return result
+                .map((item) => {
+                    return {
+                        ...item,
+                        sourceType: "A",
+                        financialQuarter: item.calendarQuarter,
+                        amountInNative: item.amountInUSD,
+                        valueInUSD: item.amountInUSD,
+                        valueInNative: item.amountInUSD,
+                        value: item.amountInUSD,
+                        amount: item.amountInUSD
+                    };
+                })
+                .filter((item) => item.amountInUSD !== null);
         } else {
             return [];
         }
@@ -178,8 +190,20 @@ export const getChangeFromPriorPeriodBarChartData = createSelector(
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
             const result = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
             // HACK BECAUSE API RESPONSE IS NAMED DIFFERENTLY AND MAKES CHARTS NOT WORK
-            result.map((item) => _.extend(item, { financialQuarter: item.calendarQuarter, amountInNative: item.amountInUSD }));
-            return result;
+            return result
+                .map((item) => {
+                    return {
+                        ...item,
+                        sourceType: "A",
+                        financialQuarter: item.calendarQuarter,
+                        amountInNative: item.amountInUSD,
+                        valueInUSD: item.amountInUSD,
+                        valueInNative: item.amountInUSD,
+                        value: item.amountInUSD,
+                        amount: item.amountInUSD
+                    };
+                })
+                .filter((item) => item.amountInUSD !== null);
         } else {
             return [];
         }
@@ -199,13 +223,25 @@ export const getChangeFromPriorBudgetBarChartData = createSelector(
     (metricsGraph: ChartDataPeriod, period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
         if (metricsGraph && period && datePart && currency) {
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsBud" : "icLatest";
+            const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "managementBudget" : "icLatest";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []) || [];
             const actualIndex: number = _.findIndex(dateDataList, (item) => item.scenarioName === scenarioName);
             const result = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
             // HACK BECAUSE API RESPONSE IS NAMED DIFFERENTLY AND MAKES CHARTS NOT WORK
-            result.map((item) => _.extend(item, { financialQuarter: item.calendarQuarter, amountInNative: item.amountInUSD }));
-            return result;
+            return result
+                .map((item) => {
+                    return {
+                        ...item,
+                        sourceType: "A",
+                        financialQuarter: item.calendarQuarter,
+                        amountInNative: item.amountInUSD,
+                        valueInUSD: item.amountInUSD,
+                        valueInNative: item.amountInUSD,
+                        value: item.amountInUSD,
+                        amount: item.amountInUSD
+                    };
+                })
+                .filter((item) => item.amountInUSD !== null);
         } else {
             return [];
         }

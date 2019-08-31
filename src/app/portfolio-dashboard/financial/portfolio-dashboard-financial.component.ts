@@ -16,6 +16,9 @@ export class PortfolioDashboardFinancialComponent implements OnInit {
     private _revenueSeries1BarChartData;
     private _revenueSeries2BarChartData;
 
+    @Input()
+    public selectedPeriod: any;
+
     // REVENUE
     @Input()
     public revenueTotalValue;

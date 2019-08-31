@@ -19,11 +19,8 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
      */
     private static logger: Logger = Logger.getLogger("PortfolioDashboardFinancialContainer");
 
-    // public selectedCurrency$: Observable<any>;
-    // public selectedPeriod$: Observable<any>;
-    // public selectedPeriodValue$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+    public selectedPeriod$: Observable<any>;
 
-    public pyValue: number;
     /**
      * The total revenue for a given period.
      */
@@ -113,36 +110,6 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
     public ebitdaSeries2Label$: Observable<string>;
 
     /**
-     * The total kpi for a given period.
-     */
-    public kpiAsOf$: Observable<number>;
-
-    /**
-     * The percent change from a prior period.
-     */
-    public kpiChangeFromPriorPeriod$: Observable<number>;
-
-    /**
-     * The percent change from a prior budget.
-     */
-    public kpiChangeFromPriorBudget$: Observable<number>;
-
-    /**
-     * List of kpi summary line chart data.
-     */
-    public kpiSummaryLineChartData$: Observable<RevenueSeriesData[]>;
-
-    /**
-     * List of kpi summary percent change from a prior period bar chart data.
-     */
-    public kpiChangeFromPriorPeriodBarChartData$: Observable<RevenueSeriesData[]>;
-
-    /**
-     * List of kpi summary percent change from a prior budget bar chart data.
-     */
-    public kpiChangeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
-
-    /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
@@ -155,6 +122,8 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
     public ngOnInit() {
         PortfolioDashboardFinancialContainer.logger.debug(`ngOnInit()`);
 
+        this.selectedPeriod$ = this.store$.pipe(select(fromPortfolioRevenue.getSelectedPeriodDate));
+
         // Revenue summary chart data.
         this.revenueAsOf$ = this.store$.pipe(select(fromPortfolioRevenue.getRevenueAsOf));
         this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromPortfolioRevenue.getChangeFromPriorPeriod));
@@ -162,7 +131,6 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getSummaryLineChartData));
         this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getChangeFromPriorPeriodBarChartData));
         this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromPortfolioRevenue.getChangeFromPriorBudgetBarChartData));
-
         this.revenueSeries1Label$ = this.store$.pipe(select(fromPortfolioRevenue.getSeries1Label));
         this.revenueSeries2Label$ = this.store$.pipe(select(fromPortfolioRevenue.getSeries2Label));
 
@@ -178,6 +146,7 @@ export class PortfolioDashboardFinancialContainer implements OnInit {
         this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromPortfolioEbitda.getChangeFromPriorPeriodBarChartData));
         this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromPortfolioEbitda.getChangeFromPriorBudgetBarChartData));
 
+        //  EBITDA Detail Chart Data
         this.ebitdaSeries1Label$ = this.store$.pipe(select(fromPortfolioEbitda.getSeries1Label));
         this.ebitdaSeries2Label$ = this.store$.pipe(select(fromPortfolioEbitda.getSeries2Label));
     }
