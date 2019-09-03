@@ -13,8 +13,8 @@ import { select, Store } from "@ngrx/store";
     template: `
         <sbp-navigation-bar [links]="links$ | async" [selectedLink]="selectedLink$ | async" (linkClick)="onLinkClick($event)" [showContent]="true">
             <div [ngClass]="{ 'btn-hidden': !showExpandCollapse }" fxLayout="row" fxLayoutAlign="start center" (click)="onExpandOrCollapse($event)">
-                <div [ngClass]="{ 'btn-expanded-img': expanded, 'btn-collapsed-img': !expanded }"></div>
-                <div [ngClass]="{ 'btn-expanded': expanded, 'btn-collapsed': !expanded }">{{ collapsed$ | async | expandOrCollapse }}</div>
+                <div [ngClass]="{ 'btn-collapsed-img': expanded, 'btn-expanded-img': !expanded }"></div>
+                <div [ngClass]="{ 'btn-collapsed': expanded, 'btn-expanded': !expanded }">{{ collapsed$ | async | expandOrCollapse }}</div>
             </div>
         </sbp-navigation-bar>
     `,
