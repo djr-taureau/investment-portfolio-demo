@@ -1,3 +1,13 @@
+<!-- <mat-table *ngIf="dataa" [dataSource]="dataa">
+        <ng-container *ngFor="let column of columns; let colIndex = index" [matColumnDef]="column">
+          <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row[colIndex] }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+</mat-table> -->
+
 <table class="kpi-detail-table">
 
     <!--
@@ -20,30 +30,17 @@
     //////////////////////////////////////////////////////////////////
     -->
 
-    <tr class="row-divider">
+    <tr>
         <th class="row-header"
             scope="row">
             <img src="assets/image/legend-actual.svg"
                  class="legend-actual">
             REVENUE
         </th>
-        <td *ngFor="let asOf of revenueTableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | millions:'1.1-1' }}</td>
+        <td class="revenueValues"
+            *ngFor="let asOf of revenueTableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | millions:'1.1-1' }}</td>
     </tr>
-    <tr>
-        <th class="row-header"
-            scope="row">
-            vs Bud
-        </th>
-        <td *ngFor="let vsBud of revenueTableDataVsBud; let i=index; trackBy: trackByFn"
-            [ngClass]="
-            {
-                'py-positive': vsBud > 0,
-                'py-negative': vsBud < 0
-            }">
-            {{ vsBud | positiveOrNegative | percent:'1.1-5' }}
-        </td>
-    </tr>
-    <tr>
+    <tr *ngIf="vsPqDataShow">
         <th class="row-header"
             scope="row">
             vs PQ
@@ -54,36 +51,78 @@
                 'py-positive': vsPq > 0,
                 'py-negative': vsPq < 0
             }">
-            {{ vsPq | positiveOrNegative | percent:'1.1-5' }}
+            {{ vsPq | positiveOrNegative | percent:'1.1-1' }}
+        </td>
+    </tr>
+    <tr *ngIf="vsPyDataShow">
+        <th class="row-header"
+            scope="row">
+            vs PY
+        </th>
+        <td *ngFor="let vsPy of revenueTableDataVsPy; let i=index; trackBy: trackByFn"
+            [ngClass]="
+                {
+                    'py-positive': vsPy > 0,
+                    'py-negative': vsPy < 0
+                }">
+            {{ vsPy/1000000000 | positiveOrNegative | percent:'1.1-1' }}
+        </td>
+    </tr>
+    <tr *ngIf="vsBudDataShow">
+        <th class="row-header"
+            scope="row">
+            vs Mgmt Bud
+        </th>
+        <td *ngFor="let vsBud of revenueTableDataVsBud; let i=index; trackBy: trackByFn"
+            [ngClass]="
+                {
+                    'py-positive': vsBud > 0,
+                    'py-negative': vsBud < 0
+                }">
+            {{ vsBud/1000000000 | positiveOrNegative | percent:'1.1-1' }}
+        </td>
+    </tr>
+    <tr *ngIf="vsForecastDataShow">
+        <th class="row-header"
+            scope="row">
+            vs Mgmt Fcst
+        </th>
+        <td *ngFor="let vsFC of revenueTableDataVsForecast; let i=index; trackBy: trackByFn"
+            [ngClass]="
+                {
+                    'py-positive': vsFC > 0,
+                    'py-negative': vsFC < 0
+                }">
+            {{ vsFC/1000000000 | positiveOrNegative | percent:'1.1-1' }}
+        </td>
+    </tr>
+    <tr *ngIf="vsIcInitialDataShow">
+        <th class="row-header"
+            scope="row">
+            vs IC Initial
+        </th>
+        <td *ngFor="let vsICI of revenueTableDataVsIcInitial; let i=index; trackBy: trackByFn"
+            [ngClass]="
+                {
+                    'py-positive': vsICI > 0,
+                    'py-negative': vsICI < 0
+                }">
+            {{ vsICI | positiveOrNegative | percent:'1.1-1' }}
+        </td>
+    </tr>
+    <tr *ngIf="vsIcLatestDataShow">
+        <th class="row-header"
+            scope="row">
+            vs IC Latest
+        </th>
+        <td *ngFor="let vsICL of revenueTableDataVsIcLatest; let i=index; trackBy: trackByFn"
+            [ngClass]="
+                {
+                    'py-positive': vsICL > 0,
+                    'py-negative': vsICL < 0
+                }">
+            {{ vsICL | positiveOrNegative | percent:'1.1-1' }}
         </td>
     </tr>
 
-    <!--    <tr>-->
-    <!--        <th class="row-header"-->
-    <!--            scope="row">-->
-    <!--            <img src="assets/image/legend-mgmt-bud.svg"-->
-    <!--                 class="legend-mgmt-bud">-->
-    <!--            vs Mgmt Budget-->
-    <!--        </th>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--    </tr>-->
-    <!--    <tr>-->
-    <!--        <th class="row-header"-->
-    <!--            scope="row">-->
-    <!--            <img src="assets/image/legend-mgmt-fcst.svg"-->
-    <!--                 class="legend-mgmt-fcst">-->
-    <!--            vs Mgmt Forecast-->
-    <!--        </th>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--        <td>hold</td>-->
-    <!--    </tr>-->
 </table>

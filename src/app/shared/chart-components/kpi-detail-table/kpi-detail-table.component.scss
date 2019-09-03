@@ -2,14 +2,32 @@
 
 :host {
 
+    .kpi-detail-table {
+        width: 98%;
+        border-collapse: collapse;
+    }
+
     .header {
-        border-bottom: solid 1px $light-grey-blue;
+        // border-bottom: solid 1px $light-grey-blue;
+    }
+
+    .revenueValues {
+        font-family: PostGrotesk;
+        font-size: 16px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: -0.5px;
+        text-align: right;
+        color: $dark;
     }
 
     th.row-header {
         width: 140px;
-        height: 25px;
-        padding-right: 18px;
+        width: 60px;
+        height: 18px;
+        // opacity: 0.75;
         font-family: PostGrotesk;
         font-size: 14px;
         font-weight: normal;
@@ -17,13 +35,13 @@
         font-stretch: normal;
         line-height: normal;
         letter-spacing: normal;
-        text-align: right;
-        color: #929fb3;
+        text-align: left;
+        color: $grey-blue;
     }
 
     th.col-header {
         width: 45px;
-        padding: 10px;
+        // padding: 10px;
         opacity: 0.75;
         font-family: PostGrotesk;
         font-size: 12px;
@@ -34,6 +52,11 @@
         letter-spacing: normal;
         text-align: right;
         color: $grey-blue;
+
+        &:nth-last-child(2) {
+            color: $light-navy;
+            border-bottom-color: solid bold $light-navy;
+        }
     }
 
     th.current {
@@ -53,23 +76,36 @@
     }
 
     tr {
-        padding: 25px;
-        height: 25px;
+        padding: 20px;
+        height: 60px;
         width: 60px;
         text-align: right;
+        border-bottom: dashed 1px $light-grey-blue !important;
     }
 
-    .td {
-        padding: 25px;
-        height: 25px;
-        width: 60px;
-    }
+
 
     tr.row-divider {
         width: 586px;
         height: 1px;
-        opacity: 0.5;
-        border: dotted 1px $light-grey-blue;
+    }
+
+    td {
+        font-family: PostGrotesk;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: right;
+        color: $grey-blue;
+
+        &:nth-last-child(2) {
+            background-color: rgba($pale-grey, .75);
+            // text-align: center;
+            // padding-right: 20px;
+        }
     }
 
     td.py-positive,

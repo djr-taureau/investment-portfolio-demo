@@ -23,8 +23,12 @@ import { Observable } from "rxjs";
                 [allLineChartData]="allLineChartData$ | async"
                 [revenueTableDataHeaders]="revenueTableDataHeaders$ | async"
                 [revenueTableDataAsOf]="revenueTableDataAsOf$ | async"
-                [revenueTableDataVsBud]="revenueTableDataVsBud$ | async"
                 [revenueTableDataVsPq]="revenueTableDataVsPq$ | async"
+                [revenueTableDataVsPy]="revenueTableDataVsPy$ | async"
+                [revenueTableDataVsBud]="revenueTableDataVsBud$ | async"
+                [revenueTableDataVsForecast]="revenueTableDataVsForecast$ | async"
+                [revenueTableDataVsIcInitial]="revenueTableDataVsIcInitial$ | async"
+                [revenueTableDataVsIcLatest]="revenueTableDataVsIcLatest$ | async"
             ></sbp-company-kpi-detail-component>
         </sbp-expandable-panel>
     `,
@@ -42,6 +46,10 @@ export class CompanyRevenueDetailContainer implements OnInit {
     public revenueTableDataAsOf$: Observable<number[]>;
     public revenueTableDataVsBud$: Observable<number[]>;
     public revenueTableDataVsPq$: Observable<number[]>;
+    public revenueTableDataVsPy$: Observable<number[]>;
+    public revenueTableDataVsForecast$: Observable<number[]>;
+    public revenueTableDataVsIcInitial$: Observable<number[]>;
+    public revenueTableDataVsIcLatest$: Observable<number[]>;
 
     constructor(private store$: Store<any>) {}
 
@@ -59,8 +67,12 @@ export class CompanyRevenueDetailContainer implements OnInit {
 
         // Table data
         this.revenueTableDataHeaders$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataHeaders));
-        this.revenueTableDataAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataRevenueAsOf));
-        this.revenueTableDataVsBud$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataRevenueVsBud));
-        this.revenueTableDataVsPq$ = this.store$.pipe(select(fromCompanyRevenue.getTableDataRevenueVsPq));
+        this.revenueTableDataAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("actual")));
+        this.revenueTableDataVsBud$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("managementBudget")));
+        this.revenueTableDataVsPq$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("vsPQ")));
+        this.revenueTableDataVsPy$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("vsPY")));
+        this.revenueTableDataVsForecast$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("forecast")));
+        this.revenueTableDataVsIcInitial$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("icInitial")));
+        this.revenueTableDataVsIcLatest$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueTableData("icLatest")));
     }
 }

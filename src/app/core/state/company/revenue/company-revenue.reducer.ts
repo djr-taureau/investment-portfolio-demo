@@ -25,7 +25,7 @@ function save(data: any, state: State = initialState): State {
 export function reducer(state: State = initialState, action: CompanyRevenueActions): State {
     switch (action.type) {
         case CompanyRevenueActionTypes.GetSuccess:
-            return save(action.payload, state);
+            return save(action.payload, initialState);
 
         default:
             return state;

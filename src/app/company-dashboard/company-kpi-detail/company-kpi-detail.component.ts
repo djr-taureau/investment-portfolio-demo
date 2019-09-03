@@ -56,8 +56,12 @@ export class CompanyKpiDetailComponent implements OnInit {
     @Input() allLineChartData: ChartDataPeriod[];
     @Input() revenueTableDataHeaders: string[];
     @Input() revenueTableDataAsOf: number[];
-    @Input() revenueTableDataVsBud: number[];
+    @Input() revenueTableDataVsPy: number[];
     @Input() revenueTableDataVsPq: number[];
+    @Input() revenueTableDataVsBud: number[];
+    @Input() revenueTableDataVsForecast: number[];
+    @Input() revenueTableDataVsIcInitial: number[];
+    @Input() revenueTableDataVsIcLatest: number[];
 
     constructor(public store$: Store<any>, public route$: ActivatedRoute) {
         CompanyKpiDetailComponent.logger.debug(`constructor()`);

@@ -1,6 +1,8 @@
-<div fxLayout="row">
+<div fxLayout="row"
+     fxLayoutAlign="space-between start">
     <!-- <div class="y-axis-label-line"></div> -->
     <sbp-timeline *ngIf="allLineChartData"
+                  fxFlex="55"
                   [allLineChartData]="allLineChartData"
                   [selectedPeriod]="selectedPeriod"
                   [xAccessor]="dateAccessor"
@@ -9,8 +11,13 @@
     </sbp-timeline>
 
     <sbp-kpi-detail-table [revenueTableDataHeaders]="revenueTableDataHeaders"
+                          fxFlex="45"
                           [revenueTableDataAsOf]="revenueTableDataAsOf"
+                          [revenueTableDataVsPq]="revenueTableDataVsPq"
+                          [revenueTableDataVsPy]="revenueTableDataVsPy"
                           [revenueTableDataVsBud]="revenueTableDataVsBud"
-                          [revenueTableDataVsPq]="revenueTableDataVsPq">
+                          [revenueTableDataVsForecast]="revenueTableDataVsForecast"
+                          [revenueTableDataVsIcInitial]="revenueTableDataVsIcInitial"
+                          [revenueTableDataVsIcLatest]="revenueTableDataVsIcLatest">
     </sbp-kpi-detail-table>
 </div>
