@@ -6,6 +6,7 @@
     <div class="chart">
         <sbp-summary-widget [data]="revenueSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
+                            [availablePeriods]="availablePeriods$ | async"
                             [barChartData1]="revenueChangeFromPriorPeriodBarChartData$ | async"
                             [barChartData2]="revenueChangeFromPriorBudgetBarChartData$ | async"
                             [title]="'Revenue'"

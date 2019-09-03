@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { getSelectedCurrency, getSelectedPeriod, getSelectedDatePart } from "@core/state/company/dashboard";
-
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
@@ -27,6 +27,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
     public selectedCurrencyCode: string;
     public icLabel: string;
 
+    public availablePeriods$: Observable<any>;
     /**
      * The total revenue for a given period.
      */
@@ -105,7 +106,6 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.selectedCurrency$.subscribe((v) => {
             this.selectedCurrencyCode = v.currencyCode;
             this.selectedCurrencySymbol = v.currencySymbol;
-            console.log(v.currencyCode);
         });
 
         this.selectedDatePart$.subscribe((v) => {
@@ -114,9 +114,9 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
             } else {
                 this.icLabel = "vs Bud";
             }
-            console.log(v);
         });
 
+        this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
         // Revenue summary chart data.
         this.revenueAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueAsOf));
         this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorPeriod));

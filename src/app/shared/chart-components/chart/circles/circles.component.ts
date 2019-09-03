@@ -25,8 +25,6 @@ export class CirclesComponent implements AfterContentInit, OnInit {
     @Input() keyAccessor: any;
     @Input() xAccessor: any;
     @Input() yAccessor: any;
-    @Input() categoryAccessor: any;
-    @Input() projectedAccessor?: any;
     @Input() radius?: 5 | null;
     @Input() circleStyles: any[];
     @Input() visible: boolean | true;

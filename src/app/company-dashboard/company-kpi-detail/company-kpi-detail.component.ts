@@ -19,7 +19,6 @@ export class CompanyKpiDetailComponent implements OnInit {
 
     parseDate = d3.timeParse("%m/%d/%Y");
     dateAccessor: any;
-    categoryAccessor: any;
     yAccessor: any;
     budgetAccessor: any;
     forecastAccessor: any;

@@ -5,26 +5,24 @@ import * as d3 from "d3";
 
 @Component({
     selector: "sbp-summary-widget",
-    templateUrl: "./summary-widget-terse.component.html",
-    styleUrls: ["./summary-widget.component-terse.scss"]
+    templateUrl: "./summary-widget.component.html",
+    styleUrls: ["./summary-widget.component.scss"]
 })
 export class SummaryWidgetComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("SummaryWidgetComponent");
 
     parseDate = d3.timeParse("%Y-%m-%d");
-    // parseDate = d3.timeParse("%YYYY-%mm-%dd");
-    // X-Axis
-    categoryAccessor: any;
-    // X-Axis
     dateAccessor: any;
     yAccessor: any;
-    projectedAccessor: any;
     fillColor;
     display;
     isPositivePY: boolean;
     isPositiveIC: boolean;
 
     @Input() selectedPeriod: any;
+
+    @Input()
+    public availablePeriods: any[];
     /**
      * Represents the M,B,T,Q value in the widget title
      * EG: REVENUE ($M) => <title> (<currencySymbol><scale>)
@@ -109,9 +107,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     ngOnInit() {
         SummaryWidgetComponent.logger.debug(`ngOnInit()`);
         this.dateAccessor = (v) => this.parseDate(v.date);
-        this.yAccessor = (v) => v.amountInNative;
-        this.categoryAccessor = (v) => `${v.financialQuarter}Q${v.date.substr(2, 2)}`;
-        this.projectedAccessor = (v) => v.projection;
+        this.yAccessor = (v) => v.value;
         this.checkCurrencyValue(this.denomination);
     }
 

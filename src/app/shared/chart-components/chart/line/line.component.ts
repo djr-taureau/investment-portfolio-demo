@@ -64,3 +64,10 @@ export class LineComponent implements OnChanges {
         this.updateLineString();
     }
 }
+
+export const line = d3
+    .line()
+    .defined((d) => !isNaN(this.yAccessor(d)) && d)
+    .x((d) => this.xAccessor(d))
+    .y((d) => this.yAccessor(d))
+    .curve(curveLinear);

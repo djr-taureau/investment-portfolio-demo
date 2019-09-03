@@ -13,14 +13,13 @@
              fxLayoutAlign="space-between stretch"
              fxFlex="50%">
             <div class="box value">{{ value }}</div>
-            <sbp-micro-timeline [data]="data"
-                                [selectedPeriod]="selectedPeriod"
-                                [barChartData1]="barChartData1"
-                                [barChartData2]="barChartData2"
-                                [xAccessor]="dateAccessor"
-                                [yAccessor]="yAccessor"
-                                [categoryAccessor]="categoryAccessor"
-                                [yLabelVisible]="false"></sbp-micro-timeline>
+            <sbp-micro-line [data]="data"
+                            [selectedPeriod]="selectedPeriod"
+                            [barChartData1]="barChartData1"
+                            [barChartData2]="barChartData2"
+                            [xAccessor]="dateAccessor"
+                            [yAccessor]="yAccessor"
+                            [yLabelVisible]="false"></sbp-micro-line>
         </div>
 
         <!-- Bar chart 1 -->
@@ -46,9 +45,7 @@
                                [selectedPeriod]="selectedPeriod"
                                [title]="'bar1'"
                                [xAccessor]="dateAccessor"
-                               [yAccessorValue]="yAccessorValue"
-                               [categoryAccessor]="categoryAccessor"
-                               [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
+                               [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
             </div>
         </div>
 
@@ -75,9 +72,7 @@
                                    [selectedPeriod]="selectedPeriod"
                                    [title]="'bar2'"
                                    [xAccessor]="dateAccessor"
-                                   [yAccessorValue]="yAccessorValue"
-                                   [categoryAccessor]="categoryAccessor"
-                                   [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
+                                   [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
                 </div>
             </div>
         </div>

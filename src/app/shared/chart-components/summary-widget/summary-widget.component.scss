@@ -149,9 +149,9 @@
         grid-column: 1 / span 1;
         grid-row: 3;
         width: 160px;
-        height: 60px;
-        align-self: start;
-        justify-self: start;
+        height: 100px;
+        align-self: end;
+        justify-self: center;
     }
 
     .py-chart {

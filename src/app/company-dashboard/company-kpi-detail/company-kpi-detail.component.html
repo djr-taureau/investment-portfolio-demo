@@ -1,14 +1,10 @@
 <div fxLayout="row">
     <!-- <div class="y-axis-label-line"></div> -->
-    <sbp-timeline *ngIf="selectedPeriod && actuals && budget && forecast"
+    <sbp-timeline *ngIf="allLineChartData"
                   [allLineChartData]="allLineChartData"
                   [selectedPeriod]="selectedPeriod"
-                  [actuals]="actuals"
-                  [budget]="budget"
-                  [forecast]="forecast"
                   [xAccessor]="dateAccessor"
                   [yAccessor]="yAccessor"
-                  [categoryAccessor]="categoryAccessor"
                   [yLabelVisible]="true">
     </sbp-timeline>
 

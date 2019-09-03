@@ -13,11 +13,9 @@ import { LineComponent } from "./chart/line/line.component";
 import { CirclesComponent } from "./chart/circles/circles.component";
 import { BarsComponent } from "./chart/bars/bars.component";
 import { GradientComponent } from "./chart/gradient/gradient.component";
-import { MicroTimelineComponent } from "./micro-timeline/micro-timeline.component";
-import { MicroHistogramComponent } from "./micro-histogram/micro-histogram.component";
 import { SummaryWidgetComponent } from "./summary-widget/summary-widget.component";
 import { MicroBarComponent } from "./micro-bar/micro-bar.component";
-import { MicroLineComponent } from "./micro-timeline/micro-line.component";
+import { MicroLineComponent } from "./micro-line/micro-line.component";
 import { TimelineComponent } from "./timeline/timeline.component";
 import { MultiLineKendoComponent } from "./multi-line-kendo/multi-line-kendo.component";
 import { MultiLineComponent } from "./multi-line/multi-line.component";
@@ -40,8 +38,6 @@ export const COMPONENTS = [
     LineComponent,
     MicroBarComponent,
     MicroLineComponent,
-    MicroHistogramComponent,
-    MicroTimelineComponent,
     MultiLineKendoComponent,
     MultiLineComponent,
     SummaryWidgetComponent,

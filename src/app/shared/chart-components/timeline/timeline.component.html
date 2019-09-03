@@ -1,156 +1,30 @@
-<div #container
-     class="card">
-    <div fxLayout="row"
-         fxLayoutAlign="start stretch"
-         fxLayoutGap="3px"
-         class="button-bar">
-        <div class="actuals-button">
-            <button kendoButton
-                    (click)="toggleVisibilty('actuals')"
-                    [imageUrl]="'../../../assets/image/legend-actual.svg'"
-                    class="actuals-dot actuals-button">Actuals</button>
-        </div>
-        <div class="budget-button">
-            <button kendoButton
-                    (click)="toggleVisibilty('budget')"
-                    [imageUrl]="'../../assets/image/legend-mgmt-bud.svg'"
-                    class="budget-dot">Mgmt Budget</button>
-        </div>
-        <div class="forecast-button">
-            <button kendoButton
-                    (click)="toggleVisibilty('forecast')"
-                    [imageUrl]="'../../assets/image/legend-mgmt-fcst.svg'"
-                    class="forecast-dot">Mgmt Forecast</button>
-        </div>
+<div fxLayout="row"
+     fxLayoutAlign="start stretch"
+     fxLayoutGap="3px"
+     class="button-bar">
+    <div class="actuals-button">
+        <button kendoButton
+                (click)="toggleVisibilty('actuals')"
+                [imageUrl]="'../../../assets/image/legend-actual.svg'"
+                id="actuals"
+                class="actuals-dot actuals-button">Actuals</button>
     </div>
-    <br />
-    <sbp-chart id="multi-timeline"
-               [dimensions]="dimensions">
-        <svg:defs>
-            <svg:g sbpGradient
-                   [id]="gradientId"
-                   [colors]="gradientColors"
-                   x2="0"
-                   y2="100%">
-            </svg:g>
-            <clipPath id="round-corner">
-                <rect x="0"
-                      y="0"
-                      width="10"
-                      height="56"
-                      rx="5"
-                      ry="5" />
-            </clipPath>
-        </svg:defs>
-        <ng-container *ngIf="actuals">
-            <!-- <svg:g sbpAxis
-                   dimension="x"
-                   [dimensions]="dimensions"
-                   [scale]="xScale"
-                   [formatTick]=""
-                   [numberOfTicks]="10"
-                   [label]="label"
-                   [xAxisTickValues]="timePeriods"
-                   [xAxisBottom]="xAxisBottom"
-                   [xAxisVisible]="true">
-            </svg:g> -->
-
-            <!-- <svg:g sbpAxis
-                   dimension="y"
-                   [dimensions]="dimensions"
-                   [scale]="yScale"
-                   [label]=""
-                   [numberOfTicks]="5"
-                   [formatTick]=""
-                   [yAxisTickValues]="yAxisTickValues"
-                   [yAxisVisible]="true"
-                   [yAxisGrid]="yAxisGrid">
-            </svg:g> -->
-
-            <!-- <svg:g sbpLine
-                   [type]="'area'"
-                   [data]="actuals"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="yAccessorScaled"
-                   [y0Accessor]="y0AccessorScaled"
-                   fill="url(#{{ gradientId }})">
-            </svg:g> -->
-        </ng-container>
-        <!-- actuals -->
-        <ng-container *ngIf="actuals && actualsVis">
-            <svg:g sbpLine
-                   class="actuals"
-                   [type]="'line'"
-                   [valueType]="'actuals'"
-                   [data]="historicalData"
-                   [visible]="actualsVis"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="yAccessorScaled">
-            </svg:g>
-            <svg:g sbpCircles
-                   class="dot"
-                   [data]="historicalData"
-                   [valueType]="'actuals'"
-                   [radius]="4"
-                   [visible]="actualsVis"
-                   [keyAccessor]="keyAccessor"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="yAccessorScaled">
-            </svg:g>
-            <svg:g sbpCircles
-                   *ngIf="selectedValue"
-                   class="dot"
-                   [data]="actualsPresentValue"
-                   [valueType]="'selected-value'"
-                   [radius]="4"
-                   [visible]="true"
-                   [categoryAccessor]="categoryAccessor"
-                   [keyAccessor]="keyAccessor"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="yAccessorScaled">
-            </svg:g>
-        </ng-container>
-        <!-- budget -->
-        <ng-container *ngIf="budget && budgetVis">
-            <svg:g sbpLine
-                   class="budget"
-                   [type]="'line'"
-                   [valueType]="'budget'"
-                   [data]="budget"
-                   [visible]="budgetVis"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="budgetAccessorScaled">
-            </svg:g>
-            <svg:g sbpCircles
-                   [data]="budget"
-                   [radius]="3"
-                   [valueType]="'budget'"
-                   [visible]="budgetVis"
-                   [keyAccessor]="keyAccessor"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="budgetAccessorScaled">
-            </svg:g>
-        </ng-container>
-        <!-- forecast -->
-        <ng-container *ngIf="forecast && forecastVis">
-            <svg:g sbpLine
-                   class="forecast"
-                   [type]="'line'"
-                   [valueType]="'forecast'"
-                   [visible]="forecastVis"
-                   [data]="forecast"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="forecastAccessorScaled">
-            </svg:g>
-            <svg:g sbpCircles
-                   class="dot forecast"
-                   [data]="forecast"
-                   [valueType]="'forecast'"
-                   [visible]="forecastVis"
-                   [radius]="2"
-                   [keyAccessor]="keyAccessor"
-                   [xAccessor]="xAccessorScaled"
-                   [yAccessor]="forecastAccessorScaled">
-            </svg:g>
-        </ng-container>
-    </sbp-chart>
+    <div class="budget-button">
+        <button kendoButton
+                (click)="toggleVisibilty('budget')"
+                [imageUrl]="'../../assets/image/legend-mgmt-bud.svg'"
+                id="budget"
+                class="budget-dot">Mgmt Budget</button>
+    </div>
+    <div class="forecast-button">
+        <button kendoButton
+                (click)="toggleVisibilty('forecast')"
+                [imageUrl]="'../../assets/image/legend-mgmt-fcst.svg'"
+                id="forecast"
+                class="forecast-dot">Mgmt Forecast</button>
+    </div>
+</div>
+<div id="multi-timeline"
+     width="690"
+     height="325"
+     [ngClass]="pathStyles"></div>

@@ -1,20 +1,21 @@
-import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
+import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
 import * as _ from "lodash";
 import { getUniqueId } from "../chart/utils";
-import { DimensionsType, ScaleType } from "../interfaces/types";
+import { DimensionsType } from "../interfaces/types";
 
 @Component({
-    selector: "sbp-micro-timeline",
-    // template: `<svg id="micro-line"></svg>`,
-    templateUrl: "./micro-timeline.component.html",
-    styleUrls: ["./micro-timeline.component.scss"]
+    selector: "sbp-micro-line",
+    template: `
+        <div id="micro-timeline"></div>
+    `,
+    styleUrls: ["./micro-line.component.scss"]
 })
-export class MicroTimelineComponent implements OnInit, OnChanges {
-    private static logger: Logger = Logger.getLogger("MicroTimelineComponent");
+export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
+    private static logger: Logger = Logger.getLogger("MicroLineComponent");
 
     @Input() id: string;
     @Input() label: string;
@@ -22,25 +23,23 @@ export class MicroTimelineComponent implements OnInit, OnChanges {
     @Input() xAccessor?: any;
     @Input() yAccessor?: any;
     @Input() keyAccessor?: any;
-    @Input() categoryAccessor?: any;
-    @Input() projectedAccessor?: any;
     @Input() valueAccessor?: any;
     @Input() yLabelVisible?: boolean;
     @Input() selectedPeriod: any;
-    @Input() yAccessorValue: string;
+    @Input() availablePeriods: any[];
 
     @Input()
-    public set data(value: any[]) {
-        if (value && value.length > 0) {
-            // this._data = value;
-            this._apiData = value;
+    public set data(value: RevenueSeriesData[]) {
+        if (value) {
+            this._data = value;
+            // this._apiData = value;
             this.update();
         }
     }
-    public get data(): any[] {
-        return this._apiData;
+    public get data(): RevenueSeriesData[] {
+        return this._data;
     }
-    private _data: any[];
+    private _data: RevenueSeriesData[];
     private _apiData: RevenueSeriesData[];
 
     @Input()
@@ -66,35 +65,24 @@ export class MicroTimelineComponent implements OnInit, OnChanges {
         return this._barChartData2;
     }
     private _barChartData2: RevenueSeriesData[];
-
-    @ViewChild("container") container: ElementRef;
-
     public timePeriods: any[];
-
     public actualsVis: boolean;
     public forecastVis: boolean;
     public budgetVis: boolean;
     public activeStyle: string;
-
+    // parseDate: any;
     historicalData: any[];
     projectedData: any[];
-    dimensions: DimensionsType = {
-        marginTop: 15,
-        marginRight: 11,
-        marginBottom: 20,
-        marginLeft: 1,
-        height: 110,
-        width: 120
-    };
+    dimensions: DimensionsType;
     xScale: any;
-    yScale: ScaleType;
+    yScale: any;
     xAccessorScaled: any;
     yAccessorScaled: any;
     y0AccessorScaled: any;
     projectedAccessorScaled: any;
     projectedScale;
-    indexDateSelected;
-
+    categorySelected: any;
+    parseDate = d3.timeParse("%Y-%m-%d");
     display = false;
     xAxisVisible = false;
     selectedValue = false;
@@ -107,33 +95,50 @@ export class MicroTimelineComponent implements OnInit, OnChanges {
     dateSelected;
     actualsPresentValue;
     indexSelected;
+    dateAccessor;
+    indexDateSelected;
+    svg;
     el: HTMLElement;
 
-    private setDimensions() {
+    constructor(elementRef: ElementRef) {
+        MicroLineComponent.logger.debug(`constructor()`);
+        this.dimensions = {
+            marginTop: 10,
+            marginRight: 11,
+            marginBottom: 10,
+            marginLeft: 10,
+            height: 160,
+            width: 120
+        };
         this.dimensions = {
             ...this.dimensions,
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
-    }
-
-    constructor(elementRef: ElementRef) {
-        MicroTimelineComponent.logger.debug(`constructor()`);
-
         this.el = elementRef.nativeElement;
+        this.svg = d3
+            .select(this.el)
+            .select("#micro-timeline")
+            .append("svg")
+            .attr("width", this.dimensions.width)
+            .attr("height", this.dimensions.height)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .append("g");
     }
 
     ngOnInit() {
-        MicroTimelineComponent.logger.debug(`ngOnInit()`);
-
-        this.setDimensions();
-        this.projectedAccessor = (v) => v.projection;
-        d3.select(this.el)
-            .selectAll("line.select-timeline")
-            .remove();
-        d3.select(this.el)
-            .selectAll("g.line.actuals")
-            .remove();
+        MicroLineComponent.logger.debug(`ngOnInit()`);
+        this.svg = d3
+            .select(this.el)
+            .selectAll("#micro-timeline")
+            .append("svg")
+            .attr("width", this.dimensions.width)
+            .attr("height", this.dimensions.height)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .append("g");
+        this.yAccessor = (v) => v.value;
     }
 
     private update(): void {
@@ -156,15 +161,31 @@ export class MicroTimelineComponent implements OnInit, OnChanges {
             });
             this.timePeriods = _.map(this.data, _.property("date"));
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
+            const periodSelected = _.indexOf(this.availablePeriods, this.dateSelected, 0);
+            const periodStart = _.findIndex(this.availablePeriods, ["date", this.dateSelected]);
         }
         this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
-        this.historicalData = _.take(this.data, this.data.length - 1);
+        this.historicalData = this.data; // _.take(this.data, this.data.length - 1);
         this.projectedData = _.takeRight(this.data, 1);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.updateScales();
     }
 
-    ngOnChanges(changes: SimpleChanges): void {}
+    ngAfterContentInit() {
+        if (this.data) {
+            // this.updateDimensions();
+            // this.updateScales();
+        }
+    }
+
+    // @HostListener("window:resize", ["$event"])
+    // onResize() {
+    //     this.updateDimensions();
+    // }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        // this.updateScales();
+    }
 
     updateScales() {
         if ((this.timePeriods || []).length < 1 || (this.data || []).length < 1 || _.isNil(this.dateSelected)) {
@@ -182,90 +203,87 @@ export class MicroTimelineComponent implements OnInit, OnChanges {
 
         this.xScale = d3
             .scaleTime()
-            .domain([actualsXMin, projectedXMax])
+            .domain([actualsXMin, actualsXMax])
             .range([0, 90])
             .nice();
 
         this.yScale = d3
             .scaleLinear()
-            .domain([actualsYMin, projectedYMax])
+            .domain([0, actualsYMax])
             .range([60, 0])
             .nice();
-        // this.xScale = d3
-        //     .scaleBand<string, number>()
-        //     .domain(this.timePeriods)
-        //     .rangeRound([0, this.dimensions.boundedWidth])
-        //     .padding(0.5);
-
-        // this.yScale = d3
-        //     .scaleLinear()
-        //     .domain(d3.extent(this.historicalData, this.yAccessor) as [number, number])
-        //     .range([this.dimensions.boundedHeight, 0])
-        //     .nice();
-
-        // this.xAxisBottom = d3.axisBottom(this.xScale);
         this.xAccessorScaled = (d) => this.xScale(this.xAccessor(d));
         this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
-        // this.projectedAccessorScaled = (d) => this.projectedScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
 
-        const svg = d3
-            .select(this.el)
-            .selectAll("#micro-timeline")
-            .select("svg")
-            .append("g");
+        this.svg.selectAll("circle.selected-value").remove();
+        this.svg.selectAll(".select-timeline").remove();
+        this.svg.selectAll(".projected").remove();
+        this.svg.selectAll(".historical").remove();
+        this.svg.selectAll(".dot").remove();
 
-        svg.append("line")
-            .attr("x1", this.xAccessorScaled(this.dateSelected))
-            .attr("y1", this.dimensions.boundedHeight)
-            .attr("x2", this.xAccessorScaled(this.dateSelected))
-            .attr("y2", this.dimensions.marginTop - 10)
+        this.svg
+            .append("line")
+            .attr("x1", this.xScale(this.parseDate(this.dateSelected)))
+            .attr("y1", this.yScale(0))
+            .attr("x2", this.xScale(this.parseDate(this.dateSelected)))
+            .attr("y2", this.yScale(actualsYMax))
             .attr("class", "select-timeline")
             .style("stroke-width", 1)
             .style("stroke", "#99a8bf");
 
-        d3.select(this.el)
-            .selectAll("circle.selected-value")
-            .remove();
-
-        d3.select(this.el)
-            .selectAll("line.y-line")
-            .remove();
-
-        svg.append("circle") // change the as-of line
-            .attr("cx", this.xAccessorScaled(this.dateSelected))
-            .attr("cy", this.yAccessorScaled(this.indexSelected))
+        this.svg
+            .append("circle") // change the as-of line
+            .attr("cx", this.xScale(this.parseDate(this.dateSelected)))
+            .attr("cy", this.yScale(this.yAccessor(this.indexSelected)))
+            .attr("r", 4)
             .attr("class", "dot selected-value")
             .style("stroke-width", 2)
+            .style("fill", "white")
             .style("stroke", "#124f8c");
 
         const circleVal = d3.select(this.el).selectAll("circle.selected-value");
 
         const line = d3
             .line()
-            .defined((d) => !isNaN(this.yAccessor(d)))
-            .x((d) => this.xAccessorScaled(d))
-            .y((d) => this.yAccessorScaled(d))
+            // .defined((d) => !isNaN(this.yAccessor(d)))
+            .x((d) => this.xScale(this.xAccessor(d)))
+            .y((d) => this.yScale(this.yAccessor(d)))
             .curve(curveLinear);
-
-        d3.select(this.el)
-            .selectAll("#micro-timeline")
+        const area = d3
+            .area()
+            .x(line.x())
+            .y1(line.y())
+            .y0(this.yScale(0));
+        const lineProjected = d3
+            .line()
+            .defined((d) => d.date >= this.xAccessor(this.dateSelected))
+            .x((d) => this.xScale(this.xAccessor(d.date)))
+            .y((d) => this.yScale(this.yAccessor(d.value)));
+        this.svg
             .append("path")
             .datum(this.historicalData)
             .attr("class", "line historical")
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
+            .attr("stroke", "#124f8c")
             .attr("stroke-width", 2)
-            // .attr("stroke", (d) => (d.projection === true ? "red" : "steelblue"))
             .attr("d", line);
-        d3.select(this.el)
-            .selectAll("#micro-timeline")
+        this.svg
             .append("path")
             .datum(this.projectedData)
             .attr("class", "line projected")
             .attr("fill", "none")
-            .attr("stroke", "red")
-            .attr("stroke-width", 2)
+            .attr("stroke", "#99a8bf")
+            .attr("opacity", "0.8")
             .attr("d", line);
+        this.svg
+            .append("path")
+            .datum(this.historicalData)
+            .attr("class", "area historical")
+            .attr("fill", "#47a2d6")
+            .attr("opacity", "0.15")
+            .attr("stroke", "#47a2d6")
+
+            .attr("d", area);
     }
 }

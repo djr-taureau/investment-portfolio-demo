@@ -1,0 +1,152 @@
+@import "../../../../assets/scss/variables.scss";
+
+:host {
+
+    ::ng-deep {
+        #micro-timeline {
+            margin-bottom: 12.8px;
+            margin-left: 10px;
+            border-radius: 6px;
+            height: 200px;
+            align-self: flex-start;
+
+
+            circle {
+
+                fill: #124f8c;
+                transition: all 0.3s ease-out;
+                width: 12px;
+                height: 12px;
+                border-style: solid;
+                stroke-width: 1;
+                stroke: $dark-sky-blue;
+
+                &.dot {
+                    &.selected-value {
+                        fill: $white;
+                        stroke-width: 2px;
+                        stroke: $light-navy;
+                    }
+                }
+
+
+
+            }
+
+
+            path {
+                .area {
+                    fill: #47a2d6;
+                    border-radius: 6px;
+                    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+                    opacity: 0.15;
+                    border: solid 2px $dark-sky-blue;
+                    background-color: $white;
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+        path.line {
+            .projected {
+                opacity: 0.15;
+                border: solid 2px $dark-sky-blue;
+                background-color: $light-periwinkle;
+                stroke-dasharray: 3, 3;
+
+            }
+
+        }
+
+
+
+        &.selected-value {
+            fill: $white;
+            stroke: #124f8c;
+            stroke-width: 3px;
+        }
+
+    }
+
+    .dot-display {
+        display: none;
+    }
+
+    .present-line {
+        stroke: $light-periwinkle;
+        stroke-width: 2px;
+        stroke-dasharray: 3, 3;
+    }
+
+    .select-line {
+        width: 1px;
+        border: solid 1px $light-periwinkle;
+    }
+
+    .y-axis-label {
+        fill: #34495e;
+        font-size: 1.4em;
+        text-anchor: middle;
+        transform: rotate(-90deg);
+
+        .display {
+            //display: none;
+            stroke-width: 2;
+            display: none;
+
+            &-none {
+                display: none;
+            }
+        }
+
+        .y-axis-label {
+            fill: $grey-blue;
+            font-size: 1.4em;
+            text-anchor: middle;
+            transform: rotate(-90deg);
+        }
+
+        .x-axis-label {
+            display: none;
+        }
+
+    }
+
+
+
+    #container {
+        width: 334px;
+        height: 165px;
+        border-radius: 6px;
+        background-color: $white;
+    }
+
+    div .card {
+        width: 334px;
+        height: 165px;
+        border-radius: 6px;
+        background-color: $white;
+    }
+
+
+
+    // .axis-grid .x .axis .x-line line {
+
+
+    .axis-grid line {
+        opacity: 0.75;
+        shape-rendering: crispEdges;
+        stroke: $light-navy;
+        stroke-dasharray: 3, 3;
+    }
+
+    .tick {
+        display: none;
+    }
+}

@@ -23,34 +23,31 @@
         }">{{ ic }}%</div>
     <!--    <div *ngIf="data && selectedPeriod && barChartData1 && barChartData2 && title !== 'Cash Runway'"-->
     <div class="box timeline">
-        <sbp-micro-timeline [data]="data"
-                            [selectedPeriod]="selectedPeriod"
-                            [barChartData1]="barChartData1"
-                            [barChartData2]="barChartData2"
-                            [xAccessor]="dateAccessor"
-                            [yAccessor]="yAccessor"
-                            [categoryAccessor]="categoryAccessor"
-                            [yLabelVisible]="false"></sbp-micro-timeline>
+        <sbp-micro-line [data]="data"
+                        [selectedPeriod]="selectedPeriod"
+                        [barChartData1]="barChartData1"
+                        [barChartData2]="barChartData2"
+                        [xAccessor]="dateAccessor"
+                        [yAccessor]="yAccessor"
+                        [yLabelVisible]="false"></sbp-micro-line>
     </div>
     <div *ngIf="selectedPeriod && barChartData1 && title !== 'Cash Runway'"
          class="box py-chart">
         <sbp-micro-bar [data]="barChartData1"
                        [selectedPeriod]="selectedPeriod"
+                       [availablePeriods]="availablePeriods"
                        [title]="'bar1'"
                        [xAccessor]="dateAccessor"
-                       [yAccessorValue]="yAccessorValue"
-                       [categoryAccessor]="categoryAccessor"
-                       [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
+                       [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
     </div>
     <div *ngIf="selectedPeriod && barChartData2 && title !== 'Cash Runway'"
          class="box budget-chart">
         <sbp-micro-bar [data]="barChartData2"
                        [selectedPeriod]="selectedPeriod"
+                       [availablePeriods]="availablePeriods"
                        [title]="'bar2'"
                        [xAccessor]="dateAccessor"
-                       [yAccessorValue]="yAccessorValue"
-                       [categoryAccessor]="categoryAccessor"
-                       [projectedAccessor]="projectedAccessor"></sbp-micro-bar>
+                       [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
     </div>
     <!-- <img src="assets/image/triangle.svg"
              class="triangle"> -->

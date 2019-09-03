@@ -12,107 +12,380 @@
         background-color: $white;
         border-radius: 6px;
 
-        .axis-grid {
-            opacity: 0.10;
-            shape-rendering: crispEdges;
-            stroke-dasharray: 3, 3;
-        }
 
-        .y-tick {
-            width: 24px;
-            height: 16px;
-            font-family: PostGrotesk;
-            font-size: 12px;
-            opacity: .5;
-            font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            text-align: right;
-            color: $light-grey-blue;
-        }
+        #multi-timeline {
+            width: 606px;
+            height: 310px;
+            border-radius: 6px;
+            margin-left: 16px;
+            padding-left: 10px;
+            margin-top: 10px;
+            padding-bottom: 36px;
+            background-color: $white;
 
-        .y .tick {
 
-            width: 24px;
-            height: 16px;
-            font-family: PostGrotesk;
-            font-size: 12px;
-            font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            text-align: right;
-            color: $light-grey-blue;
-        }
+            .budget-dot {
+                width: 6px;
+                height: 6px;
+                border: solid 1.5px $dark-sky-blue;
+                background-color: $white;
+            }
 
-        .x .tick {
-            opacity: 0.75;
-            fill: $grey-blue;
-            stroke: $grey-blue;
-            height: 10px;
-            padding: 30px;
-        }
+            .budget-path {
+                width: 16px;
+                height: 1px;
+                opacity: 0.75;
+                border: solid 1px $dark-sky-blue;
+            }
 
-        text.y text.tick {
-            height: 16px;
-        }
+            .M {
+                width: 26px;
+                height: 16px;
+                transform: rotate(-90deg);
+                opacity: 0.75;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                color: $grey-blue;
+            }
 
-        line.x-axis {
-            fill: $light-navy;
-            stroke: $light-navy;
-            opacity: .3;
-        }
+            .actuals-path {
+                width: 16px;
+                height: 1px;
+                border: solid 3px $light-navy;
+                stroke-width: 4px;
+            }
 
-        .tick-selected-value {
-            fill: $light-navy;
-            stroke: $light-navy;
-        }
+            .button-bar {
+                margin-left: 20px;
 
-        path.domain {
-            display: none;
-        }
+                .kendo-button-group {
+                    margin-left: 20px;
+                }
 
-        .y-axis-label {
-            fill: #34495e;
-            font-size: 1.4em;
-            text-anchor: middle;
-            transform: rotate(-90deg);
-            margin-left: 10px;
+                button {
+                    width: 38px;
+                    height: 16px;
+                    font-family: PostGrotesk;
+                    font-size: 12px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: $light-navy;
+                    padding: 5px;
 
-            .display {
-                //display: none;
-                stroke-width: 2;
-                // display: none;
+                    &.k-state-active {
+                        color: $white;
+                        background-color: $light-navy;
+                    }
 
-                &-none {
-                    display: none;
+                    button.forecast-toggle-on {
+                        width: 97px;
+                        height: 24px;
+                        border-radius: 4px;
+                        background-color: $pale-grey;
+                    }
+
+                    button.actuals-toggle-on {
+                        width: 74px;
+                        height: 24px;
+                        border-radius: 4px;
+                        background-color: $pale-grey;
+                    }
+
+                    button.budget-toggle-on {
+                        width: 96px;
+                        height: 24px;
+                        border-radius: 4px;
+                        background-color: $pale-grey;
+                    }
                 }
             }
 
-            .x-axis-label {
+
+            g.yAxis {
+                height: 1px;
+                opacity: 0.60;
+            }
+
+            text.y-axis-label {
+                fill: $grey-blue;
+                font-size: 12px;
+                text-anchor: middle;
+                letter-spacing: 0.5px;
+                transform: rotate(-90deg);
+            }
+
+            g.line.axis-grid {
+                &.axis-grid {
+                    width: 606px;
+                    height: 1px;
+                    opacity: 0.15;
+                    stroke-dasharray: 3, 3;
+                }
+            }
+
+            text {
+
+                &.y-axis-label-line {
+                    fill: #34495e;
+                    font-size: 1.4em;
+                    width: 57px;
+                    height: 16px;
+                    font-family: PostGrotesk;
+                    font-size: 12px;
+                    font-weight: 500;
+                    font-style: normal;
+                    font-stretch: normal;
+                    line-height: normal;
+                    letter-spacing: 0.5px;
+                    color: $grey-blue;
+                    text-anchor: middle;
+                    transform: rotate(-90deg);
+                    padding: 8px;
+                    margin-top: 10px;
+                    margin-left: 5px;
+                    margin-bottom: 60px;
+                }
+            }
+
+            path {
+                transition: all 0.3s ease-out;
+                // cursor: crosshair;
+                stroke-width: 2px;
+                stroke-linecap: round;
+                fill: none;
+
+                .projected {
+                    stroke-dasharray: 3, 3;
+                }
+
+                .tick {
+                    width: 1px;
+                    height: 8px;
+                    opacity: 0.3;
+                    background-color: #828e99;
+                }
+
+                path.projected [stroke] {
+                    stroke: $light-navy;
+                    stroke-width: 5px;
+                    stroke-dasharray: 3, 3;
+                }
+
+                &.line {
+                    stroke: $light-navy;
+                    stroke-width: 2px;
+                    stroke-linecap: round;
+                    fill: none;
+
+                    &.projected {
+                        stroke-dasharray: 3, 3;
+                    }
+
+                }
+
+                &.budget-path {
+                    stroke: $dark-sky-blue;
+                    stroke-width: 1px;
+
+                }
+
+                &.forecast-path {
+                    stroke: $light-navy;
+                    stroke-width: 1px;
+                }
+
+                &.not-visible {
+                    display: none;
+                }
+
+                &.projected {
+                    stroke-dasharray: 3, 3;
+                }
+
+
+
+            }
+
+            .actuals-path {
+                width: 16px;
+                height: 1px;
+                border: solid 3px $light-navy;
+                stroke-width: 4px;
+            }
+
+            circle.actuals-dot {
+                width: 8px;
+                height: 8px;
+                background-color: $light-navy;
+            }
+
+            circle.forcast-dot {
+                width: 6px;
+                height: 6px;
+                border: solid 1.5px $light-navy;
+                background-color: $white;
+            }
+
+            g.tick {
+                opacity: 0.75;
+                fill: $grey-blue;
+                stroke: $grey-blue;
+                height: 10px;
+                padding: 30px;
+            }
+
+            text.y-axis-label-line {
+                fill: #34495e;
+                font-size: 1.4em;
+                text-anchor: middle;
+                transform: rotate(-90deg);
+            }
+
+            circle.budget-dot {
+                width: 6px;
+                height: 6px;
+                border: solid 1.5px $dark-sky-blue;
+                background-color: $white;
+            }
+
+
+
+            .budget-path {
+                width: 16px;
+                height: 1px;
+                opacity: 0.75;
+                border: solid 1px $dark-sky-blue;
+            }
+
+            .forecast-dot {
+                width: 6px;
+                height: 6px;
+                border: solid 1.5px $light-navy;
+                background-color: $white;
+            }
+
+            .axis-grid {
+                opacity: 0.10;
+                shape-rendering: crispEdges;
+                stroke-dasharray: 3, 3;
+            }
+
+            .y-tick {
+                width: 24px;
+                height: 16px;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                opacity: .5;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: right;
+                color: $light-grey-blue;
+            }
+
+            .y .tick {
+
+                width: 24px;
+                height: 16px;
+                font-family: PostGrotesk;
+                font-size: 12px;
+                font-weight: normal;
+                font-style: normal;
+                font-stretch: normal;
+                line-height: normal;
+                letter-spacing: normal;
+                text-align: right;
+                color: $light-grey-blue;
+            }
+
+
+            .x .tick {
+                opacity: 0.75;
+                fill: $grey-blue;
+                stroke: $grey-blue;
+                height: 10px;
+                padding: 30px;
+            }
+
+            text.y text.tick {
+                height: 16px;
+            }
+
+
+            line.x-axis {
+                fill: $light-navy;
+                stroke: $light-navy;
+                opacity: .3;
+            }
+
+            .tick-selected-value {
+                fill: $light-navy;
+                stroke: $light-navy;
+            }
+
+            path.domain {
                 display: none;
             }
 
+            .y-axis-label-line {
+                fill: #34495e;
+                font-size: 1.4em;
+                text-anchor: middle;
+                transform: rotate(-90deg);
+            }
+
+            .y-axis-label-line {
+                fill: #34495e;
+                font-size: 1.4em;
+                text-anchor: middle;
+                transform: rotate(-90deg);
+                margin-left: 10px;
+
+                .display {
+                    //display: none;
+                    stroke-width: 2;
+                    // display: none;
+
+                    &-none {
+                        display: none;
+                    }
+                }
+
+
+            }
+
+
         }
 
-        .y-axis-label-line {
-            fill: #34495e;
-            font-size: 1.4em;
-            text-anchor: middle;
-            transform: rotate(-90deg);
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
 
-#container {
-    width: 334px;
-    height: 165px;
-    border-radius: 6px;
-    background-color: $white;
+.x-axis-label {
+    display: none;
 }
 
 div .card {
@@ -144,7 +417,7 @@ div .card {
     }
 
     .y-axis-label-line {
-        fill: #34495e;
+        fill: pink;
         font-size: 1.4em;
         width: 57px;
         height: 16px;
@@ -163,20 +436,7 @@ div .card {
         margin-left: 5px;
         margin-bottom: 60px;
 
-        .M {
-            width: 26px;
-            height: 16px;
-            transform: rotate(-90deg);
-            opacity: 0.75;
-            font-family: PostGrotesk;
-            font-size: 12px;
-            font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: normal;
-            color: $grey-blue;
-        }
+
     }
 
 
@@ -203,79 +463,20 @@ div .card {
 
 
 
-    button.actuals-toggle-on {
-        width: 74px;
-        height: 24px;
-        border-radius: 4px;
-        background-color: $pale-grey;
-    }
-
-    .button-bar {
-        margin-left: 46px;
-        margin-right: 1047px;
-        margin-top: 22px;
-    }
-
-    .kendo-button-group {
-        margin-left: 20px;
-    }
 
 
 
 
 
-    .actual-path {
-        width: 16px;
-        height: 1px;
-        border: solid 3px $light-navy;
-        stroke-width: 4px;
-    }
-
-    button.budget-toggle-on {
-        width: 96px;
-        height: 24px;
-        border-radius: 4px;
-        background-color: $pale-grey;
-    }
 
 
 
-    .budget-dot {
-        width: 6px;
-        height: 6px;
-        border: solid 1.5px $dark-sky-blue;
-        background-color: $white;
-    }
-
-    .budget-path {
-        width: 16px;
-        height: 1px;
-        opacity: 0.75;
-        border: solid 1px $dark-sky-blue;
-    }
-
-    button.forecast-toggle-on {
-        width: 97px;
-        height: 24px;
-        border-radius: 4px;
-        background-color: $pale-grey;
-    }
 
 
-    .kpi-detail-bar {
-        height: 136px;
-        width: 684px;
-        margin-left: 46px;
-        margin-bottom: 75px;
-        padding-bottom: 30px;
-    }
 
-    .kpi-detail-line {
-        margin-left: 46px;
-    }
 
-    .kpi-detail-table {
-        margin-top: 43px;
-        margin-right: 39px;
-    }
+
+
+
+
 }

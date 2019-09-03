@@ -39,6 +39,9 @@ export class SummaryWidgetContainer implements OnInit {
     @Input()
     public id: string;
 
+    @Input()
+    public availablePeriods: any[];
+
     /**
      * The selected currency symbol.
      */
