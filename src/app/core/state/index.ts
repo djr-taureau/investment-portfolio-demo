@@ -311,7 +311,8 @@ export const getDealTeamGroup = createSelector(
 export const getDealTeamMembers = createSelector(
     getDealTeamGroup,
     (teamGroup) => {
-        return _.take(_.get(teamGroup, "members", []), 5);
+        const list = _.take(_.get(teamGroup, "members", []), 5);
+        return list.sort((a, b) => (a.teamLead ? -1 : 1));
     }
 );
 
