@@ -2,6 +2,7 @@ import { CompanyInitiativeEffects } from "@core/state/company/dashboard/company-
 import { CompanyEbitdaEffects } from "@core/state/company/ebitda/company-ebitda.effects";
 import { CompanyKpiEffects } from "@core/state/company/kpi/company-kpi.effects";
 import { CompanyDocumentsEffects } from "@core/state/company/documents/company-documents.effects";
+import { CompanyCashEffects } from "@core/state/company/cash/company-cash.effects";
 import { CompanyRevenueEffects } from "@core/state/company/revenue/company-revenue.effects";
 import { PortfolioEbitdaEffects } from "@core/state/portfolio-dashboard/ebitda/portfolio-ebitda.effects";
 import { PortfolioExposureEffect } from "@core/state/portfolio-dashboard/exposures/portfolio-exposure.effect";
@@ -33,6 +34,7 @@ import * as PortfolioRevenue from "@core/state/portfolio-dashboard/revenue";
 import * as PortfolioExposures from "@core/state/portfolio-dashboard/exposures";
 import * as PortfolioEbitda from "@core/state/portfolio-dashboard/ebitda";
 import * as CompanyKpi from "@core/state/company/kpi";
+import * as CompanyCash from "@core/state/company/cash";
 
 const EFFECTS = [
     RouterEffect,
@@ -40,6 +42,7 @@ const EFFECTS = [
     CompanyEffects,
     CompanyFlowEffect,
     CompanyDocumentsEffects,
+    CompanyCashEffects,
     CompanyInitiativeEffects,
     CompanyEbitdaEffects,
     CompanyRevenueEffects,
@@ -74,6 +77,7 @@ const MODULES = [
     StoreModule.forFeature("companyRevenue", CompanyRevenue.reducers),
     StoreModule.forFeature("companyEbitda", CompanyEbitda.reducers),
     StoreModule.forFeature("companyKpi", CompanyKpi.reducers),
+    StoreModule.forFeature("companyCash", CompanyCash.reducers),
 
     /**
      * EffectsModule.forRoot() is imported once in the root module and

@@ -45,6 +45,7 @@ import { Observable } from "rxjs";
 import * as RouterActions from "@core/state/router/router.action";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import * as CompanyRevenueActions from "@core/state/company/revenue/company-revenue.actions";
+import * as CompanyCashActions from "@core/state/company/cash/company-cash.actions";
 import * as CompanyEbitdaActions from "@core/state/company/ebitda/company-ebitda.actions";
 import * as CompanyKpiActions from "@core/state/company/kpi/company-kpi.actions";
 
@@ -79,6 +80,7 @@ export class CompanyFlowEffect {
         concatMap((request) => [
             new SelectAsOfDate(request.selectedPeriod),
             new CompanyRevenueActions.Get(request.id, request.selectedPeriod),
+            new CompanyCashActions.GetCash(request.id, request.selectedPeriod),
             new CompanyEbitdaActions.Get(request.id, request.selectedPeriod),
             new CompanyKpiActions.Get(request.id, request.selectedPeriod)
         ])
@@ -265,6 +267,7 @@ export class CompanyFlowEffect {
             actions.push(new Get(companyId)); // get company details
             actions.push(new GetAll(companyId)); // get company team members
             actions.push(new GetAllDocuments(companyId));
+            // actions.push(new GetCash(companyId));
             actions.push(new RouterActions.UpdateUrlParams({ id: companyId }));
             actions.push(new GetAllInitiatives(companyId));
             // go to the current url but with the new id

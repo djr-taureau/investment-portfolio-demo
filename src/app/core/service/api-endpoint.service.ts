@@ -69,6 +69,7 @@ export class ApiEndpointService {
         COMPANY: "companies/{id}",
         COMPANY_INITIATIVES: `assets/data/mock-initiatives.json`, // "companies/{id}/initiatives",
         COMPANY_DOCUMENTS: "companies/{id}/documents",
+        COMPANY_CASH: "companies/{id}/cash",
         TEAMS: "companies/{id}/team-members",
         TEAM_MEMBER: "companies/{id}/team-members/{member_id}",
         VALUATION: "companies/{id}/valuation",

@@ -3,6 +3,12 @@
      class="kpi-container"
      fxLayout="row"
      fxLayoutAlign="space-between center">
+
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // Revenue Chart
+    //////////////////////////////////////////////////////////////////
+    -->
     <div class="chart">
         <sbp-summary-widget [data]="revenueSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
@@ -12,15 +18,20 @@
                             [title]="'Revenue'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="revenueAsOf$ | async | shortNumber: '1.0-1'"
+                            [value]="revenueAsOf$ | async | shortNumber: false: '1.0-1'"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="revenueChangeFromPriorPeriod$ | async | shortNumber: '1.0-1'"
+                            [pyValue]="revenueChangeFromPriorPeriod$ | async | shortNumber: false: '1.0-1'"
                             [icLabel]="icLabel"
-                            [icValue]="revenueChangeFromPriorBudget$ | async | shortNumber: '1.0-1'"
+                            [icValue]="revenueChangeFromPriorBudget$ | async | shortNumber: false: '1.0-1'"
                             (click)="onRevenueClick()">
         </sbp-summary-widget>
     </div>
 
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // EBITDA Chart
+    //////////////////////////////////////////////////////////////////
+    -->
     <div class="chart">
         <sbp-summary-widget [data]="ebitdaSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
@@ -29,35 +40,45 @@
                             [title]="'EBITDA'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="ebitdaAsOf$ | async | shortNumber: '1.0-1'"
+                            [value]="ebitdaAsOf$ | async | shortNumber: false: '1.0-1'"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async | shortNumber: '1.0-1'"
+                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async | shortNumber: false: '1.0-1'"
                             [icLabel]="icLabel"
-                            [icValue]="ebitdaChangeFromPriorBudget$ | async | shortNumber: '1.0-1'"
+                            [icValue]="ebitdaChangeFromPriorBudget$ | async | shortNumber: false: '1.0-1'"
                             (click)="onEbitdaClick()">
         </sbp-summary-widget>
     </div>
 
-    <div class="chart">
-        <sbp-summary-widget sbpTooltip="Coming Soon!"
-                            [data]="revenueSummaryLineChartData$ | async"
-                            [title]="'Cash'"
-                            [denomination]="'USD'"
-                            [currencySymbol]="'$'"
-                            [value]="-34.6"
-                            [pyLabel]="'vs PY'"
-                            [pyValue]="-2.0"
-                            [icLabel]="icLabel"
-                            [icValue]="'-5.0'"
-                            (click)="onCashClick()">
-        </sbp-summary-widget>
-    </div>
-
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // Cash
+    //////////////////////////////////////////////////////////////////
+    -->
     <div class="chart">
         <div class="cash-runway-container"
              fxLayout="column"
              fxLayoutAlign="start stretch">
-            <!-- TITLE ROW -->
+            <div class="box title">Cash ($M)</div>
+            <div class="value"
+                 fxLayout="column"
+                 fxLayoutAlign="center center"
+                 fxFlex>
+                <div fxLayout="row"
+                     fxLayoutAlign="center center"
+                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>{{ cashAsOf$ | async | shortNumber: false: '1.0-1' }}</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // Cash Runway in Months
+    //////////////////////////////////////////////////////////////////
+    -->
+    <div class="chart">
+        <div class="cash-runway-container"
+             fxLayout="column"
+             fxLayoutAlign="start stretch">
             <div class="box title">Cash Runway ($M)</div>
             <div class="value"
                  fxLayout="column"
@@ -65,7 +86,7 @@
                  fxFlex>
                 <div fxLayout="row"
                      fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>27</span> <span class="months">months</span></div>
+                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>{{ cashRunwayInMonths$ | async }}</span><span class="months">months</span></div>
             </div>
         </div>
     </div>

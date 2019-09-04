@@ -1,5 +1,6 @@
 import { CompanyRevenueRequest, GetAllCompanyInitiativesResponse, RevenueSeries } from "@app/core/domain/company.model";
 import { CompanyDocument, GetAllCompanyDocumentsResponse } from "@core/domain/document.model";
+import { CompanyCash, GetCompanyCashRequest, GetCompanyCashResponse } from "@core/domain/cash.model";
 import { Initiative } from "@core/domain/initiative.model";
 import { ApiResponseDataTransformationService } from "@core/service/api-response.data-transformation.service";
 import { Observable, throwError } from "rxjs";
@@ -196,6 +197,33 @@ export class CompanyService {
             }),
             catchError((fault: HttpErrorResponse) => {
                 CompanyService.logger.warn(`getKpiFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    /**
+     * Retrieves cash for a company.
+     */
+    public getCash(request: GetCompanyCashRequest): Observable<any> {
+        const params = {
+            id: request.id
+        };
+        const query = {
+            as_of_date: request.date
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.COMPANY_CASH, params, query);
+        CompanyService.logger.debug(`getCash( ${url} )`);
+
+        return this.apiService.get(url).pipe(
+            map((response: GetCompanyCashResponse) => {
+                const data = response.data || {};
+                CompanyService.logger.debug(`getCashSuccess()`);
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                CompanyService.logger.warn(`getCashFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );

@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { getSelectedCurrency, getSelectedPeriod, getSelectedDatePart } from "@core/state/company/dashboard";
-import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import * as fromCompanyCash from "@core/state/company/cash";
 import * as fromCompanyEbitda from "@core/state/company/ebitda";
 import * as fromCompanyRevenue from "@core/state/company/revenue";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
@@ -89,6 +90,16 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
     public ebitdaChangeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
 
     /**
+     * The cash runway in months.
+     */
+    public cashRunwayInMonths$: Observable<number>;
+
+    /**
+     * The total cash for a given period.
+     */
+    public cashAsOf$: Observable<number>;
+
+    /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
@@ -117,6 +128,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         });
 
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
+
         // Revenue summary chart data.
         this.revenueAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueAsOf));
         this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorPeriod));
@@ -132,6 +144,10 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromCompanyEbitda.getSummaryLineChartData));
         this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyEbitda.getChangeFromPriorPeriodBarChartData));
         this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyEbitda.getChangeFromPriorBudgetBarChartData));
+
+        // Cash
+        this.cashAsOf$ = this.store$.pipe(select(fromCompanyCash.getCashAsOf));
+        this.cashRunwayInMonths$ = this.store$.pipe(select(fromCompanyCash.getCashRunwayInMonths));
     }
 
     /**

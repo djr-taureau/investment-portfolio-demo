@@ -30,7 +30,6 @@ const COMPONENTS: any = [
     CompanyEBITDADetailContainer,
     CompanyInitiativesSummaryComponent,
     CompanyInitiativesSummaryContainer,
-    CompanyCashDetailContainer,
     CompanyCashDetailContainer
 ];
 

@@ -14,9 +14,10 @@ export class ShortNumberPipe implements PipeTransform {
     /**
      * Transforms numbers in the thousands, millions, billions, etc to shorter numbers
      * @param number
+     * @param includeLetterKey
      * @param digits
      */
-    public transform(number: number, digits?: any): any {
+    public transform(number: number, includeLetterKey: boolean = true, digits?: any): any {
         if (isNaN(number)) {
             return null;
         } // will only work value is a number
@@ -49,7 +50,10 @@ export class ShortNumberPipe implements PipeTransform {
                 break;
             }
         }
-        return (isNegative ? "-" : "") + this.decimalPipe.transform(abs) + key;
+
+        const prefix = isNegative ? "-" : "";
+        const suffix = includeLetterKey ? key : "";
+        return prefix + this.decimalPipe.transform(abs, digits) + suffix;
     }
 }
 /* tslint:enable */
