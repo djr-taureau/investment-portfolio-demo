@@ -238,10 +238,15 @@ export interface RevenueSeriesGraphData {
 }
 
 export interface ChartPeriodDataSets {
-    id?: string;
-    comparisonGraph: ChartDataPeriod;
+    comparisonGraph?: ChartDataPeriod;
     metricsGraph: ChartDataPeriod;
     tableData: ChartDataPeriod;
+}
+
+export interface KpiChartPeriodDataSets {
+    id: string;
+    name: string;
+    data: ChartPeriodDataSets;
 }
 
 export interface ChartDataPeriod {

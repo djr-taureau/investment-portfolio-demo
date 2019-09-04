@@ -1,12 +1,12 @@
 import { ElementRef, NgModule } from "@angular/core";
 import { CompanyInitiativesSummaryComponent } from "@app/company-dashboard/company-initiatives/company-initiatives-summary.component";
 import { CompanyInitiativesSummaryContainer } from "@app/company-dashboard/company-initiatives/company-initiatives-summary.container";
+import { CompanySummaryKpiWidgetsContainer } from "@app/company-dashboard/company-summary-kpi-widgets/company-summary-kpi-widgets.container";
 import { CompanySummaryModule } from "@app/company-dashboard/company-summary/company-summary.module";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanySummaryTopWidgetsContainer } from "./company-summary-top-widgets/company-summary-top-widgets.container";
-import { CompanySummaryWidgetsContainer } from "./company-summary-widgets/company-summary-widgets.container";
 import { CompanyKpiDetailComponent } from "./company-kpi-detail/company-kpi-detail.component";
 import { CompanyRevenueDetailContainer } from "@app/company-dashboard/company-revenue-detail/company-revenue-detail.container";
 import { CompanyEBITDADetailContainer } from "@app/company-dashboard/company-EBITDA-detail/company-EBITDA-detail.container";
@@ -22,7 +22,7 @@ const COMPONENTS: any = [
     CompanyDashboardComponent,
     CompanyDashboardContainer,
     CompanySummaryTopWidgetsContainer,
-    CompanySummaryWidgetsContainer,
+    CompanySummaryKpiWidgetsContainer,
     CompanyRevenueDetailContainer,
     PeriodSelectorComponent,
     PeriodSelectorContainer,

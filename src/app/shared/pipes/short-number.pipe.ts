@@ -50,7 +50,7 @@ export class ShortNumberPipe implements PipeTransform {
 
         const prefix = isNegative ? "-" : "";
         const suffix = includeLetterKey ? key : "";
-        return prefix + this.decimalPipe.transform(abs, digits) + suffix;
+        return prefix + this.decimalPipe.transform(abs, digits, "en") + suffix;
     }
 }
 /* tslint:enable */

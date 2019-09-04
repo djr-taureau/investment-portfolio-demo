@@ -59,11 +59,11 @@ export const getNestedPropIfExists = (item: any, path: string[] | number[], defa
         const newPath = path.slice(1, path.length);
         const prop = path[0];
 
-        if (item && item[prop]) {
+        if (item && item.hasOwnProperty(prop)) {
             return getNestedPropIfExists(item[prop], newPath, defaultValue);
         }
 
-        return defaultValue || null;
+        return defaultValue;
     }
 
     return item;

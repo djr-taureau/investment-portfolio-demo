@@ -40,7 +40,13 @@ export class HeaderComponent implements OnInit {
     @Input()
     public set selectedCompany(value: Company) {
         this._selectedCompany = value;
-        this.selectedItem = { id: String(value.id), icon: _.get(value, "logo", "https://via.placeholder.com/30"), text: value.name } as IconizedItem;
+        if (value) {
+            this.selectedItem = {
+                id: String(value.id),
+                icon: _.get(value, "logo", "https://via.placeholder.com/30"),
+                text: value.name
+            } as IconizedItem;
+        }
     }
 
     /**

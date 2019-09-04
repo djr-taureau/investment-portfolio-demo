@@ -1,8 +1,8 @@
-import { ChartPeriodDataSets } from "@core/domain/company.model";
+import { KpiChartPeriodDataSets } from "@core/domain/company.model";
 import { CompanyKpiActions, CompanyKpiActionTypes } from "@core/state/company/kpi/company-kpi.actions";
 
 export interface State {
-    chartDataPeriodSets: ChartPeriodDataSets[];
+    chartDataPeriodSets: KpiChartPeriodDataSets[];
 }
 
 export const initialState: State = {

@@ -1,5 +1,5 @@
 import { RevenueSeriesData } from "@core/domain/company.model";
-import { getSelectedCurrency, getSelectedDatePart } from "@core/state/company/dashboard";
+import { getSelectedCurrency } from "@core/state/company/dashboard";
 import { Observable } from "rxjs";
 import { Component, OnInit, Input } from "@angular/core";
 import { Logger } from "@util/logger";
@@ -114,11 +114,11 @@ export class SummaryWidgetContainer implements OnInit {
 
         // Set up the summary widget's data providers.
         this.asOf$ = this.store$.pipe(select(fromCompanyKpi.getAsOf(this.id)));
-        this.changeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriod(this.id)));
-        this.changeFromPriorBudget$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudget(this.id)));
-        this.summaryLineChartData$ = this.store$.pipe(select(fromCompanyKpi.getSummaryLineChartData(this.id)));
-        this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriodBarChartData(this.id)));
-        this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudgetBarChartData(this.id)));
+        // this.changeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriod(this.id)));
+        // this.changeFromPriorBudget$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudget(this.id)));
+        // this.summaryLineChartData$ = this.store$.pipe(select(fromCompanyKpi.getSummaryLineChartData(this.id)));
+        // this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriodBarChartData(this.id)));
+        // this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudgetBarChartData(this.id)));
     }
 
     /**

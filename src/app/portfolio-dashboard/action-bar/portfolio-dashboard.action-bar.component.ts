@@ -79,11 +79,13 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
     @Input()
     public set selectedPeriod(value: SelectorPeriod) {
         this._selectedPeriod = value;
-        this.selectedItem = {
-            id: String(value.id),
-            icon: _.get(value, "logo", "https://via.placeholder.com/30"),
-            text: this.getPeriodIdField()
-        } as IconizedItem;
+        if (value) {
+            this.selectedItem = {
+                id: String(value.id),
+                icon: _.get(value, "logo", "https://via.placeholder.com/30"),
+                text: this.getPeriodIdField()
+            } as IconizedItem;
+        }
     }
 
     /**
