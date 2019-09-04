@@ -141,7 +141,6 @@ export class MicroBarComponent implements OnInit {
         this.sourceValues = _.map(this.data, _.property("sourceType"));
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.indexSource = _.indexOf(this.sourceValues, "B", 0);
-        console.log(this.data);
         this.updateScales();
     }
 

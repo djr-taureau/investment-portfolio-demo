@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from "@angular/core";
+import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
@@ -106,7 +106,7 @@ export class MicroLineComponent implements OnInit {
             marginBottom: 10,
             marginLeft: 10,
             height: 160,
-            width: 120
+            width: 130
         };
         this.dimensions = {
             ...this.dimensions,
@@ -168,9 +168,6 @@ export class MicroLineComponent implements OnInit {
         this.historicalData = _.take(this.data, this.data.length - 1);
         this.projectedData = _.takeRight(this.data, 1);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        this.historicalData = this.data; // _.take(this.data, this.data.length - 1);
-        this.projectedData = this.projectedData = _.takeRight(this.data, 1);
-        this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.updateScales();
     }
 
@@ -179,6 +176,7 @@ export class MicroLineComponent implements OnInit {
             return;
         }
 
+        const projValues = this.data.filter((v) => v.projection === true);
         const actualsXMin = d3.min(this.historicalData.map((v) => this.xAccessor(v)));
         const actualsXMax = d3.max(this.historicalData.map((v) => this.xAccessor(v)));
         const projectedXMin = d3.min(this.projectedData.map((v) => this.xAccessor(v)));
@@ -222,7 +220,7 @@ export class MicroLineComponent implements OnInit {
         this.svg
             .append("circle") // change the as-of line
             .attr("cx", this.xScale(this.parseDate(this.dateSelected)))
-            .attr("cy", this.yScale(this.indexSelected))
+            .attr("cy", this.yScale(this.yAccessor(this.indexSelected)))
             .attr("r", 4)
             .attr("id", "selected-problem")
             .attr("class", "dot selected-value")
@@ -249,7 +247,7 @@ export class MicroLineComponent implements OnInit {
             .y((d) => this.yScale(this.yAccessor(d.value)));
         this.svg
             .append("path")
-            .datum(this.historicalData)
+            .datum(this.data)
             .attr("class", "line historical")
             .attr("fill", "none")
             .attr("stroke", "#124f8c")
@@ -257,9 +255,11 @@ export class MicroLineComponent implements OnInit {
             .attr("d", line);
         this.svg
             .append("path")
-            .datum(this.projectedData)
+            .datum(this.data.filter((v) => v.projection === true))
+            .attr("id", "projLine")
             .attr("class", "line projected")
             .attr("fill", "none")
+            .attr("stroke-dasharray", "2,2")
             .attr("stroke", "#99a8bf")
             .attr("opacity", "0.8")
             .attr("d", line);
