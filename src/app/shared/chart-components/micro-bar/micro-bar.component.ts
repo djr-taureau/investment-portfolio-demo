@@ -11,10 +11,7 @@ import { DimensionsType, getUniqueId } from "../chart/utils";
     `,
     styleUrls: ["./micro-bar.component.scss"]
 })
-export class MicroBarComponent implements OnInit, OnChanges {
-    // private margin: any = { top: 4, bottom: 75, left: 85, right: 30 };
-    // private chart: any;
-
+export class MicroBarComponent implements OnInit {
     @Input() xAccessor: any;
     @Input() yAccessor: any;
     @Input() title: string;
@@ -148,8 +145,6 @@ export class MicroBarComponent implements OnInit, OnChanges {
         this.updateScales();
     }
 
-    ngOnChanges() {}
-
     updateAccessorValue(value: string) {
         switch (value) {
             case "valueInUSD": {
@@ -167,10 +162,6 @@ export class MicroBarComponent implements OnInit, OnChanges {
         const dataLength = (this.dataValues || []).length;
         const dimensionWith = _.get(this, "dimensions.width", 0);
         const BAR_WIDTH = Math.max((dimensionWith - dataLength) / dataLength - 1, 1);
-        console.log("bounded", this.dimensions.boundedWidth);
-        console.log("does this equal or exceed bound", BAR_WIDTH * dataLength);
-        console.log(BAR_WIDTH);
-
         this.svg.selectAll("line.select-barline").remove();
         this.svg.selectAll(".bar").remove();
         this.svg.selectAll(".y-line").remove();

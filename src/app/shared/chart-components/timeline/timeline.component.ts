@@ -193,6 +193,7 @@ export class TimelineComponent implements OnInit {
     updateScales() {
         this.svg.selectAll("text.y-axis-label-line").remove();
         this.svg.selectAll(".xAxis.tick").remove();
+        this.svg.selectAll(".axis-grid").remove();
         this.svg.selectAll(".yAxis").remove();
         this.svg.selectAll(".yAxis.axis-grid").remove();
         this.svg.selectAll("circle.selected-value").remove();
@@ -206,8 +207,6 @@ export class TimelineComponent implements OnInit {
         this.svg.selectAll("circle.budget-dot").remove();
         this.svg.selectAll("circle.forecast-dot").remove();
         this.svg.selectAll(".xAxis").remove();
-        this.svg.selectAll(".yAxis").remove();
-        this.svg.selectAll(".grid").remove();
         this.svg.selectAll(".tooltip").remove();
         this.xAccessor = (v) => this.parseDate(v.date);
 
@@ -236,7 +235,7 @@ export class TimelineComponent implements OnInit {
             .nice()
             .range([this.dimensions.height - this.dimensions.marginBottom, this.dimensions.marginTop]);
 
-        const actualsScale = d3
+        this.actualsScale = d3
             .scaleLinear()
             .domain([0, d3.max(actuals.values, (d) => Math.max(d) - 40)])
             .range([this.dimensions.boundedHeight, 0])
@@ -285,27 +284,19 @@ export class TimelineComponent implements OnInit {
                     .text("KPI Detail (M)")
             );
 
-        const yAxis = this.svg
+
+        this.svg
             .append("g")
-            .attr("class", "two")
-            .call(d3.axisLeft(this.yScale));
+            .attr("class", "yAxis axis-grid")
+            .style("opactity", "0.15")
+            .attr("transform", "translate(" + this.dimensions.marginLeft + "," + (this.dimensions.marginBottom - this.dimensions.marginTop) + ")");
+
         const line = d3
             .line()
             .x((d, i) => this.xScale(this.dataSet.dates[i]))
             .y((d) => this.yScale(d))
             .curve(curveLinear);
 
-        const lineBudget = d3
-            .line()
-            .x((d, i) => this.xScale(this.dataSet.dates[i]))
-            .y((d) => this.budgetScale(d))
-            .curve(curveLinear);
-
-        const lineForecast = d3
-            .line()
-            .x((d, i) => this.xScale(this.dataSet.dates[i]))
-            .y((d) => this.forecastScale(d))
-            .curve(curveLinear);
 
         this.svg
             .append("path")
@@ -336,6 +327,7 @@ export class TimelineComponent implements OnInit {
             .attr("stroke-width", 1)
             .attr("d", line);
 
+        //  TODO djr
         // this.svg
         //     .append("text")
         //     .attr("transform", "rotate(-90)")
@@ -391,8 +383,9 @@ export class TimelineComponent implements OnInit {
             .attr("cy", (d) => this.yScale(d))
             .on("mouseover", this.showToolTip)
             .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip)
-            .on("click", (d, i) => console.log("What happend", d, i));
+            .on("mouseleave", this.hideToolTip);
+
+
         this.svg
             .append("circle") // change the as-of line
             .attr("cx", this.xScale(this.dateSelected))

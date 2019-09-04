@@ -32,7 +32,6 @@ export class MicroLineComponent implements OnInit {
     public set data(value: RevenueSeriesData[]) {
         if (value) {
             this._data = value;
-            // this._apiData = value;
             this.update();
         }
     }
@@ -70,7 +69,6 @@ export class MicroLineComponent implements OnInit {
     public forecastVis: boolean;
     public budgetVis: boolean;
     public activeStyle: string;
-    // parseDate: any;
     historicalData: any[];
     projectedData: any[];
     dimensions: DimensionsType;
@@ -116,17 +114,16 @@ export class MicroLineComponent implements OnInit {
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
         this.el = elementRef.nativeElement;
-        // this.svg = d3
-        //     .select(this.el)
-        //     .select("#micro-timeline")
-        //     .append("svg")
-        //     .attr("width", this.dimensions.boundedWidth)
-        //     .attr("height", this.dimensions.boundedHeight)
-        //     .attr("stroke-linejoin", "round")
-        //     .attr("stroke-linecap", "round")
-        //     // .attr("transform", "scale(0.2)")
-        //     .append("g")
-        //     .attr("transform", "translate(0, 10)");
+        this.svg = d3
+            .select(this.el)
+            .select("#micro-timeline")
+            .append("svg")
+            .attr("width", this.dimensions.boundedWidth)
+            .attr("height", this.dimensions.boundedHeight)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .append("g")
+            .attr("transform", "translate(0, 10)");
     }
 
     ngOnInit() {
@@ -139,7 +136,6 @@ export class MicroLineComponent implements OnInit {
             .attr("height", this.dimensions.boundedHeight)
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            // .attr("transform", "scale(0.2)")
             .append("g")
             .attr("transform", "translate(0, 10)");
         this.yAccessor = (v) => v.value;
@@ -169,10 +165,12 @@ export class MicroLineComponent implements OnInit {
             const periodStart = _.findIndex(this.availablePeriods, ["date", this.dateSelected]);
         }
         this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
+        this.historicalData = _.take(this.data, this.data.length - 1);
+        this.projectedData = _.takeRight(this.data, 1);
+        this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.historicalData = this.data; // _.take(this.data, this.data.length - 1);
         this.projectedData = this.projectedData = _.takeRight(this.data, 1);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        console.log(this.indexSelected);
         this.updateScales();
     }
 
@@ -226,6 +224,7 @@ export class MicroLineComponent implements OnInit {
             .attr("cx", this.xScale(this.parseDate(this.dateSelected)))
             .attr("cy", this.yScale(this.indexSelected))
             .attr("r", 4)
+            .attr("id", "selected-problem")
             .attr("class", "dot selected-value")
             .style("stroke-width", 2)
             .style("fill", "white")
@@ -235,7 +234,6 @@ export class MicroLineComponent implements OnInit {
 
         const line = d3
             .line()
-            // .defined((d) => !isNaN(this.yAccessor(d)))
             .x((d) => this.xScale(this.xAccessor(d)))
             .y((d) => this.yScale(this.yAccessor(d)))
             .curve(curveLinear);
