@@ -94,13 +94,13 @@ export class MicroBarComponent implements OnInit, OnChanges {
     constructor(elementRef: ElementRef) {
         this.el = elementRef.nativeElement;
         // this.svg = d3
-        this.svg = d3
-            .select(this.el)
-            .select("#hist")
-            .append("svg")
-            .attr("width", this.dimensions.width)
-            .attr("height", this.dimensions.height)
-            .append("g");
+        // this.svg = d3
+        //     .select(this.el)
+        //     .select("#hist")
+        //     .append("svg")
+        //     .attr("width", this.dimensions.width)
+        //     .attr("height", this.dimensions.height)
+        //     .append("g");
     }
 
     ngOnInit() {
@@ -144,6 +144,7 @@ export class MicroBarComponent implements OnInit, OnChanges {
         this.sourceValues = _.map(this.data, _.property("sourceType"));
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.indexSource = _.indexOf(this.sourceValues, "B", 0);
+        console.log(this.data);
         this.updateScales();
     }
 
@@ -165,8 +166,10 @@ export class MicroBarComponent implements OnInit, OnChanges {
     updateScales() {
         const dataLength = (this.dataValues || []).length;
         const dimensionWith = _.get(this, "dimensions.width", 0);
-        const BAR_WIDTH = Math.max((dimensionWith - 6) / 6, 1);
-        const checkQ = (this.availablePeriods || []).filter((v) => v.date === this.selectedPeriod.date);
+        const BAR_WIDTH = Math.max((dimensionWith - dataLength) / dataLength - 1, 1);
+        console.log("bounded", this.dimensions.boundedWidth);
+        console.log("does this equal or exceed bound", BAR_WIDTH * dataLength);
+        console.log(BAR_WIDTH);
 
         this.svg.selectAll("line.select-barline").remove();
         this.svg.selectAll(".bar").remove();
@@ -177,12 +180,14 @@ export class MicroBarComponent implements OnInit, OnChanges {
         this.xScale = d3
             .scaleLinear()
             .domain([0, (this.dataValues || []).length])
-            .range([0, 90]);
+            .range([0, 90])
+            .nice();
 
         this.yScale = d3
             .scaleLinear()
             .domain([-y0 - 0.4, y0 + 0.4])
-            .range([60, 0]);
+            .range([60, 0])
+            .nice();
 
         this.svg
             .selectAll(".bar")
@@ -192,7 +197,7 @@ export class MicroBarComponent implements OnInit, OnChanges {
             .attr("class", "bar")
             .attr("x", (d, i) => this.xScale(i))
             .attr("y", (d) => (d > 0 && d !== null ? this.yScale(d) : this.yScale(0)))
-            .attr("width", 8)
+            .attr("width", BAR_WIDTH)
             .attr("height", (d) => Math.abs(this.yScale(d) - this.yScale(0)) + 0.5)
             .attr("fill", (d) => (d > 0 ? "#20a187" : "#eb643f"))
             .attr("opacity", (d, i) => {
@@ -216,9 +221,9 @@ export class MicroBarComponent implements OnInit, OnChanges {
 
         this.svg
             .append("line")
-            .attr("x1", this.xScale(this.indexSelected) + 4)
+            .attr("x1", this.xScale(this.indexSelected) + Math.max(BAR_WIDTH / 2, 1))
             .attr("y1", 0)
-            .attr("x2", this.xScale(this.indexSelected) + 4)
+            .attr("x2", this.xScale(this.indexSelected) + Math.max(BAR_WIDTH / 2, 1))
             .attr("y2", this.lineY2)
             .attr("class", "select-barline")
             .style("stroke-width", 2)

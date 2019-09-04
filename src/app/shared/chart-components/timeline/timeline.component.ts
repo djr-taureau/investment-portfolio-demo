@@ -12,7 +12,7 @@ import { DimensionsType } from "../interfaces/types";
     templateUrl: "./timeline.component.html",
     styleUrls: ["./timeline.component.scss"]
 })
-export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
+export class TimelineComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input()
@@ -190,23 +190,15 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
         this.updateScales();
     }
 
-    ngAfterContentInit() {
-        // this.updateScales();
-    }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        // if (this.data && this.timePeriods && this.actuals && this.budget && this.forecast) {
-        //     this.updateScales();
-        // }
-    }
-
     updateScales() {
         this.svg.selectAll("text.y-axis-label-line").remove();
         this.svg.selectAll(".xAxis.tick").remove();
         this.svg.selectAll(".yAxis").remove();
+        this.svg.selectAll(".yAxis.axis-grid").remove();
         this.svg.selectAll("circle.selected-value").remove();
         this.svg.selectAll(".select-timeline").remove();
         this.svg.selectAll(".projected").remove();
+        this.svg.selectAll(".scenarios").remove();
         this.svg.selectAll(".actuals-path").remove();
         this.svg.selectAll(".budget-path").remove();
         this.svg.selectAll(".forecast-path").remove();
@@ -221,7 +213,6 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
 
         const seriesData = this.dataSet.series;
         const seriesNames = _.map(seriesData, "name");
-        console.log(seriesNames);
         const actuals = _.find(seriesData, ["name", "actual"]);
         const budget = _.find(seriesData, ["name", "managementBudget"]);
         const fore = _.find(seriesData, ["name", "managementForecast"]);
@@ -241,10 +232,15 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .nice();
         this.yScale = d3
             .scaleLinear()
-            .domain([0, d3.max(actuals.values, (d) => Math.max(d) - 40)])
-            .range([this.dimensions.height - this.dimensions.marginBottom, this.dimensions.marginTop])
-            .nice();
+            .domain([0, d3.max(this.dataSet.series, (d) => d3.max(d.values))])
+            .nice()
+            .range([this.dimensions.height - this.dimensions.marginBottom, this.dimensions.marginTop]);
 
+        const actualsScale = d3
+            .scaleLinear()
+            .domain([0, d3.max(actuals.values, (d) => Math.max(d) - 40)])
+            .range([this.dimensions.boundedHeight, 0])
+            .nice();
         this.budgetScale = d3
             .scaleLinear()
             .domain([0, d3.max(budget.values, (d) => Math.max(d) - 40)])
@@ -279,18 +275,21 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .attr("transform", `translate(${this.dimensions.marginLeft},0)`)
             .call(this.gridlines().tickSize(-this.dimensions.width, 0, 0))
             .call((g) => g.select(".domain").remove())
-            .call(
-                (g) =>
-                    g
-                        .select(".tick:last-of-type text")
-                        .clone()
-                        .attr("x", 3)
-                        .attr("text-anchor", "start")
-                        .attr("font-weight", "bold")
-                // .text("Revenue")
+            .call((g) =>
+                g
+                    .select(".tick:last-of-type text")
+                    .clone()
+                    .attr("x", 3)
+                    .attr("text-anchor", "start")
+                    .attr("font-weight", "bold")
+                    .text("KPI Detail (M)")
             );
 
-        const lineActuals = d3
+        const yAxis = this.svg
+            .append("g")
+            .attr("class", "two")
+            .call(d3.axisLeft(this.yScale));
+        const line = d3
             .line()
             .x((d, i) => this.xScale(this.dataSet.dates[i]))
             .y((d) => this.yScale(d))
@@ -312,39 +311,31 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .append("path")
             .datum(actuals.values)
             .attr("class", "actuals-path")
-            .attr("id", "tagActuals")
             .attr("fill", "none")
             .attr("stroke", "#124f8c")
             .attr("stroke-width", 2)
-            .attr("d", lineActuals);
+            .attr("d", line);
 
         this.svg
             .append("path")
             .datum(budget.values)
             .attr("class", "budget-path")
-            .attr("id", "tagBudget")
             .attr("fill", "none")
             .attr("stroke", "#124f8c")
             .attr("opacity", "0.5")
             .attr("stroke-width", 1)
-            .attr("d", lineBudget);
+            .attr("d", line);
 
         this.svg
             .append("path")
             .datum(fore.values)
             .attr("class", "forecast-path")
-            .attr("id", "tagForecast")
             .attr("fill", "none")
             .attr("stroke", "#47a2d6")
             .attr("opacity", "0.75")
             .attr("stroke-width", 1)
-            .attr("d", lineForecast);
+            .attr("d", line);
 
-        this.svg
-            .append("g")
-            .attr("class", "yAxis axix-grid")
-            .style("opactity", "0.15")
-            .attr("transform", "translate(" + this.dimensions.marginLeft + "," + (this.dimensions.marginBottom - this.dimensions.marginTop) + ")");
         // this.svg
         //     .append("text")
         //     .attr("transform", "rotate(-90)")
@@ -353,7 +344,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
         //     .attr("dy", "1em")
         //     .attr("class", "yAxis y-axis-label-line")
         //     .style("text-anchor", "middle")
-        //     .text("Revenue (M)");
+        //     .text("KPI Detail (M)");
         this.svg
             .selectAll(".dot")
             .data(actuals.values)
@@ -380,7 +371,7 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .style("fill", "white")
             .style("stroke-size", "1")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.budgetScale(d))
+            .attr("cy", (d) => this.yScale(d))
             .on("mouseover", this.showToolTip)
             .on("mousemove", this.moveToolTip)
             .on("mouseleave", this.hideToolTip);
@@ -397,12 +388,11 @@ export class TimelineComponent implements OnInit, AfterContentInit, OnChanges {
             .style("fill", "white")
             .style("stroke-size", "1")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.forecastScale(d))
+            .attr("cy", (d) => this.yScale(d))
             .on("mouseover", this.showToolTip)
             .on("mousemove", this.moveToolTip)
             .on("mouseleave", this.hideToolTip)
             .on("click", (d, i) => console.log("What happend", d, i));
-
         this.svg
             .append("circle") // change the as-of line
             .attr("cx", this.xScale(this.dateSelected))

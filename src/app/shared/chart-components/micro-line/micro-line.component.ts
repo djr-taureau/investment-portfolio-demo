@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, ElementRef, Input, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
@@ -14,7 +14,7 @@ import { DimensionsType } from "../interfaces/types";
     `,
     styleUrls: ["./micro-line.component.scss"]
 })
-export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
+export class MicroLineComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("MicroLineComponent");
 
     @Input() id: string;
@@ -46,7 +46,7 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
     public set barChartData1(value: RevenueSeriesData[]) {
         if (value) {
             this._barChartData1 = value;
-            // this.update();
+            this.update();
         }
     }
     public get barChartData1(): RevenueSeriesData[] {
@@ -58,7 +58,7 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
     public set barChartData2(value: RevenueSeriesData[]) {
         if (value) {
             this._barChartData2 = value;
-            // this.update();
+            this.update();
         }
     }
     public get barChartData2(): RevenueSeriesData[] {
@@ -116,15 +116,17 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
         this.el = elementRef.nativeElement;
-        this.svg = d3
-            .select(this.el)
-            .select("#micro-timeline")
-            .append("svg")
-            .attr("width", this.dimensions.width)
-            .attr("height", this.dimensions.height)
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .append("g");
+        // this.svg = d3
+        //     .select(this.el)
+        //     .select("#micro-timeline")
+        //     .append("svg")
+        //     .attr("width", this.dimensions.boundedWidth)
+        //     .attr("height", this.dimensions.boundedHeight)
+        //     .attr("stroke-linejoin", "round")
+        //     .attr("stroke-linecap", "round")
+        //     // .attr("transform", "scale(0.2)")
+        //     .append("g")
+        //     .attr("transform", "translate(0, 10)");
     }
 
     ngOnInit() {
@@ -133,11 +135,13 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
             .select(this.el)
             .selectAll("#micro-timeline")
             .append("svg")
-            .attr("width", this.dimensions.width)
-            .attr("height", this.dimensions.height)
+            .attr("width", this.dimensions.boundedWidth)
+            .attr("height", this.dimensions.boundedHeight)
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            .append("g");
+            // .attr("transform", "scale(0.2)")
+            .append("g")
+            .attr("transform", "translate(0, 10)");
         this.yAccessor = (v) => v.value;
     }
 
@@ -161,30 +165,15 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
             });
             this.timePeriods = _.map(this.data, _.property("date"));
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-            const periodSelected = _.indexOf(this.availablePeriods || [], this.dateSelected, 0);
-            const periodStart = _.findIndex(this.availablePeriods || [], ["date", this.dateSelected]);
+            const periodSelected = _.indexOf(this.availablePeriods, this.dateSelected, 0);
+            const periodStart = _.findIndex(this.availablePeriods, ["date", this.dateSelected]);
         }
-        this.actualsPresentValue = this.data.filter((p) => p.date === this.dateSelected);
+        this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
         this.historicalData = this.data; // _.take(this.data, this.data.length - 1);
-        this.projectedData = _.takeRight(this.data, 1);
-        this.indexSelected = _.indexOf(this.timePeriods || [], this.dateSelected, 0);
+        this.projectedData = this.projectedData = _.takeRight(this.data, 1);
+        this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
+        console.log(this.indexSelected);
         this.updateScales();
-    }
-
-    ngAfterContentInit() {
-        if (this.data) {
-            // this.updateDimensions();
-            // this.updateScales();
-        }
-    }
-
-    // @HostListener("window:resize", ["$event"])
-    // onResize() {
-    //     this.updateDimensions();
-    // }
-
-    ngOnChanges(changes: SimpleChanges): void {
-        // this.updateScales();
     }
 
     updateScales() {
@@ -235,7 +224,7 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
         this.svg
             .append("circle") // change the as-of line
             .attr("cx", this.xScale(this.parseDate(this.dateSelected)))
-            .attr("cy", this.yScale(this.yAccessor(this.indexSelected)))
+            .attr("cy", this.yScale(this.indexSelected))
             .attr("r", 4)
             .attr("class", "dot selected-value")
             .style("stroke-width", 2)
@@ -283,7 +272,6 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
             .attr("fill", "#47a2d6")
             .attr("opacity", "0.15")
             .attr("stroke", "#47a2d6")
-
             .attr("d", area);
     }
 }
