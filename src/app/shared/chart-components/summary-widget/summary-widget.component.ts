@@ -59,10 +59,10 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
      * Value for the line graphs to display
      */
     @Input()
-    set value(val: any) {
+    public set value(val: number | string) {
         // TODO: set the MBTQ scale value here
         this._value = val;
-        if (val >= 0 && val <= 999999999) {
+        if (val <= 999999999) {
             this.scale = "M";
         } else if (val > 999999999 && val <= 999999999999) {
             this.scale = "B";
@@ -70,10 +70,10 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
             this.scale = "T";
         }
     }
-    get value() {
+    public get value(): number | string {
         return this._value;
     }
-    private _value = 0;
+    private _value: number | string = 0;
 
     /**
      * Label for the py chart value
@@ -82,7 +82,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     public pyLabel?: string;
 
     @Input()
-    set pyValue(value: number) {
+    public set pyValue(value: number) {
         this.py = value;
     }
     public py?: number;
@@ -122,7 +122,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
         } else {
             this.isPositiveIC = true;
         }
-        if (this.value === 0) {
+        if (this.value === 0 || this.value === null) {
             this.value = "NA";
         }
         this.checkCurrencyValue(this.denomination);

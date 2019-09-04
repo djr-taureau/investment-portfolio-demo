@@ -70,7 +70,8 @@ export const getRevenueAsOf = createSelector(
                     return itemDateString === periodFiscalDateString;
                 });
             }
-            return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            return result ? result : 0;
         } else {
             return 0;
         }
@@ -109,7 +110,8 @@ export const getChangeFromPriorPeriod = createSelector(
                 });
             }
             // const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
-            return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            return result ? result : 0;
         } else {
             return 0;
         }
@@ -150,7 +152,8 @@ export const getChangeFromPriorBudget = createSelector(
                 });
             }
             // const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
-            return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+            return result ? result : 0;
         } else {
             return 0;
         }

@@ -161,13 +161,13 @@ export class MicroLineComponent implements OnInit, AfterContentInit, OnChanges {
             });
             this.timePeriods = _.map(this.data, _.property("date"));
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-            const periodSelected = _.indexOf(this.availablePeriods, this.dateSelected, 0);
-            const periodStart = _.findIndex(this.availablePeriods, ["date", this.dateSelected]);
+            const periodSelected = _.indexOf(this.availablePeriods || [], this.dateSelected, 0);
+            const periodStart = _.findIndex(this.availablePeriods || [], ["date", this.dateSelected]);
         }
-        this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
+        this.actualsPresentValue = this.data.filter((p) => p.date === this.dateSelected);
         this.historicalData = this.data; // _.take(this.data, this.data.length - 1);
         this.projectedData = _.takeRight(this.data, 1);
-        this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
+        this.indexSelected = _.indexOf(this.timePeriods || [], this.dateSelected, 0);
         this.updateScales();
     }
 

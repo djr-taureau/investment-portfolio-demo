@@ -7,6 +7,8 @@
     <div class="box value">{{ value }}</div>
     <div *ngIf="pyLabel"
          class="box py">{{ pyLabel }}</div>
+    <div *ngIf="!py"
+         class="box py-val">0%</div>
     <div *ngIf="py"
          class="box py-val"
          [ngClass]="{
@@ -15,6 +17,8 @@
         }">{{ py }}%</div>
     <div *ngIf="icLabel"
          class="box budget">{{ icLabel }}</div>
+    <div *ngIf="!ic"
+         class="box ic-val">0%</div>
     <div *ngIf="ic"
          class="box ic-val"
          [ngClass]="{

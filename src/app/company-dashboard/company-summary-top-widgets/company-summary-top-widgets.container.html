@@ -23,6 +23,7 @@
 
     <div class="chart">
         <sbp-summary-widget [data]="ebitdaSummaryLineChartData$ | async"
+                            [selectedPeriod]="selectedPeriod$ | async"
                             [barChartData1]="ebitdaChangeFromPriorPeriodBarChartData$ | async"
                             [barChartData2]="ebitdaChangeFromPriorBudgetBarChartData$ | async"
                             [title]="'EBITDA'"

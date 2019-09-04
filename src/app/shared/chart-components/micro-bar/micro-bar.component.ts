@@ -166,7 +166,7 @@ export class MicroBarComponent implements OnInit, OnChanges {
         const dataLength = (this.dataValues || []).length;
         const dimensionWith = _.get(this, "dimensions.width", 0);
         const BAR_WIDTH = Math.max((dimensionWith - 6) / 6, 1);
-        const checkQ = this.availablePeriods.filter((v) => v.date === this.selectedPeriod.date);
+        const checkQ = (this.availablePeriods || []).filter((v) => v.date === this.selectedPeriod.date);
 
         this.svg.selectAll("line.select-barline").remove();
         this.svg.selectAll(".bar").remove();

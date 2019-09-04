@@ -57,7 +57,8 @@ export const getAsOf = (id: string) =>
                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
                     const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
                     const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
-                    return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+                    return result ? result : 0;
                 }
                 return 0;
             }
@@ -89,7 +90,8 @@ export const getChangeFromPriorPeriod = (id: string) =>
                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
                     const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
                     const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
-                    return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+                    return result ? result : 0;
                 }
                 return 0;
             }
@@ -121,7 +123,8 @@ export const getChangeFromPriorBudget = (id: string) =>
                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
                     const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
                     const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
-                    return ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
+                    return result ? result : 0;
                 }
                 return 0;
             }
