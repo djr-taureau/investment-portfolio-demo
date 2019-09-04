@@ -1,5 +1,5 @@
 import * as _ from "lodash";
-import { AvailablePeriod } from "@core/domain/company.model";
+import { AvailablePeriod, Company } from "@core/domain/company.model";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
@@ -29,6 +29,8 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
     private _availablePeriods: SelectorPeriod[];
 
     private _availablePeriodsByYear: SelectorPeriod[];
+
+    private _selectedPeriod: SelectorPeriod;
 
     // -----------------------------------------------
     // INPUTS
@@ -75,7 +77,14 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
      * The 'as of' period (the selected period in the available periods)
      */
     @Input()
-    public selectedPeriod: SelectorPeriod;
+    public set selectedPeriod(value: SelectorPeriod) {
+        this._selectedPeriod = value;
+        this.selectedItem = {
+            id: String(value.id),
+            icon: _.get(value, "logo", "https://via.placeholder.com/30"),
+            text: this.getPeriodIdField()
+        } as IconizedItem;
+    }
 
     /**
      * The month of the financial year end.
@@ -122,6 +131,8 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
     public currencies = CurrencyTypeEnum;
 
     public dateunits = DatePartTypeEnum;
+
+    public selectedItem: IconizedItem;
 
     // -----------------------------------------------
     // OUTPUTS

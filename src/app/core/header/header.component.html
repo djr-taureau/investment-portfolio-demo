@@ -17,7 +17,7 @@
         <div *ngIf="showCompanyCombo">&#47;</div>
         <sbp-iconized-searchable-combo *ngIf="showCompanyCombo"
                                        class="combo"
-                                       [selectedItem]="selectedCompany"
+                                       [selectedItem]="selectedItem"
                                        [popupSettings]="popupSettings"
                                        (selectionChange)="onCompanySelect($event)"
                                        [listItems]="listItems">

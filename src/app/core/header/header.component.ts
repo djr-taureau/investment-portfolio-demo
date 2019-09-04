@@ -17,8 +17,10 @@ export class HeaderComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("HeaderComponent");
 
     private _companies: Company[];
+    private _selectedCompany: Company;
 
     public listItems: Array<IconizedItem>[];
+    public selectedItem: IconizedItem;
 
     /**
      * List of companies.
@@ -36,7 +38,10 @@ export class HeaderComponent implements OnInit {
      * The currently selected company
      */
     @Input()
-    public selectedCompany: Company;
+    public set selectedCompany(value: Company) {
+        this._selectedCompany = value;
+        this.selectedItem = { id: String(value.id), icon: _.get(value, "logo", "https://via.placeholder.com/30"), text: value.name } as IconizedItem;
+    }
 
     /**
      * Flag indicating if the slide-out panel is open.
