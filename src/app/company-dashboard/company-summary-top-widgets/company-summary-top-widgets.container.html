@@ -18,11 +18,11 @@
                             [title]="'Revenue'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="revenueAsOf$ | async | shortNumber: false: '1.0-1'"
+                            [value]="revenueAsOf$ | async | millions"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="revenueChangeFromPriorPeriod$ | async | shortNumber: false: '1.0-1'"
+                            [pyValue]="revenueChangeFromPriorPeriod$ | async | number: '1.1-1'"
                             [icLabel]="icLabel"
-                            [icValue]="revenueChangeFromPriorBudget$ | async | shortNumber: false: '1.0-1'"
+                            [icValue]="revenueChangeFromPriorBudget$ | async | number: '1.1-1'"
                             (click)="onRevenueClick()">
         </sbp-summary-widget>
     </div>
@@ -40,11 +40,11 @@
                             [title]="'EBITDA'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="ebitdaAsOf$ | async | shortNumber: false: '1.0-1'"
+                            [value]="ebitdaAsOf$ | async | millions"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async | shortNumber: false: '1.0-1'"
+                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async | number: '1.1-1'"
                             [icLabel]="icLabel"
-                            [icValue]="ebitdaChangeFromPriorBudget$ | async | shortNumber: false: '1.0-1'"
+                            [icValue]="ebitdaChangeFromPriorBudget$ | async | number: '1.1-1'"
                             (click)="onEbitdaClick()">
         </sbp-summary-widget>
     </div>
@@ -65,7 +65,7 @@
                  fxFlex>
                 <div fxLayout="row"
                      fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><span>{{ cashAsOf$ | async | shortNumber: false: '1.0-1' }} ($M)</span></div>
+                     fxLayoutGap="16px"><span>{{ cashAsOf$ | async | millions }}</span></div>
             </div>
         </div>
     </div>

@@ -1,27 +1,30 @@
 import { RevenueSeriesData } from "@core/domain/company.model";
-import { getSelectedCurrency } from "@core/state/company/dashboard";
+import { getSelectedCurrency, getSelectedDatePart, getSelectedPeriod } from "@core/state/company/dashboard";
 import { Observable } from "rxjs";
 import { Component, OnInit, Input } from "@angular/core";
 import { Logger } from "@util/logger";
 import { select, Store } from "@ngrx/store";
 import * as fromCompanyKpi from "@core/state/company/kpi";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 
 @Component({
     selector: "sbp-summary-widget-container",
     template: `
         <sbp-summary-widget
             [data]="summaryLineChartData$ | async"
+            [selectedPeriod]="selectedPeriod$ | async"
+            [availablePeriods]="availablePeriods$ | async"
             [barChartData1]="changeFromPriorPeriodBarChartData$ | async"
             [barChartData2]="changeFromPriorBudgetBarChartData$ | async"
-            [title]="'KPI'"
+            [title]="name + ' KPI'"
             [denomination]="selectedCurrencyCode"
             [currencySymbol]="selectedCurrencySymbol"
-            [value]="asOf$ | async | millions: '1.0-1'"
+            [value]="asOf$ | async | millions"
             [pyLabel]="'vs PY'"
-            [pyValue]="changeFromPriorPeriod$ | async"
+            [pyValue]="changeFromPriorPeriod$ | async | number: '1.1-1'"
             [icLabel]="'vs Bud'"
-            [icValue]="changeFromPriorBudget$ | async"
+            [icValue]="changeFromPriorBudget$ | async | number: '1.1-1'"
             (click)="onSummaryWidgetClick($event)"
         >
         </sbp-summary-widget>
@@ -39,15 +42,32 @@ export class SummaryWidgetContainer implements OnInit {
     @Input()
     public id: string;
 
+    /**
+     * Name for the widget.
+     */
     @Input()
-    public availablePeriods: any[];
+    public name: string;
+
+    /**
+     * List of available periods.
+     */
+    public availablePeriods$: Observable<any>;
 
     /**
      * The selected currency symbol.
      */
     public selectedCurrencySymbol: string;
 
+    /**
+     * The selected date part.
+     */
     public selectedDatePart$: Observable<any>;
+
+    /**
+     * The selected currency.
+     */
+    public selectedCurrency$: Observable<any>;
+
     /**
      * The selected currency code.
      */
@@ -74,6 +94,11 @@ export class SummaryWidgetContainer implements OnInit {
     public summaryLineChartData$: Observable<RevenueSeriesData[]>;
 
     /**
+     * The selected period.
+     */
+    public selectedPeriod$: Observable<any>;
+
+    /**
      * List of revenue budget line chart data.
      */
     public budgetLineChartData$: Observable<RevenueSeriesData[]>;
@@ -94,6 +119,11 @@ export class SummaryWidgetContainer implements OnInit {
     public changeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
 
     /**
+     * The IC label is defined once we know if it's year or quarter.
+     */
+    public icLabel: string;
+
+    /**
      * Constructor.
      */
     constructor(public store$: Store<any>) {
@@ -106,17 +136,29 @@ export class SummaryWidgetContainer implements OnInit {
     public ngOnInit() {
         SummaryWidgetContainer.logger.debug(`ngOnInit()`);
 
-        // Get the selected currency code and symbol.
-        this.store$.pipe(select(getSelectedCurrency)).subscribe((v) => {
+        this.selectedDatePart$ = this.store$.pipe(select(getSelectedDatePart));
+        this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
+        this.selectedCurrency$ = this.store$.pipe(select(getSelectedCurrency));
+        this.selectedCurrency$.subscribe((v) => {
             this.selectedCurrencyCode = v.currencyCode;
             this.selectedCurrencySymbol = v.currencySymbol;
         });
 
+        this.selectedDatePart$.subscribe((v) => {
+            if (v.id === "Y") {
+                this.icLabel = "vs IC";
+            } else {
+                this.icLabel = "vs Bud";
+            }
+        });
+
+        this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
+
         // Set up the summary widget's data providers.
         this.asOf$ = this.store$.pipe(select(fromCompanyKpi.getAsOf(this.id)));
-        // this.changeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriod(this.id)));
-        // this.changeFromPriorBudget$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudget(this.id)));
-        // this.summaryLineChartData$ = this.store$.pipe(select(fromCompanyKpi.getSummaryLineChartData(this.id)));
+        this.changeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriod(this.id)));
+        this.changeFromPriorBudget$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudget(this.id)));
+        this.summaryLineChartData$ = this.store$.pipe(select(fromCompanyKpi.getSummaryLineChartData(this.id)));
         // this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriodBarChartData(this.id)));
         // this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudgetBarChartData(this.id)));
     }

@@ -49,7 +49,8 @@ export const getAsOf = (id: string) =>
                 const set = sets.find((item: KpiChartPeriodDataSets) => item.id === id);
                 if (set) {
                     const metricsGraph = set.data.metricsGraph;
-                    const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
+                    const isQuarter = datePart.id.toUpperCase() === "Q";
+                    const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
                     const currencyKey: string =
                         currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
                     const scenarioName = "actual";
@@ -57,12 +58,12 @@ export const getAsOf = (id: string) =>
                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
                     const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
                     const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
-                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
-                    return result ? result : 0;
+                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], Math.PI);
+                    return result ? result : Math.PI;
                 }
-                return 0;
+                return Math.PI;
             }
-            return 0;
+            return Math.PI;
         }
     );
 
@@ -71,94 +72,131 @@ export const getAsOf = (id: string) =>
  * It represents the vsPQ or vsPY percentage values.
  * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
  */
-// export const getChangeFromPriorPeriod = (id: string) =>
-//     createSelector(
-//         getChartDataPeriodSets,
-//         fromCompanyDashboard.getSelectedPeriod,
-//         fromCompanyDashboard.getSelectedDatePart,
-//         fromCompanyDashboard.getSelectedCurrency,
-//         (sets: ChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//             if (sets && period && datePart && currency) {
-//                 const set = sets.find((item: ChartPeriodDataSets) => item.id === id);
-//                 if (set) {
-//                     const tableData = set.tableData;
-//                     const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//                     const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
-//                     const currencyKey: string =
-//                         currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//                     const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//                     const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//                     const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
-//                     const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
-//                     return result ? result : 0;
-//                 }
-//                 return 0;
-//             }
-//             return 0;
-//         }
-//     );
-//
-// /**
-//  * This is the value for 1.3 in the Solution Summary - aka the summary revenue chart:
-//  * It represents the vsBud or icLatest percentage values.
-//  * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
-//  */
-// export const getChangeFromPriorBudget = (id: string) =>
-//     createSelector(
-//         getChartDataPeriodSets,
-//         fromCompanyDashboard.getSelectedPeriod,
-//         fromCompanyDashboard.getSelectedDatePart,
-//         fromCompanyDashboard.getSelectedCurrency,
-//         (sets: ChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//             if (sets && period && datePart && currency) {
-//                 const set = sets.find((item: ChartPeriodDataSets) => item.id === id);
-//                 if (set) {
-//                     const tableData = set.tableData;
-//                     const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//                     const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsBud" : "icLatest";
-//                     const currencyKey: string =
-//                         currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//                     const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//                     const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//                     const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.date);
-//                     const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], 0);
-//                     return result ? result : 0;
-//                 }
-//                 return 0;
-//             }
-//             return 0;
-//         }
-//     );
-//
-// /**
-//  * This is the value for 1.3 in the Solution Summary - aka the summary revenue chart:
-//  * It represents the vsBud or icLatest percentage values.
-//  * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
-//  */
-// export const getSummaryLineChartData = (id: string) =>
-//     createSelector(
-//         getChartDataPeriodSets,
-//         fromCompanyDashboard.getSelectedPeriod,
-//         fromCompanyDashboard.getSelectedDatePart,
-//         fromCompanyDashboard.getSelectedCurrency,
-//         (sets: ChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//             if (sets && period && datePart && currency) {
-//                 const set = sets.find((item: ChartPeriodDataSets) => item.id === id);
-//                 if (set) {
-//                     const metricsGraph = set.metricsGraph;
-//                     const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//                     const scenarioName = "actual";
-//                     const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
-//                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//                     return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//                 }
-//                 return [];
-//             }
-//             return [];
-//         }
-//     );
+export const getChangeFromPriorPeriod = (id: string) =>
+    createSelector(
+        getChartDataPeriodSets,
+        fromCompanyDashboard.getSelectedPeriod,
+        fromCompanyDashboard.getSelectedDatePart,
+        fromCompanyDashboard.getSelectedCurrency,
+        (sets: KpiChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+            if (sets && period && datePart && currency) {
+                const set = sets.find((item: KpiChartPeriodDataSets) => item.id === id);
+                if (set) {
+                    const tableData = set.data.tableData;
+                    const isQuarter = datePart.id.toUpperCase() === "Q";
+                    const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+                    const scenarioName = "vsPY";
+                    const currencyKey: string =
+                        currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
+                    const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
+                    const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+                    const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+                    let matchingDateIndex = 0;
+                    if (datePart.id.toUpperCase() === "Q") {
+                        matchingDateIndex = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+                    } else {
+                        const periodFiscalDateString = new Date(period.fiscalDate).getFullYear().toString();
+                        matchingDateIndex = matchingDateData.findIndex((item) => {
+                            const itemDateString = new Date(item.date).getFullYear().toString();
+                            return itemDateString === periodFiscalDateString;
+                        });
+                    }
+                    // const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], Math.PI);
+                    return result ? result : Math.PI;
+                }
+                return Math.PI;
+            }
+            return Math.PI;
+        }
+    );
+
+/**
+ * This is the value for 1.3 in the Solution Summary - aka the summary revenue chart:
+ * It represents the vsBud or icLatest percentage values.
+ * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ */
+export const getChangeFromPriorBudget = (id: string) =>
+    createSelector(
+        getChartDataPeriodSets,
+        fromCompanyDashboard.getSelectedPeriod,
+        fromCompanyDashboard.getSelectedDatePart,
+        fromCompanyDashboard.getSelectedCurrency,
+        (sets: KpiChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+            if (sets && period && datePart && currency) {
+                const set = sets.find((item: KpiChartPeriodDataSets) => item.id === id);
+                if (set) {
+                    const tableData = set.data.tableData;
+                    const isQuarter = datePart.id.toUpperCase() === "Q";
+                    const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+                    const scenarioName: string = isQuarter ? "managementBudget" : "icLatest";
+                    const currencyKey: string =
+                        currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
+                    const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
+                    let actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+                    // If icLatest is not in the series we look for icInitial
+                    if (actualIndex === -1 && !isQuarter) {
+                        actualIndex = dateDataList.findIndex((item) => item.scenarioName === "icInitial");
+                    }
+                    const matchingDateData: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+                    let matchingDateIndex = 0;
+                    if (isQuarter) {
+                        matchingDateIndex = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+                    } else {
+                        const periodFiscalDateString = new Date(period.fiscalDate).getFullYear().toString();
+                        matchingDateIndex = matchingDateData.findIndex((item) => {
+                            const itemDateString = new Date(item.date).getFullYear().toString();
+                            return itemDateString === periodFiscalDateString;
+                        });
+                    }
+                    // const matchingDateIndex: number = matchingDateData.findIndex((item) => item.date === period.fiscalDate);
+                    const result = ObjectUtil.getNestedPropIfExists(matchingDateData, [String(matchingDateIndex), currencyKey], Math.PI);
+                    return result ? result : Math.PI;
+                }
+                return Math.PI;
+            }
+            return Math.PI;
+        }
+    );
+
+/**
+ * This is the value for 1.3 in the Solution Summary - aka the summary revenue chart:
+ * It represents the vsBud or icLatest percentage values.
+ * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ */
+export const getSummaryLineChartData = (id: string) =>
+    createSelector(
+        getChartDataPeriodSets,
+        fromCompanyDashboard.getSelectedPeriod,
+        fromCompanyDashboard.getSelectedDatePart,
+        fromCompanyDashboard.getSelectedCurrency,
+        (sets: KpiChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+            if (sets && period && datePart && currency) {
+                const set = sets.find((item: KpiChartPeriodDataSets) => item.id === id);
+                if (set) {
+                    const metricsGraph = set.data.metricsGraph;
+                    const isQuarter = datePart.id.toUpperCase() === "Q";
+                    const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+                    const scenarioName = "actual";
+                    const currencyKey: string =
+                        currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
+                    const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
+                    const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+                    const result = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+                    return result.map((item) => {
+                        const valueOrAmount = item[currencyKey] || 0;
+                        return {
+                            ...item,
+                            value: valueOrAmount,
+                            amount: valueOrAmount
+                        };
+                    });
+                }
+                return [];
+            }
+            return [];
+        }
+    );
 //
 // export const getBudgetLineChartData = (id: string) =>
 //     createSelector(

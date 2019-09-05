@@ -3,9 +3,15 @@ import { DecimalPipe } from "@angular/common";
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-    name: "shortNumber"
+    name: "shortNumber",
+    pure: true
 })
 export class ShortNumberPipe implements PipeTransform {
+    /**
+     * Key for unknown values coming from the API, which is PI trimmed to 5 decimals, aka 3.14159.
+     */
+    private static UNKNOWN_KEY = parseFloat(Math.PI.toFixed(5));
+
     /**
      * Constructor.
      */
@@ -17,10 +23,10 @@ export class ShortNumberPipe implements PipeTransform {
      * @param includeLetterKey
      * @param digits
      */
-    public transform(number: number, includeLetterKey: boolean = true, digits?: any): any {
+    public transform(number: number, includeLetterKey: boolean = true, digits?: any): string {
         if (number === 0) {
-            return 0;
-        } else if (!number) {
+            return "0";
+        } else if (number === ShortNumberPipe.UNKNOWN_KEY || !number) {
             return "N/A";
         }
 
@@ -47,6 +53,9 @@ export class ShortNumberPipe implements PipeTransform {
                 break;
             }
         }
+
+        // TODO
+        abs = number / 1000000;
 
         const prefix = isNegative ? "-" : "";
         const suffix = includeLetterKey ? key : "";

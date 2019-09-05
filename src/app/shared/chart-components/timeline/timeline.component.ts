@@ -284,7 +284,6 @@ export class TimelineComponent implements OnInit {
                     .text("KPI Detail (M)")
             );
 
-
         this.svg
             .append("g")
             .attr("class", "yAxis axis-grid")
@@ -296,7 +295,6 @@ export class TimelineComponent implements OnInit {
             .x((d, i) => this.xScale(this.dataSet.dates[i]))
             .y((d) => this.yScale(d))
             .curve(curveLinear);
-
 
         this.svg
             .append("path")
@@ -384,7 +382,6 @@ export class TimelineComponent implements OnInit {
             .on("mouseover", this.showToolTip)
             .on("mousemove", this.moveToolTip)
             .on("mouseleave", this.hideToolTip);
-
 
         this.svg
             .append("circle") // change the as-of line

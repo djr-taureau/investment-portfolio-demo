@@ -14,11 +14,11 @@
                                 [title]="revenueTitle"
                                 [denomination]="revenueDenomination"
                                 [currencySymbol]="revenueCurrencySymbol"
-                                [value]="revenueTotalValue| millions: '1.0-1'"
+                                [value]="revenueTotalValue| millions"
                                 [pyLabel]="revenueSeries1Label"
-                                [pyValue]="revenueSeries1Value | millions: '1.0-1'"
+                                [pyValue]="revenueSeries1Value | millions"
                                 [icLabel]="revenueSeries2Label"
-                                [icValue]="revenueSeries2Value | millions: '1.0-1'"
+                                [icValue]="revenueSeries2Value | millions"
                                 (click)="onRevenueClick($event)">
             </sbp-summary-widget>
         </div>
@@ -31,11 +31,11 @@
                                 [title]="ebitdaTitle"
                                 [denomination]="ebitdaDenomination"
                                 [currencySymbol]="ebitdaCurrencySymbol"
-                                [value]="ebitdaTotalValue| millions: '1.0-1'"
+                                [value]="ebitdaTotalValue| millions"
                                 [pyLabel]="ebitdaSeries1Label"
-                                [pyValue]="ebitdaSeries1Value | millions: '1.0-1'"
+                                [pyValue]="ebitdaSeries1Value | millions"
                                 [icLabel]="ebitdaSeries2Label"
-                                [icValue]="ebitdaSeries2Value | millions: '1.0-1'"
+                                [icValue]="ebitdaSeries2Value | millions"
                                 (click)="onEbitdaClick($event)">
             </sbp-summary-widget>
         </div>
