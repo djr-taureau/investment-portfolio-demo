@@ -50,9 +50,6 @@ export class CompanyKpiDetailComponent implements OnInit {
 
     @Input() selectedPeriod: any;
     @Input() title: string;
-    @Input() actuals: RevenueSeriesData[];
-    @Input() budget: RevenueSeriesData[];
-    @Input() forecast: RevenueSeriesData[];
     @Input() allLineChartData: ChartDataPeriod[];
     @Input() revenueTableDataHeaders: string[];
     @Input() revenueTableDataAsOf: number[];

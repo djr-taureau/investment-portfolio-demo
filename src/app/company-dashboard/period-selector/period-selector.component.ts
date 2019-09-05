@@ -16,6 +16,15 @@ export interface SelectorPeriod extends AvailablePeriod {
     fiscalDate?: string;
 }
 
+export interface HistoricalProjectedResult {
+    historicalCount: number;
+    historicalStart: string;
+    historicalEnd: string;
+    projectedCount: number;
+    projectedStart: string;
+    projectedEnd: string;
+}
+
 @Component({
     selector: "sbp-period-selector",
     templateUrl: "./period-selector.component.html",
@@ -103,6 +112,27 @@ export class PeriodSelectorComponent implements OnInit {
     public showDateUnitSelector = true;
 
     /**
+     * Provides values to use for historical and projected results
+     */
+    @Input()
+    set historicalProjectedResult(value: HistoricalProjectedResult) {
+        if (value) {
+            this.historicalCount = value.historicalCount;
+            this.historicalStart = value.historicalStart;
+            this.historicalEnd = value.historicalEnd;
+            this.projectedCount = value.projectedCount;
+            this.projectedStart = value.projectedStart;
+            this.projectedEnd = value.projectedEnd;
+        }
+    }
+    public historicalCount = 0;
+    public historicalStart = "";
+    public historicalEnd = "";
+    public projectedCount = 0;
+    public projectedStart = "";
+    public projectedEnd = "";
+
+    /**
      * The units that represent the historical Units
      */
     // @Input()
@@ -173,29 +203,29 @@ export class PeriodSelectorComponent implements OnInit {
         return this.selectedDatePartType === DatePartTypeEnum.QTR ? "quarterLabel" : "yearLabel";
     }
 
-    public getHistoricalUnitCount(): number {
-        return this.getHistoricalUnits().length;
-    }
+    // public getHistoricalUnitCount(): number {
+    //     return this.getHistoricalUnits().length;
+    // }
 
-    public getFirstHistoricalUnit(): Date {
-        return new Date(_.get(_.head(this.getHistoricalUnits()), "date", new Date()));
-    }
+    // public getFirstHistoricalUnit(): Date {
+    //     return new Date(_.get(_.head(this.getHistoricalUnits()), "date", new Date()));
+    // }
 
-    public getLastHistoricalUnit(): Date {
-        return new Date(_.get(_.last(this.getHistoricalUnits()), "date", new Date()));
-    }
+    // public getLastHistoricalUnit(): Date {
+    //     return new Date(_.get(_.last(this.getHistoricalUnits()), "date", new Date()));
+    // }
 
-    public getProjectedUnitCount() {
-        return this.getProjectedUnits().length;
-    }
+    // public getProjectedUnitCount() {
+    //     return this.getProjectedUnits().length;
+    // }
 
-    public getFirstProjectedUnit(): Date {
-        return new Date(_.get(_.head(this.getProjectedUnits()), "date", new Date()));
-    }
+    // public getFirstProjectedUnit(): Date {
+    //     return new Date(_.get(_.head(this.getProjectedUnits()), "date", new Date()));
+    // }
 
-    public getLastProjectedUnit(): Date {
-        return new Date(_.get(_.last(this.getProjectedUnits()), "date", new Date()));
-    }
+    // public getLastProjectedUnit(): Date {
+    //     return new Date(_.get(_.last(this.getProjectedUnits()), "date", new Date()));
+    // }
 
     public getAltCurrencyName() {
         return _.get(this.alternateCurrency, "currencyCode", "");
@@ -205,8 +235,14 @@ export class PeriodSelectorComponent implements OnInit {
         return _.get(this.alternateCurrency, "currencySymbol", "");
     }
 
-    public getSelectedDatePartName() {
-        return _.get(this.selectedDatePartType, "name", "") + "s";
+    public getSelectedDatePartNameHistorical() {
+        const result = _.get(this.selectedDatePartType, "name", "");
+        return this.historicalCount > 1 ? result.concat("s") : result;
+    }
+
+    public getSelectedDatePartNameProjected() {
+        const result = _.get(this.selectedDatePartType, "name", "");
+        return this.projectedCount > 1 ? result.concat("s") : result;
     }
 
     /**

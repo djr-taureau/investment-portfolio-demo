@@ -1,11 +1,13 @@
+import { state } from "@angular/animations";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import * as fromRevenue from "@core/state/company/revenue";
 import { Component, OnInit } from "@angular/core";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DashboardAsOfDateChanged, DashboardCurrencyChanged, DashboardDatePartChanged } from "@core/state/flow/company-flow.actions";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
 import { Observable, of } from "rxjs";
 import { select, Store } from "@ngrx/store";
-import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
+import { SelectorPeriod, HistoricalProjectedResult } from "@app/company-dashboard/period-selector/period-selector.component";
 
 @Component({
     selector: "sbp-period-selector-container",
@@ -20,6 +22,7 @@ import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-se
             [fye]="fye$ | async"
             [showCurrencySelector]="showCurrencySelector$ | async"
             [showDateUnitSelector]="showDateUnitSelector$ | async"
+            [historicalProjectedResult]="historicalProjectedResult$ | async"
             (selectedCurrencyChange)="onSelectedCurrencyChange($event)"
             (selectedDatePartChange)="onSelectedDatePartChange($event)"
             (selectedPeriodChange)="onSelectedPeriodChange($event)"
@@ -48,6 +51,11 @@ export class PeriodSelectorContainer implements OnInit {
      * What periods are available to serve as the 'as of'
      */
     public availablePeriods$: Observable<SelectorPeriod[]>;
+
+    /**
+     * The values to use for the historical and projected labels
+     */
+    public historicalProjectedResult$: Observable<HistoricalProjectedResult>;
 
     /**
      * Month of company's financial year end (0-based?)
@@ -116,5 +124,6 @@ export class PeriodSelectorContainer implements OnInit {
         this.fye$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyFYE));
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
         this.showCurrencySelector$ = this.store$.pipe(select(fromCompanyDashboardLayout.getShowCurrencySelector));
+        this.historicalProjectedResult$ = this.store$.pipe(select(fromRevenue.getHistoricalProjectedResults));
     }
 }

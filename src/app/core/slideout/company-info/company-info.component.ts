@@ -22,6 +22,7 @@ export class CompanyInfoComponent {
                     return item.name;
                 })
                 .join(", ");
+            this._company.typeString = this.setCompanyType(this._company.type);
         }
     }
     public get company(): Company {
@@ -65,5 +66,18 @@ export class CompanyInfoComponent {
     public onClose(): void {
         CompanyInfoComponent.logger.debug(`onClose()`);
         this.closePanel.emit();
+    }
+
+    private setCompanyType(type: string): string {
+        switch (type) {
+            case "PRIVATE":
+                return "Private";
+            case "PUBLIC":
+                return "Public";
+            case "EXITED":
+                return "Exited";
+            case "JOINT_VENTURE":
+                return "JV";
+        }
     }
 }

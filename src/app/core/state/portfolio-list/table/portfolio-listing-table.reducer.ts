@@ -71,7 +71,7 @@ export const initialState: PortfolioListingLayoutState = {
         {
             id: "totalValue",
             icon: "",
-            text: "Current Valuation"
+            text: "Total Value"
         },
         {
             id: "companyName",
@@ -81,7 +81,7 @@ export const initialState: PortfolioListingLayoutState = {
         {
             id: "invested",
             icon: "",
-            text: "Amount Invested"
+            text: "Invested"
         },
         {
             id: "moic",
@@ -91,13 +91,13 @@ export const initialState: PortfolioListingLayoutState = {
         {
             id: "irr",
             icon: "",
-            text: "IRR"
+            text: "Gross IRR"
         }
     ],
     selectedSortOption: {
         id: "totalValue",
         icon: "",
-        text: "Current Valuation"
+        text: "Total Value"
     }
 };
 

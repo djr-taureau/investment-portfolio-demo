@@ -53,13 +53,9 @@ export class TeamMemberDetailComponent implements OnInit {
             theMember.companyRelationships.forEach((relationship) => {
                 if (relationship.relationship === CompanyRelationshipTypes.BOARD_SEAT) {
                     this.boardSeatsCount++;
-                    // TODO: REMOVE THIS
-                    relationship.companyLogo = "assets/image/slack.png";
                     this.boardSeats.push({ name: relationship.companyName, logo: relationship.companyLogo });
                 } else if (relationship.relationship === CompanyRelationshipTypes.COMPANY_COVERED) {
                     this.companiesCoveredCount++;
-                    // TODO: REMOVE THIS
-                    relationship.companyLogo = "assets/image/slack.png";
                     this.companiesCovered.push({ name: relationship.companyName, logo: relationship.companyLogo });
                 }
             });

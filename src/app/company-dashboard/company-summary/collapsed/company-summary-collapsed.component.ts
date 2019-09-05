@@ -167,6 +167,6 @@ export class CompanySummaryCollapsedComponent implements OnInit {
     }
 
     public getCompanyOwnership(): string {
-        return ObjectUtil.getNestedPropIfExists(this, ["company", "fdOwnership"], "--");
+        return ObjectUtil.getNestedPropIfExists(this, ["_company", "fdOwnership"], "--");
     }
 }

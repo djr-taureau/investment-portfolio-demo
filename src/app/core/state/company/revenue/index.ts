@@ -336,156 +336,47 @@ export const getRevenueTableData = (scenario: string) =>
             }
         }
     );
+
 /**
- * TODO: This is the value for 1.5 in the Solution Summary - aka the summary revenue chart:
- * It represents the vsBud or icLatest percentage values.
- * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
+ * This really belongs in the dashboard index file, but, the current strategy is to use the
+ * 'actuals' scenario for determining the data to display in the Historical Results -- Projected Results
+ * widget in the selector component
  */
-// export const getTableDataRevenueAsOf = createSelector(
-//     getTableData,
-//     fromCompanyDashboard.getSelectedDatePart,
-//     fromCompanyDashboard.getSelectedCurrency,
-//     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//         if (tableData && datePart && currency) {
-//             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//             const scenarioName = "actual";
-//             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//             return data.map((item) => item[currencyKey]);
-//         } else {
-//             return [];
-//         }
-//     }
-// );
+export const getHistoricalProjectedResults = createSelector(
+    getTableData,
+    fromCompanyDashboard.getSelectedDatePart,
+    (tableData: ChartDataPeriod, datePart: DatePartType) => {
+        if (tableData && datePart) {
+            const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
+            const scenarioName = "actual";
+            const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
+            const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+            const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+            const historicalData = data.filter((item) => !item.projection);
+            const projectedData = data.filter((item) => item.projection);
+            const historicalCount = historicalData.length;
+            const historicalStart = historicalCount > 0 ? historicalData[0].date : "";
+            const historicalEnd = historicalCount > 1 ? historicalData[historicalCount - 1].date : "";
+            const projectedCount = projectedData.length;
+            const projectedStart = projectedCount > 0 ? projectedData[0].date : "";
+            const projectedEnd = projectedCount > 1 ? projectedData[projectedCount - 1].date : "";
+            return {
+                historicalCount,
+                historicalStart,
+                historicalEnd,
+                projectedCount,
+                projectedStart,
+                projectedEnd
+            };
+        } else {
+            return null;
+        }
+    }
+);
 
-// /**
-//  * TODO: This is the value for 1.5 in the Solution Summary - aka the summary revenue chart:
-//  * It represents the vsBud or icLatest percentage values.
-//  * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
-//  */
-// export const getTableDataRevenueVsBud = createSelector(
-//     getTableData,
-//     fromCompanyDashboard.getSelectedDatePart,
-//     fromCompanyDashboard.getSelectedCurrency,
-//     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//         if (tableData && datePart && currency) {
-//             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//             const scenarioName = "vsBud";
-//             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//             return data.map((item) => item[currencyKey]);
-//         } else {
-//             return [];
-//         }
-//     }
-// );
-
-// /**
-//  * TODO: This is the value for 1.5 in the Solution Summary - aka the summary revenue chart:
-//  * It represents the vsBud or icLatest percentage values.
-//  * https://casertaconcepts.atlassian.net/wiki/spaces/SOF/pages/522945521/PortCo+Dashboard+Revenue+Widget+-+SS
-//  */
-// export const getTableDataRevenueVsPq = createSelector(
-//     getTableData,
-//     fromCompanyDashboard.getSelectedDatePart,
-//     fromCompanyDashboard.getSelectedCurrency,
-//     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//         if (tableData && datePart && currency) {
-//             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//             const scenarioName = "vsPQ";
-//             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//             return data.map((item) => item[currencyKey]);
-//         } else {
-//             return [];
-//         }
-//     }
-// );
-
-// // public revenueTableDataVsPy$: Observable<number[]>;
-// // export const getRevenueTableDataVsPy = (scenario: string) => createSelector(
-// //     getTableData,
-// //     fromCompanyDashboard.getSelectedDatePart,
-// //     fromCompanyDashboard.getSelectedCurrency,
-// //     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-// //         if (tableData && datePart && currency) {
-// //             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-// //             const scenarioName = scenario;
-// //             const currencyKey: string = currency.currencyCode.toUpperCase()
-// === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-// //             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-// //             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-// //             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-// //             return data.map((item) => item[currencyKey]);
-// //         } else {
-// //             return [];
-// //         }
-// //     }
-// // );
-// // public revenueTableDataVsForecast$: Observable<number[]>;
-// export const getRevenueTableDataVsForecast = createSelector(
-//     getTableData,
-//     fromCompanyDashboard.getSelectedDatePart,
-//     fromCompanyDashboard.getSelectedCurrency,
-//     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//         if (tableData && datePart && currency) {
-//             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//             const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
-//             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//             return data.map((item) => item[currencyKey]);
-//         } else {
-//             return [];
-//         }
-//     }
-// );
-// // public revenueTableDataVsIcInitial$: Observable<number[]>;
-// export const getRevenueTableDataVsIcInitial = createSelector(
-//     getTableData,
-//     fromCompanyDashboard.getSelectedDatePart,
-//     fromCompanyDashboard.getSelectedCurrency,
-//     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//         if (tableData && datePart && currency) {
-//             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//             const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
-//             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//             return data.map((item) => item[currencyKey]);
-//         } else {
-//             return [];
-//         }
-//     }
-// );
-// // public revenueTableDataVsIcLatest$: Observable<number[]>;
-// export const getRevenueTableDataVsIcLatest = createSelector(
-//     getTableData,
-//     fromCompanyDashboard.getSelectedDatePart,
-//     fromCompanyDashboard.getSelectedCurrency,
-//     (tableData: ChartDataPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//         if (tableData && datePart && currency) {
-//             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//             const scenarioName: string = datePart.id.toUpperCase() === "Q" ? "vsPQ" : "vsPY";
-//             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "valueInUSD" : "valueInNative";
-//             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
-//             const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//             const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//             return data.map((item) => item[currencyKey]);
-//         } else {
-//             return [];
-//         }
-//     }
-// );
-
+/**
+ * Returns the specific actual, managementBudget, and managementForecast data from metricsGraph
+ */
 export const getAllLineChartData = createSelector(
     getMetricsGraph,
     fromCompanyDashboard.getSelectedPeriod,
@@ -496,11 +387,6 @@ export const getAllLineChartData = createSelector(
             const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
             const currencyKey: string = currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
             const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
-            // TODO: REMOVE THIS WHEN THE API IS RETURNING PROJECTION PROPERTY
-            dateDataList.map((arrEl) => {
-                arrEl.data.map((el) => (el.projection = false));
-            });
-            // const result = dateDataList.map((item) => item.data || []);
             return dateDataList.map((arrEl) => {
                 return {
                     ...arrEl,

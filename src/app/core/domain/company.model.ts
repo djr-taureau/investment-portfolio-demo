@@ -28,6 +28,7 @@ export enum ScenarioNameEnum {
 export interface Company {
     id: string;
     type: CompanyTypeEnum; // enum
+    typeString?: string;
     defaultCurrency: CurrencyType;
     data: any;
     approved: number;

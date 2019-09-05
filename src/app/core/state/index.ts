@@ -285,11 +285,24 @@ export const {
     selectTotal: getTotalTeamss
 } = fromTeam.adapter.getSelectors(selectTeamState);
 
+// export const getTeams = createSelector(
+//     getAllTeams,
+//     getSelectedCompanyId,
+//     (teams, selectedCompanyId) => {
+//         return teams.filter((team) => String(team.companyId) === selectedCompanyId);
+//     }
+// );
+
 export const getTeams = createSelector(
     getAllTeams,
     getSelectedCompanyId,
     (teams, selectedCompanyId) => {
-        return teams.filter((team) => String(team.companyId) === selectedCompanyId);
+        const filtered = teams.filter((team) => String(team.companyId) === selectedCompanyId);
+        const sorted = filtered.map((item) => {
+            item.members.sort((a, b) => (a.teamLead ? -1 : 1));
+            return item;
+        });
+        return sorted;
     }
 );
 

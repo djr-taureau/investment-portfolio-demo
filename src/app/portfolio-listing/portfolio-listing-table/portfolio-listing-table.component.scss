@@ -122,7 +122,7 @@
                     font-stretch: normal;
                     line-height: 1.14;
                     letter-spacing: normal;
-                    color: $slate;
+                    color: rgba($slate, .75);
                 }
 
                 .sectors {
@@ -160,7 +160,7 @@
                     font-stretch: normal;
                     line-height: 1.14;
                     letter-spacing: normal;
-                    color: $slate;
+                    color: rgba($slate, .75);
                 }
 
                 .invested,
@@ -176,7 +176,7 @@
                     line-height: 1.07;
                     letter-spacing: normal;
                     text-align: right;
-                    color: var(--slate);
+                    color: rgba($slate, .75);
                 }
 
                 &:nth-child(1) {
