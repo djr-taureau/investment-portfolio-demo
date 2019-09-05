@@ -17,6 +17,31 @@ export class MillionsPipe implements PipeTransform {
     private static UNKNOWN_VALUE = "N/A";
 
     /**
+     * Represents a thousand.
+     */
+    private static THOUSAND = 1000;
+
+    /**
+     * Represents a million.
+     */
+    private static MILLION = MillionsPipe.THOUSAND * 1000;
+
+    /**
+     * Represents a billion.
+     */
+    private static BILLION = MillionsPipe.MILLION * 1000;
+
+    /**
+     * Represents a trillion.
+     */
+    private static TRILLION = MillionsPipe.BILLION * 1000;
+
+    /**
+     * Represents a quadrillion.
+     */
+    private static QUADRILLION = MillionsPipe.TRILLION * 1000;
+
+    /**
      * Constructor.
      */
     constructor(private decimalPipe: DecimalPipe) {}
@@ -30,6 +55,19 @@ export class MillionsPipe implements PipeTransform {
         } else if (value === MillionsPipe.UNKNOWN_KEY || !value) {
             return MillionsPipe.UNKNOWN_VALUE;
         }
-        return this.decimalPipe.transform(value / 1000000, digits, "en");
+
+        if (value < MillionsPipe.MILLION) {
+            value = value / MillionsPipe.THOUSAND;
+        } else if (value >= MillionsPipe.MILLION && value < MillionsPipe.BILLION) {
+            value = value / MillionsPipe.MILLION;
+        } else if (value >= MillionsPipe.BILLION && value < MillionsPipe.TRILLION) {
+            value = value / MillionsPipe.BILLION;
+        } else if (value >= MillionsPipe.TRILLION && value < MillionsPipe.QUADRILLION) {
+            value = value / MillionsPipe.TRILLION;
+        } else if (value >= MillionsPipe.QUADRILLION) {
+            value = value / MillionsPipe.QUADRILLION;
+        }
+
+        return this.decimalPipe.transform(value, digits, "en");
     }
 }

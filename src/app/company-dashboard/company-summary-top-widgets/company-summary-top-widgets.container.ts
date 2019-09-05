@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
-import { getSelectedCurrency, getSelectedPeriod, getSelectedDatePart } from "@core/state/company/dashboard";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
@@ -11,7 +10,7 @@ import * as fromCompanyRevenue from "@core/state/company/revenue";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 
 @Component({
-    selector: "sbp-company-kpi-container",
+    selector: "sbp-company-summary-top-widgets-container",
     styleUrls: ["./company-summary-top-widgets.container.scss"],
     templateUrl: "./company-summary-top-widgets.container.html"
 })
@@ -111,9 +110,10 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      */
     public ngOnInit() {
         CompanySummaryTopWidgetsContainer.logger.debug(`ngOnInit()`);
-        this.selectedDatePart$ = this.store$.pipe(select(getSelectedDatePart));
-        this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
-        this.selectedCurrency$ = this.store$.pipe(select(getSelectedCurrency));
+
+        this.selectedDatePart$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedDatePart));
+        this.selectedPeriod$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedPeriod));
+        this.selectedCurrency$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCurrency));
         this.selectedCurrency$.subscribe((v) => {
             this.selectedCurrencyCode = v.currencyCode;
             this.selectedCurrencySymbol = v.currencySymbol;

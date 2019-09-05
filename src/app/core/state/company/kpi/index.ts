@@ -197,57 +197,59 @@ export const getSummaryLineChartData = (id: string) =>
             return [];
         }
     );
-//
-// export const getBudgetLineChartData = (id: string) =>
-//     createSelector(
-//         getChartDataPeriodSets,
-//         fromCompanyDashboard.getSelectedPeriod,
-//         fromCompanyDashboard.getSelectedDatePart,
-//         fromCompanyDashboard.getSelectedCurrency,
-//         (sets: ChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//             if (sets && period && datePart && currency) {
-//                 const set = sets.find((item: ChartPeriodDataSets) => item.id === id);
-//                 if (set) {
-//                     const metricsGraph = set.metricsGraph;
-//                     const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//                     const currencyKey: string =
-//                         currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
-//                     const scenarioName = "budget";
-//                     const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
-//                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//                     return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//                 }
-//                 return [];
-//             }
-//             return [];
-//         }
-//     );
-//
-// export const getForecastLineChartData = (id: string) =>
-//     createSelector(
-//         getChartDataPeriodSets,
-//         fromCompanyDashboard.getSelectedPeriod,
-//         fromCompanyDashboard.getSelectedDatePart,
-//         fromCompanyDashboard.getSelectedCurrency,
-//         (sets: ChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
-//             if (sets && period && datePart && currency) {
-//                 const set = sets.find((item: ChartPeriodDataSets) => item.id === id);
-//                 if (set) {
-//                     const metricsGraph = set.metricsGraph;
-//                     const datePartKey: string = datePart.id.toUpperCase() === "Q" ? "series_quarters" : "series_years";
-//                     const currencyKey: string =
-//                         currency.currencyCode.toUpperCase() === CurrencyTypeEnum.USD.currencyCode ? "amountInUSD" : "amountInNative";
-//                     const scenarioName = "forecast";
-//                     const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(metricsGraph, [datePartKey], []);
-//                     const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
-//                     return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-//                 }
-//                 return [];
-//             }
-//             return [];
-//         }
-//     );
-//
+
+export const getChangeFromPriorPeriodBarChartData = (id: string) =>
+    createSelector(
+        getChartDataPeriodSets,
+        fromCompanyDashboard.getSelectedPeriod,
+        fromCompanyDashboard.getSelectedDatePart,
+        fromCompanyDashboard.getSelectedCurrency,
+        (sets: KpiChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+            if (sets && period && datePart && currency) {
+                const set = sets.find((item: KpiChartPeriodDataSets) => item.id === id);
+                if (set) {
+                    const tableData = set.data.tableData;
+                    const isQuarter = datePart.id.toUpperCase() === "Q";
+                    const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+                    const scenarioName = "vsPY";
+                    const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
+                    const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+                    return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+                }
+                return [];
+            }
+            return [];
+        }
+    );
+
+export const getChangeFromPriorBudgetBarChartData = (id: string) =>
+    createSelector(
+        getChartDataPeriodSets,
+        fromCompanyDashboard.getSelectedPeriod,
+        fromCompanyDashboard.getSelectedDatePart,
+        fromCompanyDashboard.getSelectedCurrency,
+        (sets: KpiChartPeriodDataSets[], period: SelectorPeriod, datePart: DatePartType, currency: CurrencyType) => {
+            if (sets && period && datePart && currency) {
+                const set = sets.find((item: KpiChartPeriodDataSets) => item.id === id);
+                if (set) {
+                    const tableData = set.data.tableData;
+                    const isQuarter = datePart.id.toUpperCase() === "Q";
+                    const datePartKey: string = isQuarter ? "series_quarters" : "series_years";
+                    const scenarioName: string = isQuarter ? "managementBudget" : "icLatest";
+                    const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
+                    let actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
+                    // If icLatest is not in the series we look for icInitial
+                    if (actualIndex === -1 && !isQuarter) {
+                        actualIndex = dateDataList.findIndex((item) => item.scenarioName === "icInitial");
+                    }
+                    return ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
+                }
+                return [];
+            }
+            return [];
+        }
+    );
+
 // /**
 //  * This is the value for 1.5 in the Solution Summary - aka the summary revenue chart:
 //  * It represents the vsPQ or vsPY percentage values in the mini bar charts.

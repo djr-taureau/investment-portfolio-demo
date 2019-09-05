@@ -11,8 +11,7 @@ export const initialState: State = {
 
 function save(data: any, state: State = initialState): State {
     return {
-        ...state,
-        chartDataPeriodSets: data
+        chartDataPeriodSets: data || initialState
     };
 }
 

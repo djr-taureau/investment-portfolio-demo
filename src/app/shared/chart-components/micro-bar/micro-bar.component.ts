@@ -1,9 +1,11 @@
 import { AfterContentInit, Component, ElementRef, Input, OnInit, OnChanges } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
-import * as d3 from "d3";
-import * as _ from "lodash";
+import { Logger } from "@util/logger";
 import moment from "moment";
 import { DimensionsType, getUniqueId } from "../chart/utils";
+import * as d3 from "d3";
+import * as _ from "lodash";
+
 @Component({
     selector: "sbp-micro-bar",
     template: `
@@ -12,6 +14,11 @@ import { DimensionsType, getUniqueId } from "../chart/utils";
     styleUrls: ["./micro-bar.component.scss"]
 })
 export class MicroBarComponent implements OnInit {
+    /**
+     * Internal logger.
+     */
+    private static logger: Logger = Logger.getLogger("MicroBarComponent");
+
     @Input() xAccessor: any;
     @Input() yAccessor: any;
     @Input() title: string;
@@ -80,6 +87,36 @@ export class MicroBarComponent implements OnInit {
     barId: string = getUniqueId("bar-chart");
     barTitle: string;
 
+    /**
+     * Flag indicating if the component has been initialized.
+     */
+    private initialized = false;
+
+    constructor(elementRef: ElementRef) {
+        MicroBarComponent.logger.debug(`constructor()`);
+        this.el = elementRef.nativeElement;
+        this.setDimensions();
+        this.svg = this.createSvg();
+    }
+
+    ngOnInit() {
+        MicroBarComponent.logger.debug(`constructor()`);
+        this.initialized = true;
+        this.setDimensions();
+        this.svg = this.createSvg();
+        this.yAccessor = (v) => v.value;
+    }
+
+    private createSvg() {
+        return d3
+            .select(this.el)
+            .selectAll("#hist")
+            .append("svg")
+            .attr("width", this.dimensions.width)
+            .attr("height", this.dimensions.height)
+            .append("g");
+    }
+
     private setDimensions() {
         this.dimensions = {
             ...this.dimensions,
@@ -88,32 +125,8 @@ export class MicroBarComponent implements OnInit {
         };
     }
 
-    constructor(elementRef: ElementRef) {
-        this.el = elementRef.nativeElement;
-        // this.svg = d3
-        // this.svg = d3
-        //     .select(this.el)
-        //     .select("#hist")
-        //     .append("svg")
-        //     .attr("width", this.dimensions.width)
-        //     .attr("height", this.dimensions.height)
-        //     .append("g");
-    }
-
-    ngOnInit() {
-        this.setDimensions();
-        this.svg = d3
-            .select(this.el)
-            .selectAll("#hist")
-            .append("svg")
-            .attr("width", this.dimensions.width)
-            .attr("height", this.dimensions.height)
-            .append("g");
-        this.yAccessor = (v) => v.value;
-    }
-
     private update(): void {
-        if ((this.data || []).length < 1 || !this.yAccessorValue) {
+        if ((this.initialized && (this.data || []).length < 1) || !this.selectedPeriod) {
             return;
         }
 
@@ -158,6 +171,10 @@ export class MicroBarComponent implements OnInit {
     }
 
     updateScales() {
+        if (!this.svg) {
+            return;
+        }
+
         const dataLength = (this.dataValues || []).length;
         const dimensionWith = _.get(this, "dimensions.width", 0);
         const BAR_WIDTH = Math.max((dimensionWith - dataLength) / dataLength - 1, 1);

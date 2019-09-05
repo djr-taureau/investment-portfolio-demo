@@ -1,11 +1,11 @@
 import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
-import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
-import * as _ from "lodash";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType } from "../interfaces/types";
+import * as _ from "lodash";
+import * as d3 from "d3";
 
 @Component({
     selector: "sbp-micro-line",
@@ -15,6 +15,9 @@ import { DimensionsType } from "../interfaces/types";
     styleUrls: ["./micro-line.component.scss"]
 })
 export class MicroLineComponent implements OnInit {
+    /**
+     * Internal logger.
+     */
     private static logger: Logger = Logger.getLogger("MicroLineComponent");
 
     @Input() id: string;
@@ -30,7 +33,7 @@ export class MicroLineComponent implements OnInit {
 
     @Input()
     public set data(value: RevenueSeriesData[]) {
-        if (value) {
+        if (value && value !== this._data) {
             this._data = value;
             this.update();
         }
@@ -98,6 +101,11 @@ export class MicroLineComponent implements OnInit {
     svg;
     el: HTMLElement;
 
+    /**
+     * Flag indicating if the component has been initialized.
+     */
+    private initialized = false;
+
     constructor(elementRef: ElementRef) {
         MicroLineComponent.logger.debug(`constructor()`);
         this.dimensions = {
@@ -114,21 +122,19 @@ export class MicroLineComponent implements OnInit {
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
         this.el = elementRef.nativeElement;
-        this.svg = d3
-            .select(this.el)
-            .select("#micro-timeline")
-            .append("svg")
-            .attr("width", this.dimensions.boundedWidth)
-            .attr("height", this.dimensions.boundedHeight)
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .append("g")
-            .attr("transform", "translate(0, 10)");
+        this.svg = this.createSvg();
     }
 
     ngOnInit() {
         MicroLineComponent.logger.debug(`ngOnInit()`);
-        this.svg = d3
+        this.initialized = true;
+        this.svg = this.createSvg();
+        this.yAccessor = (v) => v.value;
+        this.update();
+    }
+
+    private createSvg() {
+        return d3
             .select(this.el)
             .selectAll("#micro-timeline")
             .append("svg")
@@ -138,11 +144,10 @@ export class MicroLineComponent implements OnInit {
             .attr("stroke-linecap", "round")
             .append("g")
             .attr("transform", "translate(0, 10)");
-        this.yAccessor = (v) => v.value;
     }
 
     private update(): void {
-        if ((this.data || []).length < 1 || !this.selectedPeriod) {
+        if ((this.initialized && (this.data || []).length < 1) || !this.selectedPeriod) {
             return;
         }
 

@@ -1,5 +1,4 @@
 import { RevenueSeriesData } from "@core/domain/company.model";
-import { getSelectedCurrency, getSelectedDatePart, getSelectedPeriod } from "@core/state/company/dashboard";
 import { Observable } from "rxjs";
 import { Component, OnInit, Input } from "@angular/core";
 import { Logger } from "@util/logger";
@@ -23,7 +22,7 @@ import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
             [value]="asOf$ | async | millions"
             [pyLabel]="'vs PY'"
             [pyValue]="changeFromPriorPeriod$ | async | number: '1.1-1'"
-            [icLabel]="'vs Bud'"
+            [icLabel]="icLabel"
             [icValue]="changeFromPriorBudget$ | async | number: '1.1-1'"
             (click)="onSummaryWidgetClick($event)"
         >
@@ -136,9 +135,9 @@ export class SummaryWidgetContainer implements OnInit {
     public ngOnInit() {
         SummaryWidgetContainer.logger.debug(`ngOnInit()`);
 
-        this.selectedDatePart$ = this.store$.pipe(select(getSelectedDatePart));
-        this.selectedPeriod$ = this.store$.pipe(select(getSelectedPeriod));
-        this.selectedCurrency$ = this.store$.pipe(select(getSelectedCurrency));
+        this.selectedDatePart$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedDatePart));
+        this.selectedPeriod$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedPeriod));
+        this.selectedCurrency$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCurrency));
         this.selectedCurrency$.subscribe((v) => {
             this.selectedCurrencyCode = v.currencyCode;
             this.selectedCurrencySymbol = v.currencySymbol;
@@ -159,8 +158,8 @@ export class SummaryWidgetContainer implements OnInit {
         this.changeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriod(this.id)));
         this.changeFromPriorBudget$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudget(this.id)));
         this.summaryLineChartData$ = this.store$.pipe(select(fromCompanyKpi.getSummaryLineChartData(this.id)));
-        // this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriodBarChartData(this.id)));
-        // this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudgetBarChartData(this.id)));
+        this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriodBarChartData(this.id)));
+        this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudgetBarChartData(this.id)));
     }
 
     /**
