@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, ElementRef, Input, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import { curveLinear } from "d3-shape";

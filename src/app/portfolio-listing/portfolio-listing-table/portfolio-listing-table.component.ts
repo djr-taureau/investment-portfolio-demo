@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Output, EventEmitter } from "@angular/core";
 import { MatTableDataSource } from "@angular/material";
+import { Unknown } from "@core/domain/enum/unknown.enum";
 import { Logger } from "@util/logger";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
 
@@ -53,7 +54,7 @@ export class PortfolioListingTableComponent implements OnInit {
                 item.irr = item.irr * 100;
                 item.irrGroup = this.setIrrGrouping(item.irr);
                 item.moicGroup = this.setMoicGrouping(item.moic);
-                item.teamLeadName = item.teamLeadName || "N/A";
+                item.teamLeadName = item.teamLeadName || Unknown.DISPLAY_VALUE;
             });
             this._tableData = value.slice();
             this.dataSource.data = this.addGroups(value, this.groupByColumns);

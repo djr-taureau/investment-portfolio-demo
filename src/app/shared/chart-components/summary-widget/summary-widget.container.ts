@@ -11,7 +11,7 @@ import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
     selector: "sbp-summary-widget-container",
     template: `
         <sbp-summary-widget
-            [data]="summaryLineChartData$ | async"
+            [lineChartData]="summaryLineChartData$ | async"
             [selectedPeriod]="selectedPeriod$ | async"
             [availablePeriods]="availablePeriods$ | async"
             [barChartData1]="changeFromPriorPeriodBarChartData$ | async"
@@ -19,11 +19,11 @@ import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
             [title]="name + ' KPI'"
             [denomination]="selectedCurrencyCode"
             [currencySymbol]="selectedCurrencySymbol"
-            [value]="asOf$ | async | millions"
+            [value]="asOf$ | async"
             [pyLabel]="'vs PY'"
-            [pyValue]="changeFromPriorPeriod$ | async | number: '1.1-1'"
+            [pyValue]="changeFromPriorPeriod$ | async"
             [icLabel]="icLabel"
-            [icValue]="changeFromPriorBudget$ | async | number: '1.1-1'"
+            [icValue]="changeFromPriorBudget$ | async"
             (click)="onSummaryWidgetClick($event)"
         >
         </sbp-summary-widget>

@@ -10,7 +10,7 @@
     //////////////////////////////////////////////////////////////////
     -->
     <div class="chart">
-        <sbp-summary-widget [data]="revenueSummaryLineChartData$ | async"
+        <sbp-summary-widget [lineChartData]="revenueSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
                             [availablePeriods]="availablePeriods$ | async"
                             [barChartData1]="revenueChangeFromPriorPeriodBarChartData$ | async"
@@ -18,11 +18,11 @@
                             [title]="'Revenue'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="revenueAsOf$ | async | millions"
+                            [value]="revenueAsOf$ | async"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="revenueChangeFromPriorPeriod$ | async | number: '1.1-1'"
+                            [pyValue]="revenueChangeFromPriorPeriod$ | async"
                             [icLabel]="icLabel"
-                            [icValue]="revenueChangeFromPriorBudget$ | async | number: '1.1-1'"
+                            [icValue]="revenueChangeFromPriorBudget$ | async"
                             (click)="onRevenueClick()">
         </sbp-summary-widget>
     </div>
@@ -33,18 +33,18 @@
     //////////////////////////////////////////////////////////////////
     -->
     <div class="chart">
-        <sbp-summary-widget [data]="ebitdaSummaryLineChartData$ | async"
+        <sbp-summary-widget [lineChartData]="ebitdaSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
                             [barChartData1]="ebitdaChangeFromPriorPeriodBarChartData$ | async"
                             [barChartData2]="ebitdaChangeFromPriorBudgetBarChartData$ | async"
                             [title]="'EBITDA'"
                             [denomination]="selectedCurrencyCode"
                             [currencySymbol]="selectedCurrencySymbol"
-                            [value]="ebitdaAsOf$ | async | millions"
+                            [value]="ebitdaAsOf$ | async"
                             [pyLabel]="'vs PY'"
-                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async | number: '1.1-1'"
+                            [pyValue]="ebitdaChangeFromPriorPeriod$ | async"
                             [icLabel]="icLabel"
-                            [icValue]="ebitdaChangeFromPriorBudget$ | async | number: '1.1-1'"
+                            [icValue]="ebitdaChangeFromPriorBudget$ | async"
                             (click)="onEbitdaClick()">
         </sbp-summary-widget>
     </div>
@@ -65,7 +65,7 @@
                  fxFlex>
                 <div fxLayout="row"
                      fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><span>{{ cashAsOf$ | async | millions }}</span></div>
+                     fxLayoutGap="16px"><span>{{ cashAsOf$ | async | shortNumber }}</span></div>
             </div>
         </div>
     </div>

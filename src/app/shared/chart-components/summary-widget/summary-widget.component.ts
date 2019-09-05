@@ -32,7 +32,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     /**
      * The line chart data.
      */
-    @Input() data: RevenueSeriesData[];
+    @Input() lineChartData: RevenueSeriesData[];
 
     /**
      * The first bar chart's data.
@@ -121,9 +121,6 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
             this.isPositiveIC = false;
         } else {
             this.isPositiveIC = true;
-        }
-        if (this.value === 0 || this.value === null) {
-            this.value = "NA";
         }
         this.checkCurrencyValue(this.denomination);
     }

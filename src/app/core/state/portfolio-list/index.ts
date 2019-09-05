@@ -1,3 +1,4 @@
+import { Unknown } from "@core/domain/enum/unknown.enum";
 import * as _ from "lodash";
 import * as fromCompanyState from "@core/state/";
 import * as fromPortfolioListingTable from "@core/state/portfolio-list/table/portfolio-listing-table.reducer";
@@ -134,7 +135,7 @@ export const getTableData = createSelector(
     (allComps: Company[], search: string) => {
         // Create the table data from the list of companies.
         const tableData: PortfolioTableItem[] = (allComps || []).map((company: Company) => {
-            const secs: string[] = (company.sectors || []).map((sector: Sector, index: number) => sector.name || "N/A");
+            const secs: string[] = (company.sectors || []).map((sector: Sector, index: number) => sector.name || Unknown.DISPLAY_VALUE);
             const pti: PortfolioTableItem = {
                 logo: company.logo || "assets/image/slack.png",
                 companyId: company.id,

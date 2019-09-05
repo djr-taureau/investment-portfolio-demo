@@ -4,7 +4,7 @@
     <div class="box title">{{ title }} ({{currencySymbol}}{{scale}})</div>
     <!-- CHARTS ROW -->
     <!-- VALUE COLUMN -->
-    <div class="box value">{{ value }}</div>
+    <div class="box value">{{ value | shortNumber }}</div>
     <div *ngIf="pyLabel"
          class="box py">{{ pyLabel }}</div>
     <div *ngIf="!py"
@@ -14,7 +14,7 @@
          [ngClass]="{
             'positive-py': isPositivePY,
             'negative-py': !isPositivePY
-        }">{{ py }}%</div>
+        }">{{ py | percentOrNa }}</div>
     <div *ngIf="icLabel"
          class="box budget">{{ icLabel }}</div>
     <div *ngIf="!ic"
@@ -24,10 +24,10 @@
          [ngClass]="{
             'positive-ic': isPositiveIC,
             'negative-ic': !isPositiveIC
-        }">{{ ic }}%</div>
+        }">{{ ic | percentOrNa }}</div>
     <!--    <div *ngIf="data && selectedPeriod && barChartData1 && barChartData2 && title !== 'Cash Runway'"-->
     <div class="box timeline">
-        <sbp-micro-line [data]="data"
+        <sbp-micro-line [data]="lineChartData"
                         [selectedPeriod]="selectedPeriod"
                         [xAccessor]="dateAccessor"
                         [yAccessor]="yAccessor"

@@ -1,6 +1,6 @@
-/* tslint:disable */
 import { DecimalPipe } from "@angular/common";
 import { Pipe, PipeTransform } from "@angular/core";
+import { Unknown } from "@core/domain/enum/unknown.enum";
 
 @Pipe({
     name: "shortNumber",
@@ -8,9 +8,29 @@ import { Pipe, PipeTransform } from "@angular/core";
 })
 export class ShortNumberPipe implements PipeTransform {
     /**
-     * Key for unknown values coming from the API, which is PI trimmed to 5 decimals, aka 3.14159.
+     * Represents a thousand.
      */
-    private static UNKNOWN_KEY = parseFloat(Math.PI.toFixed(5));
+    private static THOUSAND = 1000;
+
+    /**
+     * Represents a million.
+     */
+    private static MILLION = ShortNumberPipe.THOUSAND * 1000;
+
+    /**
+     * Represents a billion.
+     */
+    private static BILLION = ShortNumberPipe.MILLION * 1000;
+
+    /**
+     * Represents a trillion.
+     */
+    private static TRILLION = ShortNumberPipe.BILLION * 1000;
+
+    /**
+     * Represents a quadrillion.
+     */
+    private static QUADRILLION = ShortNumberPipe.TRILLION * 1000;
 
     /**
      * Constructor.
@@ -18,48 +38,27 @@ export class ShortNumberPipe implements PipeTransform {
     constructor(private decimalPipe: DecimalPipe) {}
 
     /**
-     * Transforms numbers in the thousands, millions, billions, etc to shorter numbers
-     * @param number
-     * @param includeLetterKey
-     * @param digits
+     * Convert the number into millions with one decimal place.
      */
-    public transform(number: number, includeLetterKey: boolean = true, digits?: any): string {
-        if (number === 0) {
+    transform(value: any, digits: string = "1.1-1"): string {
+        if (value === 0) {
             return "0";
-        } else if (number === ShortNumberPipe.UNKNOWN_KEY || !number) {
-            return "N/A";
+        } else if (Unknown.isUnknownValue(value) || !value) {
+            return Unknown.DISPLAY_VALUE;
         }
 
-        let abs = Math.abs(number);
-        const rounder = Math.pow(10, 1);
-        const isNegative = number < 0; // will also work for Negetive numbers
-        let key = "";
-
-        const powers = [
-            { key: "Q", value: Math.pow(10, 15) },
-            { key: "T", value: Math.pow(10, 12) },
-            { key: "B", value: Math.pow(10, 9) },
-            { key: "M", value: Math.pow(10, 6) },
-            { key: "K", value: 1000 }
-        ];
-
-        for (let i = 0; i < powers.length; i++) {
-            let reduced = abs / powers[i].value;
-            // reduced = Math.round(reduced * rounder) / rounder;
-            reduced = (reduced * rounder) / rounder;
-            if (reduced >= 1) {
-                abs = reduced;
-                key = powers[i].key;
-                break;
-            }
+        if (value < ShortNumberPipe.MILLION) {
+            value = value / ShortNumberPipe.THOUSAND;
+        } else if (value >= ShortNumberPipe.MILLION && value < ShortNumberPipe.BILLION) {
+            value = value / ShortNumberPipe.MILLION;
+        } else if (value >= ShortNumberPipe.BILLION && value < ShortNumberPipe.TRILLION) {
+            value = value / ShortNumberPipe.BILLION;
+        } else if (value >= ShortNumberPipe.TRILLION && value < ShortNumberPipe.QUADRILLION) {
+            value = value / ShortNumberPipe.TRILLION;
+        } else if (value >= ShortNumberPipe.QUADRILLION) {
+            value = value / ShortNumberPipe.QUADRILLION;
         }
 
-        // TODO
-        abs = number / 1000000;
-
-        const prefix = isNegative ? "-" : "";
-        const suffix = includeLetterKey ? key : "";
-        return prefix + this.decimalPipe.transform(abs, digits, "en") + suffix;
+        return this.decimalPipe.transform(value, digits, "en");
     }
 }
-/* tslint:enable */

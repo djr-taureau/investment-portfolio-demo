@@ -7,35 +7,35 @@
          fxLayout="row"
          fxLayoutAlign="space-between center">
         <div class="chart">
-            <sbp-summary-widget [data]="revenueSummaryLineChartData"
+            <sbp-summary-widget [lineChartData]="revenueSummaryLineChartData"
                                 [selectedPeriod]="selectedPeriod"
                                 [barChartData1]="revenueSeries1BarChartData"
                                 [barChartData2]="revenueSeries2BarChartData"
                                 [title]="revenueTitle"
                                 [denomination]="revenueDenomination"
                                 [currencySymbol]="revenueCurrencySymbol"
-                                [value]="revenueTotalValue| millions"
+                                [value]="revenueTotalValue| shortNumber"
                                 [pyLabel]="revenueSeries1Label"
-                                [pyValue]="revenueSeries1Value | millions"
+                                [pyValue]="revenueSeries1Value | shortNumber"
                                 [icLabel]="revenueSeries2Label"
-                                [icValue]="revenueSeries2Value | millions"
+                                [icValue]="revenueSeries2Value | shortNumber"
                                 (click)="onRevenueClick($event)">
             </sbp-summary-widget>
         </div>
 
         <div class="chart">
-            <sbp-summary-widget [data]="ebitdaSummaryLineChartData"
+            <sbp-summary-widget [lineChartData]="ebitdaSummaryLineChartData"
                                 [selectedPeriod]="selectedPeriod"
                                 [barChartData1]="ebitdaSeries1BarChartData"
                                 [barChartData2]="ebitdaSeries2BarChartData"
                                 [title]="ebitdaTitle"
                                 [denomination]="ebitdaDenomination"
                                 [currencySymbol]="ebitdaCurrencySymbol"
-                                [value]="ebitdaTotalValue| millions"
+                                [value]="ebitdaTotalValue| shortNumber"
                                 [pyLabel]="ebitdaSeries1Label"
-                                [pyValue]="ebitdaSeries1Value | millions"
+                                [pyValue]="ebitdaSeries1Value | shortNumber"
                                 [icLabel]="ebitdaSeries2Label"
-                                [icValue]="ebitdaSeries2Value | millions"
+                                [icValue]="ebitdaSeries2Value | shortNumber"
                                 (click)="onEbitdaClick($event)">
             </sbp-summary-widget>
         </div>

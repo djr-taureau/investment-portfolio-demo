@@ -38,7 +38,7 @@
             REVENUE
         </th>
         <td class="revenueValues"
-            *ngFor="let asOf of revenueTableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | millions:'1.1-1' }}</td>
+            *ngFor="let asOf of revenueTableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | shortNumber:'1.1-1' }}</td>
     </tr>
     <tr *ngIf="vsPqDataShow">
         <th class="row-header"

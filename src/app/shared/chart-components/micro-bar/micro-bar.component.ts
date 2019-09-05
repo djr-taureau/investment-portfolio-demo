@@ -1,5 +1,6 @@
-import { AfterContentInit, Component, ElementRef, Input, OnInit, OnChanges } from "@angular/core";
+import { Component, ElementRef, Input, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
+import { Unknown } from "@core/domain/enum/unknown.enum";
 import { Logger } from "@util/logger";
 import moment from "moment";
 import { DimensionsType, getUniqueId } from "../chart/utils";
@@ -142,7 +143,9 @@ export class MicroBarComponent implements OnInit {
                 }
             });
             this.timePeriods = _.map(this.data, _.property("date"));
-            this.dataValues = _.map(this.data, _.property(`${this.yAccessorValue}`));
+            this.dataValues = _.map(this.data, _.property(`${this.yAccessorValue}`)).map((value) =>
+                Unknown.isUnknownValue(Number(value)) ? 0 : value
+            );
             this.sourceValues = _.map(this.data, _.property("sourceType"));
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
             this.indexSource = _.indexOf(this.sourceValues, "B", 0);
@@ -150,7 +153,7 @@ export class MicroBarComponent implements OnInit {
         this.historicalData = _.take(this.data, this.data.length - 1);
         this.projectedData = _.takeRight(this.data, 1);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        this.dataValues = _.map(this.data, _.property(`${this.yAccessorValue}`));
+        // this.dataValues = _.map(this.data, _.property(`${this.yAccessorValue}`));
         this.sourceValues = _.map(this.data, _.property("sourceType"));
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.indexSource = _.indexOf(this.sourceValues, "B", 0);
