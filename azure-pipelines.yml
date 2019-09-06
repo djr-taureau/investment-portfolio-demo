@@ -13,11 +13,11 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.15.3'
-    checkLatest: false
+    versionSpec: '10.x'
   displayName: 'Install Node.js'
 
 - script: |
+    rm package-lock.json
     npm install -g @angular/cli@7.3.9
     npm install
     npm run prod
