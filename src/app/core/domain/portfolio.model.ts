@@ -29,6 +29,27 @@ export interface PortfolioInvestmentSummary {
     jv: number;
     exited: number;
 }
+export interface PortfolioRelativePerformanceSeries {
+    id: number;
+    x: number;
+    y: number;
+    density: number;
+    group: string;
+}
+
+export interface PortfolioRelativePerformance {
+    series: PortfolioRelativePerformanceSeries[];
+}
+
+export interface PortfolioRelativePerformanceRequest {
+    id: number;
+    as_of_date: string;
+    top: number;
+    accumulator: string;
+    by: string;
+    scenario: string;
+}
+
 export interface PortfolioPerformanceChartDataRequest {
     id: string;
     date: string;
@@ -47,7 +68,17 @@ export enum PortfolioMetricTypes {
     REVENUE = "REVENUE"
 }
 
-export enum PortfolioExposureType {
+// export enum PortfolioGroupingType {
+//      SECTOR= "SECTOR",
+//      FX= "FX",
+//      COUNTRY= "COUNTRY",
+//      REGION= "REGION",
+//      TYPE= "TYPE",
+//      STAGE= "STAGE",
+//      DEALLEAD= "DEALLEAD"
+// }
+
+export enum PortfolioGroupingType {
     SECTOR = "SECTOR",
     FX = "FX",
     COUNTRY = "COUNTRY",
@@ -56,11 +87,23 @@ export enum PortfolioExposureType {
     TYPE = "TYPE",
     STAGE = "STAGE"
 }
+export enum PortfolioPerformanceScenario {
+    BUDGET = "BUDGET",
+    FORECAST = "FORECAST",
+    PRIORYEAR = "PRIORYEAR",
+    PRIORQUARTER = "PRIORQUARTER",
+    INVESTMENTCASE = "INVESTMENTCASE"
+}
+export enum PortfolioPerformanceAccumulator {
+    UNREALIZED_VALUE = "UNREALIZED_VALUE",
+    INCREASE_IN_TOTAL_VALUE = "INCREASE_IN_TOTAL_VALUE",
+    REVENUE = "REVENUE"
+}
 
 export interface PortfolioExposure {
     id: string;
     metric: PortfolioMetricTypes;
-    type: PortfolioExposureType;
+    type: PortfolioGroupingType;
     label: string;
     portfolioValue: number;
     portfolioPercentage: number;

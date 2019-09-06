@@ -1,5 +1,10 @@
 import { PortfolioDashboardNavBarLink } from "@app/portfolio-dashboard/nav-bar/portfolio-dashboard.nav-bar-link";
-import { PortfolioExposureType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
+import {
+    PortfolioGroupingType,
+    PortfolioMetricTypes,
+    PortfolioPerformanceAccumulator,
+    PortfolioPerformanceScenario
+} from "@core/domain/portfolio.model";
 import { getPortfolio } from "@core/state/portfolio-dashboard";
 import {
     SelectAsOfDate,
@@ -13,7 +18,7 @@ import {
     LoadPortfolioRevenueFxExposures,
     LoadPortfolioRevenueSectorExposures
 } from "@core/state/portfolio-dashboard/exposures/portfolio-exposure.actions";
-import { LoadPortfolio, LoadPortfolioInvestmentSummary } from "@core/state/portfolio/portfolio.actions";
+import { LoadPortfolio, LoadPortfolioInvestmentSummary, LoadPortfolioRelativePerformance } from "@core/state/portfolio/portfolio.actions";
 import * as CompanyActions from "../company/company.actions";
 import * as FlowActions from "./portfolio-flow.actions";
 import * as RouterActions from "@core/state/router/router.action";
@@ -83,7 +88,7 @@ export class PortfolioFlowEffect {
                     id: String(portfolio.id),
                     as_of: lastPeriod,
                     metric_type: PortfolioMetricTypes.REVENUE,
-                    by: PortfolioExposureType.FX
+                    by: PortfolioGroupingType.FX
                 })
             );
             actions.push(
@@ -91,7 +96,18 @@ export class PortfolioFlowEffect {
                     id: String(portfolio.id),
                     as_of: lastPeriod,
                     metric_type: PortfolioMetricTypes.REVENUE,
-                    by: PortfolioExposureType.SECTOR
+                    by: PortfolioGroupingType.SECTOR
+                })
+            );
+            actions.push(
+                // TODO: The bottom four properties are hard-coded - future dev work required to gather these from picklist values!
+                new LoadPortfolioRelativePerformance({
+                    id: portfolio.id,
+                    as_of_date: lastPeriod,
+                    by: PortfolioGroupingType.REGION,
+                    top: 10,
+                    accumulator: PortfolioPerformanceAccumulator.UNREALIZED_VALUE,
+                    scenario: PortfolioPerformanceScenario.BUDGET
                 })
             );
             return actions;
@@ -184,13 +200,22 @@ export class PortfolioFlowEffect {
                 id: String(request.portfolio.id),
                 as_of: request.selectedPeriod.date,
                 metric_type: PortfolioMetricTypes.REVENUE,
-                by: PortfolioExposureType.FX
+                by: PortfolioGroupingType.FX
             }),
             new LoadPortfolioRevenueSectorExposures({
                 id: String(request.portfolio.id),
                 as_of: request.selectedPeriod.date,
                 metric_type: PortfolioMetricTypes.REVENUE,
-                by: PortfolioExposureType.SECTOR
+                by: PortfolioGroupingType.SECTOR
+            }),
+            new LoadPortfolioRelativePerformance({
+                // TODO: The bottom four properties are hard-coded - future dev work required to gather these from picklist values!
+                id: request.portfolio.id,
+                as_of_date: request.selectedPeriod.date,
+                by: PortfolioGroupingType.REGION,
+                top: 10,
+                accumulator: PortfolioPerformanceAccumulator.UNREALIZED_VALUE,
+                scenario: PortfolioPerformanceScenario.BUDGET
             })
         ])
     );

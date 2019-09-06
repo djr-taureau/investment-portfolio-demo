@@ -31,5 +31,5 @@ export const VERSION: AppVersion = {
     semver: null,
     suffix: "d4c2c05-dirty",
     semverString: null,
-    version: "0.0.454"
+    version: "0.0.455"
 };

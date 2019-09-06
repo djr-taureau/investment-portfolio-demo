@@ -80,6 +80,7 @@ export class ApiEndpointService {
         PORTFOLIO: "portfolio/{id}",
         PORTFOLIO_COMPANY_PERFORMANCE: "portfolio/{id}/companyperformancebymetric",
         PORTFOLIO_INVESTMENT_SUMMARY: "portfolio/{id}/investmentsummary",
+        PORTFOLIO_RELATIVE_PERFORMANCE: "portfolio/{id}/relativecompanyperformance",
         PORTFOLIO_EXPOSURE: "portfolio/{id}/exposure"
     };
 

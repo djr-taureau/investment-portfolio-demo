@@ -4,6 +4,8 @@ import { PortfolioEbitdaDetailContainer } from "@app/portfolio-dashboard/financi
 import { FxExposureContainer } from "@app/portfolio-dashboard/financial/fx-exposure/fx-exposure.container";
 import { PortfolioDashboardFinancialComponent } from "@app/portfolio-dashboard/financial/portfolio-dashboard-financial.component";
 import { PortfolioDashboardFinancialContainer } from "@app/portfolio-dashboard/financial/portfolio-dashboard-financial.container";
+import { RelativePerformanceComponent } from "@app/portfolio-dashboard/financial/relative-performance/relative-performance.component";
+import { RelativePerformanceContainer } from "@app/portfolio-dashboard/financial/relative-performance/relative-performance.container";
 import { PorfolioRevenueDetailContainer } from "@app/portfolio-dashboard/financial/revenue/porfolio-revenue-detail.container";
 import { SectorExposureContainer } from "@app/portfolio-dashboard/financial/sector-exposure/sector-exposure.container";
 import { PortfolioDashboardInvestmentComponent } from "@app/portfolio-dashboard/investment/portfolio-dashboard-investment.component";
@@ -23,7 +25,9 @@ const COMPONENTS: any = [
     PorfolioRevenueDetailContainer,
     PortfolioEbitdaDetailContainer,
     FxExposureContainer,
-    SectorExposureContainer
+    SectorExposureContainer,
+    RelativePerformanceComponent,
+    RelativePerformanceContainer
 ];
 const PORTFOLIO_DASHBOARD_ROUTES: Routes = [
     {

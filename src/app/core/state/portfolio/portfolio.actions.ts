@@ -1,4 +1,9 @@
-import { Portfolio, PortfolioInvestmentSummary } from "@core/domain/portfolio.model";
+import {
+    Portfolio,
+    PortfolioInvestmentSummary,
+    PortfolioRelativePerformance,
+    PortfolioRelativePerformanceRequest
+} from "@core/domain/portfolio.model";
 import { Action } from "@ngrx/store";
 import { Company } from "@core/domain/company.model";
 import { CompanyActionTypes } from "../company/company.actions";
@@ -10,7 +15,11 @@ export enum PortfolioActionTypes {
 
     LoadPortfolioInvestmentSummary = "[Portfolio] Load Investment Summary",
     LoadPortfolioInvestmentSummaryFailure = "[Portfolio] Load Investment Summary- Success",
-    LoadPortfolioInvestmentSummarySuccess = "[Portfolio] Load Investment Summary- Success"
+    LoadPortfolioInvestmentSummarySuccess = "[Portfolio] Load Investment Summary- Success",
+
+    LoadPortfolioRelativePerformance = "[Portfolio] Load Relative Performance",
+    LoadPortfolioRelativePerformanceFailure = "[Portfolio] Load Relative Performance - Success",
+    LoadPortfolioRelativePerformanceSuccess = "[Portfolio] Load Relative Performance - Success"
 }
 
 export class LoadPortfolio implements Action {
@@ -43,10 +52,28 @@ export class LoadPortfolioInvestmentSummarySuccess implements Action {
     constructor(public payload: PortfolioInvestmentSummary) {}
 }
 
+export class LoadPortfolioRelativePerformance implements Action {
+    readonly type = PortfolioActionTypes.LoadPortfolioRelativePerformance;
+    constructor(public payload: PortfolioRelativePerformanceRequest) {}
+}
+
+export class LoadPortfolioRelativePerformanceFailure implements Action {
+    readonly type = PortfolioActionTypes.LoadPortfolioRelativePerformanceFailure;
+    constructor(public payload?: any) {}
+}
+
+export class LoadPortfolioRelativePerformanceSuccess implements Action {
+    readonly type = PortfolioActionTypes.LoadPortfolioRelativePerformanceSuccess;
+    constructor(public payload: PortfolioRelativePerformance) {}
+}
+
 export type PortfolioActions =
     | LoadPortfolio
     | LoadPortfolioFailure
     | LoadPortfolioSuccess
     | LoadPortfolioInvestmentSummary
     | LoadPortfolioInvestmentSummaryFailure
-    | LoadPortfolioInvestmentSummarySuccess;
+    | LoadPortfolioInvestmentSummarySuccess
+    | LoadPortfolioRelativePerformance
+    | LoadPortfolioRelativePerformanceFailure
+    | LoadPortfolioRelativePerformanceSuccess;

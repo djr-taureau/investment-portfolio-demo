@@ -1,6 +1,6 @@
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
 import { CompanyTypeEnum } from "@core/domain/company.model";
-import { Portfolio, PortfolioExposure, PortfolioExposureType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
+import { Portfolio, PortfolioExposure, PortfolioGroupingType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
 import { getAllCompanies } from "@core/state";
 import * as ObjectUtil from "@util/object.util";
 import * as _ from "lodash";
@@ -160,6 +160,16 @@ export const getInvestmentSummary = createSelector(
     fromPortfolio.getInvestmentSummary
 );
 
+export const geRelativePerformance = createSelector(
+    selectPortfolioState,
+    fromPortfolio.getRelativePerformance
+);
+
+export const getRelativePerformanceSeries = createSelector(
+    geRelativePerformance,
+    (relativePerformance) => relativePerformance.series
+);
+
 export const getInvestmentSummaryMOIC = createSelector(
     getInvestmentSummary,
     (investmentSummary) => _.get(investmentSummary, "moic", -1)
@@ -281,7 +291,7 @@ export const getAllPortfolioRevenueFxExposures = createSelector(
     getAllExposures,
     (allExposures: PortfolioExposure[]) => {
         const result = (allExposures || []).filter(
-            (e: PortfolioExposure) => e.metric === PortfolioMetricTypes.REVENUE && e.type === PortfolioExposureType.FX
+            (e: PortfolioExposure) => e.metric === PortfolioMetricTypes.REVENUE && e.type === PortfolioGroupingType.FX
         );
         return result;
     }
@@ -291,7 +301,7 @@ export const getAllPortfolioRevenueSectorExposures = createSelector(
     getAllExposures,
     (allExposures: PortfolioExposure[]) => {
         const result = allExposures.filter(
-            (e: PortfolioExposure) => e.metric === PortfolioMetricTypes.REVENUE && e.type === PortfolioExposureType.SECTOR
+            (e: PortfolioExposure) => e.metric === PortfolioMetricTypes.REVENUE && e.type === PortfolioGroupingType.SECTOR
         );
         return result;
     }

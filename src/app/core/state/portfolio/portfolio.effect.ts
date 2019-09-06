@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
 import { SelectorPeriod } from "@app/company-dashboard/period-selector/period-selector.component";
-import { Portfolio, PortfolioInvestmentSummary } from "@core/domain/portfolio.model";
+import {
+    Portfolio,
+    PortfolioInvestmentSummary,
+    PortfolioRelativePerformance,
+    PortfolioRelativePerformanceRequest
+} from "@core/domain/portfolio.model";
 import { PortfolioService } from "@core/service/portfolio.service";
 import * as CompanyActions from "@core/state/company/company.actions";
 import { DashboardAsOfDateChanged, LoadPortfolioFlowSuccess } from "@core/state/flow/portfolio-flow.actions";
@@ -70,6 +75,20 @@ export class PortfolioEffect {
                     return [new PortfolioActions.LoadPortfolioInvestmentSummarySuccess(result)];
                 }),
                 catchError((error) => of(new PortfolioActions.LoadPortfolioInvestmentSummaryFailure(error)))
+            )
+        )
+    );
+
+    @Effect()
+    loadPortfolioRelativePerformance$: Observable<Action> = this.actions$.pipe(
+        ofType<PortfolioActions.LoadPortfolioRelativePerformance>(PortfolioActionTypes.LoadPortfolioRelativePerformance),
+        map((action) => action.payload),
+        exhaustMap((payload: PortfolioRelativePerformanceRequest) =>
+            this.portfolioService.getRelativePerformance(payload).pipe(
+                concatMap((result: PortfolioRelativePerformance) => {
+                    return [new PortfolioActions.LoadPortfolioRelativePerformanceSuccess(result)];
+                }),
+                catchError((error) => of(new PortfolioActions.LoadPortfolioRelativePerformanceFailure(error)))
             )
         )
     );

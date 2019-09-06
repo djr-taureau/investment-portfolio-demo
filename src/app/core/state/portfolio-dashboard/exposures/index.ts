@@ -1,4 +1,4 @@
-import { PortfolioExposure, PortfolioExposureType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
+import { PortfolioExposure, PortfolioGroupingType, PortfolioMetricTypes } from "@core/domain/portfolio.model";
 import * as fromRoot from "@core/state";
 import { PortfolioExposureActions } from "@core/state/portfolio-dashboard/exposures/portfolio-exposure.actions";
 import * as fromPortfolioExposures from "@core/state/portfolio-dashboard/exposures/portfolio-exposures.reducer";

@@ -4,7 +4,9 @@ import {
     Portfolio,
     PortfolioExposureDataRequest,
     PortfolioInvestmentSummary,
-    PortfolioPerformanceChartDataRequest
+    PortfolioPerformanceChartDataRequest,
+    PortfolioRelativePerformance,
+    PortfolioRelativePerformanceRequest
 } from "@core/domain/portfolio.model";
 import { ApiEndpointService } from "@core/service/api-endpoint.service";
 import { ApiService } from "@core/service/api.service";
@@ -114,6 +116,32 @@ export class PortfolioService {
             }),
             catchError((fault: HttpErrorResponse) => {
                 PortfolioService.logger.warn(`getInvestmentSummaryFault( ${fault.error.message} )`);
+                return throwError(fault);
+            })
+        );
+    }
+
+    public getRelativePerformance(request: PortfolioRelativePerformanceRequest): Observable<PortfolioRelativePerformance> {
+        const params = {
+            id: request.id
+        };
+        const query = {
+            as_of_date: request.as_of_date,
+            top: request.top,
+            accumulator: request.accumulator,
+            by: request.by,
+            scenario: request.scenario
+        };
+
+        const url = this.apiEndpointService.getEndpoint(ApiEndpointService.ENDPOINT.PORTFOLIO_RELATIVE_PERFORMANCE, params, query);
+
+        return this.apiService.get(url).pipe(
+            map((response) => {
+                const data = response.data;
+                return data;
+            }),
+            catchError((fault: HttpErrorResponse) => {
+                PortfolioService.logger.warn(`getRelativePerformanceFault( ${fault.error.message} )`);
                 return throwError(fault);
             })
         );
