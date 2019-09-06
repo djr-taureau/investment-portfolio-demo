@@ -100,7 +100,7 @@ export class TimelineComponent implements OnInit {
             marginTop: 70,
             marginRight: 30,
             marginBottom: 20,
-            marginLeft: 5,
+            marginLeft: 1,
             height: 280,
             width: 550
         };
@@ -195,6 +195,7 @@ export class TimelineComponent implements OnInit {
         this.svg.selectAll(".xAxis.tick").remove();
         this.svg.selectAll(".axis-grid").remove();
         this.svg.selectAll(".yAxis").remove();
+        this.svg.selectAll(".yMinorAxis").remove();
         this.svg.selectAll(".yAxis.axis-grid").remove();
         this.svg.selectAll("circle.selected-value").remove();
         this.svg.selectAll(".select-timeline").remove();
@@ -263,32 +264,96 @@ export class TimelineComponent implements OnInit {
                     })
                     .ticks(5)
                     .tickPadding(5)
-                    .tickSizeOuter(5)
+                    .tickSizeOuter(15)
                     .tickSizeInner(5)
             );
+        this.svg
+            .append("g")
+            .attr("class", "axis-grid")
+            .call(
+                this.gridlines()
+                    .tickSize(-this.dimensions.width)
+                    .tickFormat("")
+            );
+
+        const yAxis = d3
+            .axisLeft(this.yScale)
+            .ticks(6)
+            // .tickFormat((d, i) => {
+            //     return this.yAxisTickValues[i];
+            // })
+            // .tickValues((d, i) => {
+            //     return this.yAxisTickValues[i];
+            // })
+            .tickPadding(-100)
+            .tickSizeOuter(200);
+        // .tickSizeInner(-100);
+
+        const yMinorAxis = d3
+            .axisLeft(this.yScale)
+            .ticks(5)
+            .tickSize(6);
 
         this.svg
             .append("g")
             .attr("class", "yAxis")
             .style("opactity", "0.15")
             .attr("transform", `translate(${this.dimensions.marginLeft},0)`)
-            .call(this.gridlines().tickSize(-this.dimensions.width, 0, 0))
-            .call((g) => g.select(".domain").remove())
+            .call(yAxis.tickSize(10))
+            // .call((g) => g.select(".domain").remove())
             .call((g) =>
                 g
                     .select(".tick:last-of-type text")
                     .clone()
-                    .attr("x", 3)
+                    .attr("x", 0 - this.dimensions.height / 2)
+                    .attr("y", 0 - this.dimensions.marginLeft + 20)
                     .attr("text-anchor", "start")
-                    .attr("font-weight", "bold")
+                    .attr("transform", "rotate(-90)")
                     .text("KPI Detail (M)")
             );
 
-        this.svg
-            .append("g")
-            .attr("class", "yAxis axis-grid")
-            .style("opactity", "0.15")
-            .attr("transform", "translate(" + this.dimensions.marginLeft + "," + (this.dimensions.marginBottom - this.dimensions.marginTop) + ")");
+        // this.svg
+        //     .append("g")
+        //     .attr("class", "yMinorAxis")
+        //     .attr("transform", `translate(${this.dimensions.marginLeft},0)`)
+        //     .call(yMinorAxis)
+        //     .selectAll("text")
+        //     .remove();
+
+        // this.svg.selectAll(".yMinorAxis").remove();
+
+        // const gridLine = this.dimensions.boundedHeight / 5;
+        // this.svg
+        //     .select(".yAxis")
+        //     .append("g")
+        //     .attr("class", "yAxis-grid")
+        //     .style("stroke-dasharray", "2,2")
+        //     .style("opacity", 0.5)
+        //     .attr("transform", `translate(${this.dimensions.marginLeft}, ${gridLine})`)
+        //     .call(yAxis.tickSize(-this.dimensions.width, 0, 0));
+        // this.svg
+        //     .append("g")
+        //     .attr("class", "yAxis")
+        //     .attr("id", "one")
+        //     .style("opactity", "0.15")
+        //     .attr("transform", `translate(${this.dimensions.marginLeft}, ${gridLine})`)
+        //     .call(d3.axisLeft(this.yScale).tickSize(-this.dimensions.width, 0, 0))
+        //     .call((g) => g.select(".domain").remove());
+        // .call((g) =>
+        //     g
+        //         .select(".tick:last-of-type text")
+        //         .clone()
+        //         .attr("x", 3)
+        //         .attr("text-anchor", "start")
+        //         .attr("font-weight", "bold")
+        //         .text("KPI Detail (M)")
+        // );
+
+        // this.svg
+        //     .append("g")
+        //     .attr("class", "yAxis axis-grid-iterate")
+        //     .style("opactity", "0.15")
+        //     .attr("transform", "translate(" + this.dimensions.marginLeft + "," + (this.dimensions.marginBottom - this.dimensions.marginTop) + ")");
 
         const line = d3
             .line()
@@ -434,13 +499,8 @@ export class TimelineComponent implements OnInit {
     gridlines() {
         return d3
             .axisLeft(this.yScale)
-            .tickFormat((d, i) => {
-                return this.yAxisTickValues[i];
-            })
-            .ticks(6)
-            .tickPadding(-20)
-            .tickSizeOuter(100)
-            .tickSizeInner(100);
+            .ticks(5)
+            .tickFormat((d, i) => this.yAxisTickValues[i]);
     }
     toggleVisibilty(event) {
         switch (event) {

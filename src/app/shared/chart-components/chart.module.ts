@@ -23,6 +23,7 @@ import { HistogramComponent } from "./histogram/histogram.component";
 import { DetailBarChartComponent } from "./detail-bar-chart/_detail-bar-chart.component";
 import { KpiDetailTableComponent } from "./kpi-detail-table/kpi-detail-table.component";
 import { BarChartComponent } from "./detail-bar-chart/bar-chart.component";
+import { QuadrantScatterComponent } from "./quadrant-scatter/quadrant-scatter.component";
 
 export const COMPONENTS = [
     AxisComponent,
@@ -42,7 +43,8 @@ export const COMPONENTS = [
     MultiLineComponent,
     SummaryWidgetComponent,
     SummaryWidgetContainer,
-    TimelineComponent
+    TimelineComponent,
+    QuadrantScatterComponent
 ];
 @NgModule({
     declarations: COMPONENTS,
