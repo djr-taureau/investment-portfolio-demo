@@ -45,25 +45,22 @@
 
                 }
 
+
+                #projLine {
+                    stroke: $light-grey-blue;
+                    background-color: $white;
+                    stroke-opacity: 0.8;
+                    stroke-dasharray: 3, 3;
+                    stroke-width: 3;
+                }
+
+
+
             }
 
 
 
         }
-
-
-
-        path.line {
-            .projected {
-                opacity: 0.15;
-                border: solid 2px $dark-sky-blue;
-                background-color: $light-periwinkle;
-                stroke-dasharray: 3, 3;
-
-            }
-
-        }
-
 
 
         &.selected-value {
@@ -120,33 +117,33 @@
 
 
 
-    #container {
-        width: 334px;
-        height: 165px;
-        border-radius: 6px;
-        background-color: $white;
-    }
+    // #container {
+    //     width: 334px;
+    //     height: 165px;
+    //     border-radius: 6px;
+    //     background-color: $white;
+    // }
 
-    div .card {
-        width: 334px;
-        height: 165px;
-        border-radius: 6px;
-        background-color: $white;
-    }
+    // div .card {
+    //     width: 334px;
+    //     height: 165px;
+    //     border-radius: 6px;
+    //     background-color: $white;
+    // }
 
 
 
     // .axis-grid .x .axis .x-line line {
 
 
-    .axis-grid line {
-        opacity: 0.75;
-        shape-rendering: crispEdges;
-        stroke: $light-navy;
-        stroke-dasharray: 3, 3;
-    }
+    // .axis-grid line {
+    //     opacity: 0.75;
+    //     shape-rendering: crispEdges;
+    //     stroke: $light-navy;
+    //     stroke-dasharray: 3, 3;
+    // }
 
-    .tick {
-        display: none;
-    }
+    // .tick {
+    //     display: none;
+    // }
 }

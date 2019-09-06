@@ -171,7 +171,7 @@ export class MicroLineComponent implements OnInit {
         }
         this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
         this.historicalData = _.take(this.data, this.data.length - 1);
-        this.projectedData = _.takeRight(this.data, 1);
+        this.projectedData = _.takeRight(this.data, 2);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.updateScales();
     }
@@ -208,6 +208,7 @@ export class MicroLineComponent implements OnInit {
 
         this.svg.selectAll("circle.selected-value").remove();
         this.svg.selectAll(".select-timeline").remove();
+        this.svg.selectAll("path#projLine").remove();
         this.svg.selectAll(".projected").remove();
         this.svg.selectAll(".historical").remove();
         this.svg.selectAll(".dot").remove();
@@ -217,21 +218,10 @@ export class MicroLineComponent implements OnInit {
             .attr("x1", this.xScale(this.parseDate(this.dateSelected)))
             .attr("y1", this.yScale(0))
             .attr("x2", this.xScale(this.parseDate(this.dateSelected)))
-            .attr("y2", this.yScale(actualsYMax))
+            .attr("y2", this.yScale(d3.max(actualsYMax, projectedYMax, 70)))
             .attr("class", "select-timeline")
             .style("stroke-width", 1)
             .style("stroke", "#99a8bf");
-
-        this.svg
-            .append("circle") // change the as-of line
-            .attr("cx", this.xScale(this.parseDate(this.dateSelected)))
-            .attr("cy", this.yScale(this.yAccessor(this.indexSelected)))
-            .attr("r", 4)
-            .attr("id", "selected-problem")
-            .attr("class", "dot selected-value")
-            .style("stroke-width", 2)
-            .style("fill", "white")
-            .style("stroke", "#124f8c");
 
         const circleVal = d3.select(this.el).selectAll("circle.selected-value");
 
@@ -252,19 +242,25 @@ export class MicroLineComponent implements OnInit {
             .y((d) => this.yScale(this.yAccessor(d.value)));
         this.svg
             .append("path")
-            .datum(this.data)
+            .datum(this.historicalData)
             .attr("class", "line historical")
             .attr("fill", "none")
             .attr("stroke", "#124f8c")
             .attr("stroke-width", 2)
             .attr("d", line);
+
+        this.svg.selectAll("path#projLine").remove();
+        this.svg.selectAll(".projected").remove();
         this.svg
             .append("path")
             .datum(this.data.filter((v) => v.projection === true))
             .attr("id", "projLine")
             .attr("class", "line projected")
             .attr("fill", "none")
-            .attr("stroke-dasharray", "2,2")
+            .attr("stroke-dasharray", 3, 3)
+            .attr("width", "30px")
+            .attr("height", "12px")
+            .attr("stroke-width", "1")
             .attr("stroke", "#99a8bf")
             .attr("opacity", "0.8")
             .attr("d", line);
@@ -276,5 +272,16 @@ export class MicroLineComponent implements OnInit {
             .attr("opacity", "0.15")
             .attr("stroke", "#47a2d6")
             .attr("d", area);
+
+        this.svg
+            .append("circle") // change the as-of line
+            .attr("cx", this.xScale(this.parseDate(this.dateSelected)))
+            .attr("cy", this.yScale(this.yAccessor(this.data[this.indexDateSelected])))
+            .attr("r", 4)
+            .attr("id", "selected-dot")
+            .attr("class", "dot selected-value")
+            .style("stroke-width", 2)
+            .style("fill", "white")
+            .style("stroke", "#124f8c");
     }
 }
