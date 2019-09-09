@@ -129,7 +129,14 @@ export class MicroLineComponent implements OnInit {
         MicroLineComponent.logger.debug(`ngOnInit()`);
         this.initialized = true;
         this.svg = this.createSvg();
-        this.yAccessor = (v) => v.value;
+        this.yAccessor = (v) => {
+            if (!!v) {
+                return v.value || 0;
+            } else {
+                MicroLineComponent.logger.warn(`yAccessor( Undefined value found: ${v} )`);
+                return 0;
+            }
+        };
         this.update();
     }
 
@@ -151,7 +158,6 @@ export class MicroLineComponent implements OnInit {
             return;
         }
 
-        this.yAccessor = (v) => v.value;
         this.actualsVis = true;
         this.budgetVis = true;
         this.forecastVis = true;
@@ -180,6 +186,8 @@ export class MicroLineComponent implements OnInit {
         if ((this.timePeriods || []).length < 1 || (this.data || []).length < 1 || _.isNil(this.dateSelected)) {
             return;
         }
+
+        console.log("bmr updateScales");
 
         const projValues = this.data.filter((v) => v.projection === true);
         const actualsXMin = d3.min(this.historicalData.map((v) => this.xAccessor(v)));

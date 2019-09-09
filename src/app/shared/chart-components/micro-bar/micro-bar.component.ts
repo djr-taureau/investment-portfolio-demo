@@ -105,7 +105,15 @@ export class MicroBarComponent implements OnInit {
         this.initialized = true;
         this.setDimensions();
         this.svg = this.createSvg();
-        this.yAccessor = (v) => v.value;
+        this.yAccessor = (v) => {
+            if (!!v) {
+                return v.value || 0;
+            } else {
+                MicroBarComponent.logger.warn(`yAccessor( Undefined value found: ${v} )`);
+                return 0;
+            }
+        };
+        this.update();
     }
 
     private createSvg() {
