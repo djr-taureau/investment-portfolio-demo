@@ -105,7 +105,7 @@ export class PortfolioFlowEffect {
                     id: portfolio.id,
                     as_of_date: lastPeriod,
                     by: PortfolioGroupingType.REGION,
-                    top: 10,
+                    top: 20,
                     accumulator: PortfolioPerformanceAccumulator.UNREALIZED_VALUE,
                     scenario: PortfolioPerformanceScenario.BUDGET
                 })
@@ -213,7 +213,7 @@ export class PortfolioFlowEffect {
                 id: request.portfolio.id,
                 as_of_date: request.selectedPeriod.date,
                 by: PortfolioGroupingType.REGION,
-                top: 10,
+                top: 20,
                 accumulator: PortfolioPerformanceAccumulator.UNREALIZED_VALUE,
                 scenario: PortfolioPerformanceScenario.BUDGET
             })

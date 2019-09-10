@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit } from "@angular/core";
+import { PortfolioRelativePerformanceSeries } from "@core/domain/portfolio.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 import * as _ from "lodash";
@@ -16,7 +17,20 @@ import { getUniqueId } from "../chart/utils";
 export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContentInit {
     private static logger: Logger = Logger.getLogger("QuadrantScatterComponent");
 
-    @Input() data: any[];
+    private _data: PortfolioRelativePerformanceSeries[] = [];
+
+    @Input() public set data(value: PortfolioRelativePerformanceSeries[]) {
+        // this.removeChart();
+        if ((value || []).length > 0) {
+            this._data = value;
+            this.groups = _.uniq(_.map(this.data, "group"));
+        }
+    }
+
+    public get data(): PortfolioRelativePerformanceSeries[] {
+        return this._data;
+    }
+
     @Input() label: string;
     @Input() newData: any;
     @Input() xAccessor?: any;
@@ -85,28 +99,31 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.buildChart();
     }
 
-    buildChart() {
+    removeCircles() {
         d3.select(this.el)
             .selectAll("circle")
             .remove();
-        this.data = this.generateData();
+    }
+    buildChart() {
+        this.removeCircles();
+
         const pad = 20;
         const leftPad = 100;
-        const quad1 = this.data.filter((d) => d.x < 0 && d.y > 0);
-        const quad2 = this.data.filter((d) => d.x > 0 && d.y > 0);
-        const quad3 = this.data.filter((d) => d.x > 0 && d.y < 0);
-        const quad4 = this.data.filter((d) => d.x < 0 && d.y < 0);
+        const quad1 = this._data.filter((d) => d.x < 0 && d.y > 0);
+        const quad2 = this._data.filter((d) => d.x > 0 && d.y > 0);
+        const quad3 = this._data.filter((d) => d.x > 0 && d.y < 0);
+        const quad4 = this._data.filter((d) => d.x < 0 && d.y < 0);
         this.quad1 = `${quad1.length}0%`;
         this.quad2 = `${quad2.length}0%`;
         this.quad3 = `${quad3.length}0%`;
         this.quad4 = `${quad4.length}0%`;
-        const maxY = d3.max(this.data.map((d) => Math.abs(d.y)));
-        const minY = d3.min(this.data.map((d) => Math.abs(d.y)));
-        const maxX = d3.max(this.data.map((d) => Math.abs(d.x)));
-        const minX = d3.min(this.data.map((d) => Math.abs(d.x)));
+        const maxY = d3.max(this._data.map((d) => Math.abs(d.y)));
+        const minY = d3.min(this._data.map((d) => Math.abs(d.y)));
+        const maxX = d3.max(this._data.map((d) => Math.abs(d.x)));
+        const minX = d3.min(this._data.map((d) => Math.abs(d.x)));
 
-        this.groups = ["USA", "CAN", "CHN", "GBR"];
-        const groups = _.uniq(_.map(this.data, "group"));
+        // this.groups = ["USA", "CAN", "CHN", "GBR"];
+
         this.color = d3
             .scaleOrdinal(d3.schemeCategory10)
             .domain(this.groups.values())
@@ -380,7 +397,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         const padding = 100;
         this.z = d3
             .scaleLinear()
-            .domain(d3.extent(this.data.map((d) => d.density)))
+            .domain(d3.extent(this._data.map((d) => d.density)))
             .range([20, 60]);
         this.tooltip = d3
             .select("#quadScatter")
@@ -429,7 +446,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("g")
             .selectAll("dot")
-            .data(this.data)
+            .data(this._data)
             .enter()
             .append("circle")
             .attr("class", (d) => "bubbles " + d.group)
@@ -444,7 +461,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .on("click", (d, i) => console.log("company Id clicked is", d.id, i));
         const circles = this.svg
             .selectAll("dot")
-            .data(this.data)
+            .data(this._data)
             .enter()
             .append("g");
         circles
@@ -491,18 +508,18 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
     }
 
     generateData() {
-        const groups = ["USA", "CAN", "CHN", "GBR"];
-        const companies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        const data = [];
-        _.times(_.random(10, 10), () => {
-            data.push({
-                id: _.sample(companies),
-                density: _.random(10, 1000),
-                x: _.random(-100, 100),
-                y: _.random(-100, 100),
-                group: _.sample(groups)
-            });
-        });
-        return data;
+        // const groups = ["USA", "CAN", "CHN", "GBR"];
+        // const companies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        // const data = [];
+        // _.times(_.random(10, 10), () => {
+        //     data.push({
+        //         id: _.sample(companies),
+        //         density: _.random(10, 1000),
+        //         x: _.random(-100, 100),
+        //         y: _.random(-100, 100),
+        //         group: _.sample(groups)
+        //     });
+        // });
+        // return data;
     }
 }
