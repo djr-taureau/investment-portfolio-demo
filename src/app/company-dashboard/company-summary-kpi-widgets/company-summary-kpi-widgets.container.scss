@@ -2,6 +2,10 @@
     margin: 0 40px;
     padding: 0;
 
+    .kpi-container {
+        margin-bottom: 10px !important;
+    }
+
     .content-chart {
         width: 739px;
     }
@@ -10,4 +14,7 @@
         width: 605px
     }
 
+    .detail-container {
+        margin: 0px !important;
+    }
 }

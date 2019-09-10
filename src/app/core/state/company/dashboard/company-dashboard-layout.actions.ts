@@ -3,6 +3,7 @@ import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DatePartType } from "@core/domain/enum/date-part-type.enum";
 import { ToggleEbitdaDetail } from "@core/state/flow/company-flow.actions";
 import { Action } from "@ngrx/store";
+import { ToggleDetailPayload } from "./company-dashboard-layout.reducer";
 
 export enum CompanyDashboardLayoutActionTypes {
     ExpandOrCollapse = "[DashboardLayout] ExpandOrCollapse",
@@ -12,7 +13,8 @@ export enum CompanyDashboardLayoutActionTypes {
     ToggleEbitdaDetailExpanded = "[DashboardLayout] Toggle EBITDA Detail Expanded",
     ToggleCashDetailExpanded = "[DashboardLayout] Toggle Cash Detail Expanded",
     ToggleRevenueDetailExpanded = "[DashboardLayout] Toggle Revenue Detail Expanded",
-    ToggleKpiExpanded = "[DashboardLayout] Toggle KPI Detail Expanded"
+    ToggleKpiExpanded = "[DashboardLayout] Toggle KPI Detail Expanded",
+    ToggleDetailExpanded = "[DashboardLayout] Toggle Detail Expanded"
 }
 
 export class ExpandOrCollapse implements Action {
@@ -59,6 +61,12 @@ export class ToggleKpiExpanded implements Action {
     constructor(public payload: string) {}
 }
 
+export class ToggleDetailExpanded implements Action {
+    readonly type = CompanyDashboardLayoutActionTypes.ToggleDetailExpanded;
+
+    constructor(public payload?: ToggleDetailPayload) {}
+}
+
 export type CompanyDashboardLayoutActions =
     | ExpandOrCollapse
     | SelectCurrency
@@ -67,4 +75,5 @@ export type CompanyDashboardLayoutActions =
     | ToggleCashDetailExpanded
     | ToggleEbitdaDetailExpanded
     | ToggleRevenueDetailExpanded
-    | ToggleKpiExpanded;
+    | ToggleKpiExpanded
+    | ToggleDetailExpanded;

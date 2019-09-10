@@ -11,11 +11,11 @@ import * as AngularUtils from "@util//angular.util";
 export class KpiDetailTableComponent {
     private static logger: Logger = Logger.getLogger("KpiDetailTableComponent");
     @Input() data: any;
-    @Input() revenueTableDataHeaders: string[];
-    @Input() revenueTableDataAsOf: number[];
+    @Input() tableDataHeaders: string[];
+    @Input() tableDataAsOf: number[];
 
     @Input()
-    set revenueTableDataVsPy(data: number[]) {
+    set tableDataVsPy(data: number[]) {
         if (data && data.length > 0) {
             this.vsPyData = data;
             this.vsPyDataShow = true;
@@ -23,14 +23,14 @@ export class KpiDetailTableComponent {
             this.vsPyDataShow = false;
         }
     }
-    get revenueTableDataVsPy() {
+    get tableDataVsPy() {
         return this.vsPyData;
     }
     private vsPyData;
     public vsPyDataShow = false;
 
     @Input()
-    set revenueTableDataVsPq(data: number[]) {
+    set tableDataVsPq(data: number[]) {
         if (data && data.length > 0) {
             this.vsPqData = data;
             this.vsPqDataShow = true;
@@ -38,14 +38,14 @@ export class KpiDetailTableComponent {
             this.vsPqDataShow = false;
         }
     }
-    get revenueTableDataVsPq() {
+    get tableDataVsPq() {
         return this.vsPqData;
     }
     private vsPqData;
     public vsPqDataShow = false;
 
     @Input()
-    set revenueTableDataVsBud(data: number[]) {
+    set tableDataVsBud(data: number[]) {
         if (data && data.length > 0) {
             this.vsBudData = data;
             this.vsBudDataShow = true;
@@ -53,14 +53,14 @@ export class KpiDetailTableComponent {
             this.vsBudDataShow = false;
         }
     }
-    get revenueTableDataVsBud() {
+    get tableDataVsBud() {
         return this.vsBudData;
     }
     private vsBudData;
     public vsBudDataShow = false;
 
     @Input()
-    set revenueTableDataVsForecast(data: number[]) {
+    set tableDataVsForecast(data: number[]) {
         if (data && data.length > 0) {
             this.vsForecastData = data;
             this.vsForecastDataShow = true;
@@ -68,14 +68,14 @@ export class KpiDetailTableComponent {
             this.vsForecastDataShow = false;
         }
     }
-    get revenueTableDataVsForecast() {
+    get tableDataVsForecast() {
         return this.vsForecastData;
     }
     private vsForecastData;
     public vsForecastDataShow = false;
 
     @Input()
-    set revenueTableDataVsIcInitial(data: number[]) {
+    set tableDataVsIcInitial(data: number[]) {
         if (data && data.length > 0) {
             this.vsIcInitialData = data;
             this.vsIcInitialDataShow = true;
@@ -83,14 +83,14 @@ export class KpiDetailTableComponent {
             this.vsIcInitialDataShow = false;
         }
     }
-    get revenueTableDataVsIcInitial() {
+    get tableDataVsIcInitial() {
         return this.vsIcInitialData;
     }
     private vsIcInitialData;
     public vsIcInitialDataShow = false;
 
     @Input()
-    set revenueTableDataVsIcLatest(data: number[]) {
+    set tableDataVsIcLatest(data: number[]) {
         if (data && data.length > 0) {
             this.vsIcLatestData = data;
             this.vsIcLatestDataShow = true;
@@ -98,7 +98,7 @@ export class KpiDetailTableComponent {
             this.vsIcLatestDataShow = false;
         }
     }
-    get revenueTableDataVsIcLatest() {
+    get tableDataVsIcLatest() {
         return this.vsIcLatestData;
     }
     private vsIcLatestData;

@@ -2,7 +2,6 @@ import { Component, ElementRef, Input, OnInit } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Unknown } from "@core/domain/enum/unknown.enum";
 import { Logger } from "@util/logger";
-import moment from "moment";
 import { DimensionsType, getUniqueId } from "../chart/utils";
 import * as d3 from "d3";
 import * as _ from "lodash";
@@ -23,6 +22,7 @@ export class MicroBarComponent implements OnInit {
     @Input() xAccessor: any;
     @Input() yAccessor: any;
     @Input() title: string;
+    @Input() id: string;
     @Input() selectedPeriod: any;
     @Input() availablePeriods: any[];
     @Input() yAccessorValue: string;
@@ -43,9 +43,6 @@ export class MicroBarComponent implements OnInit {
 
     xScale: any;
     yScale: any;
-    xRoundBands = 0.2;
-    xAxisScale: any;
-    yAxisTickValues: any[];
     actualsPresentValue: any;
     dateSelected;
     lineY1: any;
@@ -57,36 +54,25 @@ export class MicroBarComponent implements OnInit {
         marginBottom: 15,
         marginLeft: 2,
         height: 60,
-        width: 71,
-        boundedHeight: 60,
-        boundedWidth: 71
+        width: 71
     };
-    el: HTMLElement;
 
-    timePeriodAccessor;
-    yTickValues: any[];
-    xAccessorScaled: any;
-    yAccessorScaled: any;
+    el: HTMLElement;
+    parseDate = d3.timeParse("%Y-%m-%d");
     sourceTypeAccessor: any;
     budgetAccessorScaled: any;
-    forecastAccessorScaled: any;
-    y0AccessorScaled: any;
-    y0BudgetAccessorScaled: any;
-    y0ForecastAccessorScaled: any;
-    xAxisBottom: any;
-    yAxisGrid: any;
     indexSelected: number;
     dataValues: any;
     sourceValues;
     indexSource;
     indexDateSelected;
-    historicalData;
-    projectedData;
-    edges: boolean[];
-    y;
-    svg;
+    y: any;
+    svg: any;
     barId: string = getUniqueId("bar-chart");
     barTitle: string;
+    barWidth;
+    rx: any;
+    ry: any;
 
     /**
      * Flag indicating if the component has been initialized.
@@ -121,9 +107,11 @@ export class MicroBarComponent implements OnInit {
             .select(this.el)
             .selectAll("#hist")
             .append("svg")
+            .attr("id", `${this.barId}`)
             .attr("width", this.dimensions.width)
             .attr("height", this.dimensions.height)
-            .append("g");
+            .append("g")
+            .attr("transform", "translate(0, 10)");
     }
 
     private setDimensions() {
@@ -139,7 +127,6 @@ export class MicroBarComponent implements OnInit {
             return;
         }
 
-        const dateToday = moment().format("YYYY-MM-DD");
         this.updateAccessorValue(this.yAccessorValue);
         this.sourceTypeAccessor = (d) => d.sourceType;
         this.timePeriods = [];
@@ -158,10 +145,7 @@ export class MicroBarComponent implements OnInit {
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
             this.indexSource = _.indexOf(this.sourceValues, "B", 0);
         }
-        this.historicalData = _.take(this.data, this.data.length - 1);
-        this.projectedData = _.takeRight(this.data, 1);
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-        // this.dataValues = _.map(this.data, _.property(`${this.yAccessorValue}`));
         this.sourceValues = _.map(this.data, _.property("sourceType"));
         this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.indexSource = _.indexOf(this.sourceValues, "B", 0);
@@ -180,17 +164,28 @@ export class MicroBarComponent implements OnInit {
             }
         }
     }
-
     updateScales() {
         if (!this.svg) {
             return;
         }
 
+        const posData = [];
+        const negData = [];
+        this.dataValues.map((d, i) => {
+            if (d > 0) {
+                posData[i] = d;
+                negData[i] = 0;
+            } else {
+                posData[i] = 0;
+                negData[i] = d;
+            }
+        });
         const dataLength = (this.dataValues || []).length;
-        const dimensionWith = _.get(this, "dimensions.width", 0);
-        const BAR_WIDTH = Math.max((dimensionWith - dataLength) / dataLength - 1, 1);
+        const dimensionWidth = _.get(this, "dimensions.width", 0);
+        this.barWidth = Math.max((dimensionWidth - dataLength) / dataLength + 1, 1);
         this.svg.selectAll("line.select-barline").remove();
         this.svg.selectAll(".bar").remove();
+        this.svg.selectAll(".rounded-rect").remove();
         this.svg.selectAll(".y-line").remove();
 
         const y0 = d3.max(d3.extent(this.dataValues).map((d) => Math.abs(d)));
@@ -203,20 +198,19 @@ export class MicroBarComponent implements OnInit {
 
         this.yScale = d3
             .scaleLinear()
-            .domain([-y0 - 0.4, y0 + 0.4])
-            .range([60, 0])
+            .domain([-y0 - 0.2, y0 + 0.2])
+            .range([50, 0])
             .nice();
 
+        this.rx = 2;
+        this.ry = 2;
+
         this.svg
-            .selectAll(".bar")
-            .data(this.dataValues)
+            .selectAll("bar")
+            .data(posData)
             .enter()
-            .append("rect")
-            .attr("class", "bar")
-            .attr("x", (d, i) => this.xScale(i))
-            .attr("y", (d) => (d > 0 && d !== null ? this.yScale(d) : this.yScale(0)))
-            .attr("width", BAR_WIDTH)
-            .attr("height", (d) => Math.abs(this.yScale(d) - this.yScale(0)) + 0.5)
+            .append("path")
+            .attr("class", "rounded-rect")
             .attr("fill", (d) => (d > 0 ? "#20a187" : "#eb643f"))
             .attr("opacity", (d, i) => {
                 if (d === 0) {
@@ -226,25 +220,91 @@ export class MicroBarComponent implements OnInit {
                 }
             })
             .attr("stroke", (d, i) => {
-                if (this.timePeriods[i] === this.dateSelected && d >= 0) {
+                if (this.timePeriods[i] === this.dateSelected && d > 0) {
+                    this.lineY2 = this.yScale(d);
+                    return "#115449";
+                } else if (this.timePeriods[i] === this.dateSelected && d < 0) {
+                    this.lineY2 = this.yScale(0);
+                    return "#6b291d";
+                } else if (d === 0) {
+                    this.lineY2 = this.yScale(0);
+                    return "#68758c";
+                } else {
+                    return;
+                }
+            })
+            .attr("d", (value, i) => {
+                let barString = "";
+                if (value === 0) {
+                    return (barString = `
+                     M${this.barWidth * i + 1},${this.yScale(value)}
+                     L${this.barWidth * (i + 1) - 1},${this.yScale(value)}Z
+                    `);
+                } else {
+                    return (barString = `
+                     M${this.barWidth * i + 1},${this.yScale(value)}
+                     a${this.rx},${this.ry} 0 0 1 ${this.rx},${-this.ry}
+                     h${this.barWidth - 2 * this.rx - 2}
+                     a${this.rx},${this.ry} 0 0 1 ${this.rx},${this.ry}
+                     v${Math.abs(this.yScale(value) - this.yScale(0))}
+                     h${-this.barWidth + 2}Z
+                   `);
+                }
+            });
+
+        this.svg
+            .selectAll("bar")
+            .data(negData)
+            .enter()
+            .append("path")
+            .attr("class", "rounded-rect")
+            .attr("fill", (d) => (d > 0 ? "#20a187" : "#eb643f"))
+            .attr("opacity", (d, i) => {
+                if (d === 0) {
+                    return "0.5";
+                } else {
+                    return this.sourceValues[i] === "B" ? "0.35" : "1";
+                }
+            })
+            .attr("stroke", (d, i) => {
+                if (this.timePeriods[i] === this.dateSelected && d > 0) {
                     this.lineY2 = this.yScale(d);
                     return "#115449";
                 } else if (this.timePeriods[i] === this.dateSelected && d < 0) {
                     this.lineY2 = this.yScale(0);
                     return "#6b291d";
                 } else {
+                    this.lineY2 = this.yScale(0);
                     return "#68758c";
+                }
+            })
+            .attr("d", (value, i) => {
+                let barString = "";
+                if (value === 0) {
+                    return barString;
+                } else {
+                    return (barString = `
+                     M${this.barWidth * i + 1},${this.yScale(value)}
+                     a${this.rx},${this.ry} 0 0 0 ${this.rx},${this.ry}
+                     h${this.barWidth - 2 * this.rx - 2}
+                     a${this.rx},${this.ry} 0 0 0 ${this.rx},${-this.ry}
+                     v${-Math.abs(this.yScale(value) - this.yScale(0))}
+                     h${-this.barWidth + 2 * this.rx - 2}Z
+                   `);
                 }
             });
 
-        this.svg
-            .append("line")
-            .attr("x1", this.xScale(this.indexSelected) + Math.max(BAR_WIDTH / 2, 1))
-            .attr("y1", 0)
-            .attr("x2", this.xScale(this.indexSelected) + Math.max(BAR_WIDTH / 2, 1))
-            .attr("y2", this.lineY2)
-            .attr("class", "select-barline")
-            .style("stroke-width", 2)
-            .style("stroke", "#dbe3f1");
+        const add = (a, b) => a + b;
+        if (dataLength >= 1 && this.dataValues.reduce(add) !== 0) {
+            this.svg
+                .append("line")
+                .attr("x1", this.xScale(this.indexSelected - 1) + this.barWidth / 2)
+                .attr("y1", 0)
+                .attr("x2", this.xScale(this.indexSelected - 1) + this.barWidth / 2)
+                .attr("y2", this.lineY2)
+                .attr("class", "select-barline")
+                .style("stroke-width", 1)
+                .style("stroke", "#dbe3f1");
+        }
     }
 }

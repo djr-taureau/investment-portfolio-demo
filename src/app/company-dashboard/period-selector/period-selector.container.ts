@@ -1,6 +1,5 @@
-import { state } from "@angular/animations";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
-import * as fromRevenue from "@core/state/company/revenue";
+import * as fromWidgets from "@core/state/company/widgets";
 import { Component, OnInit } from "@angular/core";
 import { CurrencyType } from "@core/domain/enum/currency-type.enum";
 import { DashboardAsOfDateChanged, DashboardCurrencyChanged, DashboardDatePartChanged } from "@core/state/flow/company-flow.actions";
@@ -124,6 +123,6 @@ export class PeriodSelectorContainer implements OnInit {
         this.fye$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyFYE));
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
         this.showCurrencySelector$ = this.store$.pipe(select(fromCompanyDashboardLayout.getShowCurrencySelector));
-        this.historicalProjectedResult$ = this.store$.pipe(select(fromRevenue.getHistoricalProjectedResults));
+        this.historicalProjectedResult$ = this.store$.pipe(select(fromWidgets.getHistoricalProjectedResults));
     }
 }

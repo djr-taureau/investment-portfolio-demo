@@ -1,10 +1,10 @@
+import { ToggleDetailExpanded } from "./../../../core/state/company/dashboard/company-dashboard-layout.actions";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Observable } from "rxjs";
 import { Component, OnInit, Input } from "@angular/core";
 import { Logger } from "@util/logger";
 import { select, Store } from "@ngrx/store";
-import * as fromCompanyKpi from "@core/state/company/kpi";
-import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
+import * as fromWidgets from "@core/state/company/widgets";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 
 @Component({
@@ -46,6 +46,9 @@ export class SummaryWidgetContainer implements OnInit {
      */
     @Input()
     public name: string;
+
+    @Input()
+    public type: string;
 
     /**
      * List of available periods.
@@ -154,12 +157,12 @@ export class SummaryWidgetContainer implements OnInit {
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
 
         // Set up the summary widget's data providers.
-        this.asOf$ = this.store$.pipe(select(fromCompanyKpi.getAsOf(this.id)));
-        this.changeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriod(this.id)));
-        this.changeFromPriorBudget$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudget(this.id)));
-        this.summaryLineChartData$ = this.store$.pipe(select(fromCompanyKpi.getSummaryLineChartData(this.id)));
-        this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorPeriodBarChartData(this.id)));
-        this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyKpi.getChangeFromPriorBudgetBarChartData(this.id)));
+        this.asOf$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartTotal("kpi", this.id)));
+        this.changeFromPriorPeriod$ = this.store$.pipe(select(fromWidgets.getBarChart1Total("kpi", this.id)));
+        this.changeFromPriorBudget$ = this.store$.pipe(select(fromWidgets.getBarChart2Total("kpi", this.id)));
+        this.summaryLineChartData$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartData("kpi", this.id)));
+        this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart1GraphData("kpi", this.id)));
+        this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart2GraphData("kpi", this.id)));
     }
 
     /**
@@ -167,6 +170,6 @@ export class SummaryWidgetContainer implements OnInit {
      */
     public onSummaryWidgetClick(event: any) {
         SummaryWidgetContainer.logger.debug(`onSummaryWidgetClick( KPI ID: ${this.id} )`);
-        this.store$.dispatch(new CompanyFlowActions.ToggleKpiDetail());
+        this.store$.dispatch(new ToggleDetailExpanded({ type: this.type, id: this.id }));
     }
 }

@@ -1,3 +1,4 @@
+import { CompanyDetailWidgetComponent } from "./company-detail-widget/company-detail-widget.component";
 import { ElementRef, NgModule } from "@angular/core";
 import { CompanyInitiativesSummaryComponent } from "@app/company-dashboard/company-initiatives/company-initiatives-summary.component";
 import { CompanyInitiativesSummaryContainer } from "@app/company-dashboard/company-initiatives/company-initiatives-summary.container";
@@ -7,9 +8,7 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CompanyDashboardComponent } from "./company-dashboard.component";
 import { CompanyDashboardContainer } from "./company-dashboard.container";
 import { CompanySummaryTopWidgetsContainer } from "./company-summary-top-widgets/company-summary-top-widgets.container";
-import { CompanyKpiDetailComponent } from "./company-kpi-detail/company-kpi-detail.component";
-import { CompanyRevenueDetailContainer } from "@app/company-dashboard/company-revenue-detail/company-revenue-detail.container";
-import { CompanyEBITDADetailContainer } from "@app/company-dashboard/company-EBITDA-detail/company-EBITDA-detail.container";
+import { CompanyDetailWidgetContainer } from "@app/company-dashboard/company-detail-widget/company-detail-widget.container";
 import { CompanyCashDetailContainer } from "@app/company-dashboard/company-cash-detail/company-cash-detail.container";
 import { IconizedSearchableComboModule } from "@shared/iconized-searchable-combo/iconized-searchable-combo.module";
 import { PeriodSelectorComponent } from "./period-selector/period-selector.component";
@@ -23,11 +22,10 @@ const COMPONENTS: any = [
     CompanyDashboardContainer,
     CompanySummaryTopWidgetsContainer,
     CompanySummaryKpiWidgetsContainer,
-    CompanyRevenueDetailContainer,
+    CompanyDetailWidgetContainer,
     PeriodSelectorComponent,
     PeriodSelectorContainer,
-    CompanyKpiDetailComponent,
-    CompanyEBITDADetailContainer,
+    CompanyDetailWidgetComponent,
     CompanyInitiativesSummaryComponent,
     CompanyInitiativesSummaryContainer,
     CompanyCashDetailContainer
@@ -52,6 +50,6 @@ const MODULE_ROUTES: Routes = [
             }
         }
     ],
-    entryComponents: [CompanyKpiDetailComponent]
+    entryComponents: [CompanyDetailWidgetComponent]
 })
 export class CompanyDashboardModule {}

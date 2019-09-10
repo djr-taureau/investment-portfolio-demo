@@ -1,3 +1,4 @@
+import { WidgetTypeEnum } from "@app/core/state/company/dashboard/company-dashboard-layout.reducer";
 // import "zone.js";
 import { Component, OnInit, Input } from "@angular/core";
 import { Store } from "@ngrx/store";
@@ -11,6 +12,8 @@ import { expandOutFromTop } from "@shared/animations/slide.animations";
 })
 export class CompanyDashboardComponent implements OnInit {
     private _showRevenueDetail = false;
+
+    public typeEnum = WidgetTypeEnum;
 
     @Input()
     public set showRevenueDetail(value: boolean) {

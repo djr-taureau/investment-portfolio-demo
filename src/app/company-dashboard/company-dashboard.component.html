@@ -18,17 +18,15 @@
     <sbp-company-summary-top-widgets-container fxFlexOffset="15px"></sbp-company-summary-top-widgets-container>
 
     <!-- Widget Detail Row -->
-    <sbp-company-revenue-detail-container [@expandOutFromTop]="showRevenueDetail"></sbp-company-revenue-detail-container>
-    <sbp-company-EBITDA-detail-container [@expandOutFromTop]="showEBITDADetail"></sbp-company-EBITDA-detail-container>
+    <sbp-company-detail-widget-container [@expandOutFromTop]="showRevenueDetail"
+                                         [type]="typeEnum.REVENUE"
+                                         [name]="'revenue'"></sbp-company-detail-widget-container>
+    <sbp-company-detail-widget-container [@expandOutFromTop]="showEBITDADetail"
+                                         [type]="typeEnum.EBITDA"
+                                         [name]="'ebitda'"></sbp-company-detail-widget-container>
     <sbp-company-cash-detail-container [@expandOutFromTop]="showCashDetail"></sbp-company-cash-detail-container>
-
-    <!-- TODO: BMR: Need to refactor `sbp-company-kpi-detail` to `sbp-company-detail-widget` -->
-    <!--    <sbp-company-kpi-detail-container [@expandOutFromBottom]="showKpiDetail"></sbp-company-kpi-detail-container>-->
-
     <!-- Widget Row line 2 -->
     <sbp-company-summary-kpi-widgets-container fxFlexOffset="15px"></sbp-company-summary-kpi-widgets-container>
-
-    <!--    <sbp-expandable-panel [@expandOutFromTop]="isDetailRowTwoExpanded"></sbp-expandable-panel>-->
 
     <!-- Horizontal divider line -->
     <div class="h-line"

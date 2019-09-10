@@ -1,14 +1,28 @@
-<div #container
-     #anchor
-     class="kpi-container"
-     fxLayout="row"
-     fxLayoutAlign="space-between center">
-    <ng-container class="chart"
-                  *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
+<div fxLayout="column"
+     fxLayoutAlign="start stretch">
+    <div #container
+         #anchor
+         class="kpi-container"
+         fxLayout="row"
+         fxLayoutAlign="space-between center">
+        <ng-container class="chart"
+                      *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
 
-        <sbp-summary-widget-container [id]="chartDataPeriodSet.id"
-                                      [name]="chartDataPeriodSet.name">
-        </sbp-summary-widget-container>
+            <sbp-summary-widget-container [id]="chartDataPeriodSet.id"
+                                          [name]="chartDataPeriodSet.name"
+                                          [type]="typeEnum.KPI">
+            </sbp-summary-widget-container>
 
-    </ng-container>
+        </ng-container>
+    </div>
+
+    <div *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
+        <sbp-company-detail-widget-container [@expandOutFromTop]="showKpiDetail"
+                                             [name]="chartDataPeriodSet.name"
+                                             [id]="chartDataPeriodSet.id"
+                                             [type]="typeEnum.KPI"
+                                             *ngIf="selectedKpiId === chartDataPeriodSet.id"
+                                             class="detail-container"></sbp-company-detail-widget-container>
+    </div>
+
 </div>

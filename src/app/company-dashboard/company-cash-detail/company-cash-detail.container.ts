@@ -9,7 +9,7 @@ import { Observable } from "rxjs";
     selector: "sbp-company-cash-detail-container",
     template: `
         <sbp-expandable-panel (close)="onClose()" [visible]="isExpanded$ | async">
-            <sbp-company-kpi-detail-component [data]=""></sbp-company-kpi-detail-component>
+            <sbp-company-detail-widget-component [data]=""></sbp-company-detail-widget-component>
         </sbp-expandable-panel>
     `,
     styleUrls: ["./company-cash-detail.container.scss"],

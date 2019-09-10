@@ -13,7 +13,7 @@
              fxLayoutAlign="space-between stretch"
              fxFlex="50%">
             <div class="box value">{{ value }}</div>
-            <sbp-micro-line [data]="data"
+            <sbp-micro-line [id]="title"
                             [selectedPeriod]="selectedPeriod"
                             [barChartData1]="barChartData1"
                             [barChartData2]="barChartData2"
@@ -42,6 +42,7 @@
                  fxLayout="column"
                  fxLayoutAlign="end stretch">
                 <sbp-micro-bar [data]="barChartData1"
+                               [id]="title"
                                [selectedPeriod]="selectedPeriod"
                                [title]="'bar1'"
                                [xAccessor]="dateAccessor"

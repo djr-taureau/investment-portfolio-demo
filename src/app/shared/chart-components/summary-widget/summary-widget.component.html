@@ -28,6 +28,7 @@
     <!--    <div *ngIf="data && selectedPeriod && barChartData1 && barChartData2 && title !== 'Cash Runway'"-->
     <div class="box timeline">
         <sbp-micro-line [data]="lineChartData"
+                        [id]="title"
                         [selectedPeriod]="selectedPeriod"
                         [xAccessor]="dateAccessor"
                         [yAccessor]="yAccessor"
@@ -36,19 +37,23 @@
     <div *ngIf="selectedPeriod && barChartData1 && title !== 'Cash Runway'"
          class="box py-chart">
         <sbp-micro-bar [data]="barChartData1"
+                       [id]="title"
                        [selectedPeriod]="selectedPeriod"
                        [availablePeriods]="availablePeriods"
                        [title]="'bar1'"
                        [xAccessor]="dateAccessor"
+                       [yAccessor]="yAccessor"
                        [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
     </div>
     <div *ngIf="selectedPeriod && barChartData2 && title !== 'Cash Runway'"
          class="box budget-chart">
         <sbp-micro-bar [data]="barChartData2"
+                       [id]="title"
                        [selectedPeriod]="selectedPeriod"
                        [availablePeriods]="availablePeriods"
                        [title]="'bar2'"
                        [xAccessor]="dateAccessor"
+                       [yAccessor]="yAccessor"
                        [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
     </div>
 </div>

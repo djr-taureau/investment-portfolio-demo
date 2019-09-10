@@ -1,15 +1,19 @@
+import { WidgetTypeEnum } from "@app/core/state/company/dashboard/company-dashboard-layout.reducer";
 import { Component, OnInit } from "@angular/core";
 import { KpiChartPeriodDataSets } from "@core/domain/company.model";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
 import * as AngularUtils from "@util/angular.util";
-import * as fromCompanyKpi from "@core/state/company/kpi";
+import * as fromWidgets from "@core/state/company/widgets";
+import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import { expandOutFromTop } from "@app/shared/animations/slide.animations";
 
 @Component({
     selector: "sbp-company-summary-kpi-widgets-container",
     styleUrls: ["./company-summary-kpi-widgets.container.scss"],
-    templateUrl: "./company-summary-kpi-widgets.container.html"
+    templateUrl: "./company-summary-kpi-widgets.container.html",
+    animations: [expandOutFromTop]
 })
 export class CompanySummaryKpiWidgetsContainer implements OnInit {
     /**
@@ -21,6 +25,14 @@ export class CompanySummaryKpiWidgetsContainer implements OnInit {
      * The chart data for the KPI summary widgets.
      */
     public chartDataPeriodSets$: Observable<KpiChartPeriodDataSets[]>;
+
+    public selectedKpiId$: Observable<string>;
+    public selectedKpiId: string;
+
+    public showKpiDetail$: Observable<boolean>;
+    public showKpiDetail = false;
+
+    public typeEnum = WidgetTypeEnum;
 
     /**
      * Expose so the HTML template can use it.
@@ -41,6 +53,12 @@ export class CompanySummaryKpiWidgetsContainer implements OnInit {
         CompanySummaryKpiWidgetsContainer.logger.debug(`ngOnInit()`);
 
         // KPI summary charts data.
-        this.chartDataPeriodSets$ = this.store$.pipe(select(fromCompanyKpi.getChartDataPeriodSets));
+        this.chartDataPeriodSets$ = this.store$.pipe(select(fromWidgets.getChartDataPeriodSets));
+        this.selectedKpiId$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedKpiId));
+        this.selectedKpiId$.subscribe((id) => {
+            this.selectedKpiId = id;
+        });
+        this.showKpiDetail$ = this.store$.pipe(select(fromCompanyDashboardLayout.getShowKpiDetail));
+        this.showKpiDetail$.subscribe((value) => (this.showKpiDetail = value));
     }
 }

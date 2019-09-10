@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, HostBinding } from "@angular/core";
+import { Component, OnInit, OnChanges, Input } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";

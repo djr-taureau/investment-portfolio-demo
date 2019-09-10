@@ -1,13 +1,14 @@
+import { ToggleDetailExpanded } from "@app/core/state/company/dashboard/company-dashboard-layout.actions";
 import { Component, OnInit } from "@angular/core";
-import { RevenueSeriesData } from "@core/domain/company.model";
+import { RevenueSeriesData, ChartDataPeriod } from "@core/domain/company.model";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as fromCompanyCash from "@core/state/company/cash";
-import * as fromCompanyEbitda from "@core/state/company/ebitda";
-import * as fromCompanyRevenue from "@core/state/company/revenue";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
+import * as fromWidget from "@core/state/company/widgets";
+import { WidgetTypeEnum } from "@app/core/state/company/dashboard/company-dashboard-layout.reducer";
 
 @Component({
     selector: "sbp-company-summary-top-widgets-container",
@@ -47,6 +48,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      * List of revenue summary line chart data.
      */
     public revenueSummaryLineChartData$: Observable<RevenueSeriesData[]>;
+    public revenueSummaryLineChartData: RevenueSeriesData[] = [];
 
     /**
      * List of revenue summary percent change from a prior period bar chart data.
@@ -77,6 +79,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      * List of ebitda summary line chart data.
      */
     public ebitdaSummaryLineChartData$: Observable<RevenueSeriesData[]>;
+    public ebitdaSummaryLineChartData: RevenueSeriesData[] = [];
 
     /**
      * List of ebitda summary percent change from a prior period bar chart data.
@@ -130,20 +133,22 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
 
         // Revenue summary chart data.
-        this.revenueAsOf$ = this.store$.pipe(select(fromCompanyRevenue.getRevenueAsOf));
-        this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorPeriod));
-        this.revenueChangeFromPriorBudget$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorBudget));
-        this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromCompanyRevenue.getSummaryLineChartData));
-        this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorPeriodBarChartData));
-        this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyRevenue.getChangeFromPriorBudgetBarChartData));
+        this.revenueAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal("revenue")));
+        this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromWidget.getBarChart1Total("revenue")));
+        this.revenueChangeFromPriorBudget$ = this.store$.pipe(select(fromWidget.getBarChart2Total("revenue")));
+        // TODO: do this one
+        this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("revenue")));
+        this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("revenue")));
+        this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("revenue")));
 
         // EBITDA summary chart data.
-        this.ebitdaAsOf$ = this.store$.pipe(select(fromCompanyEbitda.getEbitdaAsOf));
-        this.ebitdaChangeFromPriorPeriod$ = this.store$.pipe(select(fromCompanyEbitda.getChangeFromPriorPeriod));
-        this.ebitdaChangeFromPriorBudget$ = this.store$.pipe(select(fromCompanyEbitda.getChangeFromPriorBudget));
-        this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromCompanyEbitda.getSummaryLineChartData));
-        this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromCompanyEbitda.getChangeFromPriorPeriodBarChartData));
-        this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromCompanyEbitda.getChangeFromPriorBudgetBarChartData));
+        this.ebitdaAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal("ebitda")));
+        this.ebitdaChangeFromPriorPeriod$ = this.store$.pipe(select(fromWidget.getBarChart1Total("ebitda")));
+        this.ebitdaChangeFromPriorBudget$ = this.store$.pipe(select(fromWidget.getBarChart2Total("ebitda")));
+        // TODO: do this one
+        this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("ebitda")));
+        this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("ebitda")));
+        this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("ebitda")));
 
         // Cash
         this.cashAsOf$ = this.store$.pipe(select(fromCompanyCash.getCashAsOf));
@@ -155,7 +160,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      */
     public onRevenueClick() {
         CompanySummaryTopWidgetsContainer.logger.debug(`onRevenueClick()`);
-        this.store$.dispatch(new CompanyFlowActions.ToggleRevenueDetail());
+        this.store$.dispatch(new ToggleDetailExpanded({ type: WidgetTypeEnum.REVENUE }));
     }
 
     /**
@@ -163,7 +168,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      */
     public onEbitdaClick() {
         CompanySummaryTopWidgetsContainer.logger.debug(`onEbitdaClick()`);
-        this.store$.dispatch(new CompanyFlowActions.ToggleEbitdaDetail());
+        this.store$.dispatch(new ToggleDetailExpanded({ type: WidgetTypeEnum.EBITDA }));
     }
 
     /**

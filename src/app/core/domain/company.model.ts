@@ -451,3 +451,8 @@ export interface CompanyChartDataRequest {
     id: string;
     date: string;
 }
+
+export interface DetailViewTableRow {
+    scenario: string;
+    data: number[];
+}

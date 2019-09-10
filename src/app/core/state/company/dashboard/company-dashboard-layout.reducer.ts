@@ -3,6 +3,18 @@ import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { CompanyDashboardLayoutActions, CompanyDashboardLayoutActionTypes } from "./company-dashboard-layout.actions";
 
+export enum WidgetTypeEnum {
+    REVENUE = "revenue",
+    EBITDA = "ebitda",
+    KPI = "kpi",
+    CASH = "cash"
+}
+
+export interface ToggleDetailPayload {
+    type: string;
+    id?: string;
+}
+
 export interface CompanyDashboardLayoutState {
     collapsed: boolean;
     selectedCurrency: CurrencyType;
@@ -12,6 +24,7 @@ export interface CompanyDashboardLayoutState {
     showCashDetail: boolean;
     showEbitdaDetail: boolean;
     showKpiDetail: boolean;
+    selectedKpiId: string;
 }
 
 export const initialState: CompanyDashboardLayoutState = {
@@ -22,16 +35,34 @@ export const initialState: CompanyDashboardLayoutState = {
     showRevenueDetail: false,
     showCashDetail: false,
     showEbitdaDetail: false,
-    showKpiDetail: false
+    showKpiDetail: false,
+    selectedKpiId: ""
 };
 
+function toggleDetail(state: CompanyDashboardLayoutState = initialState, payload: ToggleDetailPayload): CompanyDashboardLayoutState {
+    switch (payload.type) {
+        case WidgetTypeEnum.REVENUE:
+            return toggleRevenueDetail(state);
+            break;
+        case WidgetTypeEnum.EBITDA:
+            return toggleEbitdaDetail(state);
+            break;
+        case WidgetTypeEnum.CASH:
+            return toggleCashDetail(state);
+            break;
+        case WidgetTypeEnum.KPI:
+            return toggleKpiDetail(state, payload.id);
+            break;
+    }
+}
 function toggleRevenueDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
     return {
         ...state,
         showRevenueDetail: !state.showRevenueDetail,
         showCashDetail: false,
         showEbitdaDetail: false,
-        showKpiDetail: false
+        showKpiDetail: false,
+        selectedKpiId: ""
     };
 }
 
@@ -41,7 +72,8 @@ function toggleEbitdaDetail(state: CompanyDashboardLayoutState = initialState): 
         showRevenueDetail: false,
         showCashDetail: false,
         showEbitdaDetail: !state.showEbitdaDetail,
-        showKpiDetail: false
+        showKpiDetail: false,
+        selectedKpiId: ""
     };
 }
 
@@ -51,17 +83,19 @@ function toggleCashDetail(state: CompanyDashboardLayoutState = initialState): Co
         showRevenueDetail: false,
         showCashDetail: !state.showCashDetail,
         showEbitdaDetail: false,
-        showKpiDetail: false
+        showKpiDetail: false,
+        selectedKpiId: ""
     };
 }
 
-function toggleKpiDetail(state: CompanyDashboardLayoutState = initialState): CompanyDashboardLayoutState {
+function toggleKpiDetail(state: CompanyDashboardLayoutState = initialState, id: string): CompanyDashboardLayoutState {
     return {
         ...state,
         showRevenueDetail: false,
         showCashDetail: false,
         showEbitdaDetail: false,
-        showKpiDetail: !state.showKpiDetail
+        showKpiDetail: state.selectedKpiId === id || state.selectedKpiId === "" ? !state.showKpiDetail : state.showKpiDetail,
+        selectedKpiId: state.selectedKpiId === id ? "" : id
     };
 }
 
@@ -101,7 +135,10 @@ export function reducer(state: CompanyDashboardLayoutState = initialState, actio
             return toggleRevenueDetail(state);
 
         case CompanyDashboardLayoutActionTypes.ToggleKpiExpanded:
-            return toggleKpiDetail(state);
+            return toggleKpiDetail(state, action.payload);
+
+        case CompanyDashboardLayoutActionTypes.ToggleDetailExpanded:
+            return toggleDetail(state, action.payload);
 
         default:
             return state;
@@ -116,3 +153,4 @@ export const getShowCashDetail = (state: CompanyDashboardLayoutState) => state.s
 export const getShowEBITDADetail = (state: CompanyDashboardLayoutState) => state.showEbitdaDetail;
 export const getShowRevenueDetail = (state: CompanyDashboardLayoutState) => state.showRevenueDetail;
 export const getShowKpiDetail = (state: CompanyDashboardLayoutState) => state.showKpiDetail;
+export const getSelectedKpiId = (state: CompanyDashboardLayoutState) => state.selectedKpiId;

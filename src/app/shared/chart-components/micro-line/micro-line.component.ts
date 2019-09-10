@@ -80,25 +80,19 @@ export class MicroLineComponent implements OnInit {
     xAccessorScaled: any;
     yAccessorScaled: any;
     y0AccessorScaled: any;
-    projectedAccessorScaled: any;
-    projectedScale;
-    categorySelected: any;
     parseDate = d3.timeParse("%Y-%m-%d");
     display = false;
     xAxisVisible = false;
     selectedValue = false;
-    formatCategory = d3.tickFormat(d3.format(","));
-    formatDate = d3.timeFormat("%m/%d/%Y");
     gradientId: string = getUniqueId("Timeline-gradient");
+    timelineId: string = getUniqueId("Timeline-Id");
     gradientColors: string[] = ["rgb(226, 222, 243)", "#f8f9fa"];
-    xAxisBottom;
-    yAxisGrid;
     dateSelected;
     actualsPresentValue;
     indexSelected;
     dateAccessor;
     indexDateSelected;
-    svg;
+    svg: any;
     el: HTMLElement;
 
     /**
@@ -145,6 +139,7 @@ export class MicroLineComponent implements OnInit {
             .select(this.el)
             .selectAll("#micro-timeline")
             .append("svg")
+            .attr("id", `${this.timelineId}`)
             .attr("width", this.dimensions.boundedWidth)
             .attr("height", this.dimensions.boundedHeight)
             .attr("stroke-linejoin", "round")
@@ -154,7 +149,7 @@ export class MicroLineComponent implements OnInit {
     }
 
     private update(): void {
-        if ((this.initialized && (this.data || []).length < 1) || !this.selectedPeriod) {
+        if ((this.initialized && (this.data || []).length < 1) || !this.selectedPeriod || !this.yAccessor) {
             return;
         }
 
@@ -172,13 +167,10 @@ export class MicroLineComponent implements OnInit {
             });
             this.timePeriods = _.map(this.data, _.property("date"));
             this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
-            const periodSelected = _.indexOf(this.availablePeriods, this.dateSelected, 0);
-            const periodStart = _.findIndex(this.availablePeriods, ["date", this.dateSelected]);
         }
         this.actualsPresentValue = this.data.filter((p) => p.date === this.selectedPeriod.date);
         this.historicalData = _.take(this.data, this.data.length - 1);
         this.projectedData = _.takeRight(this.data, 2);
-        this.indexSelected = _.indexOf(this.timePeriods, this.dateSelected, 0);
         this.updateScales();
     }
 
@@ -186,8 +178,6 @@ export class MicroLineComponent implements OnInit {
         if ((this.timePeriods || []).length < 1 || (this.data || []).length < 1 || _.isNil(this.dateSelected)) {
             return;
         }
-
-        console.log("bmr updateScales");
 
         const projValues = this.data.filter((v) => v.projection === true);
         const actualsXMin = d3.min(this.historicalData.map((v) => this.xAccessor(v)));
@@ -226,7 +216,7 @@ export class MicroLineComponent implements OnInit {
             .attr("x1", this.xScale(this.parseDate(this.dateSelected)))
             .attr("y1", this.yScale(0))
             .attr("x2", this.xScale(this.parseDate(this.dateSelected)))
-            .attr("y2", this.yScale(d3.max(actualsYMax, projectedYMax, 70)))
+            .attr("y2", this.yScale(actualsYMax * 3))
             .attr("class", "select-timeline")
             .style("stroke-width", 1)
             .style("stroke", "#99a8bf");
@@ -261,7 +251,7 @@ export class MicroLineComponent implements OnInit {
         this.svg.selectAll(".projected").remove();
         this.svg
             .append("path")
-            .datum(this.data.filter((v) => v.projection === true))
+            .datum(this.projectedData)
             .attr("id", "projLine")
             .attr("class", "line projected")
             .attr("fill", "none")

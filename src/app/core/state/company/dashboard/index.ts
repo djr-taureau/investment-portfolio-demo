@@ -83,6 +83,29 @@ export const getShowKpiDetail = createSelector(
     fromCompanyDashboardLayout.getShowKpiDetail
 );
 
+export const getSelectedKpiId = createSelector(
+    selectCompanyDashboardLayoutState,
+    fromCompanyDashboardLayout.getSelectedKpiId
+);
+
+export const getShowDetailWidget = (widget: string) =>
+    createSelector(
+        selectCompanyDashboardLayoutState,
+        getShowRevenueDetail,
+        getShowEBITDADetail,
+        getShowKpiDetail,
+        (state, revenue, ebitda, kpi) => {
+            switch (widget) {
+                case "revenue":
+                    return revenue;
+                case "ebitda":
+                    return ebitda;
+                case "kpi":
+                    return kpi;
+            }
+        }
+    );
+
 /**
  * Returns the selected company's financial year end month
  */
@@ -161,7 +184,9 @@ export const getTopInitiativesByCompanyId = createSelector(
     (allInitiatives, selectedCompany) => {
         if (selectedCompany) {
             allInitiatives = allInitiatives || [];
-            return _.take(allInitiatives.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
+            // TOOD: taking the filter out for now until api works
+            // return _.take(allInitiatives.filter((i) => i.companyId === Number(selectedCompany.id)), 3);
+            return allInitiatives;
         } else {
             return [];
         }
