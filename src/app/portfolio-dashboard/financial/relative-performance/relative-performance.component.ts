@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, EventEmitter, Output } from "@angular/core";
 import { PortfolioRelativePerformanceSeries } from "@core/domain/portfolio.model";
 
 @Component({
@@ -9,4 +9,11 @@ import { PortfolioRelativePerformanceSeries } from "@core/domain/portfolio.model
 export class RelativePerformanceComponent {
     @Input()
     public chartData: PortfolioRelativePerformanceSeries[];
+
+    @Output()
+    public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
+
+    public onOpenCompanyDashboard(companyId: string) {
+        this.openCompanyDashboard.emit(companyId);
+    }
 }
