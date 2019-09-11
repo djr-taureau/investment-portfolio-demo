@@ -37,6 +37,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     @Input() selectedPeriod: any;
     @Input() selectedDatePart: any;
     @Input() availablePeriods: any[];
+    @Input() title: string;
 
     @ViewChild("container") container: ElementRef;
 
@@ -280,7 +281,8 @@ export class TimelineComponent implements OnInit, OnChanges {
             minValues = [actualsYMin, budgetYMin, foreYMin, icInitialYMin, icLatestYMin];
             maxValues = [actualsYMax, budgetYMax, foreYMax, this.icInitialYMax, this.icLatestYMax];
         }
-
+        const newMax = d3.max(maxValues) * 1.1;
+        const newMin = d3.min(minValues) * 0.9;
         this.xScale = d3
             .scaleTime()
             .domain(d3.extent(this.dataSet.dates))
@@ -288,7 +290,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .nice();
         this.yScale = d3
             .scaleLinear()
-            .domain([0, d3.max(maxValues)])
+            .domain([newMin, newMax])
             .range([this.dimensions.height - this.dimensions.marginBottom, this.dimensions.marginTop]);
 
         this.actualsScale = d3
@@ -376,6 +378,7 @@ export class TimelineComponent implements OnInit, OnChanges {
                     .attr("class", "y-axis-label")
                     .attr("transform", "rotate(-90)")
                     .text("KPI Detail (M)")
+                    .text(this.title.concat(" ($M)").toLocaleUpperCase())
             );
 
         const line = d3

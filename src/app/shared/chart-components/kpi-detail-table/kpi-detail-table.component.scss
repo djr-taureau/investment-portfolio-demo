@@ -29,7 +29,7 @@
 
     th.row-header {
         width: 140px;
-        width: 60px;
+        width: 70px;
         height: 18px;
         // opacity: 0.75;
         font-family: PostGrotesk;
@@ -130,6 +130,10 @@
 
     td.py-negative {
         color: $pale-red;
+    }
+
+    td.py-na {
+        color: $black;
     }
 
 }
