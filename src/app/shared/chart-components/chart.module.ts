@@ -14,6 +14,7 @@ import { CirclesComponent } from "./chart/circles/circles.component";
 import { BarsComponent } from "./chart/bars/bars.component";
 import { GradientComponent } from "./chart/gradient/gradient.component";
 import { SummaryWidgetComponent } from "./summary-widget/summary-widget.component";
+import { GhostSummaryWidgetComponent } from "./summary-widget/ghost-summary-widget.component";
 import { MicroBarComponent } from "./micro-bar/micro-bar.component";
 import { MicroLineComponent } from "./micro-line/micro-line.component";
 import { TimelineComponent } from "./timeline/timeline.component";
@@ -42,6 +43,7 @@ export const COMPONENTS = [
     MultiLineKendoComponent,
     MultiLineComponent,
     SummaryWidgetComponent,
+    GhostSummaryWidgetComponent,
     SummaryWidgetContainer,
     TimelineComponent,
     QuadrantScatterComponent

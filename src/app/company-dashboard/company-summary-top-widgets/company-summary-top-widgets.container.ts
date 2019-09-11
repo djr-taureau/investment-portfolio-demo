@@ -48,7 +48,6 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
      * List of revenue summary line chart data.
      */
     public revenueSummaryLineChartData$: Observable<RevenueSeriesData[]>;
-    public revenueSummaryLineChartData: RevenueSeriesData[] = [];
 
     /**
      * List of revenue summary percent change from a prior period bar chart data.
@@ -112,6 +111,16 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
     public displayEbitdaDetail: Observable<boolean>;
 
     /**
+     * Flag indicating if revenue data is loading.
+     */
+    public revenueLoading$: Observable<boolean>;
+
+    /**
+     * Flag indicating if EBITDA data is loading.
+     */
+    public ebitdaLoading$: Observable<boolean>;
+
+    /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
@@ -143,23 +152,27 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
 
         // Revenue summary chart data.
-        this.revenueAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal("revenue")));
-        this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromWidget.getBarChart1Total("revenue")));
-        this.revenueChangeFromPriorBudget$ = this.store$.pipe(select(fromWidget.getBarChart2Total("revenue")));
+        const revenue = "revenue";
+        this.revenueLoading$ = this.store$.pipe(select(fromWidget.getIsLoading(revenue)));
+        this.revenueAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal(revenue)));
+        this.revenueChangeFromPriorPeriod$ = this.store$.pipe(select(fromWidget.getBarChart1Total(revenue)));
+        this.revenueChangeFromPriorBudget$ = this.store$.pipe(select(fromWidget.getBarChart2Total(revenue)));
         // TODO: do this one
-        this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("revenue")));
-        this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("revenue")));
-        this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("revenue")));
+        this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData(revenue)));
+        this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData(revenue)));
+        this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData(revenue)));
         this.displayRevenueDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowRevenueDetail));
 
         // EBITDA summary chart data.
-        this.ebitdaAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal("ebitda")));
-        this.ebitdaChangeFromPriorPeriod$ = this.store$.pipe(select(fromWidget.getBarChart1Total("ebitda")));
-        this.ebitdaChangeFromPriorBudget$ = this.store$.pipe(select(fromWidget.getBarChart2Total("ebitda")));
+        const ebdita = "ebitda";
+        this.ebitdaLoading$ = this.store$.pipe(select(fromWidget.getIsLoading(ebdita)));
+        this.ebitdaAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal(ebdita)));
+        this.ebitdaChangeFromPriorPeriod$ = this.store$.pipe(select(fromWidget.getBarChart1Total(ebdita)));
+        this.ebitdaChangeFromPriorBudget$ = this.store$.pipe(select(fromWidget.getBarChart2Total(ebdita)));
         // TODO: do this one
-        this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("ebitda")));
-        this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("ebitda")));
-        this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("ebitda")));
+        this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData(ebdita)));
+        this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData(ebdita)));
+        this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData(ebdita)));
         this.displayEbitdaDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowEBITDADetail));
 
         // Cash

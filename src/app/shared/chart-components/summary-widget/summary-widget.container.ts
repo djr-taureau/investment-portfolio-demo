@@ -123,7 +123,7 @@ export class SummaryWidgetContainer implements OnInit {
     public changeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
 
     /**
-     * Flag indicating if the KPI detail is dispalyed.
+     * Flag indicating if the KPI detail is displayed.
      */
     public displayKpiDetail: Observable<boolean>;
 
