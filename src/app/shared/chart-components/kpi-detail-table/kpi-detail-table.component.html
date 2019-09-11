@@ -40,22 +40,6 @@
         <td class="revenue-value cell"
             *ngFor="let asOf of tableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | shortNumber:'1.1-1'  }}</td>
     </tr>
-    <tr *ngIf="vsPqDataShow">
-        <th class="row-header"
-            scope="row">
-            vs PQ
-        </th>
-        <td *ngFor="let vsPq of tableDataVsPq; let i=index; trackBy: trackByFn"
-            class="cell"
-            [ngClass]="
-                {
-                    'py-positive': vsPq > 0,
-                    'py-negative': vsPq < 0,
-                    'py-na': isUnknownValue(vsPq)
-                }">
-            {{ vsPq | percentOrNa: true }}
-        </td>
-    </tr>
     <tr *ngIf="vsPyDataShow">
         <th class="row-header"
             scope="row">
@@ -70,6 +54,22 @@
                     'py-na': isUnknownValue(vsPy)
                 }">
             {{ vsPy | percentOrNa: true }}
+        </td>
+    </tr>
+    <tr *ngIf="vsPqDataShow">
+        <th class="row-header"
+            scope="row">
+            vs PQ
+        </th>
+        <td *ngFor="let vsPq of tableDataVsPq; let i=index; trackBy: trackByFn"
+            class="cell"
+            [ngClass]="
+                {
+                    'py-positive': vsPq > 0,
+                    'py-negative': vsPq < 0,
+                    'py-na': isUnknownValue(vsPq)
+                }">
+            {{ vsPq | percentOrNa: true }}
         </td>
     </tr>
     <tr *ngIf="vsBudDataShow">
