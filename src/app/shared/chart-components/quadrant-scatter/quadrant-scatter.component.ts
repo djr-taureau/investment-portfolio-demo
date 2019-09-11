@@ -130,6 +130,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         const minX = d3.min(this._data.map((d) => Math.abs(d.x)));
 
         // this.groups = ["USA", "CAN", "CHN", "GBR"];
+        this.groups = _.uniq(_.map(this.data, "group"));
 
         this.color = d3
             .scaleOrdinal(d3.schemeCategory10)
