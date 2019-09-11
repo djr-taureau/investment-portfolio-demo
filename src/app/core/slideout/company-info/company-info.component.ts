@@ -23,6 +23,14 @@ export class CompanyInfoComponent {
                 })
                 .join(", ");
             this._company.typeString = this.setCompanyType(this._company.type);
+            //  SS says these are the values but not getting them back  "LT_100_M" "GT_100_M"
+            if (this._company.revenueStage && this._company.revenueStage === "LT_100M") {
+                this._company.revenueStageDisplay = "< $100M";
+            } else if (this._company.revenueStage && this._company.revenueStage === "GT_100M") {
+                this._company.revenueStageDisplay = "> $100M";
+            } else {
+                this._company.revenueStageDisplay = "";
+            }
         }
     }
     public get company(): Company {

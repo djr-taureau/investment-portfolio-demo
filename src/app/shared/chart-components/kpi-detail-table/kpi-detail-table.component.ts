@@ -12,10 +12,10 @@ export class KpiDetailTableComponent {
     private static logger: Logger = Logger.getLogger("KpiDetailTableComponent");
     @Input() data: any;
     @Input() tableDataHeaders: string[];
-    @Input() tableDataAsOf: number[];
+    @Input() tableDataAsOf: any[];
 
     @Input()
-    set tableDataVsPy(data: number[]) {
+    set tableDataVsPy(data: any[]) {
         if (data && data.length > 0) {
             this.vsPyData = data;
             this.vsPyDataShow = true;
@@ -30,7 +30,7 @@ export class KpiDetailTableComponent {
     public vsPyDataShow = false;
 
     @Input()
-    set tableDataVsPq(data: number[]) {
+    set tableDataVsPq(data: any[]) {
         if (data && data.length > 0) {
             this.vsPqData = data;
             this.vsPqDataShow = true;
@@ -45,7 +45,7 @@ export class KpiDetailTableComponent {
     public vsPqDataShow = false;
 
     @Input()
-    set tableDataVsBud(data: number[]) {
+    set tableDataVsBud(data: any[]) {
         if (data && data.length > 0) {
             this.vsBudData = data;
             this.vsBudDataShow = true;
@@ -60,7 +60,7 @@ export class KpiDetailTableComponent {
     public vsBudDataShow = false;
 
     @Input()
-    set tableDataVsForecast(data: number[]) {
+    set tableDataVsForecast(data: any[]) {
         if (data && data.length > 0) {
             this.vsForecastData = data;
             this.vsForecastDataShow = true;
@@ -75,7 +75,7 @@ export class KpiDetailTableComponent {
     public vsForecastDataShow = false;
 
     @Input()
-    set tableDataVsIcInitial(data: number[]) {
+    set tableDataVsIcInitial(data: any[]) {
         if (data && data.length > 0) {
             this.vsIcInitialData = data;
             this.vsIcInitialDataShow = true;
@@ -90,7 +90,7 @@ export class KpiDetailTableComponent {
     public vsIcInitialDataShow = false;
 
     @Input()
-    set tableDataVsIcLatest(data: number[]) {
+    set tableDataVsIcLatest(data: any[]) {
         if (data && data.length > 0) {
             this.vsIcLatestData = data;
             this.vsIcLatestDataShow = true;

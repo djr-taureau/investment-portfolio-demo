@@ -50,6 +50,7 @@ export interface Company {
     aka: string;
     ceo: string;
     revenueStage: string;
+    revenueStageDisplay?: string;
     headquarters: Address;
     founders: string[];
     foundedDate: string;

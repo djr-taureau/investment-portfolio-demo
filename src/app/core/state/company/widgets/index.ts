@@ -334,10 +334,9 @@ export const getTableDataHeaders = (widget: string, id?: string) =>
                 const dateDataList: any[] = ObjectUtil.getNestedPropIfExists(tableData, [datePartKey], []);
                 const actualIndex: number = dateDataList.findIndex((item) => item.scenarioName === scenarioName);
                 const data: any[] = ObjectUtil.getNestedPropIfExists(dateDataList, [String(actualIndex), "data"], []);
-                let i = 0;
                 return data.map((item) => {
                     const year = item.date.substr(2, 2);
-                    return `${(i++).toString()}${datePart.id}${year} ${item.sourceType}`;
+                    return `${item.financialQuarter.toString()}${datePart.id}${year} ${item.sourceType}`;
                 });
             } else {
                 return [];
