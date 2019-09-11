@@ -41,11 +41,11 @@ export class TimelineComponent implements OnInit, OnChanges {
     @ViewChild("container") container: ElementRef;
 
     public timePeriods: any[];
-    public actualsVis: boolean;
-    public forecastVis: boolean;
-    public budgetVis: boolean;
-    public icLatestVis: boolean;
-    public icInitialVis: boolean;
+    public actualsVis = true;
+    public forecastVis = true;
+    public budgetVis = true;
+    public icInitialVis = true;
+    public icLatestVis = true;
 
     actualsData;
     budgetData;
