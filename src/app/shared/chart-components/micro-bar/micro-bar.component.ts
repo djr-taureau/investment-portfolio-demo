@@ -49,11 +49,11 @@ export class MicroBarComponent implements OnInit {
     lineY2: any;
     selectedValue: boolean;
     dimensions: DimensionsType = {
-        marginTop: 3,
+        marginTop: 2,
         marginRight: 5,
         marginBottom: 15,
         marginLeft: 2,
-        height: 60,
+        height: 70,
         width: 71
     };
 
@@ -87,9 +87,8 @@ export class MicroBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        MicroBarComponent.logger.debug(`constructor()`);
+        MicroBarComponent.logger.debug(`ngOnInit()`);
         this.initialized = true;
-        this.setDimensions();
         this.svg = this.createSvg();
         this.yAccessor = (v) => {
             if (!!v) {
@@ -205,6 +204,19 @@ export class MicroBarComponent implements OnInit {
         this.rx = 2;
         this.ry = 2;
 
+        const add = (a, b) => a + b;
+        if (dataLength >= 1 && this.dataValues.reduce(add) !== 0) {
+            this.svg
+                .append("line")
+                .attr("x1", this.xScale(this.indexSelected - 1) + 2.5 + this.barWidth / 2)
+                .attr("y1", -50)
+                .attr("x2", this.xScale(this.indexSelected - 1) + 2.5 + this.barWidth / 2)
+                .attr("y2", 25)
+                .attr("class", "select-barline")
+                .style("stroke-width", 1)
+                .style("stroke", "#dbe3f1");
+        }
+
         this.svg
             .selectAll("bar")
             .data(posData)
@@ -293,18 +305,5 @@ export class MicroBarComponent implements OnInit {
                    `);
                 }
             });
-
-        const add = (a, b) => a + b;
-        if (dataLength >= 1 && this.dataValues.reduce(add) !== 0) {
-            this.svg
-                .append("line")
-                .attr("x1", this.xScale(this.indexSelected - 1) + this.barWidth / 2)
-                .attr("y1", 0)
-                .attr("x2", this.xScale(this.indexSelected - 1) + this.barWidth / 2)
-                .attr("y2", this.lineY2)
-                .attr("class", "select-barline")
-                .style("stroke-width", 1)
-                .style("stroke", "#dbe3f1");
-        }
     }
 }

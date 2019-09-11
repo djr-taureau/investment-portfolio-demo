@@ -12,7 +12,7 @@ import { DimensionsType } from "../interfaces/types";
     templateUrl: "./timeline.component.html",
     styleUrls: ["./timeline.component.scss"]
 })
-export class TimelineComponent implements OnInit {
+export class TimelineComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input()
@@ -35,8 +35,8 @@ export class TimelineComponent implements OnInit {
     @Input() valueAccessor?: any;
     @Input() yLabelVisible?: boolean;
     @Input() selectedPeriod: any;
+    @Input() selectedDatePart: any;
     @Input() availablePeriods: any[];
-    @Input() title: string;
 
     @ViewChild("container") container: ElementRef;
 
@@ -44,7 +44,14 @@ export class TimelineComponent implements OnInit {
     public actualsVis = true;
     public forecastVis = true;
     public budgetVis = true;
-    public icVis: boolean;
+    public icInitialVis = true;
+    public icLatestVis = true;
+
+    actualsData;
+    budgetData;
+    forecastData;
+    icInitialData;
+    icLatestData;
 
     el: HTMLElement;
     dimensions: DimensionsType;
@@ -53,13 +60,17 @@ export class TimelineComponent implements OnInit {
     actualsScale: any;
     budgetScale: any;
     forecastScale: any;
-    icScale: any;
+    icLatestScale: any;
+    icInitialScale: any;
+    icLatestYMax;
+    icInitialYMax;
     xAxisTickValues: any[];
     yAxisTickValues: any[];
-
+    tooltip: (selection) => void;
     yTickValues: any[];
 
     y0AccessorScaled: any;
+    datePartId: string;
     y0BudgetAccessorScaled: any;
     y0ForecastAccessorScaled: any;
     parseDate = d3.timeParse("%Y-%m-%d");
@@ -101,13 +112,14 @@ export class TimelineComponent implements OnInit {
     constructor(elementRef: ElementRef) {
         TimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
-            marginTop: 70,
+            marginTop: 50,
             marginRight: 20,
             marginBottom: 20,
-            marginLeft: 25,
-            height: 280,
-            width: 550
+            marginLeft: 55,
+            height: 270,
+            width: 606
         };
+
         this.dimensions = {
             ...this.dimensions,
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
@@ -124,6 +136,7 @@ export class TimelineComponent implements OnInit {
 
     ngOnInit() {
         TimelineComponent.logger.debug(`ngOnInit()`);
+
         this.yAxisTickValues = [0, 150, 300, 450, 600, 750];
         this.timePeriods = [];
         this.xAccessor = (v) => v.date;
@@ -135,33 +148,47 @@ export class TimelineComponent implements OnInit {
             .attr("height", this.dimensions.height)
             .append("g");
         this.svg.append("g").attr("transform", "translate(" + this.dimensions.marginLeft + "," + this.dimensions.marginTop + ")");
-        this.update();
+    }
+
+    ngOnChanges() {
+        //  this.updateScales();
     }
 
     private update(): void {
         if ((this.allLineChartData || []).length < 1 || !this.selectedPeriod) {
             return;
         }
-        d3.select(this.el)
-            .selectAll("line.select-timeline")
+
+        this.svg.selectAll("line.select-timeline").remove();
+        this.svg.selectAll("path.actuals-path").remove();
+        this.svg.selectAll("path.budget-path").remove();
+        this.svg.selectAll("path.forecast-path").remove();
+        this.svg
+            .selectAll("#multi-timeline")
+            .selectAll(".tooltip")
             .remove();
-        d3.select(this.el)
-            .selectAll("g.line.actuals")
-            .remove();
-        d3.select(this.el)
-            .selectAll("g.line.budget")
-            .remove();
-        d3.select(this.el)
-            .selectAll("g.line.forecast")
-            .remove();
+        this.svg.selectAll("circle.actuals-dot").remove();
+        this.svg.selectAll("circle.icLatest-dot").remove();
+        this.svg.selectAll("circle.icInitial-dot").remove();
+        this.svg.selectAll("circle.budget-dot").remove();
+        this.svg.selectAll("circle.forecast-dot").remove();
 
         this.yAccessor = (v) => v.value;
         this.activeStyle = "not-visible";
         const getPeriodId = _.get(this, "selectedPeriod.id", null);
         this.dateSelected = _.get(this, "selectedPeriod.date", null);
         const getDateSelectedString = _.get(this, "selectedPeriod.formatted", null);
-        this.dateSelectedString = `${getDateSelectedString.substr(2, 1)}${getDateSelectedString.substr(1, 1)}${getDateSelectedString.substr(6, 2)}`;
+        this.datePartId = _.get(this, "selectedDatePart.id", null);
+        if (this.datePartId === "Y") {
+            this.dateSelectedString = `${getDateSelectedString.substr(4, 4)}`;
+        } else {
+            this.dateSelectedString = `${getDateSelectedString.substr(2, 1)}${getDateSelectedString.substr(1, 1)}${getDateSelectedString.substr(
+                6,
+                2
+            )}`;
+        }
         const getData = this.allLineChartData.map((v) => _.pick(v, ["scenarioName", "data"]));
+        console.log(getData);
         this.scenarioNames = getData;
         let newVals = [];
         let quarters;
@@ -177,7 +204,7 @@ export class TimelineComponent implements OnInit {
         const periodStrings = _.forEach(
             _.zip(quarters, this.timePeriods),
             _.spread((q, d) => {
-                periods = periods.concat(`${q}Q${d.substr(2, 2)}`);
+                this.datePartId === "Q" ? (periods = periods.concat(`${q}Q${d.substr(2, 2)}`)) : (periods = periods.concat(`${d.substr(0, 4)}`));
                 return periods;
             })
         );
@@ -205,33 +232,54 @@ export class TimelineComponent implements OnInit {
         this.svg.selectAll(".scenarios").remove();
         this.svg.selectAll(".actuals-path").remove();
         this.svg.selectAll(".budget-path").remove();
+        this.svg.selectAll(".icLatest-path").remove();
+        this.svg.selectAll(".icInitial-path").remove();
         this.svg.selectAll(".tick-selected-value").remove();
         this.svg.selectAll(".forecast-path").remove();
         this.svg.selectAll("circle.actuals-dot").remove();
+        this.svg.selectAll("circle.icLatest-dot").remove();
+        this.svg.selectAll("circle.icInitial-dot").remove();
         this.svg.selectAll("circle.budget-dot").remove();
         this.svg.selectAll("circle.forecast-dot").remove();
         this.svg.selectAll(".xAxis").remove();
-        this.svg.selectAll(".tooltip").remove();
+        this.svg
+            .selectAll("#multi-timeline")
+            .selectAll(".tooltip")
+            .remove();
         this.xAccessor = (v) => this.parseDate(v.date);
 
         const seriesData = this.dataSet.series;
         const seriesNames = _.map(seriesData, "name");
         const actuals = _.find(seriesData, ["name", "actual"]);
-        const millions = (n) => n / 1000000;
-        let actualsData = _.map(actuals.values, millions);
         const budget = _.find(seriesData, ["name", "managementBudget"]);
         const fore = _.find(seriesData, ["name", "managementForecast"]);
-        const budgetData = _.map(budget.values, millions);
-        const forecastData = _.map(fore.values, millions);
-        const actualsYMin = d3.min(actualsData);
-        const actualsYMax = d3.max(actualsData);
-        const budgetYMin = d3.min(budgetData);
-        const budgetYMax = d3.max(budgetData);
-        const foreYMin = d3.min(forecastData);
-        const foreYMax = d3.max(forecastData);
-        actualsData = _.take(actualsData, actualsData.length - 1);
-        const minValues = [actualsYMin, budgetYMin, foreYMin];
-        const maxValues = [actualsYMax, budgetYMax, foreYMax];
+
+        const millions = (n) => n / 1000000;
+        this.actualsData = _.map(actuals.values, millions);
+        this.budgetData = _.map(budget.values, millions);
+        this.forecastData = _.map(fore.values, millions);
+
+        const actualsYMin = d3.min(this.actualsData);
+        const actualsYMax = d3.max(this.actualsData);
+        const budgetYMin = d3.min(this.budgetData);
+        const budgetYMax = d3.max(this.budgetData);
+        const foreYMin = d3.min(this.forecastData);
+        const foreYMax = d3.max(this.forecastData);
+        this.actualsData = _.take(this.actualsData, this.actualsData.length - 1);
+        let minValues = [actualsYMin, budgetYMin, foreYMin];
+        let maxValues = [actualsYMax, budgetYMax, foreYMax];
+        if (_.size(seriesData) > 3) {
+            const icLatest = _.find(seriesData, ["name", "icLatest"]);
+            const icInitial = _.find(seriesData, ["name", "icInitial"]);
+            this.icLatestData = _.map(icLatest.values, millions);
+            this.icInitialData = _.map(icInitial.values, millions);
+            const icLatestYMin = d3.min(this.icLatestData);
+            this.icLatestYMax = d3.max(this.icLatestData);
+            const icInitialYMin = d3.min(this.icInitialData);
+            this.icInitialYMax = d3.max(this.icInitialData);
+            minValues = [actualsYMin, budgetYMin, foreYMin, icInitialYMin, icLatestYMin];
+            maxValues = [actualsYMax, budgetYMax, foreYMax, this.icInitialYMax, this.icLatestYMax];
+        }
 
         this.xScale = d3
             .scaleTime()
@@ -240,25 +288,38 @@ export class TimelineComponent implements OnInit {
             .nice();
         this.yScale = d3
             .scaleLinear()
-            .domain([0, 750])
+            .domain([0, d3.max(maxValues)])
             .range([this.dimensions.height - this.dimensions.marginBottom, this.dimensions.marginTop]);
 
         this.actualsScale = d3
             .scaleLinear()
-            .domain([0, 750])
+            .domain([0, 950])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
         this.budgetScale = d3
             .scaleLinear()
-            .domain([0, 750])
+            .domain([0, budgetYMax])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
         this.forecastScale = d3
             .scaleLinear()
-            .domain([0, 750])
+            .domain([0, foreYMax])
             .range([this.dimensions.boundedHeight, 0])
             .nice();
-
+        if (this.icLatestData) {
+            this.icLatestScale = d3
+                .scaleLinear()
+                .domain([0, this.icLatestYMax])
+                .range([this.dimensions.boundedHeight, 0])
+                .nice();
+        }
+        if (this.icInitialData) {
+            this.icInitialScale = d3
+                .scaleLinear()
+                .domain([0, this.icInitialYMax])
+                .range([this.dimensions.boundedHeight, 0])
+                .nice();
+        }
         const xAxis = this.svg
             .append("g")
             .attr("transform", `translate(0,${this.dimensions.height - this.dimensions.marginBottom})`)
@@ -278,28 +339,23 @@ export class TimelineComponent implements OnInit {
         this.svg
             .append("g")
             .attr("class", "axis-grid")
-            .attr("transform", "translate(55, 0)")
+            .attr("transform", "translate(70, 0)")
             .call(
                 this.gridlines()
                     .tickSize(-this.dimensions.width)
                     .tickFormat("")
             )
-            .call((g) => g.select("g.tick.tick:nth-child(2) line").attr("class", "y-axis-zero-line"))
-            .call((g) => g.select("g.tick.tick:nth-child(3) line").attr("class", "y-axis-remove-line"));
-        // todo:: djr
-        // xAxis
-        //     .select("g.tick.tick:nth-child(5) text`)")
-        //     .data(this.timePeriods[this.indexDateSelected])
-        //     .enter()
-        //     .attr("class", "tick-selected-value");
-
+            .style("fill", "black")
+            .style("stroke", "red")
+            .call((g) => g.select("g.tick.tick:nth-child(2) line").attr("class", "y-axis-zero-line"));
+        this.svg
+            .selectAll("line.y-axis-zero-line")
+            .style("fill", "#68758c")
+            .style("stroke", "#68758c")
+            .style("opacity", "0.8");
         const yAxis = d3
             .axisLeft(this.yScale)
-            .tickValues(this.yAxisTickValues)
-            .tickFormat((d, i) => {
-                return this.yAxisTickValues[i] !== 150 ? d : "";
-            })
-            .tickPadding(-15)
+            .ticks(5)
             .tickSizeOuter(20)
             .tickSizeInner(20);
 
@@ -314,12 +370,12 @@ export class TimelineComponent implements OnInit {
                 g
                     .select(".tick:last-of-type text")
                     .clone()
-                    .attr("x", 0 - this.dimensions.height / 3)
-                    .attr("y", 0 - this.dimensions.marginLeft + 5)
+                    .attr("x", 0 - this.dimensions.height / 2)
+                    .attr("y", -50)
                     .attr("text-anchor", "start")
                     .attr("class", "y-axis-label")
                     .attr("transform", "rotate(-90)")
-                    .text(this.title.concat(" (M)").toLocaleUpperCase())
+                    .text("KPI Detail (M)")
             );
 
         const line = d3
@@ -330,7 +386,7 @@ export class TimelineComponent implements OnInit {
 
         this.svg
             .append("path")
-            .datum(actualsData)
+            .datum(this.actualsData)
             .attr("class", "actuals-path")
             .attr("fill", "none")
             .attr("stroke", "#124f8c")
@@ -339,7 +395,7 @@ export class TimelineComponent implements OnInit {
 
         this.svg
             .append("path")
-            .datum(budgetData)
+            .datum(this.budgetData)
             .attr("class", "budget-path")
             .attr("fill", "none")
             .attr("stroke", "#124f8c")
@@ -349,17 +405,40 @@ export class TimelineComponent implements OnInit {
 
         this.svg
             .append("path")
-            .datum(forecastData)
+            .datum(this.forecastData)
             .attr("class", "forecast-path")
             .attr("fill", "none")
             .attr("stroke", "#47a2d6")
             .attr("opacity", "0.75")
             .attr("stroke-width", 1)
             .attr("d", line);
+        if (this.icLatestData) {
+            this.svg
+                .append("path")
+                .datum(this.icLatestData)
+                .attr("class", "icLatest-path")
+                .attr("fill", "none")
+                .attr("stroke", "#ebc034")
+                .attr("opacity", "0.75")
+                .attr("stroke-width", 1)
+                .attr("d", line);
+        }
+
+        if (this.icInitialData) {
+            this.svg
+                .append("path")
+                .datum(this.icInitialData)
+                .attr("class", "icInitial-path")
+                .attr("fill", "none")
+                .attr("stroke", "#ebc034")
+                .attr("opacity", "0.75")
+                .attr("stroke-width", 1)
+                .attr("d", line);
+        }
 
         this.svg
             .selectAll(".dot")
-            .data(actualsData)
+            .data(this.actualsData)
             .enter()
             .append("circle")
             .attr("class", (d, i) => {
@@ -387,7 +466,7 @@ export class TimelineComponent implements OnInit {
 
         this.svg
             .selectAll(".dot")
-            .data(budgetData)
+            .data(this.budgetData)
             .enter()
             .append("circle")
             .attr("class", "budget-dot")
@@ -403,7 +482,7 @@ export class TimelineComponent implements OnInit {
 
         this.svg
             .selectAll(".dot")
-            .data(forecastData)
+            .data(this.forecastData)
             .enter()
             .append("circle")
             .attr("class", "forecast-dot")
@@ -419,6 +498,47 @@ export class TimelineComponent implements OnInit {
             .on("mousemove", this.moveToolTip)
             .on("mouseleave", this.hideToolTip);
 
+        if (this.icLatestData) {
+            this.svg
+                .selectAll(".dot")
+                .data(this.icLatestData)
+                .enter()
+                .append("circle")
+                .attr("class", "icLatest-dot")
+                .attr("r", 3)
+                .attr("width", "6px")
+                .attr("height", "6px")
+                .style("stroke", "#ebc034")
+                .style("fill", "white")
+                .style("stroke-size", "1")
+                .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
+                .attr("cy", (d) => this.yScale(d))
+                .on("mouseover", this.showToolTip)
+                .on("mousemove", this.moveToolTip)
+                .on("mouseleave", this.hideToolTip);
+        }
+
+        if (this.icInitialData) {
+            this.svg
+                .selectAll(".dot")
+                .data(this.icInitialData)
+                .enter()
+                .append("circle")
+                .attr("class", "icInital-dot")
+                .attr("r", 3)
+                .attr("width", "6px")
+                .attr("height", "6px")
+                .style("stroke", "#ebc034")
+                .style("fill", "white")
+                .style("stroke-size", "1")
+                .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
+                .attr("cy", (d) => this.yScale(d))
+                .on("mouseover", this.showToolTip)
+                .on("mousemove", this.moveToolTip)
+                .on("mouseleave", this.hideToolTip)
+                .append("svg:title")
+                .text((d, i) => `${this.dataSet.dates}${d}`);
+        }
         this.toolTip = d3
             .select("#multi-timeline")
             .append("div")
@@ -430,11 +550,11 @@ export class TimelineComponent implements OnInit {
             .style("border-width", "2px")
             .style("border-radius", "5px")
             .style("padding", "5px");
-        this.showToolTip = (d) => {
+        this.showToolTip = (d, i) => {
             this.toolTip.transition().duration(1000);
             this.toolTip
                 .style("opacity", 1)
-                .html((i) => this.dataSet.dates[i] + "  " + actualsData[i])
+                // .html((d, i) => this.timePeriods[i] + "  " + this.actualsData[i] + "  " + this.budgetData[i] + "  " + this.forecastData[i])
                 .style("left", d3.mouse(d3.event.currentTarget)[0] + 30 + "px")
                 .style("top", d3.mouse(d3.event.currentTarget)[1] + 30 + "px");
         };
@@ -442,7 +562,6 @@ export class TimelineComponent implements OnInit {
             this.toolTip.style("left", d3.mouse(d3.event.currentTarget)[0] + 70 + "px").style("top", d3.mouse(d3.event.currentTarget)[1] + "px");
         };
         this.hideToolTip = (d) => {
-            d3.select(d3.event.currentTarget).style("stroke", "none");
             this.toolTip
                 .transition()
                 .duration(1000)
@@ -451,7 +570,7 @@ export class TimelineComponent implements OnInit {
     }
 
     gridlines() {
-        return d3.axisLeft(this.yScale).tickValues(this.yAxisTickValues);
+        return d3.axisLeft(this.yScale).ticks(5);
     }
 
     toggleVisibility(event) {
@@ -476,8 +595,18 @@ export class TimelineComponent implements OnInit {
                 this.svg.select(".forecast-path").style("opacity", newOpacity);
                 this.svg.selectAll("circle.forecast-dot").style("opacity", newOpacity);
                 break;
-            case "ic":
-                this.forecastVis = !this.forecastVis;
+            case "icLatest":
+                this.icLatestVis = !this.icLatestVis;
+                newOpacity = this.icLatestVis ? 1 : 0;
+                this.svg.select(".icLatest-path").style("opacity", newOpacity);
+                this.svg.selectAll("circle.icLatest-dot").style("opacity", newOpacity);
+                break;
+            case "icInitial":
+                this.icInitialVis = !this.icInitialVis;
+                newOpacity = this.icInitialVis ? 1 : 0;
+                this.svg.select(".icIntial-path").style("opacity", newOpacity);
+                this.svg.selectAll("circle.icInitial-dot").style("opacity", newOpacity);
+                break;
         }
     }
 }

@@ -121,6 +121,7 @@ export class MicroLineComponent implements OnInit {
 
     ngOnInit() {
         MicroLineComponent.logger.debug(`ngOnInit()`);
+        MicroLineComponent.logger.debug(`ngOnInit()`);
         this.initialized = true;
         this.svg = this.createSvg();
         this.yAccessor = (v) => {

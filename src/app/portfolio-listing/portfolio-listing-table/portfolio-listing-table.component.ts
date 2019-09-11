@@ -33,7 +33,6 @@ export class Group {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PortfolioListingTableComponent implements OnInit {
-
     @Input()
     public set tableData(value: PortfolioTableItem[]) {
         if (value) {
