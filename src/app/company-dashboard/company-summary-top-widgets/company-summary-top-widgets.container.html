@@ -11,6 +11,7 @@
     -->
     <div class="chart">
         <sbp-summary-widget class="hand-cursor"
+                            *ngIf="!(revenueLoading$ | async)"
                             [selected]="displayRevenueDetail | async"
                             [lineChartData]="revenueSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
@@ -27,6 +28,11 @@
                             [icValue]="revenueChangeFromPriorBudget$ | async"
                             (click)="onRevenueClick()">
         </sbp-summary-widget>
+
+        <sbp-ghost-summary-widget *ngIf="revenueLoading$ | async"
+                                  [selected]="displayRevenueDetail | async">
+        </sbp-ghost-summary-widget>
+
     </div>
 
     <!--
@@ -36,6 +42,7 @@
     -->
     <div class="chart">
         <sbp-summary-widget class="hand-cursor"
+                            *ngIf="!(ebitdaLoading$ | async)"
                             [selected]="displayEbitdaDetail | async"
                             [lineChartData]="ebitdaSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
@@ -51,6 +58,10 @@
                             [icValue]="ebitdaChangeFromPriorBudget$ | async"
                             (click)="onEbitdaClick()">
         </sbp-summary-widget>
+
+        <sbp-ghost-summary-widget *ngIf="ebitdaLoading$ | async"
+                                  [selected]="displayEbitdaDetail | async">
+        </sbp-ghost-summary-widget>
     </div>
 
     <!--

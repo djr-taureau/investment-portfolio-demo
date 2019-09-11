@@ -42,6 +42,14 @@ export const getChartDataPeriodSets = createSelector(
     fromCompanyKpi.getChartDataPeriodSets
 );
 
+export const getIsLoading = (child: string, id?: string) =>
+    createSelector(
+        selectChildState(child),
+        (childState) => {
+            return !!childState.isLoading;
+        }
+    );
+
 export const getMetricsGraph = (child: string, id?: string) =>
     createSelector(
         selectChildState(child),

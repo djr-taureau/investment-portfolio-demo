@@ -6,12 +6,14 @@ import { Logger } from "@util/logger";
 import { select, Store } from "@ngrx/store";
 import * as fromWidgets from "@core/state/company/widgets";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
+import * as fromWidget from "@core/state/company/widgets";
 
 @Component({
     selector: "sbp-summary-widget-container",
     template: `
         <sbp-summary-widget
             class="hand-cursor"
+            *ngIf="!(kpiLoading$ | async)"
             [selected]="displayKpiDetail | async"
             [lineChartData]="summaryLineChartData$ | async"
             [selectedPeriod]="selectedPeriod$ | async"
@@ -123,7 +125,7 @@ export class SummaryWidgetContainer implements OnInit {
     public changeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
 
     /**
-     * Flag indicating if the KPI detail is dispalyed.
+     * Flag indicating if the KPI detail is displayed.
      */
     public displayKpiDetail: Observable<boolean>;
 
@@ -164,12 +166,13 @@ export class SummaryWidgetContainer implements OnInit {
         this.availablePeriods$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCompanyAvailablePeriods));
 
         // Set up the summary widget's data providers.
-        this.asOf$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartTotal("kpi", this.id)));
-        this.changeFromPriorPeriod$ = this.store$.pipe(select(fromWidgets.getBarChart1Total("kpi", this.id)));
-        this.changeFromPriorBudget$ = this.store$.pipe(select(fromWidgets.getBarChart2Total("kpi", this.id)));
-        this.summaryLineChartData$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartData("kpi", this.id)));
-        this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart1GraphData("kpi", this.id)));
-        this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart2GraphData("kpi", this.id)));
+        const kpi = "kpi";
+        this.asOf$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartTotal(kpi, this.id)));
+        this.changeFromPriorPeriod$ = this.store$.pipe(select(fromWidgets.getBarChart1Total(kpi, this.id)));
+        this.changeFromPriorBudget$ = this.store$.pipe(select(fromWidgets.getBarChart2Total(kpi, this.id)));
+        this.summaryLineChartData$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartData(kpi, this.id)));
+        this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart1GraphData(kpi, this.id)));
+        this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart2GraphData(kpi, this.id)));
         this.displayKpiDetail = this.store$.pipe(select(fromCompanyDashboardLayout.isKpiIdSelected(this.id)));
     }
 

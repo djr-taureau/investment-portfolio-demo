@@ -35,6 +35,16 @@ export class CompanySummaryKpiWidgetsContainer implements OnInit {
     public typeEnum = WidgetTypeEnum;
 
     /**
+     * Default number of ghosted KPI widgets.
+     */
+    public ghosts = [1, 2, 3, 4];
+
+    /**
+     * Flag indicating of KPI data is loading.
+     */
+    public kpiLoading$: Observable<boolean>;
+
+    /**
      * Expose so the HTML template can use it.
      */
     public trackByFn = AngularUtils.trackByFn;
@@ -51,6 +61,8 @@ export class CompanySummaryKpiWidgetsContainer implements OnInit {
      */
     public ngOnInit() {
         CompanySummaryKpiWidgetsContainer.logger.debug(`ngOnInit()`);
+
+        this.kpiLoading$ = this.store$.pipe(select(fromWidgets.getIsLoading("kpi")));
 
         // KPI summary charts data.
         this.chartDataPeriodSets$ = this.store$.pipe(select(fromWidgets.getChartDataPeriodSets));
