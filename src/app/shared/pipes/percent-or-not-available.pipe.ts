@@ -15,13 +15,15 @@ export class PercentOrNotAvailablePipe implements PipeTransform {
     /**
      * Convert the number into millions with one decimal place.
      */
-    transform(value: any, digits: string = "1.1-1"): string {
+    transform(value: any, usePlus: boolean = false, digits: string = "1.1-1"): string {
         if (value === 0) {
             return "0%";
         } else if (Unknown.isUnknownValue(value) || !value) {
             return Unknown.DISPLAY_VALUE;
         }
 
-        return `${this.decimalPipe.transform(value, digits, "en")}%`;
+        const plusSign = usePlus && value > 0 ? `+` : ``;
+
+        return `${plusSign}${this.decimalPipe.transform(value, digits, "en")}%`;
     }
 }
