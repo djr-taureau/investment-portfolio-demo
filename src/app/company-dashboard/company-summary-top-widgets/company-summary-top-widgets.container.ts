@@ -102,6 +102,16 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
     public cashAsOf$: Observable<number>;
 
     /**
+     * Flag indicating if the revenue detail is displayed.
+     */
+    public displayRevenueDetail: Observable<boolean>;
+
+    /**
+     * Flag indicating if the EBITDA detail is displayed.
+     */
+    public displayEbitdaDetail: Observable<boolean>;
+
+    /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
@@ -140,6 +150,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("revenue")));
         this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("revenue")));
         this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("revenue")));
+        this.displayRevenueDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowRevenueDetail));
 
         // EBITDA summary chart data.
         this.ebitdaAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal("ebitda")));
@@ -149,6 +160,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("ebitda")));
         this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("ebitda")));
         this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("ebitda")));
+        this.displayEbitdaDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowEBITDADetail));
 
         // Cash
         this.cashAsOf$ = this.store$.pipe(select(fromCompanyCash.getCashAsOf));

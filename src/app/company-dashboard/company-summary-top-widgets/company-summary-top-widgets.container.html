@@ -11,6 +11,7 @@
     -->
     <div class="chart">
         <sbp-summary-widget class="hand-cursor"
+                            [selected]="displayRevenueDetail | async"
                             [lineChartData]="revenueSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
                             [availablePeriods]="availablePeriods$ | async"
@@ -35,6 +36,7 @@
     -->
     <div class="chart">
         <sbp-summary-widget class="hand-cursor"
+                            [selected]="displayEbitdaDetail | async"
                             [lineChartData]="ebitdaSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
                             [barChartData1]="ebitdaChangeFromPriorPeriodBarChartData$ | async"
