@@ -1,3 +1,4 @@
+import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import { GoToCompanyDashboard } from "@core/state/router/router.action";
 import { appRoutePaths } from "@app/app.routes";
 import { Company } from "@core/domain/company.model";
@@ -46,6 +47,9 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
      */
     public groupBy$: Observable<string>;
 
+    /**
+     * The sort by property for the table data.
+     */
     public sortBy$: Observable<string>;
 
     /**
@@ -62,6 +66,8 @@ export class PortfolioListingContainer extends CorePortfolioContainer implements
      */
     public ngOnInit(): void {
         PortfolioListingContainer.logger.debug(`ngOnInit()`);
+        this.store$.dispatch(new CompanyFlowActions.SortCompanies("totalValue"));
+
         this.companies$ = this.store$.pipe(select(fromCompanyState.getAllCompanies));
         this.tableData$ = this.store$.pipe(select(fromPortfolioListingState.getTableData));
         this.groupBy$ = this.store$.pipe(select(fromPortfolioListingState.getGroupBy));

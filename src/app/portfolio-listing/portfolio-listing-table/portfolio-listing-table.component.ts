@@ -33,12 +33,6 @@ export class Group {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PortfolioListingTableComponent implements OnInit {
-    /**
-     * Internal logger.
-     */
-    private static logger: Logger = Logger.getLogger("PortfolioListingTableComponent");
-    @Output()
-    public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
 
     @Input()
     public set tableData(value: PortfolioTableItem[]) {
@@ -58,12 +52,17 @@ export class PortfolioListingTableComponent implements OnInit {
             });
             this._tableData = value.slice();
             this.dataSource.data = this.addGroups(value, this.groupByColumns);
+
+            if (!this.initialDataSet && value.length > 0) {
+                this.initialDataSet = true;
+                this.sortedData = this.sortData(this.sortColumn, this.tableData);
+                this.setDataSource();
+            }
         }
     }
     public get tableData(): PortfolioTableItem[] {
         return this._tableData;
     }
-    private _tableData: PortfolioTableItem[];
 
     @Input()
     public set filter(value: string[]) {
@@ -78,7 +77,6 @@ export class PortfolioListingTableComponent implements OnInit {
     public get filter() {
         return this._filter || [];
     }
-    private _filter: string[];
 
     @Input()
     public set groupByColumn(value: string) {
@@ -105,6 +103,20 @@ export class PortfolioListingTableComponent implements OnInit {
     public get sortByColumn() {
         return this.sortColumn;
     }
+
+    constructor() {
+        // this.dataSource.data = this.addGroups(people, this.groupByColumns);
+        this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
+    }
+    /**
+     * Internal logger.
+     */
+    private static logger: Logger = Logger.getLogger("PortfolioListingTableComponent");
+
+    @Output()
+    public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
+    private _tableData: PortfolioTableItem[];
+    private _filter: string[];
     private sortColumn: string;
 
     /**
@@ -131,6 +143,8 @@ export class PortfolioListingTableComponent implements OnInit {
      * Data table's data provider.
      */
     public dataSource = new MatTableDataSource<PortfolioTableItem | Group>([]);
+
+    private initialDataSet = false;
 
     /**
      * Handles all of the permutations of filtering, sorting, grouping
@@ -189,11 +203,6 @@ export class PortfolioListingTableComponent implements OnInit {
      */
     public isGroup(index, item): boolean {
         return item.level;
-    }
-
-    constructor() {
-        // this.dataSource.data = this.addGroups(people, this.groupByColumns);
-        this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
     }
 
     ngOnInit() {}
@@ -303,7 +312,7 @@ export class PortfolioListingTableComponent implements OnInit {
                 case "invested":
                     return compare(a.invested, b.invested);
                 case "totalValue":
-                    return compare(a.totalValue, b.totalValue);
+                    return compare(a.totalValue, b.totalValue, false);
                 case "moic":
                     return compare(a.moic, b.moic);
                 case "irr":

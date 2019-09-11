@@ -19,10 +19,17 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     isPositivePY: boolean;
     isPositiveIC: boolean;
 
+    /**
+     * Flag indicating if the widget is selected.
+     */
+    @Input()
+    public selected = false;
+
     @Input() selectedPeriod: any;
 
     @Input()
     public availablePeriods: any[];
+
     /**
      * Represents the M,B,T,Q value in the widget title
      * EG: REVENUE ($M) => <title> (<currencySymbol><scale>)

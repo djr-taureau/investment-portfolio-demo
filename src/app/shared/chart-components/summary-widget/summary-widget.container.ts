@@ -1,4 +1,4 @@
-import { ToggleDetailExpanded } from "./../../../core/state/company/dashboard/company-dashboard-layout.actions";
+import { ToggleDetailExpanded } from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { RevenueSeriesData } from "@core/domain/company.model";
 import { Observable } from "rxjs";
 import { Component, OnInit, Input } from "@angular/core";
@@ -11,6 +11,8 @@ import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
     selector: "sbp-summary-widget-container",
     template: `
         <sbp-summary-widget
+            class="hand-cursor"
+            [selected]="displayKpiDetail | async"
             [lineChartData]="summaryLineChartData$ | async"
             [selectedPeriod]="selectedPeriod$ | async"
             [availablePeriods]="availablePeriods$ | async"
@@ -121,6 +123,11 @@ export class SummaryWidgetContainer implements OnInit {
     public changeFromPriorBudgetBarChartData$: Observable<RevenueSeriesData[]>;
 
     /**
+     * Flag indicating if the KPI detail is dispalyed.
+     */
+    public displayKpiDetail: Observable<boolean>;
+
+    /**
      * The IC label is defined once we know if it's year or quarter.
      */
     public icLabel: string;
@@ -163,6 +170,7 @@ export class SummaryWidgetContainer implements OnInit {
         this.summaryLineChartData$ = this.store$.pipe(select(fromWidgets.getSummaryLineChartData("kpi", this.id)));
         this.changeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart1GraphData("kpi", this.id)));
         this.changeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidgets.getBarChart2GraphData("kpi", this.id)));
+        this.displayKpiDetail = this.store$.pipe(select(fromCompanyDashboardLayout.isKpiIdSelected(this.id)));
     }
 
     /**

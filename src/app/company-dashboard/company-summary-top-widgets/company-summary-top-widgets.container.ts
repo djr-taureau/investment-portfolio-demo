@@ -1,4 +1,4 @@
-import { ToggleDetailExpanded } from "@app/core/state/company/dashboard/company-dashboard-layout.actions";
+import { ToggleDetailExpanded } from "@core/state/company/dashboard/company-dashboard-layout.actions";
 import { Component, OnInit } from "@angular/core";
 import { RevenueSeriesData, ChartDataPeriod } from "@core/domain/company.model";
 import { select, Store } from "@ngrx/store";
@@ -8,7 +8,7 @@ import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as fromCompanyCash from "@core/state/company/cash";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import * as fromWidget from "@core/state/company/widgets";
-import { WidgetTypeEnum } from "@app/core/state/company/dashboard/company-dashboard-layout.reducer";
+import { WidgetTypeEnum } from "@core/state/company/dashboard/company-dashboard-layout.reducer";
 
 @Component({
     selector: "sbp-company-summary-top-widgets-container",
@@ -102,6 +102,16 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
     public cashAsOf$: Observable<number>;
 
     /**
+     * Flag indicating if the revenue detail is displayed.
+     */
+    public displayRevenueDetail: Observable<boolean>;
+
+    /**
+     * Flag indicating if the EBITDA detail is displayed.
+     */
+    public displayEbitdaDetail: Observable<boolean>;
+
+    /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
@@ -140,6 +150,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.revenueSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("revenue")));
         this.revenueChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("revenue")));
         this.revenueChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("revenue")));
+        this.displayRevenueDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowRevenueDetail));
 
         // EBITDA summary chart data.
         this.ebitdaAsOf$ = this.store$.pipe(select(fromWidget.getSummaryLineChartTotal("ebitda")));
@@ -149,6 +160,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.ebitdaSummaryLineChartData$ = this.store$.pipe(select(fromWidget.getSummaryLineChartData("ebitda")));
         this.ebitdaChangeFromPriorPeriodBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart1GraphData("ebitda")));
         this.ebitdaChangeFromPriorBudgetBarChartData$ = this.store$.pipe(select(fromWidget.getBarChart2GraphData("ebitda")));
+        this.displayEbitdaDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowEBITDADetail));
 
         // Cash
         this.cashAsOf$ = this.store$.pipe(select(fromCompanyCash.getCashAsOf));
