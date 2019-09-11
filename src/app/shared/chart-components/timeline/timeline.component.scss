@@ -3,15 +3,19 @@
 :host {
     ::ng-deep {
         height: 375px;
-        // min-width: 500px;
-        // width: calc(100% + 1em);
-        // margin-bottom: 2em;
         background: $white;
-        // padding: 0.6em 1em;
-        // margin: 0.5em;
         background-color: $white;
         border-radius: 6px;
 
+        .chart-button {
+            background-color: rgba(219, 227, 241, 0.75);
+            background-image: none;
+            color: $light-navy
+        }
+
+        .toggle-off {
+            opacity: 0.50;
+        }
 
         #multi-timeline {
             width: 606px;
@@ -79,42 +83,13 @@
                     letter-spacing: 0.5px;
                     color: $light-navy;
                     padding: 5px;
-
-                    &.k-state-active {
-                        color: $white;
-                        background-color: $light-navy;
-                    }
-
-                    button.forecast-toggle-on {
-                        width: 97px;
-                        height: 24px;
-                        border-radius: 4px;
-                        background-color: $pale-grey;
-                    }
-
-                    button.actuals-toggle-on {
-                        width: 74px;
-                        height: 24px;
-                        border-radius: 4px;
-                        background-color: $pale-grey;
-                    }
-
-                    button.budget-toggle-on {
-                        width: 96px;
-                        height: 24px;
-                        border-radius: 4px;
-                        background-color: $pale-grey;
-                    }
                 }
             }
-
 
             g.yAxis {
                 height: 1px;
                 opacity: 0.60;
             }
-
-
 
             text.y-axis-label {
                 fill: $grey-blue;
@@ -474,10 +449,10 @@ div .card {
                 color: $light-navy;
                 padding: 5px;
 
-                &.k-state-active {
-                    color: $white;
-                    background-color: $light-navy;
-                }
+                //&.k-state-active {
+                //    color: $white;
+                //    background-color: $light-navy;
+                //}
             }
         }
     }

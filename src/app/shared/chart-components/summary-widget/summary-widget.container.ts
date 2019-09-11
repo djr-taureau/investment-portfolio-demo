@@ -11,6 +11,7 @@ import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
     selector: "sbp-summary-widget-container",
     template: `
         <sbp-summary-widget
+            class="hand-cursor"
             [lineChartData]="summaryLineChartData$ | async"
             [selectedPeriod]="selectedPeriod$ | async"
             [availablePeriods]="availablePeriods$ | async"

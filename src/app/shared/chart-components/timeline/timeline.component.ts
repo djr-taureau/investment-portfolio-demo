@@ -41,9 +41,9 @@ export class TimelineComponent implements OnInit {
     @ViewChild("container") container: ElementRef;
 
     public timePeriods: any[];
-    public actualsVis: boolean;
-    public forecastVis: boolean;
-    public budgetVis: boolean;
+    public actualsVis = true;
+    public forecastVis = true;
+    public budgetVis = true;
     public icVis: boolean;
 
     el: HTMLElement;
@@ -124,9 +124,6 @@ export class TimelineComponent implements OnInit {
 
     ngOnInit() {
         TimelineComponent.logger.debug(`ngOnInit()`);
-        this.actualsVis = true;
-        this.budgetVis = true;
-        this.forecastVis = true;
         this.yAxisTickValues = [0, 150, 300, 450, 600, 750];
         this.timePeriods = [];
         this.xAccessor = (v) => v.date;
@@ -159,9 +156,6 @@ export class TimelineComponent implements OnInit {
             .remove();
 
         this.yAccessor = (v) => v.value;
-        this.actualsVis = true;
-        this.budgetVis = true;
-        this.forecastVis = true;
         this.activeStyle = "not-visible";
         const getPeriodId = _.get(this, "selectedPeriod.id", null);
         this.dateSelected = _.get(this, "selectedPeriod.date", null);
@@ -459,25 +453,26 @@ export class TimelineComponent implements OnInit {
     gridlines() {
         return d3.axisLeft(this.yScale).tickValues(this.yAxisTickValues);
     }
-    toggleVisibilty(event) {
+
+    toggleVisibility(event) {
         let newOpacity = 1;
         switch (event) {
             case "actuals":
                 this.actualsVis = !this.actualsVis;
-                newOpacity = this.actualsVis ? 0 : 1;
+                newOpacity = this.actualsVis ? 1 : 0;
                 this.svg.select(".actuals-path").style("opacity", newOpacity);
                 this.svg.selectAll("circle.actuals-dot").style("opacity", newOpacity);
                 this.svg.select("circle.selected-dot").style("opacity", newOpacity);
                 break;
             case "budget":
                 this.budgetVis = !this.budgetVis;
-                newOpacity = this.budgetVis ? 0 : 1;
+                newOpacity = this.budgetVis ? 1 : 0;
                 this.svg.select(".budget-path").style("opacity", newOpacity);
                 this.svg.selectAll("circle.budget-dot").style("opacity", newOpacity);
                 break;
             case "forecast":
                 this.forecastVis = !this.forecastVis;
-                newOpacity = this.forecastVis ? 0 : 1;
+                newOpacity = this.forecastVis ? 1 : 0;
                 this.svg.select(".forecast-path").style("opacity", newOpacity);
                 this.svg.selectAll("circle.forecast-dot").style("opacity", newOpacity);
                 break;

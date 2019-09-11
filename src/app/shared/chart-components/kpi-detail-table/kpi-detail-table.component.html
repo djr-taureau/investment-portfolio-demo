@@ -18,7 +18,7 @@
 
     <tr class="header">
         <th scope="col"></th>
-        <th class="col-header"
+        <th class="col-header cell"
             scope="col"
             *ngFor="let header of tableDataHeaders; let i=index; trackBy: trackByFn">{{ header }}</th>
     </tr>
@@ -37,7 +37,7 @@
                  class="legend-actual">
             REVENUE
         </th>
-        <td class="revenueValues"
+        <td class="revenue-value cell"
             *ngFor="let asOf of tableDataAsOf; let i=index; trackBy: trackByFn">{{ asOf | shortNumber:'1.1-1'  }}</td>
     </tr>
     <tr *ngIf="vsPqDataShow">
@@ -46,6 +46,7 @@
             vs PQ
         </th>
         <td *ngFor="let vsPq of tableDataVsPq; let i=index; trackBy: trackByFn"
+            class="cell"
             [ngClass]="
             {
                 'py-positive': vsPq > 0,
@@ -59,7 +60,8 @@
             scope="row">
             vs PY
         </th>
-        <td *ngFor="let vsPy of tableDataVsPy; let i=index; trackBy: trackByFn"
+        <td class="cell"
+            *ngFor="let vsPy of tableDataVsPy; let i=index; trackBy: trackByFn"
             [ngClass]="
                 {
                     'py-positive': vsPy > 0,
@@ -73,7 +75,8 @@
             scope="row">
             vs Mgmt Bud
         </th>
-        <td *ngFor="let vsBud of tableDataVsBud; let i=index; trackBy: trackByFn"
+        <td class="cell"
+            *ngFor="let vsBud of tableDataVsBud; let i=index; trackBy: trackByFn"
             [ngClass]="
                 {
                     'py-positive': vsBud > 0,
@@ -87,7 +90,8 @@
             scope="row">
             vs Mgmt Fcst
         </th>
-        <td *ngFor="let vsFC of tableDataVsForecast; let i=index; trackBy: trackByFn"
+        <td class="cell"
+            *ngFor="let vsFC of tableDataVsForecast; let i=index; trackBy: trackByFn"
             [ngClass]="
                 {
                     'py-positive': vsFC > 0,
@@ -101,7 +105,8 @@
             scope="row">
             vs IC Initial
         </th>
-        <td *ngFor="let vsICI of tableDataVsIcInitial; let i=index; trackBy: trackByFn"
+        <td class="cell"
+            *ngFor="let vsICI of tableDataVsIcInitial; let i=index; trackBy: trackByFn"
             [ngClass]="
                 {
                     'py-positive': vsICI > 0,
@@ -115,7 +120,8 @@
             scope="row">
             vs IC Latest
         </th>
-        <td *ngFor="let vsICL of tableDataVsIcLatest; let i=index; trackBy: trackByFn"
+        <td class="cell"
+            *ngFor="let vsICL of tableDataVsIcLatest; let i=index; trackBy: trackByFn"
             [ngClass]="
                 {
                     'py-positive': vsICL > 0,
