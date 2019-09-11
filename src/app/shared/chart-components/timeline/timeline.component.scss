@@ -22,13 +22,13 @@
         }
 
         #multi-timeline {
-            width: 606px;
-            height: 310px;
+            // width: 606px;
+            // height: 310px;
             border-radius: 6px;
-            margin-left: 16px;
-            padding-left: 10px;
-            margin-top: 10px;
-            padding-bottom: 36px;
+            // margin-left: 16px;
+            // padding-left: 10px;
+            // margin-top: 10px;
+            // padding-bottom: 36px;
             background-color: $white;
 
 
@@ -265,7 +265,7 @@
 
 
             .axis-grid {
-                opacity: 0.10;
+                opacity: 0.60;
                 shape-rendering: crispEdges;
                 stroke-dasharray: 3, 3;
             }
