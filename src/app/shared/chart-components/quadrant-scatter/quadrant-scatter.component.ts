@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit } from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit, EventEmitter, Output } from "@angular/core";
 import { PortfolioRelativePerformanceSeries } from "@core/domain/portfolio.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
@@ -42,6 +42,9 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
     @Input() yLabelVisible?: boolean;
 
     @ViewChild("container") container: ElementRef;
+    b;
+    @Output()
+    public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
 
     el: HTMLElement;
     dimensions: DimensionsType;
@@ -72,12 +75,12 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
     constructor(elementRef: ElementRef) {
         QuadrantScatterComponent.logger.debug(`constructor()`);
         this.dimensions = {
-            marginTop: 30,
+            marginTop: 165,
             marginRight: 30,
             marginBottom: 30,
             marginLeft: 60,
-            height: 563,
-            width: 790
+            height: 460,
+            width: 1200
         };
         this.dimensions = {
             ...this.dimensions,
@@ -93,6 +96,10 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
 
     ngOnChanges(changes: SimpleChanges): void {
         //
+    }
+
+    public onOpenCompanyDashboard(companyId: string) {
+        this.openCompanyDashboard.emit(companyId);
     }
 
     ngAfterContentInit() {
@@ -136,6 +143,13 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .attr("height", this.dimensions.height + this.dimensions.marginTop + this.dimensions.marginBottom)
             .append("g")
             .attr("transform", "translate(" + this.dimensions.marginLeft + "," + this.dimensions.marginTop + ")");
+        this.svg
+            .append("line")
+            .style("stroke", "#d8d8d8")
+            .attr("x1", -55)
+            .attr("y1", -50)
+            .attr("x2", 1230)
+            .attr("y2", -50);
         this.x = d3
             .scaleLinear()
             .domain([-maxX, maxX])
@@ -171,6 +185,19 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .call(yAxis);
         this.svg
             .append("text")
+            .attr("text-anchor", "end")
+            .attr("x", 460)
+            .attr("y", -130)
+            .style("stroke", "#111927")
+            .style("font-size", "24px")
+            .style("font-family", "PostGrotesk")
+            .style("text-align", "right")
+            .style("width", "44px")
+            .style("height", "21px")
+            .style("letter-spacing", "0.25px")
+            .text(`Company Performance: Top 10 Unrealized Value`);
+        this.svg
+            .append("text")
             .attr("text-anchor", "middle")
             .attr("class", "image")
             .attr("x", this.dimensions.width / 2 + 25)
@@ -185,8 +212,9 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("x", 5)
-            .attr("y", this.dimensions.height / 2)
+            .attr("transform", "rotate(-90)")
+            .attr("x", -230)
+            .attr("y", -50)
             .style("font-size", "14px")
             .style("font-family", "PostGrotesk")
             .style("opacity", 0.75)
@@ -196,28 +224,41 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", 48)
-            .attr("y", 0)
+            .attr("x", -25)
+            .attr("y", -25)
+            .style("stroke", "#111927")
+            .style("font-size", "15px")
+            .style("font-weight", "bold")
+            .style("font-family", "PostGrotesk")
+            .style("text-align", "right")
+            .style("width", "44px")
+            .style("height", "21px")
+            .text(`${this.quad1}`);
+        this.svg
+            .append("text")
+            .attr("text-anchor", "end")
+            .attr("x", 58)
+            .attr("y", -25)
             .style("stroke", "#3b4659")
             .style("font-size", "12px")
             .style("font-family", "PostGrotesk")
             .style("width", "80px")
             .style("height", "16px")
             .style("opacity", 0.75)
-            .text(`${this.quad1} Portfolio Value`);
+            .text("Portfolio Value");
         const topLeftLeft = this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-under.svg")
-            .attr("x", -55)
-            .attr("y", this.dimensions.marginTop - 20)
+            .attr("x", -50)
+            .attr("y", -15)
             .attr("height", "10px")
             .attr("width", "16px");
 
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", 14)
-            .attr("y", this.dimensions.marginTop - 12)
+            .attr("x", 18)
+            .attr("y", -7)
             .style("stroke", "#eb643f")
             .style("padding-top", "18px")
             .style("font-size", "10px")
@@ -228,15 +269,15 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-over.svg")
-            .attr("x", 30)
-            .attr("y", this.dimensions.marginTop - 20)
+            .attr("x", 28)
+            .attr("y", -15)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", 90)
-            .attr("y", this.dimensions.marginTop - 11)
+            .attr("x", 85)
+            .attr("y", -8)
             .style("stroke", "#20a187")
             .style("padding-top", "18px")
             .style("font-size", "10px")
@@ -247,8 +288,8 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("x", this.dimensions.width - 25)
-            .attr("y", 0)
+            .attr("x", 1150)
+            .attr("y", -25)
             .style("stroke", "#3b4659")
             .style("font-size", "12px")
             .style("letter-spacing", "0.25px")
@@ -256,19 +297,32 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .style("width", "80px")
             .style("height", "16px")
             .style("opacity", 0.75)
-            .text(`Portfolio Value ${this.quad2}`);
+            .text("Portfolio Value");
+        this.svg
+            .append("text")
+            .attr("text-anchor", "end")
+            .attr("x", 1230)
+            .attr("y", -25)
+            .style("stroke", "#111927")
+            .style("font-size", "15px")
+            .style("font-weight", "bold")
+            .style("font-family", "PostGrotesk")
+            .style("text-align", "right")
+            .style("width", "44px")
+            .style("height", "21px")
+            .text(`${this.quad2}`);
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-over.svg")
-            .attr("x", this.dimensions.width - 105)
-            .attr("y", this.dimensions.marginTop - 20)
+            .attr("x", 1105)
+            .attr("y", -15)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", this.dimensions.width - 42)
-            .attr("y", this.dimensions.marginTop - 11)
+            .attr("x", 1172)
+            .attr("y", -7)
             .style("stroke", "#20a187")
             .style("padding-top", "18px")
             .style("font-size", "10px")
@@ -280,15 +334,15 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-over.svg")
-            .attr("x", this.dimensions.width - 32)
-            .attr("y", this.dimensions.marginTop - 19)
+            .attr("x", 1178)
+            .attr("y", -15)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", this.dimensions.width + 24)
-            .attr("y", this.dimensions.marginTop - 11)
+            .attr("x", 1230)
+            .attr("y", -7)
             .style("stroke", "#20a187")
             .style("padding-top", "18px")
             .style("font-size", "10px")
@@ -299,8 +353,8 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("x", this.dimensions.width - 25)
-            .attr("y", this.dimensions.height)
+            .attr("x", 1145)
+            .attr("y", 460)
             .style("stroke", "#3b4659")
             .style("font-size", "12px")
             .style("letter-spacing", "0.25px")
@@ -308,19 +362,32 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .style("width", "80px")
             .style("height", "16px")
             .style("opacity", 0.75)
-            .text(`Portfolio Value ${this.quad3}`);
+            .text("Portfolio Value");
+        this.svg
+            .append("text")
+            .attr("text-anchor", "end")
+            .attr("x", 1225)
+            .attr("y", 460)
+            .style("stroke", "#111927")
+            .style("font-size", "15px")
+            .style("font-weight", "bold")
+            .style("font-family", "PostGrotesk")
+            .style("text-align", "right")
+            .style("width", "44px")
+            .style("height", "21px")
+            .text(`${this.quad3}`);
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-over.svg")
-            .attr("x", this.dimensions.width - 107)
-            .attr("y", this.dimensions.height + 15)
+            .attr("x", 1100)
+            .attr("y", 472)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", this.dimensions.width - 42)
-            .attr("y", this.dimensions.height + 14)
+            .attr("x", 1165)
+            .attr("y", 480)
             .style("stroke", "#20a187")
             .style("font-size", "10px")
             .style("font-family", "PostGrotesk")
@@ -330,15 +397,15 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-under.svg")
-            .attr("x", this.dimensions.width - 30)
-            .attr("y", this.dimensions.height + 15)
+            .attr("x", 1170)
+            .attr("y", 472)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", this.dimensions.width + 26)
-            .attr("y", this.dimensions.height + 14)
+            .attr("x", 1225)
+            .attr("y", 480)
             .style("stroke", "#eb643f")
             .style("font-size", "10px")
             .style("font-family", "PostGrotesk")
@@ -347,29 +414,42 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .text("PROFIT");
         this.svg
             .append("text")
-            .attr("text-anchor", "end")
-            .attr("x", this.dimensions.marginLeft - 5)
-            .attr("y", this.dimensions.height)
+            .attr("text-anchor", "middle")
+            .attr("x", 20)
+            .attr("y", 460)
             .style("stroke", "#3b4659")
-            .style("letter-spacing", "0.25px")
             .style("font-size", "12px")
+            .style("letter-spacing", "0.25px")
             .style("font-family", "PostGrotesk")
             .style("width", "80px")
             .style("height", "16px")
             .style("opacity", 0.75)
-            .text(`${this.quad4} Portfolio Value`);
+            .text("Portfolio Value");
+        this.svg
+            .append("text")
+            .attr("text-anchor", "end")
+            .attr("x", -25)
+            .attr("y", 460)
+            .style("stroke", "#111927")
+            .style("font-size", "15px")
+            .style("font-weight", "bold")
+            .style("font-family", "PostGrotesk")
+            .style("text-align", "right")
+            .style("width", "44px")
+            .style("height", "21px")
+            .text(`${this.quad4}`); // add styling for percent
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-under.svg")
-            .attr("x", -48)
-            .attr("y", this.dimensions.height + 16)
+            .attr("x", -50)
+            .attr("y", 472)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", 22)
-            .attr("y", this.dimensions.height + 15)
+            .attr("x", 16)
+            .attr("y", 480)
             .style("stroke", "#eb643f")
             .style("font-size", "10px")
             .style("font-family", "PostGrotesk")
@@ -379,15 +459,15 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("image")
             .attr("xlink:href", "https://localhost:4400/assets/image/performance-under.svg")
-            .attr("x", 40)
-            .attr("y", this.dimensions.height + 16)
+            .attr("x", 28)
+            .attr("y", 472)
             .attr("height", "10px")
             .attr("width", "16px");
         this.svg
             .append("text")
             .attr("text-anchor", "end")
-            .attr("x", 99)
-            .attr("y", this.dimensions.height + 15)
+            .attr("x", 82)
+            .attr("y", 480)
             .style("stroke", "#eb643f")
             .style("font-size", "10px")
             .style("font-family", "PostGrotesk")
@@ -458,7 +538,10 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .on("mouseover", this.showTooltip, bubbleHover)
             .on("mousemove", this.moveTooltip)
             .on("mouseleave", this.hideTooltip)
-            .on("click", (d, i) => console.log("company Id clicked is", d.id, i));
+            .on("click", (d, i) => {
+                this.onOpenCompanyDashboard(d.id);
+                console.log("company Id clicked is", d.id, i);
+            });
         const circles = this.svg
             .selectAll("dot")
             .data(this._data)
@@ -473,53 +556,114 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .on("mouseover", this.showTooltip)
             .on("mousemove", this.moveTooltip)
             .on("mouseleave", this.hideTooltip)
-            .on("click", (d, i) => console.log("company Id clicked is", d.id, i));
+            .on("click", (d, i) => {
+                this.onOpenCompanyDashboard(d.id);
+                console.log("company Id clicked is", d.id, i);
+            });
         const valuesToShow = [5, 10, 20];
         const xCircle = 390;
         const xLabel = 440;
-        const size = 20;
-        const allgroups = ["USA", "CAN", "CHN", "GBR"];
-        const n = allgroups.length;
+        const size = 2;
+        const allGroups = this.groups;
+        const n = allGroups.length;
         const itemWidth = 80;
         const itemHeight = 18;
 
-        this.svg
-            .selectAll("myrect")
-            .data(allgroups)
+        const valueSize = d3
+            .scaleSqrt()
+            .domain([1, 100])
+            .range([1, 100]);
+
+        const legend = this.svg
+            .append("g")
+            .attr("class", "legend")
+            .attr("height", 100)
+            .attr("width", 600)
+            .attr("transform", `translate(-50, -70)`);
+        legend
+            .selectAll("circle")
+            .data(allGroups)
             .enter()
             .append("circle")
-            .attr("cx", 390)
-            .attr("cy", (d, i) => 10 + i * (size + 5))
-            .attr("r", 7)
+            .attr("cx", (d, i) => {
+                const xPost = this.legendXPosition(allGroups, i, 10);
+                return xPost;
+            })
+            .attr("cy", -4) // (d, i) => 2 + i * (size + 2))
+            .attr("r", 4)
             .style("fill", (d) => this.color(d));
-        this.svg
-            .selectAll("mylabels")
-            .data(allgroups)
+
+        legend
+            .selectAll("text")
+            .data(allGroups)
             .enter()
             .append("text")
-            .attr("x", 390 + size * 0.8)
-            .attr("y", (d, i) => i * (size + 5) + size / 2)
+            .attr("x", (d, i) => {
+                const xPost = this.legendXPositionText(allGroups, i, 10, 10);
+                return xPost;
+            })
+            .style("font-size", "10px")
             .style("font-family", "PostGrotesk")
             .style("font-size", "14px")
             .style("fill", "#3b4659")
-            .text((d) => d)
+            .attr("y", -2) // (d, i) => 2 + (i * (size + 2)) / 2)
+            .text((d) => {
+                return d;
+            })
             .attr("text-anchor", "left")
-            .style("alignment-baseline", "bottom");
+            .style("alignment-baseline", "middle");
+        // TODO:: djr -get the legend working
+        // const valueLegend = this.svg
+        //     .append("g")
+        //     .attr("class", "valueLegend")
+        //     .attr("height", 100)
+        //     .attr("width", 600)
+        //     .attr("transform", `translate(600, -70)`);
+        // valueLegend
+        //     .selectAll("text")
+        //     .data(valuesToShow)
+        //     .enter()
+        //     .append("text")
+        //     .attr("x", (d, i) => {
+        //         const xPost = this.legendXPositionText(valuesToShow, i, 10, 10);
+        //         return xPost;
+        //     })
+        //     .style("font-size", "10px")
+        //     .style("font-family", "PostGrotesk")
+        //     .style("font-size", "14px")
+        //     .style("fill", "#3b4659")
+        //     .attr("y", -2)
+        //     .text((d) => {
+        //         return `$${d}M`;
+        //     })
+        //     .attr("text-anchor", "left")
+        //     .style("alignment-baseline", "middle");
+        // valueLegend
+        //     .selectAll("circle")
+        //     .data(valuesToShow)
+        //     .enter()
+        //     .append("circle")
+        //     .attr("cx", (d, i) => {
+        //         const xPost = this.legendXPosition(valuesToShow, i, 10);
+        //         return xPost;
+        //     })
+        //     .attr("cy", (d) => valueSize(d))
+        //     .attr("r", (d) => valueSize(d));
     }
 
-    generateData() {
-        // const groups = ["USA", "CAN", "CHN", "GBR"];
-        // const companies = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-        // const data = [];
-        // _.times(_.random(10, 10), () => {
-        //     data.push({
-        //         id: _.sample(companies),
-        //         density: _.random(10, 1000),
-        //         x: _.random(-100, 100),
-        //         y: _.random(-100, 100),
-        //         group: _.sample(groups)
-        //     });
-        // });
-        // return data;
+    legendXPositionText(data, position, textOffset, avgFontWidth) {
+        return this.legendXPosition(data, position, avgFontWidth) + textOffset;
+    }
+
+    legendXPosition(data, position, avgFontWidth) {
+        if (position === 0) {
+            return 0;
+        } else {
+            let xPostiion = 0;
+            for (let i = 0; i < position; i++) {
+                xPostiion += data[i].length * avgFontWidth + 10;
+            }
+            return xPostiion;
+        }
     }
 }
