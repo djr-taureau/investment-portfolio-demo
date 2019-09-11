@@ -10,7 +10,9 @@
     //////////////////////////////////////////////////////////////////
     -->
     <div class="chart">
-        <sbp-summary-widget [lineChartData]="revenueSummaryLineChartData$ | async"
+        <sbp-summary-widget class="hand-cursor"
+                            [selected]="displayRevenueDetail | async"
+                            [lineChartData]="revenueSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
                             [availablePeriods]="availablePeriods$ | async"
                             [barChartData1]="revenueChangeFromPriorPeriodBarChartData$ | async"
@@ -33,7 +35,9 @@
     //////////////////////////////////////////////////////////////////
     -->
     <div class="chart">
-        <sbp-summary-widget [lineChartData]="ebitdaSummaryLineChartData$ | async"
+        <sbp-summary-widget class="hand-cursor"
+                            [selected]="displayEbitdaDetail | async"
+                            [lineChartData]="ebitdaSummaryLineChartData$ | async"
                             [selectedPeriod]="selectedPeriod$ | async"
                             [barChartData1]="ebitdaChangeFromPriorPeriodBarChartData$ | async"
                             [barChartData2]="ebitdaChangeFromPriorBudgetBarChartData$ | async"

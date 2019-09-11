@@ -34,24 +34,34 @@ export class CompanySummaryCollapsedComponent implements OnInit {
      */
     @Input()
     public currentTotalValue;
+
     @Input()
     public currentMoic;
+
     @Input()
     public currentIrr;
+
     @Input()
     public plusOneTotalValue;
+
     @Input()
     public plusOneMoic;
+
     @Input()
     public plusOneIrr;
+
     @Input()
     public exitTotalValue;
+
     @Input()
     public exitMoic;
+
     @Input()
     public exitIrr;
+
     @Input()
     public currentApproved;
+
     @Input()
     public currentInvested;
 

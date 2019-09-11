@@ -136,12 +136,8 @@ export class TimelineComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         TimelineComponent.logger.debug(`ngOnInit()`);
-        this.actualsVis = true;
-        this.budgetVis = true;
-        this.forecastVis = true;
-        this.icLatestVis = true;
-        this.icInitialVis = true;
-        this.yAxisTickValues = [0, 190, 380, 570, 760, 950];
+
+        this.yAxisTickValues = [0, 150, 300, 450, 600, 750];
         this.timePeriods = [];
         this.xAccessor = (v) => v.date;
         this.svg = d3
@@ -178,19 +174,11 @@ export class TimelineComponent implements OnInit, OnChanges {
         this.svg.selectAll("circle.forecast-dot").remove();
 
         this.yAccessor = (v) => v.value;
-        this.actualsVis = true;
-        this.budgetVis = true;
-        this.forecastVis = true;
         this.activeStyle = "not-visible";
         const getPeriodId = _.get(this, "selectedPeriod.id", null);
-        console.log("PERIOD ID", getPeriodId);
-        console.log(getPeriodId);
-        console.log(this.selectedPeriod);
-        console.log("DATE PART", this.selectedDatePart);
         this.dateSelected = _.get(this, "selectedPeriod.date", null);
         const getDateSelectedString = _.get(this, "selectedPeriod.formatted", null);
         this.datePartId = _.get(this, "selectedDatePart.id", null);
-        console.log(getDateSelectedString);
         if (this.datePartId === "Y") {
             this.dateSelectedString = `${getDateSelectedString.substr(4, 4)}`;
         } else {
@@ -228,11 +216,6 @@ export class TimelineComponent implements OnInit, OnChanges {
         };
         this.timePeriods = periods;
         this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelectedString, 0);
-        console.log("periods", periods);
-        console.log("time", this.timePeriods);
-        console.log(this.dataSet);
-        console.log(this.indexDateSelected);
-        console.log(this.label);
         this.updateScales();
     }
 
@@ -370,23 +353,9 @@ export class TimelineComponent implements OnInit, OnChanges {
             .style("fill", "#68758c")
             .style("stroke", "#68758c")
             .style("opacity", "0.8");
-        // .call((g) => g.select("g.tick.tick:nth-child(3) line").attr("class", "y-axis-remove-line"));
-        // todo:: djr
-        // xAxis
-        //     .select("g.tick.tick:nth-child(5) text`)")
-        //     .data(this.timePeriods[this.indexDateSelected])
-        //     .enter()
-        //     .attr("class", "tick-selected-value");
-        // TODO: still might use this
         const yAxis = d3
             .axisLeft(this.yScale)
-            // .tickValues(this.yAxisTickValues)
             .ticks(5)
-            // .tickFormat(d3.format(""))
-            // .tickFormat((d, i) => {
-            //     return this.yAxisTickValues[i] !== 150 ? d : "";
-            // })
-            // .tickPadding(-15)
             .tickSizeOuter(20)
             .tickSizeInner(20);
 
@@ -601,11 +570,10 @@ export class TimelineComponent implements OnInit, OnChanges {
     }
 
     gridlines() {
-        // TODO: Might implement this depends on feedbck from SB
-        // return d3.axisLeft(this.yScale).tickValues(this.yAxisTickValues);
         return d3.axisLeft(this.yScale).ticks(5);
     }
-    toggleVisibilty(event) {
+
+    toggleVisibility(event) {
         let newOpacity = 1;
         switch (event) {
             case "actuals":

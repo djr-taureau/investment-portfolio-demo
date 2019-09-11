@@ -2,28 +2,45 @@
      fxLayoutAlign="start stretch"
      fxLayoutGap="3px"
      class="button-bar">
-    <div class="actuals-button">
+
+    <div>
         <button kendoButton
-                (click)="toggleVisibilty('actuals')"
-                [imageUrl]="'../../../assets/image/legend-actual.svg'"
                 id="actuals"
-                class="actuals-dot actuals-button">Actuals</button>
+                class="chart-button"
+                [togglable]="true"
+                [ngClass]="{
+                    'toggle-off': !actualsVis
+                }"
+                [imageUrl]="'../../../assets/image/legend-actual.svg'"
+                (click)="toggleVisibility('actuals')">Actuals</button>
     </div>
-    <div class="budget-button">
+
+    <div>
         <button kendoButton
-                (click)="toggleVisibilty('budget')"
-                [imageUrl]="'../../assets/image/legend-mgmt-bud.svg'"
                 id="budget"
-                class="budget-dot">Mgmt Budget</button>
+                class="chart-button"
+                [togglable]="true"
+                [ngClass]="{
+                    'toggle-off': !budgetVis
+                }"
+                (click)="toggleVisibility('budget')"
+                [imageUrl]="'../../assets/image/legend-mgmt-bud.svg'">Mgmt Budget</button>
     </div>
-    <div class="forecast-button">
+
+    <div>
         <button kendoButton
-                (click)="toggleVisibilty('forecast')"
-                [imageUrl]="'../../assets/image/legend-mgmt-fcst.svg'"
                 id="forecast"
-                class="forecast-dot">Mgmt Forecast</button>
+                class="chart-button"
+                [togglable]="true"
+                [ngClass]="{
+                    'toggle-off': !forecastVis
+                }"
+                [imageUrl]="'../../assets/image/legend-mgmt-fcst.svg'"
+                (click)="toggleVisibility('forecast')">Mgmt Forecast</button>
     </div>
+
 </div>
+
 <div id="multi-timeline"
      width="690"
      height="325"

@@ -88,6 +88,12 @@ export const getSelectedKpiId = createSelector(
     fromCompanyDashboardLayout.getSelectedKpiId
 );
 
+export const isKpiIdSelected = (id: string) =>
+    createSelector(
+        getSelectedKpiId,
+        (selectedId: string) => id === selectedId
+    );
+
 export const getShowDetailWidget = (widget: string) =>
     createSelector(
         selectCompanyDashboardLayoutState,
