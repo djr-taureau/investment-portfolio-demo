@@ -65,7 +65,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     icInitialScale: any;
     icLatestYMax;
     icInitialYMax;
-    xAxisTickValues: any[];
+    xAxisTickValues: any;
     yAxisTickValues: any[];
     tooltip: (selection) => void;
     yTickValues: any[];
@@ -149,6 +149,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .attr("height", this.dimensions.height)
             .append("g");
         this.svg.append("g").attr("transform", "translate(" + this.dimensions.marginLeft + "," + this.dimensions.marginTop + ")");
+        this.update();
     }
 
     ngOnChanges() {
@@ -164,10 +165,8 @@ export class TimelineComponent implements OnInit, OnChanges {
         this.svg.selectAll("path.actuals-path").remove();
         this.svg.selectAll("path.budget-path").remove();
         this.svg.selectAll("path.forecast-path").remove();
-        this.svg
-            .selectAll("#multi-timeline")
-            .selectAll(".tooltip")
-            .remove();
+
+        this.svg.selectAll("div.tooltip").remove();
         this.svg.selectAll("circle.actuals-dot").remove();
         this.svg.selectAll("circle.icLatest-dot").remove();
         this.svg.selectAll("circle.icInitial-dot").remove();
@@ -243,10 +242,7 @@ export class TimelineComponent implements OnInit, OnChanges {
         this.svg.selectAll("circle.budget-dot").remove();
         this.svg.selectAll("circle.forecast-dot").remove();
         this.svg.selectAll(".xAxis").remove();
-        this.svg
-            .selectAll("#multi-timeline")
-            .selectAll(".tooltip")
-            .remove();
+        this.svg.selectAll("div.tooltip").remove();
         this.xAccessor = (v) => this.parseDate(v.date);
 
         const seriesData = this.dataSet.series;
@@ -462,10 +458,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             })
             .style("stroke-size", "4")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.yScale(d))
-            .on("mouseover", this.showToolTip)
-            .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip);
+            .attr("cy", (d) => this.yScale(d));
 
         this.svg
             .selectAll(".dot")
@@ -478,10 +471,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .style("fill", "white")
             .style("stroke-size", "1")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.yScale(d))
-            .on("mouseover", this.showToolTip)
-            .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip);
+            .attr("cy", (d) => this.yScale(d));
 
         this.svg
             .selectAll(".dot")
@@ -496,10 +486,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .style("fill", "white")
             .style("stroke-size", "1")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.yScale(d))
-            .on("mouseover", this.showToolTip)
-            .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip);
+            .attr("cy", (d) => this.yScale(d));
 
         if (this.icLatestData) {
             this.svg
@@ -515,10 +502,7 @@ export class TimelineComponent implements OnInit, OnChanges {
                 .style("fill", "white")
                 .style("stroke-size", "1")
                 .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-                .attr("cy", (d) => this.yScale(d))
-                .on("mouseover", this.showToolTip)
-                .on("mousemove", this.moveToolTip)
-                .on("mouseleave", this.hideToolTip);
+                .attr("cy", (d) => this.yScale(d));
         }
 
         if (this.icInitialData) {
@@ -535,41 +519,8 @@ export class TimelineComponent implements OnInit, OnChanges {
                 .style("fill", "white")
                 .style("stroke-size", "1")
                 .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-                .attr("cy", (d) => this.yScale(d))
-                .on("mouseover", this.showToolTip)
-                .on("mousemove", this.moveToolTip)
-                .on("mouseleave", this.hideToolTip)
-                .append("svg:title")
-                .text((d, i) => `${this.dataSet.dates}${d}`);
+                .attr("cy", (d) => this.yScale(d));
         }
-        this.toolTip = d3
-            .select("#multi-timeline")
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-radius", "5px")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px");
-        this.showToolTip = (d, i) => {
-            this.toolTip.transition().duration(1000);
-            this.toolTip
-                .style("opacity", 1)
-                // .html((d, i) => this.timePeriods[i] + "  " + this.actualsData[i] + "  " + this.budgetData[i] + "  " + this.forecastData[i])
-                .style("left", d3.mouse(d3.event.currentTarget)[0] + 30 + "px")
-                .style("top", d3.mouse(d3.event.currentTarget)[1] + 30 + "px");
-        };
-        this.moveToolTip = (d) => {
-            this.toolTip.style("left", d3.mouse(d3.event.currentTarget)[0] + 70 + "px").style("top", d3.mouse(d3.event.currentTarget)[1] + "px");
-        };
-        this.hideToolTip = (d) => {
-            this.toolTip
-                .transition()
-                .duration(1000)
-                .style("opacity", 0);
-        };
     }
 
     gridlines() {

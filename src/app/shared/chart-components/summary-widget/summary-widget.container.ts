@@ -135,6 +135,11 @@ export class SummaryWidgetContainer implements OnInit {
     public icLabel: string;
 
     /**
+     * Flag indicating of KPI data is loading.
+     */
+    public kpiLoading$: Observable<boolean>;
+
+    /**
      * Constructor.
      */
     constructor(public store$: Store<any>) {
@@ -146,7 +151,7 @@ export class SummaryWidgetContainer implements OnInit {
      */
     public ngOnInit() {
         SummaryWidgetContainer.logger.debug(`ngOnInit()`);
-
+        this.kpiLoading$ = this.store$.pipe(select(fromWidgets.getIsLoading("kpi")));
         this.selectedDatePart$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedDatePart));
         this.selectedPeriod$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedPeriod));
         this.selectedCurrency$ = this.store$.pipe(select(fromCompanyDashboardLayout.getSelectedCurrency));
