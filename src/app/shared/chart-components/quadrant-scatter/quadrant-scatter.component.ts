@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit, EventEmitter } from "@angular/core";
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild, AfterContentInit, EventEmitter, Output } from "@angular/core";
 import { PortfolioRelativePerformanceSeries } from "@core/domain/portfolio.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
@@ -42,7 +42,8 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
     @Input() yLabelVisible?: boolean;
 
     @ViewChild("container") container: ElementRef;
-
+    b;
+    @Output()
     public openCompanyDashboard: EventEmitter<string> = new EventEmitter<string>();
 
     el: HTMLElement;
@@ -97,7 +98,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         //
     }
 
-    onOpenCompanyDashboard(companyId: string) {
+    public onOpenCompanyDashboard(companyId: string) {
         this.openCompanyDashboard.emit(companyId);
     }
 
@@ -184,6 +185,19 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .call(yAxis);
         this.svg
             .append("text")
+            .attr("text-anchor", "end")
+            .attr("x", 460)
+            .attr("y", -130)
+            .style("stroke", "#111927")
+            .style("font-size", "24px")
+            .style("font-family", "PostGrotesk")
+            .style("text-align", "right")
+            .style("width", "44px")
+            .style("height", "21px")
+            .style("letter-spacing", "0.25px")
+            .text(`Company Performance: Top 10 Unrealized Value`);
+        this.svg
+            .append("text")
             .attr("text-anchor", "middle")
             .attr("class", "image")
             .attr("x", this.dimensions.width / 2 + 25)
@@ -213,7 +227,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             .attr("x", -25)
             .attr("y", -25)
             .style("stroke", "#111927")
-            .style("font-size", "12px")
+            .style("font-size", "15px")
             .style("font-weight", "bold")
             .style("font-family", "PostGrotesk")
             .style("text-align", "right")
@@ -274,7 +288,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("x", 1160)
+            .attr("x", 1150)
             .attr("y", -25)
             .style("stroke", "#3b4659")
             .style("font-size", "12px")
@@ -339,7 +353,7 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
         this.svg
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("x", 1155)
+            .attr("x", 1145)
             .attr("y", 460)
             .style("stroke", "#3b4659")
             .style("font-size", "12px")
@@ -557,32 +571,8 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
 
         const valueSize = d3
             .scaleSqrt()
-            .domain([1, 100]) // What's in the data, let's say it is percentage
-            .range([5, 100]);
-
-        // this.svg
-        //     .append("g")
-        //     .selectAll("myrect")
-        //     .data(allGroups)
-        //     .enter()
-        //     .append("circle")
-        //     .attr("cx", 100)
-        //     .attr("cy", (d, i) => 10 + i * (size + 5))
-        //     .attr("r", 7)
-        //     .style("fill", (d) => this.color(d));
-        // this.svg
-        //     .selectAll("mylabels")
-        //     .data(allGroups)
-        //     .enter()
-        //     .append("text")
-        //     .attr("x", 100 + size * 0.8)
-        //     .attr("y", (d, i) => i * (size + 5) + size / 2)
-        //     .style("font-family", "PostGrotesk")
-        //     .style("font-size", "14px")
-        //     .style("fill", "#3b4659")
-        //     .text((d) => d)
-        //     .attr("text-anchor", "left")
-        //     .style("alignment-baseline", "bottom");
+            .domain([1, 100])
+            .range([1, 100]);
 
         const legend = this.svg
             .append("g")
@@ -622,43 +612,43 @@ export class QuadrantScatterComponent implements OnInit, OnChanges, AfterContent
             })
             .attr("text-anchor", "left")
             .style("alignment-baseline", "middle");
-
-        const valueLegend = this.svg
-            .append("g")
-            .attr("class", "valueLegend")
-            .attr("height", 100)
-            .attr("width", 600)
-            .attr("transform", `translate(600, -70)`);
-        valueLegend
-            .selectAll("text")
-            .data(valuesToShow)
-            .enter()
-            .append("text")
-            .attr("x", (d, i) => {
-                const xPost = this.legendXPositionText(valuesToShow, i, 10, 10);
-                return xPost;
-            })
-            .style("font-size", "10px")
-            .style("font-family", "PostGrotesk")
-            .style("font-size", "14px")
-            .style("fill", "#3b4659")
-            .attr("y", -2)
-            .text((d) => {
-                return `$${d}M`;
-            })
-            .attr("text-anchor", "left")
-            .style("alignment-baseline", "middle");
-        valueLegend
-            .selectAll("circle")
-            .data(valuesToShow)
-            .enter()
-            .append("circle")
-            .attr("cx", (d, i) => {
-                const xPost = this.legendXPosition(valuesToShow, i, 10);
-                return xPost;
-            })
-            .attr("cy", (d) => valueSize(d)) // (d, i) => 2 + i * (size + 2))
-            .attr("r", (d) => valueSize(d));
+        // TODO:: djr -get the legend working
+        // const valueLegend = this.svg
+        //     .append("g")
+        //     .attr("class", "valueLegend")
+        //     .attr("height", 100)
+        //     .attr("width", 600)
+        //     .attr("transform", `translate(600, -70)`);
+        // valueLegend
+        //     .selectAll("text")
+        //     .data(valuesToShow)
+        //     .enter()
+        //     .append("text")
+        //     .attr("x", (d, i) => {
+        //         const xPost = this.legendXPositionText(valuesToShow, i, 10, 10);
+        //         return xPost;
+        //     })
+        //     .style("font-size", "10px")
+        //     .style("font-family", "PostGrotesk")
+        //     .style("font-size", "14px")
+        //     .style("fill", "#3b4659")
+        //     .attr("y", -2)
+        //     .text((d) => {
+        //         return `$${d}M`;
+        //     })
+        //     .attr("text-anchor", "left")
+        //     .style("alignment-baseline", "middle");
+        // valueLegend
+        //     .selectAll("circle")
+        //     .data(valuesToShow)
+        //     .enter()
+        //     .append("circle")
+        //     .attr("cx", (d, i) => {
+        //         const xPost = this.legendXPosition(valuesToShow, i, 10);
+        //         return xPost;
+        //     })
+        //     .attr("cy", (d) => valueSize(d))
+        //     .attr("r", (d) => valueSize(d));
     }
 
     legendXPositionText(data, position, textOffset, avgFontWidth) {
