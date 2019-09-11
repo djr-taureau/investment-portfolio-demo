@@ -48,11 +48,12 @@
         <td *ngFor="let vsPq of tableDataVsPq; let i=index; trackBy: trackByFn"
             class="cell"
             [ngClass]="
-            {
-                'py-positive': vsPq > 0,
-                'py-negative': vsPq < 0
-            }">
-            {{ vsPq | percentOrNa }}
+                {
+                    'py-positive': vsPq > 0,
+                    'py-negative': vsPq < 0,
+                    'py-na': isUnknownValue(vsPq)
+                }">
+            {{ vsPq | percentOrNa: true }}
         </td>
     </tr>
     <tr *ngIf="vsPyDataShow">
@@ -65,9 +66,10 @@
             [ngClass]="
                 {
                     'py-positive': vsPy > 0,
-                    'py-negative': vsPy < 0
+                    'py-negative': vsPy < 0,
+                    'py-na': isUnknownValue(vsPy)
                 }">
-            {{ vsPy | percentOrNa }}
+            {{ vsPy | percentOrNa: true }}
         </td>
     </tr>
     <tr *ngIf="vsBudDataShow">
@@ -80,9 +82,10 @@
             [ngClass]="
                 {
                     'py-positive': vsBud > 0,
-                    'py-negative': vsBud < 0
+                    'py-negative': vsBud < 0,
+                    'py-na': isUnknownValue(vsBud)
                 }">
-            {{ vsBud | percentOrNa }}
+            {{ vsBud | percentOrNa: true }}
         </td>
     </tr>
     <tr *ngIf="vsForecastDataShow">
@@ -95,9 +98,10 @@
             [ngClass]="
                 {
                     'py-positive': vsFC > 0,
-                    'py-negative': vsFC < 0
+                    'py-negative': vsFC < 0,
+                    'py-na': isUnknownValue(vsFC)
                 }">
-            {{ vsFC | percentOrNa }}
+            {{ vsFC | percentOrNa: true }}
         </td>
     </tr>
     <tr *ngIf="vsIcInitialDataShow">
@@ -110,9 +114,10 @@
             [ngClass]="
                 {
                     'py-positive': vsICI > 0,
-                    'py-negative': vsICI < 0
+                    'py-negative': vsICI < 0,
+                    'py-na': isUnknownValue(vsICI)
                 }">
-            {{ vsICI | percentOrNa }}
+            {{ vsICI | percentOrNa: true }}
         </td>
     </tr>
     <tr *ngIf="vsIcLatestDataShow">
@@ -125,9 +130,10 @@
             [ngClass]="
                 {
                     'py-positive': vsICL > 0,
-                    'py-negative': vsICL < 0
+                    'py-negative': vsICL < 0,
+                    'py-na': isUnknownValue(vsICL)
                 }">
-            {{ vsICL | percentOrNa }}
+            {{ vsICL | percentOrNa: true }}
         </td>
     </tr>
 

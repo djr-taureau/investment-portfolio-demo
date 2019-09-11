@@ -1,5 +1,6 @@
 import { MatTableDataSource } from "@angular/material";
 import { Component, Input } from "@angular/core";
+import { Unknown } from "@core/domain/enum/unknown.enum";
 import { Logger } from "@util/logger";
 import * as AngularUtils from "@util//angular.util";
 
@@ -105,6 +106,7 @@ export class KpiDetailTableComponent {
     public vsIcLatestDataShow = false;
 
     public trackByFn = AngularUtils.trackByFn;
+    public isUnknownValue = Unknown.isUnknownValue;
 
     constructor() {}
 }
