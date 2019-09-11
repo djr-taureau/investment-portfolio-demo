@@ -46,17 +46,7 @@ export const getIsLoading = (child: string, id?: string) =>
     createSelector(
         selectChildState(child),
         (childState) => {
-            if (id) {
-                // const set = childState.chartDataPeriodSets.find((item: KpiChartPeriodDataSets) => item.id === id);
-                // if (set) {
-                //     return set.data.metricsGraph;
-                // } else {
-                //     return null;
-                // }
-                return false;
-            } else {
-                return !!childState.isLoading;
-            }
+            return !!childState.isLoading;
         }
     );
 

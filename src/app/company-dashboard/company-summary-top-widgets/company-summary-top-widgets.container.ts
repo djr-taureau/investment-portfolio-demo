@@ -4,11 +4,11 @@ import { RevenueSeriesData, ChartDataPeriod } from "@core/domain/company.model";
 import { select, Store } from "@ngrx/store";
 import { Logger } from "@util/logger";
 import { Observable } from "rxjs";
+import { WidgetTypeEnum } from "@core/state/company/dashboard/company-dashboard-layout.reducer";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
 import * as fromCompanyCash from "@core/state/company/cash";
 import * as CompanyFlowActions from "@core/state/flow/company-flow.actions";
 import * as fromWidget from "@core/state/company/widgets";
-import { WidgetTypeEnum } from "@core/state/company/dashboard/company-dashboard-layout.reducer";
 
 @Component({
     selector: "sbp-company-summary-top-widgets-container",
