@@ -57,6 +57,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     public budgetVis = true;
     public icInitialVis = true;
     public icLatestVis = true;
+    public yLabelVisible = true;
 
     actualsData;
     budgetData;
