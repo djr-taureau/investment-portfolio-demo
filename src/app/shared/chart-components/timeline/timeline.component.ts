@@ -6,13 +6,14 @@ import { curveLinear } from "d3-shape";
 import * as _ from "lodash";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType } from "../interfaces/types";
+import * as AngularUtils from "@util//angular.util";
 
 @Component({
     selector: "sbp-timeline",
     templateUrl: "./timeline.component.html",
     styleUrls: ["./timeline.component.scss"]
 })
-export class TimelineComponent implements OnInit, OnChanges {
+export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input()
@@ -27,6 +28,18 @@ export class TimelineComponent implements OnInit, OnChanges {
     }
     private _allLineChartData: ChartDataPeriod[];
 
+    @Input()
+    public set xAxisTickValues(value: string[]) {
+        if (value) {
+            this._xAxisTickValues = value;
+            this.update();
+        }
+    }
+    public get xAxisTickValues(): string[] {
+        return this._xAxisTickValues;
+    }
+    private _xAxisTickValues: string[];
+
     @Input() label: string;
     @Input() newData: any;
     @Input() xAccessor?: any;
@@ -38,8 +51,7 @@ export class TimelineComponent implements OnInit, OnChanges {
     @Input() selectedDatePart: any;
     @Input() availablePeriods: any[];
     @Input() title: string;
-
-    @ViewChild("container") container: ElementRef;
+    // @Input() tableDataHeaders: string[];
 
     public timePeriods: any[];
     public actualsVis = true;
@@ -65,7 +77,6 @@ export class TimelineComponent implements OnInit, OnChanges {
     icInitialScale: any;
     icLatestYMax;
     icInitialYMax;
-    xAxisTickValues: any[];
     yAxisTickValues: any[];
     tooltip: (selection) => void;
     yTickValues: any[];
@@ -126,6 +137,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             boundedHeight: Math.max(this.dimensions.height - this.dimensions.marginTop - this.dimensions.marginBottom, 0),
             boundedWidth: Math.max(this.dimensions.width - this.dimensions.marginLeft - this.dimensions.marginRight, 0)
         };
+
         this.el = elementRef.nativeElement;
         this.svg = d3
             .select(this.el)
@@ -155,6 +167,10 @@ export class TimelineComponent implements OnInit, OnChanges {
         //  this.updateScales();
     }
 
+    ngAfterContentInit() {
+        console.log(this.xAxisTickValues);
+    }
+
     private update(): void {
         if ((this.allLineChartData || []).length < 1 || !this.selectedPeriod) {
             return;
@@ -176,46 +192,26 @@ export class TimelineComponent implements OnInit, OnChanges {
 
         this.yAccessor = (v) => v.value;
         this.activeStyle = "not-visible";
-        const getPeriodId = _.get(this, "selectedPeriod.id", null);
+
         this.dateSelected = _.get(this, "selectedPeriod.date", null);
-        const getDateSelectedString = _.get(this, "selectedPeriod.formatted", null);
-        this.datePartId = _.get(this, "selectedDatePart.id", null);
-        if (this.datePartId === "Y") {
-            this.dateSelectedString = `${getDateSelectedString.substr(4, 4)}`;
-        } else {
-            this.dateSelectedString = `${getDateSelectedString.substr(2, 1)}${getDateSelectedString.substr(1, 1)}${getDateSelectedString.substr(
-                6,
-                2
-            )}`;
-        }
         const getData = this.allLineChartData.map((v) => _.pick(v, ["scenarioName", "data"]));
-        console.log(getData);
+        console.log("data for series", getData);
         this.scenarioNames = getData;
         let newVals = [];
-        let quarters;
+
         const data = _.forEach(this.scenarioNames, (values) => {
             const newName = values.scenarioName;
-            quarters = values.data.map((v) => v.financialQuarter);
             const vals = values.data.map((v) => v.value);
             this.timePeriods = values.data.map((v) => v.date);
             const obj = Object.assign({ name: newName }, { values: vals });
             newVals = newVals.concat(obj);
         });
-        let periods = [];
-        const periodStrings = _.forEach(
-            _.zip(quarters, this.timePeriods),
-            _.spread((q, d) => {
-                this.datePartId === "Q" ? (periods = periods.concat(`${q}Q${d.substr(2, 2)}`)) : (periods = periods.concat(`${d.substr(0, 4)}`));
-                return periods;
-            })
-        );
-
         this.scenarioNames = newVals;
         this.dataSet = {
             series: this.scenarioNames,
             dates: this.timePeriods.map((v) => this.parseDate(v))
         };
-        this.timePeriods = periods;
+        this.timePeriods = this.xAxisTickValues;
         this.indexDateSelected = _.indexOf(this.timePeriods, this.dateSelectedString, 0);
         this.updateScales();
     }
@@ -248,7 +244,6 @@ export class TimelineComponent implements OnInit, OnChanges {
             .selectAll(".tooltip")
             .remove();
         this.xAccessor = (v) => this.parseDate(v.date);
-
         const seriesData = this.dataSet.series;
         const seriesNames = _.map(seriesData, "name");
         const actuals = _.find(seriesData, ["name", "actual"]);
@@ -291,7 +286,7 @@ export class TimelineComponent implements OnInit, OnChanges {
         this.yScale = d3
             .scaleLinear()
             .domain([newMin, newMax])
-            .range([this.dimensions.height - this.dimensions.marginBottom, this.dimensions.marginTop]);
+            .range([this.dimensions.height, 0]);
 
         this.actualsScale = d3
             .scaleLinear()
@@ -347,8 +342,6 @@ export class TimelineComponent implements OnInit, OnChanges {
                     .tickSize(-this.dimensions.width)
                     .tickFormat("")
             )
-            .style("fill", "black")
-            .style("stroke", "red")
             .call((g) => g.select("g.tick.tick:nth-child(2) line").attr("class", "y-axis-zero-line"));
         this.svg
             .selectAll("line.y-axis-zero-line")
@@ -377,7 +370,6 @@ export class TimelineComponent implements OnInit, OnChanges {
                     .attr("text-anchor", "start")
                     .attr("class", "y-axis-label")
                     .attr("transform", "rotate(-90)")
-                    .text("KPI Detail (M)")
                     .text(this.title.concat(" ($M)").toLocaleUpperCase())
             );
 
@@ -496,10 +488,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .style("fill", "white")
             .style("stroke-size", "1")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.yScale(d))
-            .on("mouseover", this.showToolTip)
-            .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip);
+            .attr("cy", (d) => this.yScale(d));
 
         if (this.icLatestData) {
             this.svg
@@ -515,10 +504,7 @@ export class TimelineComponent implements OnInit, OnChanges {
                 .style("fill", "white")
                 .style("stroke-size", "1")
                 .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-                .attr("cy", (d) => this.yScale(d))
-                .on("mouseover", this.showToolTip)
-                .on("mousemove", this.moveToolTip)
-                .on("mouseleave", this.hideToolTip);
+                .attr("cy", (d) => this.yScale(d));
         }
 
         if (this.icInitialData) {
@@ -535,41 +521,26 @@ export class TimelineComponent implements OnInit, OnChanges {
                 .style("fill", "white")
                 .style("stroke-size", "1")
                 .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-                .attr("cy", (d) => this.yScale(d))
-                .on("mouseover", this.showToolTip)
-                .on("mousemove", this.moveToolTip)
-                .on("mouseleave", this.hideToolTip)
-                .append("svg:title")
-                .text((d, i) => `${this.dataSet.dates}${d}`);
+                .attr("cy", (d) => this.yScale(d));
         }
-        this.toolTip = d3
-            .select("#multi-timeline")
-            .append("div")
-            .style("opacity", 0)
-            .attr("class", "tooltip")
-            .style("background-color", "white")
-            .style("border", "solid")
-            .style("border-radius", "5px")
-            .style("border-width", "2px")
-            .style("border-radius", "5px")
-            .style("padding", "5px");
-        this.showToolTip = (d, i) => {
-            this.toolTip.transition().duration(1000);
-            this.toolTip
-                .style("opacity", 1)
-                // .html((d, i) => this.timePeriods[i] + "  " + this.actualsData[i] + "  " + this.budgetData[i] + "  " + this.forecastData[i])
-                .style("left", d3.mouse(d3.event.currentTarget)[0] + 30 + "px")
-                .style("top", d3.mouse(d3.event.currentTarget)[1] + 30 + "px");
-        };
-        this.moveToolTip = (d) => {
-            this.toolTip.style("left", d3.mouse(d3.event.currentTarget)[0] + 70 + "px").style("top", d3.mouse(d3.event.currentTarget)[1] + "px");
-        };
-        this.hideToolTip = (d) => {
-            this.toolTip
-                .transition()
-                .duration(1000)
-                .style("opacity", 0);
-        };
+
+        // this.showToolTip = (d, i) => {
+        //     this.toolTip.transition().duration(1000);
+        //     this.toolTip
+        //         .style("opacity", 1)
+        //         // .html((d, i) => this.timePeriods[i] + "  " + this.actualsData[i] + "  " + this.budgetData[i] + "  " + this.forecastData[i])
+        //         .style("left", d3.mouse(d3.event.currentTarget)[0] + 30 + "px")
+        //         .style("top", d3.mouse(d3.event.currentTarget)[1] + 30 + "px");
+        // };
+        // this.moveToolTip = (d) => {
+        //     this.toolTip.style("left", d3.mouse(d3.event.currentTarget)[0] + 70 + "px").style("top", d3.mouse(d3.event.currentTarget)[1] + "px");
+        // };
+        // this.hideToolTip = (d) => {
+        //     this.toolTip
+        //         .transition()
+        //         .duration(1000)
+        //         .style("opacity", 0);
+        // };
     }
 
     gridlines() {

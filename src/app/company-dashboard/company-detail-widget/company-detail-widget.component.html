@@ -3,6 +3,7 @@
     <!-- <div class="y-axis-label-line"></div> -->
     <sbp-timeline *ngIf="allLineChartData"
                   fxFlex="50"
+                  [xAxisTickValues]="tableDataHeaders"
                   [allLineChartData]="allLineChartData"
                   [selectedPeriod]="selectedPeriod"
                   [xAccessor]="dateAccessor"

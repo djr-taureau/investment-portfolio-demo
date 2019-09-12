@@ -38,6 +38,28 @@
                 [imageUrl]="'../../assets/image/legend-mgmt-fcst.svg'"
                 (click)="toggleVisibility('forecast')">Mgmt Fcst</button>
     </div>
+    <div *ngIf="icLatestData">
+        <button kendoButton
+                (click)="toggleVisibility('icLatest')"
+                [imageUrl]="'../../assets/image/legend-ic-latest.svg'"
+                id="icLatest"
+                [togglable]="true"
+                [ngClass]="{
+                    'toggle-off': !icInitialVis
+                }"
+                class="chart-button">IC-Initial</button>
+    </div>
+    <div *ngIf="icInitialData">
+        <button kendoButton
+                (click)="toggleVisibility('icInital')"
+                [imageUrl]="'../../assets/image/legend-ic-initial.svg'"
+                id="icInitial"
+                [togglable]="true"
+                [ngClass]="{
+                    'toggle-off': !icLatestVis
+                }"
+                class="chart-button">IC-Latest</button>
+    </div>
 
 </div>
 
