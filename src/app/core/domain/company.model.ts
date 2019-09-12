@@ -5,10 +5,11 @@ import { ApiResponse } from "./api.model";
 export interface AvailablePeriod {
     // quarter: string;
     // year: number;
+    date: string;
     financialQuarter: number;
     fiscalQuarter: number;
-    date: string;
     isProjection?: boolean;
+    formatted: string;
 }
 export enum CompanyTypeEnum {
     PUBLIC = "PUBLIC",

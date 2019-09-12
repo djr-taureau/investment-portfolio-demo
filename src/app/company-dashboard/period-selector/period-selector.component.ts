@@ -1,6 +1,6 @@
-import * as _ from "lodash";
 import { AvailablePeriod } from "@core/domain/company.model";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import * as _ from "lodash";
 import { CurrencyType, CurrencyTypeEnum } from "@core/domain/enum/currency-type.enum";
 import { DatePartType, DatePartTypeEnum } from "@core/domain/enum/date-part-type.enum";
 import { IconizedItem } from "@shared/iconized-searchable-combo/iconized-item";
@@ -54,7 +54,17 @@ export class PeriodSelectorComponent implements OnInit {
      * The alternative, non-USD currency that the user can select (if available)
      */
     @Input()
-    public alternateCurrency: CurrencyType;
+    set alternateCurrency(value: CurrencyType) {
+        if (value) {
+            this._alternateCurrency = value;
+            this.showAlternateCurrency = value.currencyCode !== null;
+        }
+    }
+    get alternateCurrency() {
+        return this._alternateCurrency;
+    }
+    private _alternateCurrency: CurrencyType;
+    public showAlternateCurrency = false;
 
     /**
      * Which date unit has the user selected - quarter or year?
@@ -85,7 +95,15 @@ export class PeriodSelectorComponent implements OnInit {
      * The 'as of' period (the selected period in the available periods)
      */
     @Input()
-    public selectedPeriod: SelectorPeriod;
+    set selectedPeriod(value: SelectorPeriod) {
+        if (value) {
+            this._selectedPeriod = value;
+        }
+    }
+    get selectedPeriod(): SelectorPeriod {
+        return this._selectedPeriod;
+    }
+    private _selectedPeriod: SelectorPeriod = null;
 
     /**
      * The month of the financial year end
@@ -196,7 +214,24 @@ export class PeriodSelectorComponent implements OnInit {
     // PUBLIC FUNCTIONS
     // -----------------------------------------------
     public getPeriods() {
-        return this.selectedDatePartType === DatePartTypeEnum.QTR ? this._availablePeriods : this._availablePeriodsByYear;
+        // date: string;
+        // financialQuarter: number;
+        // fiscalDate: string;
+        // fiscalQuarter: number;
+        // formatted: string;
+
+        // id: string;
+        // icon: string;
+        // text: string;
+        // data?: any;
+
+        return this.selectedDatePartType === DatePartTypeEnum.QTR
+            ? this._availablePeriods.map((item) => {
+                  return { id: item.date, icon: null, text: item.formatted } as IconizedItem;
+              })
+            : this._availablePeriodsByYear.map((item) => {
+                  return { id: item.date, icon: null, text: item.formatted } as IconizedItem;
+              });
     }
 
     public getPeriodIdField() {
@@ -243,13 +278,6 @@ export class PeriodSelectorComponent implements OnInit {
     public getSelectedDatePartNameProjected() {
         const result = _.get(this.selectedDatePartType, "name", "");
         return this.projectedCount > 1 ? result.concat("s") : result;
-    }
-
-    /**
-     * Determines if the alternate currency should be selected
-     */
-    public showAlternateCurrency(): boolean {
-        return _.get(this, "alternateCurrency.currencyCode", this.currencies.USD.currencyCode) !== this.currencies.USD.currencyCode;
     }
 
     /**

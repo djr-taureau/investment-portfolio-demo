@@ -78,11 +78,43 @@
                 top: -5px;
                 text-align: right;
 
-                &:nth-child(2),
-                &:nth-child(3),
-                &:nth-child(4),
+                &:nth-child(1) {
+                    width: 55px;
+                }
+
+                &:nth-child(2) {
+                    text-align: left;
+                    width: 220px;
+                }
+
+                &:nth-child(3) {
+                    text-align: left;
+                    width: 220px;
+                }
+
+                &:nth-child(4) {
+                    text-align: left;
+                    width: 195px;
+                }
+
                 &:nth-child(5) {
                     text-align: left;
+                    width: 140px;
+                }
+
+                &:nth-child(6) {
+                    text-align: right;
+                    width: 120px;
+                }
+
+                &:nth-child(8) {
+                    text-align: right;
+                    width: 100px;
+                }
+
+                &:nth-child(9) {
+                    text-align: right;
+                    padding-right: 35px;
                 }
 
                 // }
@@ -167,13 +199,13 @@
                 .totalValue,
                 .moic,
                 .irr {
-                    opacity: 0.75;
+                    // opacity: 0.75;
                     font-family: PostGrotesk;
                     font-size: 14px;
                     font-weight: normal;
                     font-style: normal;
                     font-stretch: normal;
-                    line-height: 1.07;
+                    line-height: 1.14;
                     letter-spacing: normal;
                     text-align: right;
                     color: rgba($slate, .75);
@@ -185,6 +217,10 @@
 
                 &:nth-child(2) {
                     font-weight: bold;
+                }
+
+                &:nth-child(9) {
+                    padding-right: 35px;
                 }
 
             }

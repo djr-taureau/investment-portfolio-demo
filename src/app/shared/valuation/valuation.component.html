@@ -7,14 +7,14 @@
     <div *ngIf="!columnar"
          fxLayout="row"
          fxLayoutAlign="center">
-        <div class="moic-gross-irr">{{ moic }}x</div>
+        <div class="moic-gross-irr">{{ moic | number: '1.2-2' }}x</div>
         <div class="divide">/</div>
         <div class="moic-gross-irr">{{ grossIrr * 100 | percentOrNa }}</div>
     </div>
     <div *ngIf="columnar"
          fxLayout="column"
          fxLayoutAlign="start end">
-        <div class="moic-gross-irr">{{ moic }}x</div>
+        <div class="moic-gross-irr">{{ moic | number: '1.2-2' }}x</div>
         <div class="moic-gross-irr">{{ grossIrr * 100 | percentOrNa }}</div>
     </div>
 </div>

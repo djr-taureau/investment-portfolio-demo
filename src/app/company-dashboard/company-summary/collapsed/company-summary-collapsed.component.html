@@ -131,8 +131,8 @@
         </div>
 
         <sbp-valuation [header]="'Current'"
-                       [value]="currentTotalValue | number:'1.1-1'"
-                       [moic]="currentMoic | number:'1.1-1'"
+                       [value]="currentTotalValue"
+                       [moic]="currentMoic"
                        [grossIrr]="currentIrr | number:'1.1-1'">
         </sbp-valuation>
 
@@ -144,7 +144,7 @@
 
         <sbp-valuation [header]="'+1 year'"
                        [value]="plusOneTotalValue | number:'1.1-1'"
-                       [moic]="plusOneMoic | number:'1.1-1'"
+                       [moic]="plusOneMoic"
                        [grossIrr]="plusOneIrr | number:'1.1-1'">
         </sbp-valuation>
 
@@ -156,7 +156,7 @@
 
         <sbp-valuation [header]="'Exit'"
                        [value]="exitTotalValue | number:'1.1-1'"
-                       [moic]="exitMoic | number:'1.1-1'"
+                       [moic]="exitMoic"
                        [grossIrr]="exitIrr | number:'1.1-1'">
         </sbp-valuation>
     </div>
