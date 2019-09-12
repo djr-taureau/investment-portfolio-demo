@@ -51,7 +51,8 @@
                  [ngClass]="
                  {
                     'vs-positive': isPositivePY,
-                    'vs-negative': !isPositivePY
+                    'vs-negative': !isPositivePY,
+                    'vs-na': isUnknownValue(py)
                  }">
                 {{ py | percentOrNa: true }}
             </div>
@@ -70,8 +71,9 @@
                  class="vs-value"
                  [ngClass]="
                  {
-                    'vs-positive': isPositivePY,
-                    'vs-negative': !isPositivePY
+                    'vs-positive': isPositiveIC,
+                    'vs-negative': !isPositiveIC,
+                    'vs-na': isUnknownValue(ic)
                  }">
                 {{ ic | percentOrNa: true }}
             </div>
