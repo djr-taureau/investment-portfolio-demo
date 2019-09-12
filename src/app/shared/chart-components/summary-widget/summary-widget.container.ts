@@ -6,14 +6,12 @@ import { Logger } from "@util/logger";
 import { select, Store } from "@ngrx/store";
 import * as fromWidgets from "@core/state/company/widgets";
 import * as fromCompanyDashboardLayout from "@core/state/company/dashboard";
-import * as fromWidget from "@core/state/company/widgets";
 
 @Component({
     selector: "sbp-summary-widget-container",
     template: `
         <sbp-summary-widget
             class="hand-cursor"
-            *ngIf="!(kpiLoading$ | async)"
             [selected]="displayKpiDetail | async"
             [lineChartData]="summaryLineChartData$ | async"
             [selectedPeriod]="selectedPeriod$ | async"
