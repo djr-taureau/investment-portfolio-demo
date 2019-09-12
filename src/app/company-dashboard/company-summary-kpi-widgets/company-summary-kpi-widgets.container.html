@@ -1,31 +1,45 @@
 <div fxLayout="column"
-     fxLayoutAlign="start stretch">
-    <div #container
-         #anchor
-         class="kpi-container"
-         fxLayout="row"
-         fxLayoutAlign="space-between center">
-        <ng-container class="chart"
-                      *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
+     fxLayoutAlign="start stretch"
+     fxLayoutGap="0px">
 
-            <sbp-summary-widget-container [id]="chartDataPeriodSet.id"
-                                          [name]="chartDataPeriodSet.name"
-                                          [type]="typeEnum.KPI">
-            </sbp-summary-widget-container>
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // KPI Summary Charts
+    //////////////////////////////////////////////////////////////////
+    -->
 
-        </ng-container>
+    <div fxLayout="row"
+         fxLayoutAlign="space-between stretch"
+         fxLayoutGap="10px"
+         *ngIf="!(kpiLoading$ | async)">
 
-        <ng-container class="chart"
-                      *ngFor="let ghost of ghosts; let i=index; trackBy: trackByFn">
-
-            <sbp-ghost-summary-widget *ngIf="kpiLoading$ | async">
-            </sbp-ghost-summary-widget>
-
-        </ng-container>
+        <sbp-summary-widget-container *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn"
+                                      fxFlex
+                                      [id]="chartDataPeriodSet.id"
+                                      [name]="chartDataPeriodSet.name"
+                                      [type]="typeEnum.KPI">
+        </sbp-summary-widget-container>
 
     </div>
 
-    <div *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn">
+    <div fxLayout="row"
+         fxLayoutAlign="space-between stretch"
+         fxLayoutGap="10px"
+         *ngIf="kpiLoading$ | async">
+
+        <sbp-ghost-summary-widget *ngFor="let ghost of ghosts; let i=index; trackBy: trackByFn"
+                                  fxFlex>
+        </sbp-ghost-summary-widget>
+
+    </div>
+
+    <!--
+    //////////////////////////////////////////////////////////////////
+    // KPI Detail Charts
+    //////////////////////////////////////////////////////////////////
+    -->
+    <div *ngFor="let chartDataPeriodSet of chartDataPeriodSets$ | async; let i=index; trackBy: trackByFn"
+         class="detail-container">
         <sbp-company-detail-widget-container [@expandOutFromTop]="showKpiDetail"
                                              [name]="chartDataPeriodSet.name"
                                              [id]="chartDataPeriodSet.id"

@@ -153,6 +153,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .attr("height", this.dimensions.height)
             .append("g");
         this.svg.append("g").attr("transform", "translate(" + this.dimensions.marginLeft + "," + this.dimensions.marginTop + ")");
+        this.update();
     }
 
     ngOnChanges() {

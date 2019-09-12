@@ -7,6 +7,7 @@
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
+    max-height: 566px;
 
     .item {
         width: 100%;
@@ -51,7 +52,8 @@
 
     .items-list {
         width: 100%;
-        height: calc(100% - 40px);
+        max-height: 400px;
+        overflow-y: auto;
         //border-bottom: dashed 1px rgba($light-grey-blue, .5);
     }
 

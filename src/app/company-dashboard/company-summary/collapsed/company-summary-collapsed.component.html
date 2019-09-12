@@ -99,8 +99,8 @@
             <div>&nbsp;</div>
             <div class="deployed-denomination">($M)</div>
         </div>
-        <div class="deployed-value">{{ currentInvested | shortNumber:'1.1-1' }}</div>
-        <div class="deployed-total">/ {{ currentApproved | shortNumber:'1.1-1'}}</div>
+        <div class="deployed-value">{{ currentInvested | number:'1.1-1' }}</div>
+        <div class="deployed-total">/ {{ currentApproved | number:'1.1-1' }}</div>
     </div>
 
     <!--
@@ -131,7 +131,7 @@
         </div>
 
         <sbp-valuation [header]="'Current'"
-                       [value]="currentTotalValue"
+                       [value]="currentTotalValue | number:'1.1-1'"
                        [moic]="currentMoic"
                        [grossIrr]="currentIrr | number:'1.1-1'">
         </sbp-valuation>

@@ -1,6 +1,6 @@
 {
-    "apiEndpoint": "https://prism-test-api-management.azure-api.net/",
-    "adClientId": "ebe43431-a5e1-4569-8de8-f7119d5c87e2",
-    "adInstance": "https://login.microsoftonline.com/",
-    "adTenant": "softbank.com"
-  }
+  "apiEndpoint": "https://prism-test-api-management.azure-api.net/",
+  "adClientId": "ebe43431-a5e1-4569-8de8-f7119d5c87e2",
+  "adInstance": "https://login.microsoftonline.com/",
+  "adTenant": "softbank.com"
+}

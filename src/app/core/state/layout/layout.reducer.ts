@@ -136,7 +136,7 @@ function updateSelectedCompanyLinks(selectedLink: string, state: LayoutState = i
 export function layoutReducer(state: LayoutState = initialState, action: LayoutActions): LayoutState {
     switch (action.type) {
         case LayoutActionTypes.ObserveUrlChange:
-            return observeUrlChange(action.payload);
+            return observeUrlChange(action.payload, state);
 
         case LayoutActionTypes.ToggleSlideout:
             return toggleSlideout(action.payload, action.component, state);

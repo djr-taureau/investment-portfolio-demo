@@ -1,3 +1,4 @@
+import { CompanyCashModule } from "@app/company-dashboard/company-summary-top-widgets/cash/company-cash.module";
 import { CompanyDetailWidgetComponent } from "./company-detail-widget/company-detail-widget.component";
 import { ElementRef, NgModule } from "@angular/core";
 import { CompanyInitiativesSummaryComponent } from "@app/company-dashboard/company-initiatives/company-initiatives-summary.component";
@@ -39,7 +40,15 @@ const MODULE_ROUTES: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(MODULE_ROUTES), CompanySummaryModule, PopupModule, ButtonsModule, IconizedSearchableComboModule, SharedModule],
+    imports: [
+        RouterModule.forChild(MODULE_ROUTES),
+        CompanySummaryModule,
+        PopupModule,
+        ButtonsModule,
+        IconizedSearchableComboModule,
+        SharedModule,
+        CompanyCashModule
+    ],
     declarations: COMPONENTS,
     exports: COMPONENTS,
     providers: [

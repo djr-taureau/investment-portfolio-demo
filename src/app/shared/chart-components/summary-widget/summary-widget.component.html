@@ -1,64 +1,139 @@
-<!-- CONTAINER -->
 <div class="container"
      [ngClass]="{
         'selected': selected
     }">
-    <!-- TITLE ROW -->
-    <div class="box title">{{ title }} ({{currencySymbol}}{{scale}})</div>
-    <!-- CHARTS ROW -->
-    <!-- VALUE COLUMN -->
-    <div class="box value">{{ value | shortNumber }}</div>
-    <div *ngIf="pyLabel"
-         class="box py">{{ pyLabel }}</div>
-    <div *ngIf="!py"
-         class="box py-val">0%</div>
-    <div *ngIf="py"
-         class="box py-val"
-         [ngClass]="{
-            'positive-py': isPositivePY,
-            'negative-py': !isPositivePY
-        }">{{ py | percentOrNa }}</div>
-    <div *ngIf="icLabel"
-         class="box budget">{{ icLabel }}</div>
-    <div *ngIf="!ic"
-         class="box ic-val">0%</div>
-    <div *ngIf="ic"
-         class="box ic-val"
-         [ngClass]="{
-            'positive-ic': isPositiveIC,
-            'negative-ic': !isPositiveIC
-        }">{{ ic | percentOrNa }}</div>
-    <!--    <div *ngIf="data && selectedPeriod && barChartData1 && barChartData2 && title !== 'Cash Runway'"-->
-    <div class="box timeline">
-        <sbp-micro-line [data]="lineChartData"
-                        [id]="title"
-                        [selectedPeriod]="selectedPeriod"
-                        [xAccessor]="dateAccessor"
-                        [yAccessor]="yAccessor"
-                        [yLabelVisible]="false"></sbp-micro-line>
+
+    <!--
+    //////////////////////////////////////////////////////////////////////
+    // Top Row
+    //
+    // Title and details
+    //////////////////////////////////////////////////////////////////////
+    -->
+
+    <div fxLayout="row"
+         fxLayoutAlign="space-between stretch"
+         class="top-row">
+
+        <!-- Title -->
+        <div class="title">{{ title }} ({{currencySymbol}}{{scale}})</div>
+
+        <!-- Details -->
+        <div class="details"
+             *ngIf="selected">
+            Details
+        </div>
     </div>
-    <div *ngIf="selectedPeriod && barChartData1 && title !== 'Cash Runway'"
-         class="box py-chart">
-        <sbp-micro-bar [data]="barChartData1"
-                       [id]="title"
-                       [selectedPeriod]="selectedPeriod"
-                       [availablePeriods]="availablePeriods"
-                       [title]="'bar1'"
-                       [xAccessor]="dateAccessor"
-                       [yAccessor]="yAccessor"
-                       [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
+
+    <div class="grid">
+
+        <!--
+        //////////////////////////////////////////////////////////////////////
+        // Middle Row
+        //
+        // Value, PY, IC
+        //////////////////////////////////////////////////////////////////////
+        -->
+
+        <!-- Value -->
+        <div class="row1-col1 value value-offset">{{ value | shortNumber }}</div>
+
+        <!-- PY -->
+        <div class="row1-col2">
+
+            <div *ngIf="pyLabel"
+                 class="vs-label">
+                {{ pyLabel }}
+            </div>
+
+            <div *ngIf="py"
+                 class="vs-value"
+                 [ngClass]="
+                 {
+                    'vs-positive': isPositivePY,
+                    'vs-negative': !isPositivePY,
+                    'vs-na': isUnknownValue(py)
+                 }">
+                {{ py | percentOrNa: true }}
+            </div>
+
+        </div>
+
+        <!-- BUD -->
+        <div class="row1-col3">
+
+            <div *ngIf="icLabel"
+                 class="vs-label">
+                {{ icLabel }}
+            </div>
+
+            <div *ngIf="ic"
+                 class="vs-value"
+                 [ngClass]="
+                 {
+                    'vs-positive': isPositiveIC,
+                    'vs-negative': !isPositiveIC,
+                    'vs-na': isUnknownValue(ic)
+                 }">
+                {{ ic | percentOrNa: true }}
+            </div>
+
+        </div>
+
+        <!--
+        //////////////////////////////////////////////////////////////////////
+        // Bottom Row
+        //
+        // Line chart, PY bar chart, BUD bar chart
+        //////////////////////////////////////////////////////////////////////
+        -->
+
+        <!-- Line Chart -->
+        <div class="row2-col1 timeline">
+            <sbp-micro-line [data]="lineChartData"
+                            [id]="title"
+                            [selectedPeriod]="selectedPeriod"
+                            [xAccessor]="dateAccessor"
+                            [yAccessor]="yAccessor"
+                            [yLabelVisible]="false">
+            </sbp-micro-line>
+        </div>
+
+        <!-- PY Bar Chart -->
+        <div *ngIf="selectedPeriod && barChartData1"
+             class="row2-col2 bar-chart">
+            <sbp-micro-bar [data]="barChartData1"
+                           [id]="title"
+                           [selectedPeriod]="selectedPeriod"
+                           [availablePeriods]="availablePeriods"
+                           [title]="'bar1'"
+                           [xAccessor]="dateAccessor"
+                           [yAccessor]="yAccessor"
+                           [yAccessorValue]="yAccessorValue">
+            </sbp-micro-bar>
+        </div>
+
+        <!-- BUD Bar Chart -->
+        <div *ngIf="selectedPeriod && barChartData2"
+             class="row2-col3 bar-chart">
+            <sbp-micro-bar [data]="barChartData2"
+                           [id]="title"
+                           [selectedPeriod]="selectedPeriod"
+                           [availablePeriods]="availablePeriods"
+                           [title]="'bar2'"
+                           [xAccessor]="dateAccessor"
+                           [yAccessor]="yAccessor"
+                           [yAccessorValue]="yAccessorValue">
+            </sbp-micro-bar>
+        </div>
+
     </div>
-    <div *ngIf="selectedPeriod && barChartData2 && title !== 'Cash Runway'"
-         class="box budget-chart">
-        <sbp-micro-bar [data]="barChartData2"
-                       [id]="title"
-                       [selectedPeriod]="selectedPeriod"
-                       [availablePeriods]="availablePeriods"
-                       [title]="'bar2'"
-                       [xAccessor]="dateAccessor"
-                       [yAccessor]="yAccessor"
-                       [yAccessorValue]="yAccessorValue"></sbp-micro-bar>
-    </div>
+
+    <!--
+    //////////////////////////////////////////////////////////////////////
+    // Triangle pointing to detials when selected
+    //////////////////////////////////////////////////////////////////////
+    -->
     <img src="assets/image/triangle.svg"
          class="triangle"
          [ngClass]="{

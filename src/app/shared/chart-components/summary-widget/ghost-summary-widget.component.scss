@@ -5,15 +5,13 @@
     overflow: hidden;
 
     .container {
-        padding: 0;
         position: relative;
-        width: 334px;
-        height: 170px;
         border-radius: 6px;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
         background-color: $white;
         transition: all 2s ease-out !important;
         border: solid 2px $white;
+        height: 165.5px;
     }
 
     .selected {
@@ -56,12 +54,10 @@
         height: 55px;
     }
 
-}
-
-
-.triangle {
-    position: absolute;
-    top: 100%;
-    width: 100%;
-    height: 8px;
+    .triangle {
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        height: 8px;
+    }
 }
