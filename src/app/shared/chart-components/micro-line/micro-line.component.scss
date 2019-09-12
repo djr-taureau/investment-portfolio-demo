@@ -4,12 +4,6 @@
 
     ::ng-deep {
         #micro-timeline {
-            margin-bottom: 12.8px;
-            margin-left: 10px;
-            border-radius: 6px;
-            height: 200px;
-            align-self: flex-start;
-
 
             circle {
 
@@ -28,11 +22,7 @@
                         stroke: $light-navy;
                     }
                 }
-
-
-
             }
-
 
             path {
                 .area {
@@ -53,15 +43,8 @@
                     stroke-dasharray: 3, 3;
                     stroke-width: 3;
                 }
-
-
-
             }
-
-
-
         }
-
 
         &.selected-value {
             fill: $white;

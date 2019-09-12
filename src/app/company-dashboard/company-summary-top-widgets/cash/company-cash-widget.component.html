@@ -1,0 +1,47 @@
+<div class="cash-container "
+     fxLayout="column"
+     fxLayoutAlign="start stretch"
+     [ngClass]="{
+        'selected': selected
+    }">
+
+    <!--
+    //////////////////////////////////////////////////////////////////////
+    // Top Row
+    //
+    // Title and details
+    //////////////////////////////////////////////////////////////////////
+    -->
+
+    <div fxLayout="row"
+         fxLayoutAlign="space-between stretch"
+         class="top-row">
+
+        <!-- Title -->
+        <div class="title">Cash ($M)</div>
+
+        <!-- Details -->
+        <div class="details"
+             *ngIf="selected">
+            Details
+        </div>
+    </div>
+
+    <!--
+    //////////////////////////////////////////////////////////////////////
+    // Middle Row
+    //
+    // Cash
+    //////////////////////////////////////////////////////////////////////
+    -->
+
+    <div fxLayout="column"
+         fxLayoutAlign="center center"
+         fxFlex>
+        <div fxLayout="row"
+             fxLayoutAlign="center center"
+             fxLayoutGap="16px"
+             class="value"><span>{{ cash | shortNumber }}</span></div>
+    </div>
+
+</div>

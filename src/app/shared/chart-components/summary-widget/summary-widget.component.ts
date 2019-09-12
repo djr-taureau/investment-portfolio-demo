@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, Input } from "@angular/core";
 import { RevenueSeriesData } from "@core/domain/company.model";
+import { Unknown } from "@core/domain/enum/unknown.enum";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 
@@ -55,7 +56,7 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
     public title: string;
 
     /**
-     * Value for the denomitation indicator in the title row
+     * Value for the denomination indicator in the title row
      */
     @Input()
     public denomination: string;
@@ -106,6 +107,8 @@ export class SummaryWidgetComponent implements OnInit, OnChanges {
 
     public yAccessorValue: string;
     // public icString?: string;
+
+    public isUnknownValue = Unknown.isUnknownValue;
 
     constructor() {
         SummaryWidgetComponent.logger.debug(`constructor()`);

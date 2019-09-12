@@ -12,68 +12,7 @@
         width: 605px
     }
 
-    .cash-runway-container {
-        padding: 0;
-        position: relative;
-        width: 334px;
-        height: 170px;
-        border-radius: 6px;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-        // border: solid 2px $dark-sky-blue;
-        background-color: white;
-        display: grid;
-        grid-gap: 5px;
-        grid-template-columns: 168px 73px 73px;
-        grid-template-rows: 23px 45px 113px;
-        transition: all 2s ease-out !important;
-
-        .box {
-            padding: 4px;
-
-        }
-
-        .title {
-            grid-column: 1 / span 4;
-            grid-row: 1;
-            font-family: PostGrotesk;
-            font-size: 12px;
-            font-weight: 500;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: 0.5px;
-            color: $grey-blue;
-            padding-left: 10px;
-            margin-left: 10px;
-            padding-top: 5px;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            text-align: left;
-            text-transform: uppercase;
-            justify-self: start;
-            align-self: start;
-        }
-
-        .value {
-            text-align: center;
-            ont-family: PostGrotesk;
-            font-weight: normal;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: normal;
-            letter-spacing: -0.2px;
-            text-align: right;
-            color: $dark;
-            font-size: 40px;
-            margin-top: -26px;
-
-            .months {
-                font-size: 32px;
-                letter-spacing: -0.25px;
-                margin-bottom: 2px;
-                margin-bottom: -6px;
-                margin-left: -10px;
-            }
-        }
+    .chart {
+        height: 171px;
     }
 }

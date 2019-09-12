@@ -113,11 +113,11 @@ export class TimelineComponent implements OnInit, OnChanges {
     constructor(elementRef: ElementRef) {
         TimelineComponent.logger.debug(`constructor()`);
         this.dimensions = {
-            marginTop: 50,
+            marginTop: 10,
             marginRight: 20,
             marginBottom: 20,
             marginLeft: 55,
-            height: 270,
+            height: 325,
             width: 606
         };
 
@@ -131,8 +131,8 @@ export class TimelineComponent implements OnInit, OnChanges {
             .select(this.el)
             .select("#multi-timeline")
             .append("svg")
-            .attr("width", this.dimensions.boundedWidth)
-            .attr("height", this.dimensions.boundedHeight);
+            .attr("width", this.dimensions.width)
+            .attr("height", this.dimensions.height);
     }
 
     ngOnInit() {

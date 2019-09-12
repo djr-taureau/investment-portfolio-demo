@@ -136,17 +136,20 @@ export class MicroLineComponent implements OnInit {
     }
 
     private createSvg() {
-        return d3
-            .select(this.el)
-            .selectAll("#micro-timeline")
-            .append("svg")
-            .attr("id", `${this.timelineId}`)
-            .attr("width", this.dimensions.boundedWidth)
-            .attr("height", this.dimensions.boundedHeight)
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .append("g")
-            .attr("transform", "translate(0, 10)");
+        return (
+            d3
+                .select(this.el)
+                .selectAll("#micro-timeline")
+                .append("svg")
+                .attr("id", `${this.timelineId}`)
+                .attr("width", this.dimensions.boundedWidth)
+                // .attr("height", this.dimensions.boundedHeight)
+                .attr("height", 75)
+                .attr("stroke-linejoin", "round")
+                .attr("stroke-linecap", "round")
+                .append("g")
+                .attr("transform", "translate(0, 10)")
+        );
     }
 
     private update(): void {

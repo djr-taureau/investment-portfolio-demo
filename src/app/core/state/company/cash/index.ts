@@ -46,3 +46,8 @@ export const getCashAsOf = createSelector(
         return !!cashAsOf ? cashAsOf.amountInUSD : 0;
     }
 );
+
+export const getIsLoading = createSelector(
+    selectCompanyCashDataState,
+    fromCompanyCash.getIsLoading
+);
