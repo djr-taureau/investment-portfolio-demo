@@ -18,7 +18,7 @@
     }
 
     .content-container {
-        margin-top: 40px;
+        margin-top: 16px;
     }
 
     .vr {
@@ -26,5 +26,11 @@
         height: 43px;
         opacity: 0.2;
         background-color: $grey-blue;
+    }
+
+    .h-line {
+        height: 1px;
+        margin: 3px 40px 0px 40px;
+        border-bottom: dashed 1px rgba($light-grey-blue, .5);
     }
 }

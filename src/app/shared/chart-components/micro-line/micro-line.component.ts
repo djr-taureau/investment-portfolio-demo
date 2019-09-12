@@ -136,7 +136,6 @@ export class MicroLineComponent implements OnInit {
     }
 
     private createSvg() {
-        console.log("bmr this.dimensions.boundedHeight", this.dimensions.boundedHeight);
         return (
             d3
                 .select(this.el)
