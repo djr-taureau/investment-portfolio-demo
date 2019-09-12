@@ -68,7 +68,7 @@ export class IconizedSearchableComboComponent implements OnInit {
      * Attempts to set it via the Kendo DropDown API were unsuccessful.
      */
     public getDefaultValue(): any {
-        return this.data && this.data.length > 0 ? this.data[this.data.length - 1] : {};
+        return this.data && this.data.length > 0 ? this.data[0] : {};
     }
 
     /**

@@ -138,7 +138,7 @@ export const getSelectedCompanyAvailablePeriods = createSelector(
                 yearLabel: "FY " + new Date(p.date).getFullYear()
             };
         });
-        periods = periods.sort(ArrayUtil.sortDateYYYYMMDD("date"));
+        periods = periods.sort(ArrayUtil.sortDateYYYYMMDD("date")).reverse();
         return periods;
     }
 );
