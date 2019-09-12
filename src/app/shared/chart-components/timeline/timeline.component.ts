@@ -333,14 +333,12 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
                     .tickSizeInner(5)
             )
             .call((g) => g.select("g.tick.tick:nth-child(6) text").attr("class", "tick-selected-value"));
+
         this.svg
-            .append("line")
-            .attr("class", "xAxisLine")
-            .style("stroke", "#d8d8d8")
-            .attr("x1", 50)
-            .attr("y1", 100)
-            .attr("x2", 300)
-            .attr("y2", 100);
+            .append("g")
+            .attr("transform", `translate(0,${this.dimensions.height - this.dimensions.marginBottom})`)
+            .attr("class", "xAxisLine");
+
         this.svg
             .append("g")
             .attr("class", "axis-grid")
@@ -380,6 +378,16 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
                     .attr("transform", "rotate(-90)")
                     .text(this.title.concat(" ($M)").toLocaleUpperCase())
             );
+
+        this.svg
+            .select(".xAxisLine")
+            .append("line")
+            .attr("class", "xAxisLine")
+            .style("stroke", "#d8d8d8")
+            .attr("x1", 50)
+            .attr("y1", 100)
+            .attr("x2", 300)
+            .attr("y2", 100);
 
         const line = d3
             .line()
