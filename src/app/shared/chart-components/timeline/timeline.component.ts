@@ -169,10 +169,8 @@ export class TimelineComponent implements OnInit, OnChanges {
         this.svg.selectAll("path.actuals-path").remove();
         this.svg.selectAll("path.budget-path").remove();
         this.svg.selectAll("path.forecast-path").remove();
-        this.svg
-            .selectAll("#multi-timeline")
-            .selectAll(".tooltip")
-            .remove();
+
+        this.svg.selectAll("div.tooltip").remove();
         this.svg.selectAll("circle.actuals-dot").remove();
         this.svg.selectAll("circle.icLatest-dot").remove();
         this.svg.selectAll("circle.icInitial-dot").remove();
@@ -235,6 +233,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             .selectAll(".tooltip")
             .remove();
         //  d3 date parse
+
         this.xAccessor = (v) => this.parseDate(v.date);
         const seriesData = this.dataSet.series;
         const seriesNames = _.map(seriesData, "name");
@@ -473,10 +472,7 @@ export class TimelineComponent implements OnInit, OnChanges {
             })
             .style("stroke-size", "4")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.yScale(d))
-            .on("mouseover", this.showToolTip)
-            .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip);
+            .attr("cy", (d) => this.yScale(d));
 
         this.svg
             .selectAll(".dot")
