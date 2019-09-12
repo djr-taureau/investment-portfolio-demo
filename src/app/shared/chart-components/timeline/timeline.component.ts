@@ -334,6 +334,14 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             )
             .call((g) => g.select("g.tick.tick:nth-child(6) text").attr("class", "tick-selected-value"));
         this.svg
+            .append("line")
+            .attr("class", "xAxisLine")
+            .style("stroke", "#d8d8d8")
+            .attr("x1", 50)
+            .attr("y1", 100)
+            .attr("x2", 300)
+            .attr("y2", 100);
+        this.svg
             .append("g")
             .attr("class", "axis-grid")
             .attr("transform", "translate(70, 0)")
