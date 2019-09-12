@@ -2,5 +2,6 @@
      fxLayout="column"
      fxLayoutAlign="center center"
      fxFlex>
-    <sbp-quadrant-scatter [data]="chartData"></sbp-quadrant-scatter>
+    <sbp-quadrant-scatter [data]="chartData"
+                          (openCompanyDashboard)="onOpenCompanyDashboard($event)"></sbp-quadrant-scatter>
 </div>
