@@ -321,7 +321,8 @@
                 color: $light-grey-blue;
 
                 .y-axis-remove-line {
-                    display: none;
+                    color: $dark-sky-blue;
+                    stroke-width: 4;
                 }
 
                 .y-axis-zero-line {

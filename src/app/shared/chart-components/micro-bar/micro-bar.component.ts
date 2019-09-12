@@ -170,6 +170,7 @@ export class MicroBarComponent implements OnInit {
 
         const posData = [];
         const negData = [];
+        // separate the data into negative and positive to build rounded bars
         this.dataValues.map((d, i) => {
             if (d > 0) {
                 posData[i] = d;
@@ -189,18 +190,20 @@ export class MicroBarComponent implements OnInit {
 
         const y0 = d3.max(d3.extent(this.dataValues).map((d) => Math.abs(d)));
 
+        //  x scale is range of data which is also the array length
         this.xScale = d3
             .scaleLinear()
             .domain([0, (this.dataValues || []).length])
             .range([0, 90])
             .nice();
 
+        //  yScale needs to run above and below for pos and neg valaues
         this.yScale = d3
             .scaleLinear()
             .domain([-y0 - 0.2, y0 + 0.2])
             .range([50, 0])
             .nice();
-
+        //  rounded corn values
         this.rx = 2;
         this.ry = 2;
 
@@ -216,7 +219,7 @@ export class MicroBarComponent implements OnInit {
                 .style("stroke-width", 1)
                 .style("stroke", "#dbe3f1");
         }
-
+        // positive bars
         this.svg
             .selectAll("bar")
             .data(posData)
@@ -263,7 +266,7 @@ export class MicroBarComponent implements OnInit {
                    `);
                 }
             });
-
+        //  negative values
         this.svg
             .selectAll("bar")
             .data(negData)
