@@ -12,7 +12,7 @@
                     [disabled]="!alternateCurrency"
                     (click)="onCurrencyChange(currencies.USD)">{{ currencies.USD.currencySymbol }} {{ currencies.USD.currencyCode }}</button>
             <button kendoButton
-                    *ngIf="showAlternateCurrency()"
+                    *ngIf="showAlternateCurrency"
                     [toggleable]="true"
                     [selected]="getAlternateCurrencySelected()"
                     [value]="alternateCurrency"
