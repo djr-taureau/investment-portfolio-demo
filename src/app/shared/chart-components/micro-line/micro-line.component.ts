@@ -121,7 +121,6 @@ export class MicroLineComponent implements OnInit {
 
     ngOnInit() {
         MicroLineComponent.logger.debug(`ngOnInit()`);
-        MicroLineComponent.logger.debug(`ngOnInit()`);
         this.initialized = true;
         this.svg = this.createSvg();
         this.yAccessor = (v) => {
@@ -180,16 +179,12 @@ export class MicroLineComponent implements OnInit {
             return;
         }
 
-        const projValues = this.data.filter((v) => v.projection === true);
         const actualsXMin = d3.min(this.historicalData.map((v) => this.xAccessor(v)));
         const actualsXMax = d3.max(this.historicalData.map((v) => this.xAccessor(v)));
-        const projectedXMin = d3.min(this.projectedData.map((v) => this.xAccessor(v)));
-        const projectedXMax = d3.max(this.projectedData.map((v) => this.xAccessor(v)));
         const actualsYMin = d3.min(this.historicalData.map((v) => this.yAccessor(v)));
         const actualsYMax = d3.max(this.historicalData.map((v) => this.yAccessor(v)));
-        const projectedYMin = d3.min(this.projectedData.map((v) => this.yAccessor(v)));
-        const projectedYMax = d3.max(this.projectedData.map((v) => this.yAccessor(v)));
 
+        // xScale is domain of min to max values for data
         this.xScale = d3
             .scaleTime()
             .domain([actualsXMin, actualsXMax])
@@ -205,6 +200,7 @@ export class MicroLineComponent implements OnInit {
         this.yAccessorScaled = (d) => this.yScale(this.yAccessor(d));
         this.y0AccessorScaled = this.yScale(this.yScale.domain()[0]);
 
+        //  remove all old svg elements for rer render of chart
         this.svg.selectAll("circle.selected-value").remove();
         this.svg.selectAll(".select-timeline").remove();
         this.svg.selectAll("path#projLine").remove();
@@ -212,6 +208,7 @@ export class MicroLineComponent implements OnInit {
         this.svg.selectAll(".historical").remove();
         this.svg.selectAll(".dot").remove();
 
+        //  draw the vertical line for as of date selected
         this.svg
             .append("line")
             .attr("x1", this.xScale(this.parseDate(this.dateSelected)))
@@ -222,23 +219,25 @@ export class MicroLineComponent implements OnInit {
             .style("stroke-width", 1)
             .style("stroke", "#99a8bf");
 
-        const circleVal = d3.select(this.el).selectAll("circle.selected-value");
-
+        // line definition
         const line = d3
             .line()
             .x((d) => this.xScale(this.xAccessor(d)))
             .y((d) => this.yScale(this.yAccessor(d)))
             .curve(curveLinear);
+        // area defintion
         const area = d3
             .area()
             .x(line.x())
             .y1(line.y())
             .y0(this.yScale(0));
+        // line definition for projected data
         const lineProjected = d3
             .line()
             .defined((d) => d.date >= this.xAccessor(this.dateSelected))
             .x((d) => this.xScale(this.xAccessor(d.date)))
             .y((d) => this.yScale(this.yAccessor(d.value)));
+        // draw the path for historical data
         this.svg
             .append("path")
             .datum(this.historicalData)
@@ -247,7 +246,7 @@ export class MicroLineComponent implements OnInit {
             .attr("stroke", "#124f8c")
             .attr("stroke-width", 2)
             .attr("d", line);
-
+        // remove paths for both lines
         this.svg.selectAll("path#projLine").remove();
         this.svg.selectAll(".projected").remove();
         this.svg
@@ -271,7 +270,7 @@ export class MicroLineComponent implements OnInit {
             .attr("opacity", "0.15")
             .attr("stroke", "#47a2d6")
             .attr("d", area);
-
+        //  draw the circle for as of selected date
         this.svg
             .append("circle") // change the as-of line
             .attr("cx", this.xScale(this.parseDate(this.dateSelected)))

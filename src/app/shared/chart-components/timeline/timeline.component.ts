@@ -13,7 +13,7 @@ import * as AngularUtils from "@util//angular.util";
     templateUrl: "./timeline.component.html",
     styleUrls: ["./timeline.component.scss"]
 })
-export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
+export class TimelineComponent implements OnInit, OnChanges {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input()
@@ -45,13 +45,11 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
     @Input() xAccessor?: any;
     @Input() yAccessor?: any;
     @Input() keyAccessor?: any;
-    @Input() valueAccessor?: any;
-    @Input() yLabelVisible?: boolean;
+
     @Input() selectedPeriod: any;
     @Input() selectedDatePart: any;
-    @Input() availablePeriods: any[];
+    @Input() availablPeriods: any[];
     @Input() title: string;
-    // @Input() tableDataHeaders: string[];
 
     public timePeriods: any[];
     public actualsVis = true;
@@ -78,32 +76,23 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
     icLatestYMax;
     icInitialYMax;
     yAxisTickValues: any[];
-    tooltip: (selection) => void;
     yTickValues: any[];
-
     y0AccessorScaled: any;
     datePartId: string;
-    y0BudgetAccessorScaled: any;
+
     y0ForecastAccessorScaled: any;
     parseDate = d3.timeParse("%Y-%m-%d");
     formatCategory = d3.tickFormat(d3.format(","));
     formatDate = d3.timeFormat("%m/%d/%Y");
     gradientId: string = getUniqueId("Timeline-gradient");
     gradientColors: string[] = ["rgb(226, 222, 243)", "#f8f9fa"];
-    xAxisBottom;
-    yAxisGrid;
-    actualsPresentValue;
-    dateSelected;
+    dateSelected: any;
     selectedValue: boolean;
-    tooltipScale: any;
-    sourceValues: any;
-    indexSource: any;
     activeStyle: string;
     indexSelected: number;
     scenarioNames;
     pathStyles;
     dataSet;
-    tipBox;
     actuals;
     budget;
     forecast;
@@ -167,15 +156,11 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
         //  this.updateScales();
     }
 
-    ngAfterContentInit() {
-        console.log(this.xAxisTickValues);
-    }
-
     private update(): void {
         if ((this.allLineChartData || []).length < 1 || !this.selectedPeriod) {
             return;
         }
-
+        // remove all svg element before updating data
         this.svg.selectAll("line.select-timeline").remove();
         this.svg.selectAll("path.actuals-path").remove();
         this.svg.selectAll("path.budget-path").remove();
@@ -195,10 +180,10 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
 
         this.dateSelected = _.get(this, "selectedPeriod.date", null);
         const getData = this.allLineChartData.map((v) => _.pick(v, ["scenarioName", "data"]));
-        console.log("data for series", getData);
         this.scenarioNames = getData;
         let newVals = [];
 
+        // transform the data into format for passing to multi line time series
         const data = _.forEach(this.scenarioNames, (values) => {
             const newName = values.scenarioName;
             const vals = values.data.map((v) => v.value);
@@ -207,6 +192,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             newVals = newVals.concat(obj);
         });
         this.scenarioNames = newVals;
+        //  create the new time series data
         this.dataSet = {
             series: this.scenarioNames,
             dates: this.timePeriods.map((v) => this.parseDate(v))
@@ -217,6 +203,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
     }
 
     updateScales() {
+        // remove all svg elements that need to be redrawn
         this.svg.selectAll("text.y-axis-label-line").remove();
         this.svg.selectAll(".xAxis.tick").remove();
         this.svg.selectAll(".axis-grid").remove();
@@ -243,6 +230,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             .selectAll("#multi-timeline")
             .selectAll(".tooltip")
             .remove();
+        //  d3 date parse
         this.xAccessor = (v) => this.parseDate(v.date);
         const seriesData = this.dataSet.series;
         const seriesNames = _.map(seriesData, "name");
@@ -251,10 +239,12 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
         const fore = _.find(seriesData, ["name", "managementForecast"]);
 
         const millions = (n) => n / 1000000;
+        // convert values before passing them to the d3 scaleas
         this.actualsData = _.map(actuals.values, millions);
         this.budgetData = _.map(budget.values, millions);
         this.forecastData = _.map(fore.values, millions);
 
+        // take the min and max for each of the scales
         const actualsYMin = d3.min(this.actualsData);
         const actualsYMax = d3.max(this.actualsData);
         const budgetYMin = d3.min(this.budgetData);
@@ -262,8 +252,10 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
         const foreYMin = d3.min(this.forecastData);
         const foreYMax = d3.max(this.forecastData);
         this.actualsData = _.take(this.actualsData, this.actualsData.length - 1);
+        // take the min and max for the entire data set by group
         let minValues = [actualsYMin, budgetYMin, foreYMin];
         let maxValues = [actualsYMax, budgetYMax, foreYMax];
+        // if the date series has more than three we want the sets for ic intial and latest
         if (_.size(seriesData) > 3) {
             const icLatest = _.find(seriesData, ["name", "icLatest"]);
             const icInitial = _.find(seriesData, ["name", "icInitial"]);
@@ -276,13 +268,17 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             minValues = [actualsYMin, budgetYMin, foreYMin, icInitialYMin, icLatestYMin];
             maxValues = [actualsYMax, budgetYMax, foreYMax, this.icInitialYMax, this.icLatestYMax];
         }
+        // extend each end of the scale by 10%
         const newMax = d3.max(maxValues) * 1.1;
         const newMin = d3.min(minValues) * 0.9;
+        // xscale domain dates in data set
+        // from the left marging to the bounded width of the chart
         this.xScale = d3
             .scaleTime()
             .domain(d3.extent(this.dataSet.dates))
             .range([this.dimensions.marginLeft, this.dimensions.boundedWidth])
             .nice();
+        // y scale is min and max of all values in seried
         this.yScale = d3
             .scaleLinear()
             .domain([newMin, newMax])
@@ -334,6 +330,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             )
             .call((g) => g.select("g.tick.tick:nth-child(6) text").attr("class", "tick-selected-value"));
 
+        //  draw the line above the x axis
         this.svg
             .append("line")
             .attr("class", "y0")
@@ -345,6 +342,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             .attr("y1", this.yScale.range()[0] - 20)
             .attr("y2", this.yScale.range()[0] - 20);
 
+        //  draw the lines for the grid
         this.svg
             .append("g")
             .attr("class", "axis-grid")
@@ -362,6 +360,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             .style("stroke", "#68758c")
             .style("opacity", "0.8");
 
+        // build the y axis
         const yAxis = d3
             .axisLeft(this.yScale)
             .ticks(5)
@@ -374,7 +373,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             .style("opactity", "0.15")
             .attr("transform", `translate(${this.dimensions.marginLeft},0)`)
             .call(yAxis.tickSize(0))
-            // .call((g) => g.select(".domain").remove())
+            .call((g) => g.select(".domain").remove())
             .call((g) =>
                 g
                     .select(".tick:last-of-type text")
@@ -386,13 +385,13 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
                     .attr("transform", "rotate(-90)")
                     .text(this.title.concat(" ($M)").toLocaleUpperCase())
             );
-
+        //  create the line used for the path of each data set
         const line = d3
             .line()
             .x((d, i) => this.xScale(this.dataSet.dates[i]))
             .y((d) => this.yScale(d))
             .curve(curveLinear);
-
+        //  use the line to draw the path of each dataset
         this.svg
             .append("path")
             .datum(this.actualsData)
@@ -445,6 +444,8 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
                 .attr("d", line);
         }
 
+        // draw the dots that represent the data points for each data set
+
         this.svg
             .selectAll(".dot")
             .data(this.actualsData)
@@ -484,10 +485,7 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
             .style("fill", "white")
             .style("stroke-size", "1")
             .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
-            .attr("cy", (d) => this.yScale(d))
-            .on("mouseover", this.showToolTip)
-            .on("mousemove", this.moveToolTip)
-            .on("mouseleave", this.hideToolTip);
+            .attr("cy", (d) => this.yScale(d));
 
         this.svg
             .selectAll(".dot")
@@ -537,30 +535,13 @@ export class TimelineComponent implements OnInit, OnChanges, AfterContentInit {
                 .attr("cx", (d, i) => this.xScale(this.dataSet.dates[i]))
                 .attr("cy", (d) => this.yScale(d));
         }
-
-        // this.showToolTip = (d, i) => {
-        //     this.toolTip.transition().duration(1000);
-        //     this.toolTip
-        //         .style("opacity", 1)
-        //         // .html((d, i) => this.timePeriods[i] + "  " + this.actualsData[i] + "  " + this.budgetData[i] + "  " + this.forecastData[i])
-        //         .style("left", d3.mouse(d3.event.currentTarget)[0] + 30 + "px")
-        //         .style("top", d3.mouse(d3.event.currentTarget)[1] + 30 + "px");
-        // };
-        // this.moveToolTip = (d) => {
-        //     this.toolTip.style("left", d3.mouse(d3.event.currentTarget)[0] + 70 + "px").style("top", d3.mouse(d3.event.currentTarget)[1] + "px");
-        // };
-        // this.hideToolTip = (d) => {
-        //     this.toolTip
-        //         .transition()
-        //         .duration(1000)
-        //         .style("opacity", 0);
-        // };
     }
-
+    // grid line function for each data set
     gridlines() {
         return d3.axisLeft(this.yScale).ticks(5);
     }
 
+    //  visibility toggle for each data set
     toggleVisibility(event) {
         let newOpacity = 1;
         switch (event) {
