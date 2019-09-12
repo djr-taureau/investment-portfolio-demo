@@ -51,13 +51,15 @@ export class TimelineComponent implements OnInit, OnChanges {
     @Input() availablPeriods: any[];
     @Input() title: string;
 
+    @Input()
+    public yLabelVisible: boolean;
+
     public timePeriods: any[];
     public actualsVis = true;
     public forecastVis = true;
     public budgetVis = true;
     public icInitialVis = true;
     public icLatestVis = true;
-    public yLabelVisible = true;
 
     actualsData;
     budgetData;
