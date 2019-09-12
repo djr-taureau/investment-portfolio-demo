@@ -121,6 +121,11 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
     public ebitdaLoading$: Observable<boolean>;
 
     /**
+     * Flag indicating if cash data is loading.
+     */
+    public cashLoading$: Observable<boolean>;
+
+    /**
      * Constructor.
      */
     constructor(private store$: Store<any>) {
@@ -176,6 +181,7 @@ export class CompanySummaryTopWidgetsContainer implements OnInit {
         this.displayEbitdaDetail = this.store$.pipe(select(fromCompanyDashboardLayout.getShowEBITDADetail));
 
         // Cash
+        this.cashLoading$ = this.store$.pipe(select(fromCompanyCash.getIsLoading));
         this.cashAsOf$ = this.store$.pipe(select(fromCompanyCash.getCashAsOf));
         this.cashRunwayInMonths$ = this.store$.pipe(select(fromCompanyCash.getCashRunwayInMonths));
     }

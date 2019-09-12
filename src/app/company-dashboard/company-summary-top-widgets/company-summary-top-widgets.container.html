@@ -70,17 +70,37 @@
     // Cash
     //////////////////////////////////////////////////////////////////
     -->
-    <sbp-company-cash-widget fxFlex
-                             [cash]="cashAsOf$ | async">
-    </sbp-company-cash-widget>
+    <div fxFlex
+         class="chart">
+
+        <sbp-company-cash-widget fxFlex
+                                 *ngIf="!(cashLoading$ | async)"
+                                 [cash]="cashAsOf$ | async">
+        </sbp-company-cash-widget>
+
+        <sbp-ghost-summary-widget *ngIf="cashLoading$ | async"
+                                  [selected]="displayEbitdaDetail | async">
+        </sbp-ghost-summary-widget>
+
+    </div>
 
     <!--
     //////////////////////////////////////////////////////////////////
     // Cash Runway in Months
     //////////////////////////////////////////////////////////////////
     -->
-    <sbp-company-cash-runway-widget fxFlex
-                                    [runwayInMonths]="cashRunwayInMonths$ | async">
-    </sbp-company-cash-runway-widget>
+    <div fxFlex
+         class="chart">
+
+        <sbp-company-cash-runway-widget fxFlex
+                                        *ngIf="!(cashLoading$ | async)"
+                                        [runwayInMonths]="cashRunwayInMonths$ | async">
+        </sbp-company-cash-runway-widget>
+
+        <sbp-ghost-summary-widget *ngIf="cashLoading$ | async"
+                                  [selected]="displayEbitdaDetail | async">
+        </sbp-ghost-summary-widget>
+
+    </div>
 
 </div>
