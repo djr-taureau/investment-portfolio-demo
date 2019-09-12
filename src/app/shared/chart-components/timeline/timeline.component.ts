@@ -189,7 +189,6 @@ export class TimelineComponent implements OnInit, OnChanges {
             )}`;
         }
         const getData = this.allLineChartData.map((v) => _.pick(v, ["scenarioName", "data"]));
-        console.log(getData);
         this.scenarioNames = getData;
         let newVals = [];
         let quarters;

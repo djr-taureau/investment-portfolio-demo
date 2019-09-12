@@ -1,15 +1,15 @@
-<div #container
-     #anchor
-     class="kpi-container"
-     fxLayout="row"
-     fxLayoutAlign="space-between center">
+<div fxLayout="row"
+     fxLayoutAlign="space-between stretch"
+     fxLayoutGap="10px">
 
     <!--
     //////////////////////////////////////////////////////////////////
     // Revenue Chart
     //////////////////////////////////////////////////////////////////
     -->
-    <div class="chart">
+    <div fxFlex
+         class="chart">
+
         <sbp-summary-widget class="hand-cursor"
                             *ngIf="!(revenueLoading$ | async)"
                             [selected]="displayRevenueDetail | async"
@@ -32,7 +32,6 @@
         <sbp-ghost-summary-widget *ngIf="revenueLoading$ | async"
                                   [selected]="displayRevenueDetail | async">
         </sbp-ghost-summary-widget>
-
     </div>
 
     <!--
@@ -40,7 +39,9 @@
     // EBITDA Chart
     //////////////////////////////////////////////////////////////////
     -->
-    <div class="chart">
+    <div fxFlex
+         class="chart">
+
         <sbp-summary-widget class="hand-cursor"
                             *ngIf="!(ebitdaLoading$ | async)"
                             [selected]="displayEbitdaDetail | async"
@@ -69,41 +70,17 @@
     // Cash
     //////////////////////////////////////////////////////////////////
     -->
-    <div class="chart">
-        <div class="cash-runway-container"
-             fxLayout="column"
-             fxLayoutAlign="start stretch">
-            <div class="box title">Cash ($M)</div>
-            <div class="value"
-                 fxLayout="column"
-                 fxLayoutAlign="center center"
-                 fxFlex>
-                <div fxLayout="row"
-                     fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><span>{{ cashAsOf$ | async | shortNumber }}</span></div>
-            </div>
-        </div>
-    </div>
+    <sbp-company-cash-widget fxFlex
+                             [cash]="cashAsOf$ | async">
+    </sbp-company-cash-widget>
 
     <!--
     //////////////////////////////////////////////////////////////////
     // Cash Runway in Months
     //////////////////////////////////////////////////////////////////
     -->
-    <div class="chart">
-        <div class="cash-runway-container"
-             fxLayout="column"
-             fxLayoutAlign="start stretch">
-            <div class="box title">Cash Runway ($M)</div>
-            <div class="value"
-                 fxLayout="column"
-                 fxLayoutAlign="center center"
-                 fxFlex>
-                <div fxLayout="row"
-                     fxLayoutAlign="center center"
-                     fxLayoutGap="16px"><img src="/assets/image/on-track.svg"><span>{{ cashRunwayInMonths$ | async }}</span><span class="months">months</span></div>
-            </div>
-        </div>
-    </div>
+    <sbp-company-cash-runway-widget fxFlex
+                                    [runwayInMonths]="cashRunwayInMonths$ | async">
+    </sbp-company-cash-runway-widget>
 
 </div>
