@@ -131,7 +131,7 @@
         </div>
 
         <sbp-valuation [header]="'Current'"
-                       [value]="currentTotalValue"
+                       [value]="currentTotalValue | number:'1.1-1'"
                        [moic]="currentMoic"
                        [grossIrr]="currentIrr | number:'1.1-1'">
         </sbp-valuation>
