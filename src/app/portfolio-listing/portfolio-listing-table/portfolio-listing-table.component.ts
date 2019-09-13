@@ -3,6 +3,7 @@ import { MatTableDataSource } from "@angular/material";
 import { Unknown } from "@core/domain/enum/unknown.enum";
 import { Logger } from "@util/logger";
 import { PortfolioTableItem } from "@app/core/domain/portfolio-table-item.model";
+import { IsoConversionService } from "@core/service/isoConversion.service";
 
 // - Region
 // - Deal Lead
@@ -48,6 +49,7 @@ export class PortfolioListingTableComponent implements OnInit {
                 item.irrGroup = this.setIrrGrouping(item.irr);
                 item.moicGroup = this.setMoicGrouping(item.moic);
                 item.teamLeadName = item.teamLeadName || Unknown.DISPLAY_VALUE;
+                item.countryISO = this.flagService.iso3ToIso2AndName(item.countryISO);
             });
             this._tableData = value.slice();
             this.dataSource.data = this.addGroups(value, this.groupByColumns);
@@ -103,7 +105,7 @@ export class PortfolioListingTableComponent implements OnInit {
         return this.sortColumn;
     }
 
-    constructor() {
+    constructor(private flagService: IsoConversionService) {
         // this.dataSource.data = this.addGroups(people, this.groupByColumns);
         this.dataSource.filterPredicate = this.customFilterPredicate.bind(this);
     }

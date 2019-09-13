@@ -145,7 +145,7 @@ export const getTableData = createSelector(
                 sectors: secs,
                 sectorsAdditional: { value: "", visible: false },
                 region: company.region || "TODO",
-                countryISO: company.countryISO2 || "us",
+                countryISO: company.country || "us",
                 country: company.country || "TODO",
                 invested: company.invested,
                 totalValue: company.totalValue,
