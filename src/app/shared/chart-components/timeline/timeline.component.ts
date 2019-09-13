@@ -1,19 +1,18 @@
-import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from "@angular/core";
-import { ChartDataPeriod, RevenueSeriesData } from "@core/domain/company.model";
+import { Component, ElementRef, Input, OnChanges, OnInit } from "@angular/core";
+import { ChartDataPeriod } from "@core/domain/company.model";
 import { Logger } from "@util/logger";
 import * as d3 from "d3";
 import { curveLinear } from "d3-shape";
 import * as _ from "lodash";
 import { getUniqueId } from "../chart/utils";
 import { DimensionsType } from "../interfaces/types";
-import * as AngularUtils from "@util//angular.util";
 
 @Component({
     selector: "sbp-timeline",
     templateUrl: "./timeline.component.html",
     styleUrls: ["./timeline.component.scss"]
 })
-export class TimelineComponent implements OnInit, OnChanges {
+export class TimelineComponent implements OnInit {
     private static logger: Logger = Logger.getLogger("TimelineComponent");
 
     @Input()
@@ -118,7 +117,7 @@ export class TimelineComponent implements OnInit, OnChanges {
         this.dimensions = {
             marginTop: 10,
             marginRight: 20,
-            marginBottom: 20,
+            marginBottom: 10,
             marginLeft: 55,
             height: 325,
             width: 606
@@ -154,10 +153,6 @@ export class TimelineComponent implements OnInit, OnChanges {
             .append("g");
         this.svg.append("g").attr("transform", "translate(" + this.dimensions.marginLeft + "," + this.dimensions.marginTop + ")");
         this.update();
-    }
-
-    ngOnChanges() {
-        //  this.updateScales();
     }
 
     private update(): void {
@@ -281,69 +276,11 @@ export class TimelineComponent implements OnInit, OnChanges {
             .domain(d3.extent(this.dataSet.dates))
             .range([this.dimensions.marginLeft, this.dimensions.boundedWidth])
             .nice();
-        // y scale is min and max of all values in seried
+        // y scale is min and max of all values in series
         this.yScale = d3
             .scaleLinear()
-            .domain([newMin, newMax])
-            .range([this.dimensions.height, 0]);
-
-        this.actualsScale = d3
-            .scaleLinear()
-            .domain([0, 950])
-            .range([this.dimensions.boundedHeight, 0])
-            .nice();
-        this.budgetScale = d3
-            .scaleLinear()
-            .domain([0, budgetYMax])
-            .range([this.dimensions.boundedHeight, 0])
-            .nice();
-        this.forecastScale = d3
-            .scaleLinear()
-            .domain([0, foreYMax])
-            .range([this.dimensions.boundedHeight, 0])
-            .nice();
-        if (this.icLatestData) {
-            this.icLatestScale = d3
-                .scaleLinear()
-                .domain([0, this.icLatestYMax])
-                .range([this.dimensions.boundedHeight, 0])
-                .nice();
-        }
-        if (this.icInitialData) {
-            this.icInitialScale = d3
-                .scaleLinear()
-                .domain([0, this.icInitialYMax])
-                .range([this.dimensions.boundedHeight, 0])
-                .nice();
-        }
-        const xAxis = this.svg
-            .append("g")
-            .attr("transform", `translate(0,${this.dimensions.height - this.dimensions.marginBottom})`)
-            .attr("class", "xAxis")
-            .call(
-                d3
-                    .axisBottom(this.xScale)
-                    .tickFormat((d, i) => {
-                        return this.timePeriods[i];
-                    })
-                    .ticks(6)
-                    .tickPadding(5)
-                    .tickSizeOuter(5)
-                    .tickSizeInner(5)
-            )
-            .call((g) => g.select("g.tick.tick:nth-child(6) text").attr("class", "tick-selected-value"));
-
-        //  draw the line above the x axis
-        this.svg
-            .append("line")
-            .attr("class", "y0")
-            .attr("stroke-width", 1)
-            .attr("stroke", "#68758c")
-            .attr("opacity", 0.2)
-            .attr("x1", this.xScale.range()[0] + 15)
-            .attr("x2", 606)
-            .attr("y1", this.yScale.range()[0] - 20)
-            .attr("y2", this.yScale.range()[0] - 20);
+            .domain([-2, newMax])
+            .range([this.dimensions.boundedHeight, this.dimensions.marginBottom]);
 
         //  draw the lines for the grid
         this.svg
@@ -355,7 +292,7 @@ export class TimelineComponent implements OnInit, OnChanges {
                     .tickSize(-this.dimensions.width)
                     .tickFormat("")
             )
-            .call((g) => g.select("g.tick.tick:nth-child(2) line").attr("class", "y-axis-zero-line"));
+            .call((g) => g.select("g.tick.tick:nth-child(3) line").attr("class", "y-axis-zero-line"));
 
         this.svg
             .selectAll("line.y-axis-zero-line")
@@ -388,6 +325,23 @@ export class TimelineComponent implements OnInit, OnChanges {
                     .attr("transform", "rotate(-90)")
                     .text(this.title.concat(" ($M)").toLocaleUpperCase())
             );
+
+        const xAxis = this.svg
+            .append("g")
+            .attr("transform", `translate(0,${this.dimensions.height - this.dimensions.marginBottom})`)
+            .attr("class", "xAxis")
+            .call(
+                d3
+                    .axisBottom(this.xScale)
+                    .tickFormat((d, i) => {
+                        return this.timePeriods[i];
+                    })
+                    .ticks(6)
+                    .tickPadding(0)
+                    .tickSizeInner(-10)
+            )
+            .call((g) => g.select("g.tick.tick:nth-child(6) text").attr("class", "tick-selected-value"));
+
         //  create the line used for the path of each data set
         const line = d3
             .line()
