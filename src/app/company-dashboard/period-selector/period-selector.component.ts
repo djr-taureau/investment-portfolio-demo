@@ -1,3 +1,4 @@
+import { getSelectedDatePart } from "./../../core/state/company/dashboard/company-dashboard-layout.reducer";
 import { AvailablePeriod } from "@core/domain/company.model";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import * as _ from "lodash";
@@ -70,7 +71,15 @@ export class PeriodSelectorComponent implements OnInit {
      * Which date unit has the user selected - quarter or year?
      */
     @Input()
-    public selectedDatePartType: DatePartType = DatePartTypeEnum.QTR;
+    set selectedDatePartType(value: DatePartType) {
+        if (value) {
+            this._selectedDatePartType = value;
+        }
+    }
+    get selectedDatePartType(): DatePartType {
+        return this._selectedDatePartType;
+    }
+    private _selectedDatePartType: DatePartType = DatePartTypeEnum.QTR;
 
     /**
      * The periods available for the selector
@@ -89,6 +98,7 @@ export class PeriodSelectorComponent implements OnInit {
             });
             this._availablePeriodsByYear.push(updatedLastItem);
         });
+        this._availablePeriodsByYear.reverse();
     }
 
     /**
@@ -150,18 +160,6 @@ export class PeriodSelectorComponent implements OnInit {
     public projectedStart = "";
     public projectedEnd = "";
 
-    /**
-     * The units that represent the historical Units
-     */
-    // @Input()
-    // public get historicalUnits(): SelectorPeriod[];
-
-    /**
-     * The units that represent the projected Unit
-     */
-    // @Input()
-    // public get projectedUnits(): SelectorPeriod[];
-
     // -----------------------------------------------
     // PUBLIC
     // -----------------------------------------------
@@ -214,53 +212,12 @@ export class PeriodSelectorComponent implements OnInit {
     // PUBLIC FUNCTIONS
     // -----------------------------------------------
     public getPeriods() {
-        // date: string;
-        // financialQuarter: number;
-        // fiscalDate: string;
-        // fiscalQuarter: number;
-        // formatted: string;
-
-        // id: string;
-        // icon: string;
-        // text: string;
-        // data?: any;
-
-        return this.selectedDatePartType === DatePartTypeEnum.QTR
-            ? this._availablePeriods.map((item) => {
-                  return { id: item.date, icon: null, text: item.formatted } as IconizedItem;
-              })
-            : this._availablePeriodsByYear.map((item) => {
-                  return { id: item.date, icon: null, text: item.formatted } as IconizedItem;
-              });
+        return this.selectedDatePartType === DatePartTypeEnum.QTR ? this._availablePeriods : this._availablePeriodsByYear;
     }
 
     public getPeriodIdField() {
         return this.selectedDatePartType === DatePartTypeEnum.QTR ? "quarterLabel" : "yearLabel";
     }
-
-    // public getHistoricalUnitCount(): number {
-    //     return this.getHistoricalUnits().length;
-    // }
-
-    // public getFirstHistoricalUnit(): Date {
-    //     return new Date(_.get(_.head(this.getHistoricalUnits()), "date", new Date()));
-    // }
-
-    // public getLastHistoricalUnit(): Date {
-    //     return new Date(_.get(_.last(this.getHistoricalUnits()), "date", new Date()));
-    // }
-
-    // public getProjectedUnitCount() {
-    //     return this.getProjectedUnits().length;
-    // }
-
-    // public getFirstProjectedUnit(): Date {
-    //     return new Date(_.get(_.head(this.getProjectedUnits()), "date", new Date()));
-    // }
-
-    // public getLastProjectedUnit(): Date {
-    //     return new Date(_.get(_.last(this.getProjectedUnits()), "date", new Date()));
-    // }
 
     public getAltCurrencyName() {
         return _.get(this.alternateCurrency, "currencyCode", "");
@@ -316,15 +273,15 @@ export class PeriodSelectorComponent implements OnInit {
         // Example: The user chooses to view by QTR and choose "FQ2 2016", then changes to "FY 2016"... we can't just change the display, we also need
         // to set the selectedPeriod (which are always quarters) to "FQ$ 2016", otherwise the charts would only have FQ2 2016 and FQ1 2016
 
-        if ($event === DatePartTypeEnum.YEAR) {
-            const selectedYear = new Date(this.selectedPeriod.date).getFullYear();
-            const selectedYearQuarters = _.orderBy(
-                _.filter(this._availablePeriods, (period) => new Date(period.date).getFullYear() === selectedYear),
-                "financialQuarter"
-            );
+        // if ($event === DatePartTypeEnum.YEAR) {
+        //     const selectedYear = new Date(this.selectedPeriod.date).getFullYear();
+        //     const selectedYearQuarters = _.orderBy(
+        //         _.filter(this._availablePeriods, (period) => new Date(period.date).getFullYear() === selectedYear),
+        //         "financialQuarter"
+        //     );
 
-            this.selectedPeriodChange.emit(_.last(selectedYearQuarters));
-        }
+        //     this.selectedPeriodChange.emit(_.last(selectedYearQuarters));
+        // }
         this.selectedDatePartChange.emit($event);
     }
 
