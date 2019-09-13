@@ -1,3 +1,4 @@
+import { DirectivesModule } from "@shared/directives/directives.module";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -10,7 +11,7 @@ import { NavigationBarModule } from "../navigation-bar/navigation-bar.module";
 const COMPONENTS: any = [PortfolioExposureComponent];
 
 @NgModule({
-    imports: [FlexLayoutModule, CommonModule, PipeModule],
+    imports: [FlexLayoutModule, CommonModule, PipeModule, DirectivesModule],
     declarations: COMPONENTS,
     exports: COMPONENTS
 })

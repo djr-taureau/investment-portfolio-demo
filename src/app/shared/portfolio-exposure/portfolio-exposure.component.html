@@ -1,24 +1,30 @@
 <div class="chart">
     <div class="card-container"
          fxLayout="column"
-         fxLayoutAlign="start stretch">
+         fxLayoutAlign="start stretch"
+         fxLayoutGap="36px">
         <!-- TITLE ROW -->
         <div class="box title">{{ exposureType }} EXPOSURE: Based on {{ basedOn }} ({{currSymbol}}{{scale}})</div>
         <div class="value"
              fxLayout="column"
-             fxLayoutAlign="center stretch"
+             fxLayoutAlign="start stretch"
+             fxLayoutGap="7px"
              fxFlex>
             <ng-container *ngFor="let item of exposures; let i = index; trackBy: trackByFn">
                 <div fxLayout="row"
-                     fxLayoutAlign="center center"
+                     fxLayoutAlign="space-between center"
                      fxLayoutGap="16px">
-                    <div class="symbol-label">{{ item.label}}</div>
-                    <div class="value-as-line">
-                        <div class="line"
-                             [style.width.%]="item.portfolioValue"></div>
+                    <div class="symbol-label"
+                         fxFlex="15">{{ item.label | sbpEllipsis: 9}}</div>
+                    <div class="value-as-line"
+                         fxFlex="32">
+                        <div class="line-{{i}}"
+                             [style.width.%]="item.portfolioValue  / 100000000"></div>
                     </div>
-                    <div class="portfolio-value">{{ item.portfolioValue }}</div>
-                    <div class="portfolio-perc">{{ item.portfolioPercentage}}</div>
+                    <div class="portfolio-value"
+                         fxFlex="10">{{ item.portfolioValue / 1000000000  | number:'1.1-1'}}</div>
+                    <div class="portfolio-perc"
+                         fxFlex="10">{{ item.portfolioPercentage | percentOrNa}}</div>
                 </div>
             </ng-container>
         </div>

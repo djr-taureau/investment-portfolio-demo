@@ -18,15 +18,15 @@
         transition: all 2s ease-out !important;
 
         .box {
-            padding: 4px;
+            padding: 10px;
 
         }
 
         .title {
             padding-left: 10px;
             margin-left: 10px;
-            padding-top: 5px;
-            margin-top: 10px;
+            // padding-top: 5px;
+            // margin-top: 10px;
             margin-bottom: 5px;
             height: 16px;
             font-family: PostGrotesk;
@@ -40,6 +40,7 @@
         }
 
         .value {
+            padding: 0px 15px;
             text-align: center;
             ont-family: PostGrotesk;
             font-weight: normal;
@@ -54,6 +55,7 @@
         }
 
         .symbol-label {
+            text-align: left;
             opacity: 0.75;
             font-family: PostGrotesk;
             font-size: 14px;
@@ -66,9 +68,28 @@
         }
 
         .value-as-line {
-            .line {
+            .line-0 {
                 height: 4px;
                 border-radius: 2px;
+                background-color: $dark-sky-blue;
+            }
+
+            .line-1 {
+                height: 4px;
+                border-radius: 2px;
+                background-color: $light-navy;
+            }
+
+            .line-2 {
+                height: 4px;
+                border-radius: 2px;
+                background-color: $dark-slate-blue;
+            }
+
+            .line-3 {
+                height: 4px;
+                border-radius: 2px;
+                background-color: $light-grey-blue;
             }
         }
 

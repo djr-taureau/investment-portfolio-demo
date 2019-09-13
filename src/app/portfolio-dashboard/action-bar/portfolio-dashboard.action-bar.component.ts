@@ -59,7 +59,7 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
      */
     @Input()
     public set availablePeriods(value: SelectorPeriod[]) {
-        this._availablePeriods = value;
+        this._availablePeriods = value.slice();
         this._availablePeriodsByYear = [];
         const groupedByYear = _.groupBy(value, (p) => {
             return new Date(p.date).getFullYear();
@@ -71,20 +71,24 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
             });
             this._availablePeriodsByYear.push(updatedLastItem);
         });
+        this._availablePeriodsByYear.reverse();
+        this._availablePeriods.reverse();
     }
 
     /**
      * The 'as of' period (the selected period in the available periods)
      */
     @Input()
-    public set selectedPeriod(value: SelectorPeriod) {
+    public set selectedPeriod(value: any) {
         this._selectedPeriod = value;
         if (value) {
-            this.selectedItem = {
-                id: String(value.id),
-                icon: _.get(value, "logo", "https://via.placeholder.com/30"),
-                text: this.getPeriodIdField()
-            } as IconizedItem;
+            this.selectedItem = value;
+            // this.selectedItem = {
+            //     date: "2018-12-31",
+            //     id: "FY 2018",
+            //     quarterLabel: "CQ4 2018",
+            //     yearLabel: "CY 2018"
+            // }
         }
     }
 
@@ -134,7 +138,7 @@ export class PortfolioDashboardActionBarComponent implements OnInit {
 
     public dateunits = DatePartTypeEnum;
 
-    public selectedItem: IconizedItem;
+    public selectedItem: any;
 
     // -----------------------------------------------
     // OUTPUTS
